@@ -1,0 +1,52 @@
+@keyframes over {
+    0% {
+        opacity: 0;
+        margin-left: -99em;
+    }
+
+    50% {
+        opacity: 0;
+        margin-left: 15px;
+    }
+
+    100% {
+        opacity: 1;
+        margin-left: 15px;
+    }
+}
+
+#sidebar #nav-items {
+    width: 100%;
+}
+
+#sidebar #nav-items a {
+    display: flex;
+    text-decoration: none;
+}
+
+#sidebar #nav-items a span {
+    display: inline-block;
+    margin-left: -999rem;
+}
+
+#sidebar #nav-items:hover a span {
+    text-decoration: none;
+    font-size: inherit;
+    animation-name: over;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+
+#sidebar #nav-items:hover .hide-element{
+    display: block;
+}
+
+#sidebar #nav-items .hide-element{
+    display: none;
+}
+
+
+#sidebar #nav-items:hover img {
+    width: auto;
+    height: 4rem;
+}

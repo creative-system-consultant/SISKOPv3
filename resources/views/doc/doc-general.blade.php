@@ -1,0 +1,399 @@
+<div class="bg-white rounded-md p-6 shadow-md ">
+    <h2 class="text-lg font-semibold mb-4 border-b-2 border-gray-300">General Component</h2>
+
+    <!-- start table component -->
+    <x-general.accordion active="selected" tab="6" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                <p class="text-sm">Table</p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="border-t-2 px-6">
+                <div class="bg-white shadow-lg p-4 my-4">
+                    <x-table.table>
+                        <x-slot name="thead">
+                            <x-table.table-header class="text-left " value="Name" sort="" />
+                            <x-table.table-header class="text-left" value="Email" sort="" />
+                            <x-table.table-header class="text-left" value="Phone No" sort="" />
+                        </x-slot>
+                        <x-slot name="tbody">
+                            <tr>
+                                <x-table.table-body colspan="" class="text-left">
+                                    Safwan
+                                </x-table.table-body>
+                                <x-table.table-body colspan="" class="text-left">
+                                    Safwan@csc.net.my
+                                </x-table.table-body>
+                                <x-table.table-body colspan="" class="text-left">
+                                    01112983148
+                                </x-table.table-body>
+                            </tr>
+                        </x-slot>
+                    </x-table.table>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="language-html -mt-4" wire:ignore>
+                    <code class="language-html"> 
+&lt;x-table.table>
+    &lt;x-slot name="thead">
+        &lt;x-table.table-header class="text-left " value="Name" sort="" />
+        &lt;x-table.table-header class="text-left" value="Email" sort="" />
+        &lt;x-table.table-header class="text-left" value="Phone No" sort="" />
+    &lt;/x-slot>
+    &lt;x-slot name="tbody">
+        &lt;tr>
+            &lt;x-table.table-body colspan="" class="text-left">
+                Safwan
+            &lt;/x-table.table-body>
+            &lt;x-table.table-body colspan="" class="text-left">
+                Safwan@csc.net.my
+            &lt;/x-table.table-body>
+            &lt;x-table.table-body colspan="" class="text-left">
+                01112983148
+            &lt;/x-table.table-body>
+        &lt;/tr>
+    &lt;/x-slot>
+&lt;/x-table.table>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end table component -->
+
+    <!-- start accordion component -->
+    <x-general.accordion active="selected" tab="7" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                    <p class="text-sm">Accordion</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="border-t-2 px-6">
+                    <div class="bg-white shadow-lg p-4 my-4">
+                        <div x-data="{open : 0}">
+                            <x-general.accordion active="open" tab="1" bg="white">
+                                <x-slot name="title">
+                                    <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                                        <p class="text-sm">Title 1</p>
+                                    </div>
+                                </x-slot>
+                                <x-slot name="content">
+                                    //conten 1
+                                </x-slot>
+                            </x-general.accordion>
+                            <x-general.accordion active="open" tab="2" bg="white">
+                                <x-slot name="title">
+                                    <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                                        <p class="text-sm">Title 2</p>
+                                    </div>
+                                </x-slot>
+                                <x-slot name="content">
+                                    //conten 2
+                                </x-slot>
+                            </x-general.accordion>
+                        </div>
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="language-html -mt-4" wire:ignore>
+                        <code class="language-html"> 
+&lt;div x-data="{open : 0}">
+    &lt;x-general.accordion active="open" tab="1" bg="white">
+        &lt;x-slot name="title">
+            &lt;div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                &lt;p class="text-sm">Title 1&lt;/p>
+            &lt;/div>
+        &lt;/x-slot>
+        &lt;x-slot name="content">
+            //conten 1
+        &lt;/x-slot>
+    &lt;/x-general.accordion>
+    &lt;x-general.accordion active="open" tab="2" bg="white">
+        &lt;x-slot name="title">
+            &lt;div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                &lt;p class="text-sm">Title 2&lt;/p>
+            &lt;/div>
+        &lt;/x-slot>
+        &lt;x-slot name="content">
+            //conten 2
+        &lt;/x-slot>
+    &lt;/x-general.accordion>
+&lt;/div>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+        <!-- end accordion component -->
+
+    <!-- start Tab component -->
+    <x-general.accordion active="selected" tab="8" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                <p class="text-sm">Tab</p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="border-t-2 px-6">
+                <div class="bg-white shadow-lg p-4 my-4">
+                    <div x-data="{active : 0}">
+                        <div class="bg-white rounded-md flex">
+                            <x-tab.title name="0" livewire="">
+                                <div class="flex items-center">
+                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                                    <p>Tab 1</p>
+                                </div>
+                            </x-tab.title>
+                            <x-tab.title name="1" livewire="">
+                                <div class="flex items-center">
+                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                                    <p>Tab 2</p>
+                                </div>
+                            </x-tab.title>
+                            <x-tab.title name="2" livewire="">
+                            <div class="flex items-center">
+                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                                    <p>Tab 3</p>
+                                </div>
+                            </x-tab.title>
+                        </div>
+                        <div class="bg-white pt-4 border-t-2">
+                            <x-tab.content name="0">
+                                //content 1
+                            </x-tab.content>
+                            <x-tab.content name="1">
+                                //content 2
+                            </x-tab.content>
+                            <x-tab.content name="2">
+                                //content 3
+                            </x-tab.content>
+                        </div>
+                    </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="language-html -mt-4" wire:ignore>
+                    <code class="language-html"> 
+&lt;div x-data="{active : 0}">
+    &lt;div class="bg-white rounded-md flex">
+        &lt;x-tab.title name="0" livewire="">
+            &lt;div class="flex items-center">
+                &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                &lt;p>Tab 1&lt;/p>
+            &lt;/div>
+        &lt;/x-tab.title>
+        &lt;x-tab.title name="1" livewire="">
+            &lt;div class="flex items-center">
+                &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                &lt;p>Tab 2</p>
+            &lt;/div>
+        &lt;/x-tab.title>
+        &lt;x-tab.title name="2" livewire="">
+        &lt;div class="flex items-center">
+            &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                &lt;p>Tab 3&lt;/p>
+            &lt;/div>
+        &lt;/x-tab.title>
+    &lt;/div>
+    &lt;div class="bg-white pt-4 border-t-2">
+        &lt;x-tab.content name="0">
+            //content 1
+        &lt;/x-tab.content>
+        &lt;x-tab.content name="1">
+            //content 2
+        &lt;/x-tab.content>
+        &lt;x-tab.content name="2">
+            //content 3
+        &lt;/x-tab.content>
+    &lt;/div>
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end Tab component -->
+
+    <!-- start modal component -->
+    <x-general.accordion active="selected" tab="9" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                <p class="text-sm">Modal</p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="border-t-2 px-6">
+                <div class="bg-white shadow-lg p-4 my-4">
+                    <div>
+                        <x-modal.trigger target="open">
+                            <button type="button" class="flex items-center p-2 text-sm bg-primary-800 rounded-md hover:bg-primary-900 focus:outline-none text-white">
+                                open modal
+                            </button>
+                        </x-modal.trigger>
+                        <x-modal.modal 
+                            id="open"
+                            title="Modal Title" 
+                            close="true" 
+                            autoClose="true" 
+                            width="2xl"
+                        >
+                            <div class="p-4">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                when an unknown printer took a galley of type and scrambled it to make a 
+                                type specimen book. It has survived not only five centuries, but also 
+                                the leap into electronic typesetting, remaining essentially unchanged. 
+                                It was popularised in the 1960s with the release of Letraset sheets 
+                                containing Lorem Ipsum passages, and more recently with desktop 
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </div>
+                        </x-modal.modal>
+                    </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="language-html -mt-4" wire:ignore>
+                    <code class="language-html"> 
+&lt;div>
+    &lt;x-modal.trigger target="open">
+        &lt;button type="button" class="flex items-center p-2 text-sm bg-primary-800 rounded-md hover:bg-primary-900 focus:outline-none text-white">
+            open modal
+        &lt;/button>
+    &lt;/x-modal.trigger>
+    &lt;x-modal.modal 
+        id="open"
+        title="Modal Title" 
+        close="true" 
+        autoClose="true" 
+        width="2xl"
+    >
+        &lt;div class="p-4">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled it to make a 
+            type specimen book. It has survived not only five centuries, but also 
+            the leap into electronic typesetting, remaining essentially unchanged. 
+            It was popularised in the 1960s with the release of Letraset sheets 
+            containing Lorem Ipsum passages, and more recently with desktop 
+            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        &lt;/div>
+    &lt;/x-modal.modal>
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end modal component -->
+
+    <!-- start toast component -->
+    <x-general.accordion active="selected" tab="10" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                <p class="text-sm">Toast</p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="border-t-2 px-6">
+                <div class="bg-white shadow-lg p-4 my-4">
+                    <! -- Start toast alert -->
+                    <div x-data="{success:false , error:false , warning:false , info:false}">
+                        <p class="font-semibold mb-2">Toast</p>
+                        <div class="grid gap-2 grid-cols-1  md:grid-cols-4">
+                            <button x-on:click="success = !success" type="button" class="flex justify-center items-center p-2 text-sm bg-green-500 rounded-md focus:outline-none text-white">
+                                success toast
+                            </button>
+                            <button x-on:click="error = !error" type="button" class="flex justify-center items-center p-2 text-sm bg-red-500 rounded-md focus:outline-none text-white">
+                                error toast
+                            </button>
+                            <button x-on:click="warning = !warning" type="button" class="flex justify-center items-center p-2 text-sm bg-yellow-400 rounded-md focus:outline-none text-white">
+                                warning toast
+                            </button>
+                            <button x-on:click="info = !info" type="button" class="flex justify-center items-center p-2 text-sm bg-blue-500 rounded-md focus:outline-none text-white">
+                                info toast
+                            </button>
+                        </div>
+
+                        <div x-show="success">
+                            <x-toaster.success title="success" message="message success" />
+                        </div>
+                        <div x-show="error">
+                            <x-toaster.error title="error" message="message error" />
+                        </div>
+                        <div x-show="warning">
+                            <x-toaster.warning title="warning" message="message warning" />
+                        </div>
+                        <div x-show="info">
+                            <x-toaster.info title="info" message="message info" />
+                        </div>
+                    </div>
+                    <! -- Start swall alert -->
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="language-html -mt-4" wire:ignore>
+                    <code class="language-html"> 
+&lt;div x-data="{success:false , error:false , warning:false , info:false}">
+    &lt;p class="font-semibold mb-2">Toast&lt;/p>
+    &lt;div class="grid gap-2 grid-cols-1  md:grid-cols-4">
+        &lt;button x-on:click="success = !success" type="button" class="flex justify-center items-center p-2 text-sm bg-green-500 rounded-md focus:outline-none text-white">
+            success toast
+        &lt;/button>
+        &lt;button x-on:click="error = !error" type="button" class="flex justify-center items-center p-2 text-sm bg-red-500 rounded-md focus:outline-none text-white">
+            error toast
+        &lt;/button>
+        &lt;button x-on:click="warning = !warning" type="button" class="flex justify-center items-center p-2 text-sm bg-yellow-400 rounded-md focus:outline-none text-white">
+            warning toast
+        &lt;/button>
+        &lt;button x-on:click="info = !info" type="button" class="flex justify-center items-center p-2 text-sm bg-blue-500 rounded-md focus:outline-none text-white">
+            info toast
+        &lt;/button>
+    &lt;/div>
+
+    &lt;div x-show="success">
+        &lt;x-toaster.success title="success" message="message success" />
+    &lt;/div>
+    &lt;div x-show="error">
+        &lt;x-toaster.error title="error" message="message error" />
+    &lt;/div>
+    &lt;div x-show="warning">
+        &lt;x-toaster.warning title="warning" message="message warning" />
+    &lt;/div>
+    &lt;div x-show="info">
+        &lt;x-toaster.info title="info" message="message info" />
+    &lt;/div>
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end toast component -->
+
+    <!-- start loading  component -->
+    <x-general.accordion active="selected" tab="123" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold bg-gray-50 rounded-md">
+                <p class="text-sm">Loading </p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="border-t-2 px-6">
+                <div class="bg-white shadow-lg p-4 my-4">
+                    Put u function in wire:target="" when u want show the loading
+                    <div wire:loading wire:target="submit">
+                        <x-main-loading />
+                    </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="language-html -mt-4" wire:ignore>
+                    <code class="language-html"> 
+&lt;div wire:loading wire:target="">
+    &lt;x-main-loading />
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end loading component -->
+
+</div>
