@@ -45,10 +45,26 @@
         </div>
         @if($errors->has($value5)) <p class="text-sm text-red-600">{{ $errors->first($value5) }}</p> @endif
     </div>
-    <x-form.state-dropdown label="State" value="{{ $value6 }}" mandatory="yes">
-        <option value="" hide selected>SELECT STATE</option>
-        {{-- @foreach ($state as $item)
-            <option value="{{ $item->id }}" >{{ $item->description }}</option>
-        @endforeach --}}
-    </x-form.state-dropdown>
+    <div>
+        <label class="block text-sm font-semibold leading-5 text-gray-700">
+            State
+            @if( $mandatory ?? '' == "true")
+                <span class="font-semibold text-red-600">*</span>
+            @endif
+        </label>
+        <div class="mt-1 rounded-md shadow-sm">
+            <select
+                wire:model="{{ $value6 }}"
+                class="block w-full transition duration-150 ease-in-out form-select sm:text-sm sm:leading-5 {{ ($errors->has($value6)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}"
+                wire:loading.attr='readonly'
+                wire:loading.class="bg-gray-300"
+                wire:target="submit">
+                <option value="" hide selected>SELECT STATE</option>
+                {{-- @foreach ($state as $item)
+                    <option value="{{ $item->id }}" >{{ $item->description }}</option>
+                @endforeach --}}
+            </select>
+        </div>
+        @if($value6 !="" && $errors->has($value6)) <p class="text-sm text-red-600">{{ $errors->first($value6) }}</p> @endif
+    </div>
 </div>
