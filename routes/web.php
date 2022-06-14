@@ -11,6 +11,7 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Page\Home;
+use App\Http\Livewire\Page\Profile\Index;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +48,13 @@ Route::middleware('auth')->group(function () {
 //page routes
 Route::middleware('auth')->group(function () {
     Route::get('home', Home::class)->name('home');
+
+    //profile
+    Route::get('profile', Index::class)->name('profile');
 });
 
 //component doc
 Route::get('doc', ComponentDoc::class)->name('doc');
+
+// //profile
+// Route::get('profile', Index::class)->name('profile');
