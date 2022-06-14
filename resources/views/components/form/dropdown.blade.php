@@ -14,7 +14,7 @@
             {{ ($errors->has($value)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}"
             {{ $attributes }}  {{ $disable == "true" ? 'disabled' : '' }} >
             @if($default == 'yes')
-                <option value="" selected>Sila Pilih</option>
+                <option value="" selected>Please Choose </option>
             @endif
             {{ $slot }}
         </select>
