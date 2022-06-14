@@ -1,0 +1,9 @@
+php artisan view:clear
+php artisan route:clear
+php artisan event:clear
+php artisan debugbar:clear
+php artisan config:clear
+php artisan cache:clear
+php artisan auth:clear-resets
+php artisan icons:clear
+php artisan icons:cache

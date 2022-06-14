@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kuala_Lumpur',
 
     /*
     |--------------------------------------------------------------------------
@@ -211,5 +211,15 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
+    'ESMS_KEY' => env('ESMS_KEY'),
+    'ESMS_API_KEY' => env('ESMS_API_KEY'),
+
+    'WABLAS_API_KEY' => env('WABLAS_API_KEY'),
+    'WABLAS_URL_SMS' => env('WABLAS_URL_SMS'),
+    'WABLAS_URL_WA' => env('WABLAS_URL_WA'),
+    'WABLAS_TOKEN' => env('WABLAS_TOKEN'),
+
+    'LIVEWIRE_ASSET' => env('LIVEWIRE_ASSET',''),
 
 ];
