@@ -162210,6 +162210,9 @@ input:invalid, textarea:invalid, select:invalid {
   .sm\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .sm\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .sm\:flex-row{
     flex-direction: row;
   }
@@ -162300,6 +162303,9 @@ input:invalid, textarea:invalid, select:invalid {
   .lg\:grid-cols-1{
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+  .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .lg\:px-8{
     padding-left: 2rem;
     padding-right: 2rem;
@@ -162323,5 +162329,8 @@ input:invalid, textarea:invalid, select:invalid {
   }
   .xl\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .xl\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
