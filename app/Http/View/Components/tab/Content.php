@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\tab;
+namespace App\Http\View\Components\tab;
 
 use Illuminate\View\Component;
 

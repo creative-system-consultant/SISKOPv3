@@ -35,19 +35,15 @@ Route::middleware('guest')->group(function () {
 Route::get('password/reset', Email::class)->name('password.request');
 Route::get('password/reset/{token}', Reset::class)->name('password.reset');
 
-Route::middleware('auth')->group(function () {
-    Route::get('email/verify', Verify::class)->middleware('throttle:6,1')->name('verification.notice');
-    Route::get('password/confirm', Confirm::class)->name('password.confirm');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
-    Route::post('logout', LogoutController::class)->name('logout');
-});
-
 //page routes
 Route::middleware('auth')->group(function () {
     Route::get('home', Home::class)->name('home');
+
+    //auth
+    Route::get('email/verify', Verify::class)->middleware('throttle:6,1')->name('verification.notice');
+    Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
+    Route::get('password/confirm', Confirm::class)->name('password.confirm');
+    Route::post('logout', LogoutController::class)->name('logout');
 
     //profile
     Route::get('profile', Index::class)->name('profile');

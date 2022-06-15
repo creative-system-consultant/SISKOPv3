@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\table;
+namespace App\Http\View\Components\table;
 
 use Illuminate\View\Component;
 

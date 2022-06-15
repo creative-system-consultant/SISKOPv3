@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\swall;
+namespace App\Http\View\Components\swall;
 
 use Illuminate\View\Component;
 
