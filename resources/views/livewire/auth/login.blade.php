@@ -57,9 +57,14 @@
                                 </label>
                             </div>
                             <div class="text-sm ml-4">
-                                <a href="{{ route('password.request') }}" class="text-primary-900 hover:text-primary-800">
-                                    Lupa Kata Laluan?
+                                <a href="{{ route('retrieve-account') }}" class="text-primary-900 hover:text-primary-800 ml-5">
+                                    Forget your account?
                                 </a>
+                                <div class="ml-3">
+                                    <a href="{{ route('password.request') }}" class="text-primary-900 hover:text-primary-800">
+                                        Forget your password?
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div class="flex items-center space-x-1 pt-2">

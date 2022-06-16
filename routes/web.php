@@ -8,6 +8,7 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
+use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Page\Home;
@@ -34,6 +35,8 @@ Route::middleware('guest')->group(function () {
 
 Route::get('password/reset', Email::class)->name('password.request');
 Route::get('password/reset/{token}', Reset::class)->name('password.reset');
+
+Route::get('retrieve-account', RetrieveAccount::class)->name('retrieve-account');
 
 //page routes
 Route::middleware('auth')->group(function () {
