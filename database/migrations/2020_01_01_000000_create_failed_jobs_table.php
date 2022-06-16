@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.jobs_failed', function (Blueprint $table) {
+        Schema::create('SISKOP.sys_jobs_failed', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
             $table->text('connection');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.jobs_failed');
+        Schema::dropIfExists('SISKOP.sys_jobs_failed');
     }
 };

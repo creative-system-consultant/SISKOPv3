@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.jobs', function (Blueprint $table) {
+        Schema::create('SISKOP.sys_jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('queue')->index();
             $table->longText('payload');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.jobs');
+        Schema::dropIfExists('SISKOP.sys_jobs');
     }
 };

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.users', function (Blueprint $table) {
-            $table->id()->from(100);
+        Schema::create('SISKOP.Coop', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->default(DB::raw('newid()'));
+
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone_no')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('name2');
+            $table->string('reg_num')->nullable();
+            $table->foreign('address_id')->references('id')->on('CIF.Address');
+
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
             $table->timestamp('deleted_at')->nullable();
@@ -31,8 +29,6 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
-
-        DB::statement("DBCC CHECKIDENT ('SISKOP.users',RESEED,100)");
     }
 
     /**
@@ -42,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.users');
+        Schema::dropIfExists('SISKOP.Coop');
     }
 };
