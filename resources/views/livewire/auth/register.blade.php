@@ -40,7 +40,26 @@
                         @enderror
                     </div>
 
-                    <div class="mt-6">
+                    <div class="mt-3">
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <input 
+                                wire:model.lazy="icno" 
+                                id="icno" 
+                                type="text" 
+                                placeholder="No Kad Pengenalan" 
+                                required 
+                                autofocus 
+                                class="form-input w-full content-center text-sm px-4 py-2
+                                @error('name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                            />
+                        </div>
+
+                        @error('icno')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
                             <input 
                                 wire:model.lazy="icno" 
@@ -77,7 +96,7 @@
                         @enderror
                     </div>
 
-                    <div class="mt-6">
+                    <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
                             <input 
                                 wire:model.lazy="password" 
@@ -95,7 +114,7 @@
                         @enderror
                     </div>
 
-                    <div class="mt-6">
+                    <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
                             <input 
                                 wire:model.lazy="passwordConfirmation" 

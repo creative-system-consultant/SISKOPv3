@@ -2,8 +2,8 @@
     <x-form.basic-form wire:submit.prevent="">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6 bg-gray-50">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">New Password</h3>
-                <p class="max-w-2xl mt-1 text-sm text-gray-500"> create new password </p>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Change Password</h3>
+                <p class="max-w-2xl mt-1 text-sm text-gray-500"> Change password to a new password </p>
             </div>
             <div class="border-t border-gray-200">
             <dl>
