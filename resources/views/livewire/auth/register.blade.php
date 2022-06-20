@@ -46,11 +46,11 @@
                                 wire:model.lazy="icno" 
                                 id="icno" 
                                 type="text" 
-                                placeholder="No Kad Pengenalan" 
+                                placeholder="Kad Pengenalan" 
                                 required 
                                 autofocus 
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('icno') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
                             />
                         </div>
 
@@ -62,18 +62,18 @@
                     <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
                             <input 
-                                wire:model.lazy="icno" 
-                                id="icno" 
+                                wire:model.lazy="phone_no" 
+                                id="phone_no" 
                                 type="text" 
-                                placeholder="Kad Pengenalan" 
+                                placeholder="No Tel Bimbit" 
                                 required 
                                 autofocus 
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('icno') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('phone_no') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
                             />
                         </div>
 
-                        @error('icno')
+                        @error('phone_no')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

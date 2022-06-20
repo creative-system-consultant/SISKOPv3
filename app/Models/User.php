@@ -30,6 +30,7 @@ class User extends Authenticatable implements Auditable
     protected $fillable = [
         'name',
         'icno',
+        'phone_no',
         'email',
         'password',
     ];
@@ -61,6 +62,11 @@ class User extends Authenticatable implements Auditable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url','coop_id',
     ];
+
+    public function getCoopIdAttribute()
+    {
+        return '1';
+    }
 }

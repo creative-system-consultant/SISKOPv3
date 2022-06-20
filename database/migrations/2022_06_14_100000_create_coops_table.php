@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('name2');
             $table->string('reg_num')->nullable();
-            $table->foreign('address_id')->references('id')->on('CIF.Address');
+            $table->bigInteger('address_id');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

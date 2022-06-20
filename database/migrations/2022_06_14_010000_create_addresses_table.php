@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('CIF.Address', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
-            $table->string('addressable_type')->nullable();
-            $table->bigInteger('addressable_id')->nullable();
+            $table->morphs('addressable');
 
             $table->string('address1')->nullable();
             $table->string('address2')->nullable();

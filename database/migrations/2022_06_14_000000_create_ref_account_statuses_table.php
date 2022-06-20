@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('ref_account_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('description',150)->default('');
-            $table->string('description_bm',150)->default('');
+            $table->string('description');
+            $table->string('description_bm',150)->nullable();
             $table->string('status',1)->default('1');
 
             $table->timestamp('created_at')->useCurrent();
