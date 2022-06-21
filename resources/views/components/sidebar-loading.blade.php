@@ -1,5 +1,5 @@
 <style>
-.loader {
+.load {
     position: fixed;
     z-index: 99;
     top: 0;
@@ -13,7 +13,7 @@
     align-items: center;
     }
     
-    .loader.hidden {
+    .load.hidden {
         animation: fadeOut 1s;
         animation-fill-mode: forwards;
     }
@@ -24,8 +24,8 @@
         }
     }
 </style>
-<div  id="myDIV"  class="bg-black bg-opacity-50 loader" style="visibility: hidden;">
-    <img src="{{ asset('img/loading.png') }}" alt="" class="w-auto h-20">
+<div  id="myDIV"  class="bg-black bg-opacity-50 load" style="visibility: hidden;">
+    <img src="{{ asset('img/loading.png') }}" alt="" class="w-auto h-20 animate-pulse ">
 </div>
 <script>
     function loading() {
