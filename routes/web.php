@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Livewire\ComponentDoc;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\RedirectController;
@@ -11,9 +11,14 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Livewire\ComponentDoc;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Page\Admin\Maintenance\{
+    ListMaintenance,
+    AddMaintenance,
+    EditMaintenance
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +55,13 @@ Route::middleware('auth')->group(function () {
 
     //profile
     Route::get('profile', Index::class)->name('profile');
+
+    //------------------------admin------------------------------//
+
+    //maintenance
+    Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
+    Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
+    Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
 });
 
 //component doc

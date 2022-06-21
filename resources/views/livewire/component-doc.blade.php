@@ -1,9 +1,9 @@
 <div>
     <div class="p-4">
         <div x-data="{active : 0}">
-            <div class="bg-white rounded-md flex flex-nowrap mb-2 w-full overflow-x-auto">
+            <div class="flex w-full mb-2 overflow-x-auto bg-white rounded-md flex-nowrap">
                 <x-tab.title name="0" livewire="">
-                    <div class="flex items-center  w-36 md:w-full">
+                    <div class="flex items-center w-36 md:w-full">
                         <x-heroicon-o-collection class="w-6 h-6 mr-2"/> 
                         <p>Component List</p>
                     </div>
@@ -21,41 +21,41 @@
                     </div>
                 </x-tab.title>
             </div>
-            <div class="bg-white pt-4 border-t-2">
+            <div class="pt-4 bg-white border-t-2">
                 <x-tab.content name="0">
                     <div class="p-4" x-data="{selected : 0}">
-                        <h1 class="font-semibold md:text-2xl text-base mb-6">Component List</h1>
-                        <x-general.grid mobile="1" gap="6" sm="2" md="2" lg="2" xl="2" class="col-span-12 mt-6">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl">Component List</h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             @include('doc.doc-form')
                             @include('doc.doc-general')
                             @include('doc.doc-grid')
-                        </x-general.grid>
+                        </div>
                     </div>
                 </x-tab.content>
                 <x-tab.content name="1">
                     <div class="p-4" x-data="{selected : 0}">
-                        <h1 class="font-semibold md:text-2xl text-base mb-6">Call Swall</h1>
-                        <x-general.grid mobile="1" gap="6" sm="2" md="2" lg="2" xl="2" class="col-span-12 mt-6">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl">Call Swall</h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             @include('doc.doc-swall')
-                        </x-general.grid>
+                        </div>
                     </div>
                 </x-tab.content>
                 <x-tab.content name="2">
                     <div class="p-4" x-data="{selected : 0}">
-                        <h1 class="font-semibold md:text-2xl text-base mb-6">COLOR PLATE</h1>
-                        <x-general.grid mobile="1" gap="6" sm="2" md="2" lg="2" xl="2" class="col-span-12 mt-6">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl">COLOR PLATE</h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             @include('doc.doc-colors')
-                            <div class="bg-white rounded-md p-6 shadow-md ">
+                            <div class="p-6 bg-white rounded-md shadow-md ">
 
-                                <div class="border-t-2 px-6">
-                                    <div class="bg-white shadow-lg p-4 my-4">
+                                <div class="px-6 border-t-2">
+                                    <div class="p-4 my-4 bg-white shadow-lg">
                                         <x-form.basic-form wire:submit.prevent="">
                                             choose color plate
                                         </x-form.basic-form>
                                     </div>
                                     <p class="font-semibold">tailwind.config.js</p>
-                                    <div class="h-96 overflow-y-auto">
-                                    <pre class="language-html -mt-4" wire:ignore>
+                                    <div class="overflow-y-auto h-96">
+                                    <pre class="-mt-4 language-html" wire:ignore>
                                         <code class="language-html"> 
     Slate: {
         50 : '#f8fafc',
@@ -329,7 +329,7 @@
                                 </div>
                             
                             </div>
-                        </x-general.grid>
+                        </div>
                     </div>
                 </x-tab.content>
             </div>

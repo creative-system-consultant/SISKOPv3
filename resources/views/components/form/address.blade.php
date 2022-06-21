@@ -20,7 +20,7 @@
     </div>
     @if($errors->has($value3)) <p class="text-sm text-red-600">{{ $errors->first($value3) }}</p> @endif
 </div>
-<div class="grid gap-2 mt-3 lg:grid-cols-3 sm:grid-cols-1">
+<div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3">
     <div>
         <label class="block text-sm font-semibold leading-5 text-gray-700">
             Town

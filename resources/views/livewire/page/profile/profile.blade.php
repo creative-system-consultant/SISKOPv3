@@ -28,8 +28,8 @@
                 wire:model="profile_img"
             >
         </div>
-        <x-general.grid mobile="1" gap="5" sm="1" md="2" lg="2" xl="2" class="col-span-12 mt-6">
-            
+        
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
             <x-form.input 
                 label="Full Name" 
                 name="" 
@@ -182,8 +182,9 @@
                 <option value="1">TETAP</option>
                 <option value="2">KONTRAK</option>
             </x-form.dropdown>
-        </x-general.grid>
-        <x-general.grid mobile="1" gap="5" sm="1" md="1" lg="1" xl="1" class="col-span-12">
+        </div>
+        
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 ">
             <x-form.address class="mt-8"
                 label="Address"
                 value1="address1"
@@ -210,7 +211,7 @@
                 condition="state"
                 mandatory="true"
             />
-        </x-general.grid>
+        </div>
 
         <div class="p-4 mt-6 rounded-md bg-gray-50">
             <div class="flex items-center justify-center space-x-2">

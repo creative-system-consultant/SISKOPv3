@@ -22,12 +22,12 @@
             </div>
             <div>
                 <ul class="mt-6 leading-10">
-                    <x-sidebar.nav-item title="HALAMAN UTAMA" route="{{route('home')}}" uri="home">
+                    <x-sidebar.nav-item title="HOME" route="{{route('home')}}" uri="home">
                         <x-heroicon-o-home class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
-                    <x-sidebar.nav-item title="MENU" route="#" uri="#">
-                        <x-heroicon-o-chart-square-bar class="w-7 h-7" />
+                    <x-sidebar.nav-item title="Maintenance" route="{{route('list-maintenance')}}" uri="list-maintenance">
+                        <x-heroicon-o-cog class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="PERMOHONAN" uri="pemohonan/*">

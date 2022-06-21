@@ -23,7 +23,7 @@
                 @else
                 pl-2 pr-9
                 @endif
-                {{ ($disable == 'true') ? 'bg-gray-200' : '' }} 
+                {{ ($disable == 'true') ? 'cursor-not-allowed' : '' }} 
                 {{ ($errors->has($value)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
                 "
             >

@@ -233,4 +233,98 @@
             </div>
         </x-slot>
     </x-general.accordion>
+
+         <!-- start switch toggle Input component -->
+         <x-general.accordion active="selected" tab="444" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                    <p class="text-sm">Switch Toggle</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="px-6 border-t-2">
+                    <div class="p-4 my-4 bg-white shadow-lg">
+                        <div class="flex items-center w-full">
+                            <label for="your-id" class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input 
+                                        type="checkbox" 
+                                        id="your-id"
+                                        class="sr-only"
+                                        {{-- wire:click="statusBtn(your-id)" --}}
+                                    >
+                                    <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                    <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="-mt-4 language-html" wire:ignore>
+                        <code class="language-html"> 
+    &lt;div class="flex items-center w-full">
+        &lt;label for="your-id" class="flex items-center cursor-pointer">
+            &lt;div class="relative">
+                &lt;input 
+                    type="checkbox" 
+                    id="your-id" 
+                    class="sr-only"
+                    &#x7b;&#x7b;-- wire:click="funtionInLivewire(your-id)" --&#x7d;&#x7d;
+                >
+                &lt;div class="block h-8 bg-gray-300 rounded-full w-14 body">&lt;/div>
+                &lt;div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1">&lt;/div>
+            &lt;/div>
+        &lt;/label>
+    &lt;/div>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+
+    <!-- start submit button -->
+    <x-general.accordion active="selected" tab="32524546768543623" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                <p class="text-sm">Submit Cancel Button</p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="px-6 border-t-2">
+                <div class="p-4 my-4 bg-white shadow-lg">
+                   This component must be inside<br> 
+                   &lt;x-form.basic-form wire:submit.prevent=""><br> 
+                   // content<br> 
+                   &lt;/x-form.basic-form>
+                <div class="p-4 mt-6 rounded-md bg-gray-50">
+                    <div class="flex items-center justify-center space-x-2">
+                        <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
+                            Cancel
+                        </a>
+                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="-mt-4 language-html" wire:ignore>
+                    <code class="language-html"> 
+&lt;div class="p-4 mt-6 rounded-md bg-gray-50">
+    &lt;div class="flex items-center justify-center space-x-2">
+        &lt;a href="&#x7b;&#x7b;url()->previous()&#x7d;&#x7d;" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
+            Cancel
+        &lt;/a>
+        &lt;button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+            Submit
+        &lt;/button>
+    &lt;/div>
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end Submit button -->
 </div>
+
