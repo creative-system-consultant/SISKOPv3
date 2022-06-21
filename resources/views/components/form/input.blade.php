@@ -13,7 +13,7 @@
             {{ $disable == "true" ? 'disabled' : '' }}
             type="{{ $type ?? '' }}" {{ $attributes }} value="{{$value}}"
             class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
-            {{ ($disable == 'true') ? 'cursor-not-allowed' : '' }}  
+            {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}  
             {{ ($errors->has($value)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}"
         >
     </div>
