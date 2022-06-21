@@ -30,6 +30,10 @@
                         <x-heroicon-o-cog class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
+                    <x-sidebar.nav-item title="Report" route="{{route('list-reporting')}}" uri="list-reporting">
+                        <x-heroicon-o-clipboard-list class="w-7 h-7" />
+                    </x-sidebar.nav-item>
+
                     <x-sidebar.dropdown-nav-item active="open" title="PERMOHONAN" uri="pemohonan/*">
                         <x-slot name="icon">
                             <x-heroicon-o-document-search class="w-7 h-7" />

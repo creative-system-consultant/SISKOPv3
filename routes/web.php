@@ -14,12 +14,11 @@ use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\ComponentDoc;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
-use App\Http\Livewire\Page\Admin\Maintenance\{
-    ListMaintenance,
-    AddMaintenance,
-    EditMaintenance
-};
-
+use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
+use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
+use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
+use App\Http\Livewire\Page\Reporting\ListReport;
+use App\Http\Livewire\Page\Reporting\UserReporting;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,6 +54,11 @@ Route::middleware('auth')->group(function () {
 
     //profile
     Route::get('profile', Index::class)->name('profile');
+
+
+    //Reporting
+    Route::get('list-reporting', ListReport::class)->name('list-reporting');
+    Route::get('user-reporting', UserReporting::class)->name('user-reporting');
 
     //------------------------admin------------------------------//
 
