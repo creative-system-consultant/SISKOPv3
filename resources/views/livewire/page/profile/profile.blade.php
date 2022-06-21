@@ -1,7 +1,7 @@
 <div class="p-4">
     <x-form.basic-form wire:submit.prevent="">
         <div class="pb-4 mb-2 border-b-2">
-            <label for="profile_img" class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4">
                 <img 
                     class="border-4 rounded-full h-28 w-28 border-primary-800" 
                     src="
@@ -13,13 +13,13 @@
                     " 
                     alt="Rounded avatar"
                 > 
-                <span>
+                <label for="profile_img">
                     <p class="font-semibold">USERNAME</p>  
                     <a class="text-sm font-semibold cursor-pointer text-primary-600 hover:text-primary-700">
                         Change Avatar
                     </a>
-                </span>
-            </label>
+                </label>
+            </div>
             <input 
                 type="file" 
                 class="absolute invisible pointer-events-none" 
