@@ -11,7 +11,8 @@ class ListSpecialAid extends Component
 
     public function mount()
     {
-        $this->specialAids = SpecialAid::all();
+        $user = Auth()->user();
+        $this->specialAids = SpecialAid::where('coop_id', $user->coop_id)->withTrashed()->get();
     }
 
     public function render()

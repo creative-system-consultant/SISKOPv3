@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class FieldSpecialAid extends Model implements Auditable
+class SpecialAidField extends Model implements Auditable
 {
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'SISKOP.sys_field_special_aid';
+
+    protected $guarded = [];
 
     /**
      * The accessors to append to the model's array form.
@@ -52,4 +54,6 @@ class FieldSpecialAid extends Model implements Auditable
         if ($this->type == 'datetime'){ $this->datetime = $value; }
         if ($this->type == 'bigint'){   $this->bigint   = $value; }
     }
+
+    
 }

@@ -3094,6 +3094,10 @@ input:checked ~ .body {
 }
 @media (min-width: 1024px) {
 
+  .lg\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
   .lg\:col-span-4 {
     grid-column: span 4 / span 4;
   }
@@ -3160,6 +3164,10 @@ input:checked ~ .body {
   }
 }
 @media (min-width: 1280px) {
+
+  .xl\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
 
   .xl\:col-span-4 {
     grid-column: span 4 / span 4;

@@ -6,6 +6,7 @@
             <div class="pt-4 bg-white ">
                 <div class="pl-4 pb-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit('{{ $specialAid->uuid }}')">
+                        <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
@@ -60,6 +61,43 @@
                             </div>
                         </div>
 
+                        <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
+                        <button wire:click.prevent="addField" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                            Add Field
+                        </button>
+                        <div id="fields">
+                        @foreach($specialAid->field as $index => $list )
+                            <div class="mt-6 grid grid-cols-12 gap-6">
+                                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
+                                    <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="{{ $list->label }}" mandatory="" disable="" type="text"/>
+                                    @error('Flabel.'.$index)
+                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
+                                    <x-form.input label="Field Name" name="Fname.{{ $index }}" value="{{ $list->name }}" mandatory="" disable="" type="text"/>
+                                    @error('Fname.'.$index)
+                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
+                                    <x-form.dropdown label="Field Type" value="{{ $list->type }}" name="Ftype.{{ $index }}" id="" mandatory="" disable="" default="">
+                                        @foreach ($field->types() as $type)
+                                            <option value="{{ $type }}">{{ $type }}</option>
+                                        @endforeach
+                                    </x-form.dropdown>
+                                </div>
+                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
+                                    <div class="pt-4 mt-1 rounded-md justify-end">
+                                        <button wire:click.prevent="remField({{ $index }})" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        </div>
+
                         <div class="p-4 mt-6 rounded-md bg-gray-50">
                             <div class="flex items-center justify-center space-x-2">
                                 <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
@@ -70,7 +108,7 @@
                                 </button>
                             </div>
                         </div>
-                    </x-form.basic-form>                    
+                    </x-form.basic-form>
                 </div>
             </div>
         </div>
