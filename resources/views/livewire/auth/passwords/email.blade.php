@@ -1,4 +1,4 @@
-@section('title', 'Set Semula Kata Laluan')
+@section('title', 'Password Reset')
 
 
 <div>
@@ -10,7 +10,7 @@
                 <div class="sm:mx-auto sm:w-full sm:max-w-md mb-6 border-b-2 pb-4">
                     <x-logo class="w-auto h-20 mx-auto text-primary" />
                     <h2 class="mt-2 text-2xl font-extrabold text-center text-gray-900 leading-9">
-                        Set Semula Kata Laluan
+                        Password Reset
                     </h2>
                 </div>
                 @if ($emailSentMessage)
@@ -38,7 +38,7 @@
                                     id="email" 
                                     name="email" 
                                     type="email" 
-                                    placeholder="Alamat E-mel"
+                                    placeholder="Email Address"
                                     required 
                                     autofocus 
                                     class="form-input w-full content-center text-sm px-4 py-2 
@@ -54,7 +54,7 @@
                         <div class="mt-6">
                             <span class="block w-full rounded-md shadow-sm">
                                 <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-primary-800 border border-transparent rounded-md hover:bg-primary-900 focus:outline-none focus:border-gray-700 focus:ring-indigo active:bg-gray-700 transition duration-150 ease-in-out">
-                                    Hantar Link Set Semula Kata Laluan
+                                   Send Password Reset Link
                                 </button>
                             </span>
                         </div>

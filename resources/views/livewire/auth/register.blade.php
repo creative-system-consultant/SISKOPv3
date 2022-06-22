@@ -1,4 +1,4 @@
-@section('title', 'Daftar Akaun')
+@section('title', 'Register Account')
 
 <div>
     @include('include.auth-bg')
@@ -9,13 +9,13 @@
                 <div class="sm:mx-auto sm:w-full sm:max-w-md mb-6 border-b-2 pb-4">
                     <x-logo class="w-auto h-20 mx-auto text-primary" />
                     <h2 class="mt-2 text-2xl font-extrabold text-center text-gray-900 leading-9">
-                        Daftar Akaun Baru
+                        Register a New Account
                     </h2>
             
                     <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
-                        Atau
+                        or
                         <a href="{{ route('login') }}" class="font-medium text-primary focus:outline-none focus:underline transition ease-in-out duration-150 text-primary-900">
-                            Log Masuk Akaun Anda
+                            Login to Your Account
                         </a>
                     </p>
                 </div>
@@ -27,7 +27,7 @@
                                 wire:model.lazy="name" 
                                 id="name" 
                                 type="text" 
-                                placeholder="Nama Penuh" 
+                                placeholder="Full Name" 
                                 required 
                                 autofocus 
                                 class="form-input w-full content-center text-sm px-4 py-2
@@ -46,7 +46,7 @@
                                 wire:model.lazy="icno" 
                                 id="icno" 
                                 type="text" 
-                                placeholder="Kad Pengenalan" 
+                                placeholder="IC No." 
                                 required 
                                 autofocus 
                                 class="form-input w-full content-center text-sm px-4 py-2
@@ -65,7 +65,7 @@
                                 wire:model.lazy="phone_no" 
                                 id="phone_no" 
                                 type="text" 
-                                placeholder="No Tel Bimbit" 
+                                placeholder="Phone No." 
                                 required 
                                 autofocus 
                                 class="form-input w-full content-center text-sm px-4 py-2
@@ -84,7 +84,7 @@
                                 wire:model.lazy="email" 
                                 id="email" 
                                 type="email"
-                                placeholder="Alamat E-mel"  
+                                placeholder="Email Address"  
                                 required 
                                 class="form-input w-full content-center text-sm px-4 py-2
                                 @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
@@ -102,7 +102,7 @@
                                 wire:model.lazy="password" 
                                 id="password" 
                                 type="password"
-                                placeholder="Kata Laluan"  
+                                placeholder="Password"  
                                 required 
                                 class="form-input w-full content-center text-sm px-4 py-2
                                 @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
@@ -120,7 +120,7 @@
                                 wire:model.lazy="passwordConfirmation" 
                                 id="password_confirmation" 
                                 type="password"
-                                placeholder="Pengesahan Kata Laluan"   
+                                placeholder="Confrim Password"   
                                 required 
                                 class="form-input w-full content-center text-sm px-4 py-2"
                             />
@@ -130,7 +130,7 @@
                     <div class="mt-6">
                         <span class="block w-full rounded-md shadow-sm">
                             <button type="submit" class="text-sm flex justify-center w-full p-2 font-semibold text-gray-100 border-2 border-primary-900 rounded-md  bg-primary-900 hover:bg-primary-800 focus:outline-none">
-                                Daftar
+                                Register
                             </button>
                         </span>
                     </div>

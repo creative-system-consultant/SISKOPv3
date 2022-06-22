@@ -1,5 +1,11 @@
 <div class="p-4">
-    <x-form.basic-form wire:submit.prevent="">
+    @if (session('success'))
+        <x-swall.success message="{{ session('message') }}"/>
+    @elseif (session('error'))
+        <x-swall.error  message="{{ session('message') }}"/>
+    @endif
+
+    <x-form.basic-form wire:submit.prevent="changePassword">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6 bg-gray-50">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">Change Password</h3>
@@ -13,13 +19,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-3">
                         <x-form.input 
                             label="" 
-                            name="" 
+                            name="old_pass" 
+                            wire:model.lazy="old_pass" 
                             value="" 
                             mandatory=""
                             disable=""
-                            type="text"
+                            type="password"
                         />
                     </div>
+                    @error('old_pass')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </dd>
                 </div>
                 
@@ -31,13 +41,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-3">
                         <x-form.input 
                             label="" 
-                            name="" 
+                            name="password" 
+                            wire:model.lazy="password" 
                             value="" 
                             mandatory=""
                             disable=""
-                            type="text"
+                            type="password"
                         />
                     </div>
+                    @error('password')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </dd>
                 </div>
             </dl>
@@ -48,11 +62,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-3">
                         <x-form.input 
                             label="" 
-                            name="" 
+                            name="confirm_pass" 
+                            wire:model.lazy="confirm_password" 
                             value="" 
                             mandatory=""
                             disable=""
-                            type="text"
+                            type="password"
                         />
                     </div>
                 </dd>

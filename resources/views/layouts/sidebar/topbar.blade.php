@@ -41,7 +41,7 @@
                         <li class="flex">
                             <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
                                 href="#">
-                                <span>Tiada Notifikasi</span>
+                                <span>No Notification</span>
                             </a>
                         </li>
                     </ul>
