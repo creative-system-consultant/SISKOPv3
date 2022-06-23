@@ -2,6 +2,12 @@
     <div class="p-4">
         <div x-data="{active : 0}">
             <div class="flex w-full mb-2 overflow-x-auto bg-white rounded-md flex-nowrap">
+                <x-tab.title name="6" livewire="">
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-code class="w-6 h-6 mr-2"/> 
+                        <p>Create Livewire</p>
+                    </div>
+                </x-tab.title>
                 <x-tab.title name="0" livewire="">
                     <div class="flex items-center w-36 md:w-full">
                         <x-heroicon-o-collection class="w-6 h-6 mr-2"/> 
@@ -22,6 +28,24 @@
                 </x-tab.title>
             </div>
             <div class="pt-4 bg-white border-t-2">
+                
+                <x-tab.content name="6">
+                    <div class="p-4" x-data="{selected : 0}">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl"></h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                            <div class="p-6 bg-white rounded-md shadow-md ">
+                                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">To Create livewire page, must run this command for folder strucure</h2>
+                                <p class="font-semibold">Code</p>
+                                <pre class="-mt-4 language-html" wire:ignore>
+                                    <code class="language-html"> 
+php artisan make:livewire Page/YourPageName
+                                    </code>
+                                </pre>        
+                            </div> 
+                        </div>
+                    </div>
+                </x-tab.content>
+                
                 <x-tab.content name="0">
                     <div class="p-4" x-data="{selected : 0}">
                         <h1 class="mb-6 text-base font-semibold md:text-2xl">Component List</h1>
@@ -29,7 +53,39 @@
                             @include('doc.doc-form')
                             @include('doc.doc-general')
                             @include('doc.doc-grid')
+                            <div class="p-6 bg-white rounded-md shadow-md ">
+                            <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Icon Component</h2>
+                            <!-- star Icon component -->
+                                <x-general.accordion active="selected" tab="3545236325" bg="white">
+                                    <x-slot name="title">
+                                        <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                                            <p class="text-sm">HeroIcons</p>
+                                        </div>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <div class="px-6 border-t-2">
+                                            <div class="p-4 my-4 bg-white shadow-lg">
+                                                For Icon u can using this link  <a href="https://heroicons.com/" target="_blank" class="text-blue-500 hover:text-blue-400">https://heroicons.com/</a> 
+                                                <div class="flex mt-4 space-x-3 ">
+                                                    <x-heroicon-o-home class="w-7 h-7 text-primary-800" />
+                                                    <x-heroicon-s-home class="w-7 h-7 text-primary-800" />
+                                                </div>
+                                            </div>
+                                            <p class="font-semibold">Code</p>
+                                            <pre class="-mt-4 language-html" wire:ignore>
+                                                <code class="language-html"> 
+//outline icon
+&lt;x-heroicon-o-home class="w-7 h-7 text-primary-800" />
+//solid icon
+&lt;x-heroicon-s-home class="w-7 h-7 text-primary-800" />
+                                                </code>
+                                            </pre>
+                                        </div>
+                                    </x-slot>
+                                </x-general.accordion>
+                                <!-- end Submit Icon component -->
                         </div>
+                    </div>
                     </div>
                 </x-tab.content>
                 <x-tab.content name="1">
