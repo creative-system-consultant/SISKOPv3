@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\SpecialAid;
+namespace App\Http\Livewire\Page\Admin\SpecialAid;
 
 use App\Models\SpecialAid;
 use App\Models\SpecialAidField;

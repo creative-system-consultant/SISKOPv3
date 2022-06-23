@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\SpecialAid;
+namespace App\Http\Livewire\Page\Admin\SpecialAid;
 
 use App\Models\SpecialAid;
 use Livewire\Component;
@@ -17,6 +17,6 @@ class ListSpecialAid extends Component
 
     public function render()
     {
-        return view('livewire.list-special-aid')->extends('layouts.head');
+        return view('livewire.page.admin..special-aid.list-special-aid')->extends('layouts.head');
     }
 }

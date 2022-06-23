@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\SpecialAid;
+namespace App\Http\Livewire\Page\Admin\SpecialAid;
 
 use App\Models\SpecialAid;
 use App\Models\SpecialAidField;
@@ -56,6 +56,6 @@ class EditSpecialAid extends Component
 
     public function render()
     {
-        return view('livewire.admin.special-aid.edit-special-aid')->extends('layouts.head');
+        return view('livewire.page.admin.special-aid.edit-special-aid')->extends('layouts.head');
     }
 }

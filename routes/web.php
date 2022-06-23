@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\RedirectController;
-use App\Http\Livewire\Admin\SpecialAid\CreateSpecialAid;
-use App\Http\Livewire\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -14,9 +12,11 @@ use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\ComponentDoc;
-use App\Http\Livewire\Admin\SpecialAid\ListSpecialAid;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
+use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
+use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
+use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
@@ -42,7 +42,6 @@ Route::middleware('guest')->group(function () {
 
 Route::get('password/reset', Email::class)->name('password.request');
 Route::get('password/reset/{token}', Reset::class)->name('password.reset');
-
 Route::get('retrieve-account', RetrieveAccount::class)->name('retrieve-account');
 
 //----------------------------- page routes -------------------------------//
@@ -55,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('password/confirm', Confirm::class)->name('password.confirm');
     Route::post('logout', LogoutController::class)->name('logout');
 
-    //---------------- profile ---------------------- //
+    //profile
     Route::get('profile', Index::class)->name('profile');
 
 
@@ -65,15 +64,14 @@ Route::middleware('auth')->group(function () {
 
     //------------------------admin------------------------------//
 
-    //-------------------------------- Special Aid ------------------------------------//
+    //Special Aid
     Route::prefix('specialAid')->group(function(){
-        //--------------------------- Create Special Aid ------------------------------//
         Route::get('list', ListSpecialAid::class)->name('special_aid.list');
         Route::get('create', CreateSpecialAid::class)->name('special_aid.create');            
         Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');            
     });
 
-    //--------------------------------- Maintenance ----------------------------------//
+    //Maintenance
     Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
     Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
     Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
