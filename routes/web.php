@@ -22,6 +22,10 @@ use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
+use App\Http\Livewire\Admin\Maintenance\Bank\bank;
+use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
+use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,6 +85,12 @@ Route::middleware('auth')->group(function () {
 
 //-------------- component doc -------------------//
 Route::get('doc', ComponentDoc::class)->name('doc');
+
+    //--------------------------------- Bank Maintenance ----------------------------------//
+    Route::get('bank', bank::class)->name('bank');
+    Route::get('bankcreate', bankcreate::class)->name('bankcreate');
+    Route::get('bankedit/{id}', bankedit::class)->name('bankedit');
+    Route::get('delete/{id}', bank::class)->name('delete');
 
 
 // //profile
