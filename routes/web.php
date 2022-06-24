@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Livewire\Admin\SpecialAid\CreateSpecialAid;
+use App\Http\Livewire\Admin\SpecialAid\EditSpecialAid;
+use App\Http\Livewire\admin\maintenance\education\ListEducation;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -14,9 +17,6 @@ use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\ComponentDoc;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
-use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
-use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
-use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
@@ -25,7 +25,8 @@ use App\Http\Livewire\Page\Reporting\UserReporting;
 use App\Http\Livewire\Admin\Maintenance\Bank\bank;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
-
+use App\Http\Livewire\admin\maintenance\education\AddEducation;
+use App\Http\Livewire\admin\maintenance\education\EditEducation;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,6 +91,12 @@ Route::get('doc', ComponentDoc::class)->name('doc');
     Route::get('bankedit/{id}', bankedit::class)->name('bankedit');
     Route::get('delete/{id}', bank::class)->name('delete');
 
+    //maintenance education
+
+    Route::get('educationlist', ListEducation::class)->name('education.list');
+    Route::get('educationcreate', AddEducation::class)->name('education.create');
+    Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
+    Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
 
 // //profile
 // Route::get('profile', Index::class)->name('profile');
