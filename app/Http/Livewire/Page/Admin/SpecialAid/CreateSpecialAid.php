@@ -48,7 +48,7 @@ class CreateSpecialAid extends Component
 
         $this->validate([
             'specialAid_name'       => ['required', 'string'],
-            'default_apply_amount'  => ['required', 'numeric'],
+            'default_apply_amount'  => ['nullable', 'numeric'],
             'Fname.*'               => ['required', 'min:4'],
             'Flabel.*'              => ['required', 'min:4'],
             'start_date'            => ['nullable', 'string'],
