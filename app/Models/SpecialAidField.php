@@ -8,7 +8,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class SpecialAidField extends Model implements Auditable
 {
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'SISKOP.sys_field_special_aid';
