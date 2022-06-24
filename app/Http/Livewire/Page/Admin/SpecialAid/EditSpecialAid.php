@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Livewire\Admin\SpecialAid;
+namespace App\Http\Livewire\Page\Admin\SpecialAid;
 
 use App\Models\SpecialAid;
+use App\Models\SpecialAidField;
 use Livewire\Component;
 
 class EditSpecialAid extends Component
 {
+    public $field;
     public $specialAid_name;
     public $enabled_apply_amt;
     public $default_apply_amount;
@@ -45,13 +47,15 @@ class EditSpecialAid extends Component
     
     public function mount($uuid)
     {
+        $user = Auth()->user();
         $this->specialAid = SpecialAid::where('uuid', $uuid)->first();
+        $this->field = new SpecialAidField;
 
         $this->loadUser($uuid);
     }
 
     public function render()
     {
-        return view('livewire.admin.special-aid.edit-special-aid')->extends('layouts.head');
+        return view('livewire.page.admin.special-aid.edit-special-aid')->extends('layouts.head');
     }
 }

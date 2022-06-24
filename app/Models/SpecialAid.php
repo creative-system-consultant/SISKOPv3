@@ -4,12 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SpecialAid extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'SISKOP.special_aids';
     
-    public $fillable = ['name', 'apply_amt_enable', 'default_apply_amt', 'coop_id'];
+    protected $guarded = [];
+
+    public function field()
+    {
+        return $this->morphMany(SpecialAidField::class,'fieldable');
+    }
 }
