@@ -1,9 +1,9 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Special Aid List > Edit</h1>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-            <x-general.header-title title="Special Aid Information" route="{{route('special_aid.list')}}"/>
+            <x-general.header-title title="Edit Special Aid" route="{{route('special_aid.list')}}"/>
                  
-            <div class="pt-4 bg-white ">
+            <div class="pt-4 bg-white ">    
                 <div class="pl-4 pb-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit('{{ $specialAid->uuid }}')">
                         <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
@@ -73,58 +73,80 @@
 
                                 @error('start_date')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                @enderror                            
                             </div>
                             
                             <div>
                                 <x-form.input 
                                     label="End Date" 
-                                    name="end_date" 
                                     value="" 
+                                    name="end_date" 
                                     mandatory=""
                                     disable=""
                                     type="date"
                                     wire:model.defer='end_date'
-                                />  
-
+                                />                                                          
                                 @error('end_date')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                @enderror                        
                             </div>
                         </div>
 
                         <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
-                        <button wire:click.prevent="addField" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                        <button wire:click.prevent="createField" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                             Add Field
                         </button>
                         <div id="fields">
-                        @foreach($specialAid->field as $index => $list )
-                            <div class="mt-6 grid grid-cols-12 gap-6">
+                        @foreach($Fname as $index => $list )
+                            <div class="mt-6 grid grid-cols-12 gap-6" x-data>
+                                @php if ($Fstatus[$index] == false ){ $status = 'true';} else { $status = 'false'; } @endphp
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
-                                    <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="{{ $list->label }}" mandatory="" disable="" type="text"/>
+                                    <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="" mandatory="" disable="{{ $status }}" type="text" wire:model.debounce.500ms="Flabel.{{ $index }}"/>
                                     @error('Flabel.'.$index)
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
-                                    <x-form.input label="Field Name" name="Fname.{{ $index }}" value="{{ $list->name }}" mandatory="" disable="" type="text"/>
+                                    <x-form.input label="Field Name" name="Fname.{{ $index }}" value="" mandatory="" disable="{{ $status }}" type="text" wire:model.debounce.500ms="Fname.{{ $index }}"/>
                                     @error('Fname.'.$index)
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
-                                    <x-form.dropdown label="Field Type" value="{{ $list->type }}" name="Ftype.{{ $index }}" id="" mandatory="" disable="" default="">
+                                    <x-form.dropdown label="Field Type" value="" name="Ftype.{{ $index }}" id="" disable="{{ $status }}" mandatory="" default="" wire:model.debounce.500ms="Ftype.{{ $index }}">
                                         @foreach ($field->types() as $type)
                                             <option value="{{ $type }}">{{ $type }}</option>
                                         @endforeach
                                     </x-form.dropdown>
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
+                                    <label for="field_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                        Field Status
+                                    </label>
+                                    <div class="flex items-center w-full mt-2">
+                                        <label for="Fstatus.{{ $index }}" class="flex items-center cursor-pointer">
+                                            <div class="relative">
+                                                <input 
+                                                    type="checkbox" 
+                                                    id="Fstatus.{{ $index }}" 
+                                                    class="sr-only"
+                                                    wire:model='Fstatus.{{ $index }}'
+                                                >
+                                                <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                                <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>  
+                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
                                     <div class="pt-4 mt-1 rounded-md justify-end">
-                                        <button wire:click.prevent="remField({{ $index }})" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                                            Remove
+                                        <button wire:click.prevent="alertDelete('{{ $specialAid->uuid }}', '{{ $index }}')" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
+                                            Delete
                                         </button>
                                     </div>
+                                </div>
+                                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
+                                    <x-form.input label="" name="Fuuid.{{ $index }}" value="" mandatory="" disable="" type="hidden" wire:model="Fuuid.{{ $index }}"/>
                                 </div>
                             </div>
                         @endforeach
@@ -146,3 +168,20 @@
         </div>
     </h1>
 </div>
+
+@push('js')
+<script>
+    window.addEventListener('swal:confirm', event => { 
+        swal.fire({
+            icon: event.detail.type,
+            title: event.detail.text,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel'
+        }).then(function(result){
+            if(result.isConfirmed){
+                window.Livewire.emit('remField', event.detail.uuid, event.detail.index);
+            }
+        });
+    });    
+</script>
+@endpush

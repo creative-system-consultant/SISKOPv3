@@ -106,8 +106,8 @@ class EditSpecialAid extends Component
         $this->specialAid_name      = $specialAid->name;
         $this->default_apply_amount = $specialAid->default_apply_amt;
         $this->enabled_apply_amt    = $specialAid->apply_amt_enable == true ? 'checked' : '';
-        $this->start_date           = date_format($specialAid->start_date, "Y-m-d");
-        $this->end_date             = date_format($specialAid->end_date, "Y-m-d");
+        $this->start_date           = $specialAid?->start_date ? date_format($specialAid->start_date, "Y-m-d") : '';
+        $this->end_date             = $specialAid?->end_date ? date_format($specialAid->end_date, "Y-m-d") : '';
         
         foreach ($specialAid->field as $index => $input) {                      
             $this->Flabel[$index]  = $input->label;
@@ -132,3 +132,4 @@ class EditSpecialAid extends Component
         return view('livewire.page.admin.special-aid.edit-special-aid')->extends('layouts.head');
     }
 }
+
