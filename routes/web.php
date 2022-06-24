@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Livewire\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Admin\SpecialAid\EditSpecialAid;
+use App\Http\Livewire\admin\maintenance\education\ListEducation;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -22,6 +23,8 @@ use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
+use App\Http\Livewire\admin\maintenance\education\AddEducation;
+use App\Http\Livewire\admin\maintenance\education\EditEducation;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +85,17 @@ Route::middleware('auth')->group(function () {
 //-------------- component doc -------------------//
 Route::get('doc', ComponentDoc::class)->name('doc');
 
+//maintenance education
+
+Route::get('educationlist', ListEducation::class)->name('education.list');
+Route::get('educationcreate', AddEducation::class)->name('education.create');
+Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
+Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
+
+
+/*Route::get('/', function () {
+    return view('');
+});*/
 
 // //profile
 // Route::get('profile', Index::class)->name('profile');
