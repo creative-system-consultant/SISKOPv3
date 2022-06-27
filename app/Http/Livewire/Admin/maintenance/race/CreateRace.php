@@ -16,7 +16,7 @@ class CreateRace extends Component
     {
         $this->validate([
             'race_description' => ['required', 'string'],
-            'race_code'        => ['required'],
+            'race_code'        => ['required', 'string'],
         ]);
 
         $race = RefRace::create([

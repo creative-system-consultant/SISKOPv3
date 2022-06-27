@@ -1,6 +1,10 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Race List</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+        @if (session('success'))
+            <x-swall.success message="{{ session('message') }}"/>
+        @endif
+
         <a href="{{route('race.create')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
             <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
             Create
@@ -8,8 +12,9 @@
         <x-table.table>
             <x-slot name="thead">
                 <x-table.table-header class="text-left " value="No." sort="" />
-                <x-table.table-header class="text-left " value="Description" sort="" />
+                <x-table.table-header class="text-left " value="Race Name" sort="" />
                 <x-table.table-header class="text-left " value="Code" sort="" />
+                <x-table.table-header class="text-left " value="Status" sort="" />
                 <x-table.table-header class="text-left " value="Action" sort="" />
             </x-slot>
             <x-slot name="tbody">
@@ -19,10 +24,13 @@
                         {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->description }}
+                        {{ Str::upper(Str::limit($item->description,110)) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->code }}
+                        {{ Str::upper(Str::limit($item->code,110)) }}
+                    </x-table.table-body>
+                    <x-table.table-body colspan="" class="text-left">
+                        {{ $item->status}}
                     </x-table.table-body>
                     <x-table.table-body colspan="1" class="text-left">
                         <a href="{{route('race.edit',$item->id)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">

@@ -9,7 +9,7 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
-                                    label="Name" 
+                                    label="Race Name" 
                                     name="race_description" 
                                     value="" 
                                     mandatory=""
@@ -24,21 +24,16 @@
                             </div>
 
                             <div>
-                                <x-form.dropdown 
-                                    label="Code"
-                                    value=""
+                                <x-form.input 
+                                    label="Code" 
                                     name="race_code" 
-                                    id="race_code"
+                                    value="" 
                                     mandatory=""
                                     disable=""
-                                    default="yes"  
-                
-                                    wire:model.defer='race_code'
-                                >
-                                <option value="MALAY">MALAY</option>
-                                <option value="CHINESE">CHINESE</option>
-                                <option value="INDIAN">INDIAN</option>
-                                </x-form.dropdown>
+                                    type="text"
+                                    
+                                    wire:model.defer='race_code'    
+                                />
                 
                                 @error('race_code')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -71,7 +66,7 @@
                                     Cancel
                                 </a>
                                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                                    Edit
+                                    Update
                                 </button>
                             </div>
                         </div>
