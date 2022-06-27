@@ -29,6 +29,9 @@ use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
 use App\Http\Livewire\admin\maintenance\education\AddEducation;
 use App\Http\Livewire\admin\maintenance\education\EditEducation;
+use App\Http\Livewire\admin\maintenance\title\ListTitle;
+use App\Http\Livewire\admin\maintenance\title\CreateTitle;
+use App\Http\Livewire\admin\maintenance\title\EditTitle;
 use App\Http\Livewire\admin\maintenance\race\ListRace;
 use App\Http\Livewire\admin\maintenance\race\CreateRace;
 use App\Http\Livewire\admin\maintenance\race\EditRace;
@@ -104,10 +107,18 @@ Route::get('doc', ComponentDoc::class)->name('doc');
     Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
     Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
 
+    //maintenance cust_title
+
+    Route::get('titlelist', ListTitle::class)->name('title.list');
+    Route::get('titlecreate', CreateTitle::class)->name('title.create');
+    Route::get('titleedit/{id}', EditTitle::class)->name('title.edit');
+
     //maintenance race
+
     Route::get('racelist', ListRace::class)->name('race.list');
     Route::get('racecreate', CreateRace::class)->name('race.create');
     Route::get('raceedit/{id}', EditRace::class)->name('race.edit');
+
 
 // //profile
 // Route::get('profile', Index::class)->name('profile');
