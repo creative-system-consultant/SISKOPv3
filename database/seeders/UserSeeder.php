@@ -35,6 +35,13 @@ class UserSeeder extends Seeder
                 'password'  => $pass,
             ],
             [
+                'name'      => 'Shahiran', 
+                'email'     => 'shahirankamal74@gmail.com',
+                'phone_no ' => '01154243088',
+                'icno'      => '020923100279',
+                'password'  => $pass,
+            ],
+            [
                 'name'      => 'Eksekutif Aki', 
                 'email'     => 'akaun01@koperasi.com',
                 'phone_no ' => '0183546808',
@@ -58,7 +65,7 @@ class UserSeeder extends Seeder
             [
                 'name'      => 'Eksekutif Shahiran', 
                 'email'     => 'akaun04@koperasi.com',
-                'phone_no ' => '01154243088',
+                'phone_no ' => '01234567890',
                 'icno'      => '850409035143',
                 'password'  => $pass,
             ],
@@ -74,5 +81,52 @@ class UserSeeder extends Seeder
         DB::table('SISKOP.users')->insert($users);
 
         DB::statement("DBCC CHECKIDENT ('SISKOP.users',RESEED,100)");
+
+        $customers = [
+            [
+                'coop_id'   => '1',
+                'name'      => 'Mohd Aizuddin',
+                'icno'      => '850409035147',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Danish', 
+                'icno'      => '011128140509',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Shahiran', 
+                'icno'      => '020923100279',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Eksekutif Aki', 
+                'icno'      => '850409035140',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Eksekutif Danish', 
+                'icno'      => '850409035141',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Eksekutif Abu', 
+                'icno'      => '850409035142',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Eksekutif Shahiran', 
+                'icno'      => '850409035143',
+            ],
+            [
+                'coop_id'   => '1',
+                'name'      => 'Admin Aki', 
+                'icno'      => '850409035144',
+            ],
+        ];
+
+        DB::statement("DBCC CHECKIDENT ('CIF.customers',RESEED,0)");
+        DB::table('CIF.customers')->insert($customers);
+        DB::statement("DBCC CHECKIDENT ('CIF.customers',RESEED,100)");
     }
 }
