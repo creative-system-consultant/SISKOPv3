@@ -9,12 +9,14 @@ class DropdownNavItem extends Component
     public $active;
     public $title;
     public $uri;
+    public $type;
     
-    public function __construct($title,$active,$uri)
+    public function __construct($title,$active,$uri,$type)
     {
-        $this->active = $active;
         $this->title = $title;
+        $this->active = $active;
         $this->uri = $uri;
+        $this->type = $type;
     }
 
     
