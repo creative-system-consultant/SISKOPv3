@@ -27,7 +27,7 @@ class EditEducation extends Component
             'status'      => $this->edu_status == true ? '1' : '0',
         ]);
 
-        session()->flash('message', 'Education Updated');
+        session()->flash('message', 'Education Edited');
         session()->flash('success');
         session()->flash('title', 'Success!');
 
