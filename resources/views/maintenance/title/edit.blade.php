@@ -24,21 +24,16 @@
                             </div>
 
                             <div>
-                                <x-form.dropdown 
-                                    label="Code"
-                                    value=""
+                                <x-form.input 
+                                    label="Code" 
                                     name="title_code" 
-                                    id="title_code"
+                                    value="" 
                                     mandatory=""
                                     disable=""
-                                    default="yes"  
-                
-                                    wire:model.defer='title_code'
-                                >
-                                <option value="TAN SRI">TAN SRI</option>
-                                <option value="DATO">DATO'</option>
-                                <option value="DATIN">DATIN</option>
-                                </x-form.dropdown>
+                                    type="text"
+                                    
+                                    wire:model.defer='title_code'    
+                                />
                 
                                 @error('title_code')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -71,7 +66,7 @@
                                     Cancel
                                 </a>
                                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                                    Edit
+                                    Update
                                 </button>
                             </div>
                         </div>

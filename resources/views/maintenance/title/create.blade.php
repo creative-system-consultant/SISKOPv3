@@ -1,7 +1,7 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl"> Create Title </h1>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-            <x-general.header-title title="Education List" route="{{route('education.list')}}"/>
+            <x-general.header-title title="Title List" route="{{route('title.list')}}"/>
 
             <div class="pt-4 bg-white ">
                 <div class="pl-4 pb-4 pr-4">
@@ -9,7 +9,7 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
-                                    label="Name" 
+                                    label="Title" 
                                     name="title_description" 
                                     value="" 
                                     mandatory=""
@@ -24,21 +24,16 @@
                             </div>
 
                             <div>
-                                <x-form.dropdown 
-                                    label="Code"
-                                    value=""
+                                <x-form.input 
+                                    label="Code" 
                                     name="title_code" 
-                                    id="title_code"
+                                    value="" 
                                     mandatory=""
                                     disable=""
-                                    default="yes"  
-                
-                                    wire:model.defer='title_code'
-                                >
-                                    <option value="TAN SRI">TAN SRI</option>
-                                    <option value="DATO">DATO'</option>
-                                    <option value="DATIN">DATIN</option>
-                                </x-form.dropdown>
+                                    type="text"
+                                    
+                                    wire:model.defer='title_code'    
+                                />
                 
                                 @error('title_code')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

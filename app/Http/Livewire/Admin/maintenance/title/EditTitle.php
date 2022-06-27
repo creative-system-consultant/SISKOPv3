@@ -16,7 +16,7 @@ class EditTitle extends Component
     {
         $this->validate([
             'title_description' => ['required', 'string'],
-            'title_code'        => ['required'],
+            'title_code'        => ['required', 'string'],
         ]);
 
         $title = RefCustTitle::where('id', $id)->first();
