@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Admin\maintenance\race;
 
-use Livewire\Component;
 use App\Models\Ref\RefRace;
+use Livewire\Component;
 
 class EditRace extends Component
 {
@@ -19,7 +19,7 @@ class EditRace extends Component
             'race_code'        => ['required'],
         ]);
 
-        $race = RefRace::where('id', $id)->first();
+        $race = RefRace::where('id', $id)->first(); 
 
         $race->update([
             'description' => $this->race_description,
