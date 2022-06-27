@@ -22,24 +22,28 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+                        </div>
     
-                            <div class="flex items-center w-full mt-3">
+                        <div class="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+                            <div>
                                 <label for="enable_applyAmt" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
                                     Enabled Apply Amount 
                                 </label>
-                                <label for="enabled_apply_amt" class="flex items-center cursor-pointer">                                
-                                    <div class="relative">
-                                        <input 
-                                            type="checkbox" 
-                                            id="enabled_apply_amt" 
-                                            class="sr-only"
-                                            name="enabled_apply_amt"
-                                            wire:model.defer='enabled_apply_amt'                                            
-                                        >
-                                        <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
-                                        <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
-                                    </div>
-                                </label>
+                                <div class="flex items-center w-full mt-3">
+                                    <label for="enabled_apply_amt" class="flex items-center cursor-pointer">                                
+                                        <div class="relative">
+                                            <input 
+                                                type="checkbox" 
+                                                id="enabled_apply_amt" 
+                                                class="sr-only"
+                                                name="enabled_apply_amt"
+                                                wire:model.defer='enabled_apply_amt'                                            
+                                            >
+                                            <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                            <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
     
                             <div>
@@ -60,6 +64,44 @@
                                 @enderror
                             </div>
 
+                            <div>
+                                <x-form.input-tag 
+                                    label="Default Minimum Amount" 
+                                    type="text"
+                                    name="default_min_amount" 
+                                    value=""
+                                    leftTag="RM"
+                                    rightTag=""
+                                    mandatory=""
+                                    disable=""
+                                    wire:model.defer='default_min_amount'
+                                />
+
+                                @error('default_min_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <x-form.input-tag 
+                                    label="Default Maximum Amount" 
+                                    type="text"
+                                    name="default_max_amount" 
+                                    value=""
+                                    leftTag="RM"
+                                    rightTag=""
+                                    mandatory=""
+                                    disable=""
+                                    wire:model.defer='default_max_amount'
+                                />
+
+                                @error('default_max_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    
+                        <div class="grid grid-cols-1 gap-6 mt-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
                                     label="Start Date" 
@@ -90,7 +132,7 @@
                                 @error('end_date')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
-                            </div>
+                            </div>                            
                         </div>
                         <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
                         <button wire:click.prevent="addField" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">

@@ -12,6 +12,8 @@ class EditSpecialAid extends Component
     public $specialAid_name;
     public $enabled_apply_amt;
     public $default_apply_amount;
+    public $default_min_amount;
+    public $default_max_amount;
     public $specialAid;
     public $start_date;
     public $end_date;
@@ -60,6 +62,8 @@ class EditSpecialAid extends Component
         $this->validate([
             'specialAid_name'       => ['required', 'string'],
             'default_apply_amount'  => ['nullable', 'numeric'],
+            'default_min_amount'    => ['nullable', 'numeric'],
+            'default_max_amount'    => ['nullable', 'numeric'],
             'Fname.*'               => ['required', 'min:4'],
             'Flabel.*'              => ['required', 'min:4'],
             'start_date'            => ['nullable'],
@@ -69,6 +73,8 @@ class EditSpecialAid extends Component
         $specialAid->update([
             'name'               => $this->specialAid_name,
             'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
+            'min_apply_amt'      => $this->default_min_amount,
+            'max_apply_amt'      => $this->default_max_amount,
             'default_apply_amt'  => $this->default_apply_amount,
             'start_date'         => $this->start_date,
             'end_date'           => $this->end_date,
@@ -105,6 +111,8 @@ class EditSpecialAid extends Component
 
         $this->specialAid_name      = $specialAid->name;
         $this->default_apply_amount = $specialAid->default_apply_amt;
+        $this->default_min_amount   = $specialAid->min_apply_amt;
+        $this->default_max_amount   = $specialAid->max_apply_amt;
         $this->enabled_apply_amt    = $specialAid->apply_amt_enable == true ? 'checked' : '';
         $this->start_date           = $specialAid?->start_date ? date_format($specialAid->start_date, "Y-m-d") : '';
         $this->end_date             = $specialAid?->end_date ? date_format($specialAid->end_date, "Y-m-d") : '';

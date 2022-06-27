@@ -23,7 +23,9 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+                        </div>
     
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                             <div class="flex items-center w-full mt-3">
                                 <label for="enable_applyAmt" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
                                     Enabled Apply Amount 
@@ -60,6 +62,44 @@
                                 @enderror
                             </div>
 
+                            <div>
+                                <x-form.input-tag 
+                                    label="Default Minimum Amount" 
+                                    type="text"
+                                    name="default_min_amount" 
+                                    value=""
+                                    leftTag="RM"
+                                    rightTag=""
+                                    mandatory=""
+                                    disable=""
+                                    wire:model.defer='default_min_amount'
+                                />
+
+                                @error('default_min_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <x-form.input-tag 
+                                    label="Default Maximum Amount" 
+                                    type="text"
+                                    name="default_max_amount" 
+                                    value=""
+                                    leftTag="RM"
+                                    rightTag=""
+                                    mandatory=""
+                                    disable=""
+                                    wire:model.defer='default_max_amount'
+                                />
+
+                                @error('default_max_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
                                     label="Start Date" 
@@ -139,7 +179,7 @@
                                     </div>
                                 </div>  
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
-                                    <div class="pt-4 mt-1 rounded-md justify-end">
+                                    <div class="pt-4 mt-3 rounded-md justify-end">
                                         <button wire:click.prevent="alertDelete('{{ $specialAid->uuid }}', '{{ $index }}')" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                                             Delete
                                         </button>
