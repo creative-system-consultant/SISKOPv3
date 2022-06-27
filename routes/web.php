@@ -29,6 +29,10 @@ use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
 use App\Http\Livewire\admin\maintenance\education\AddEducation;
 use App\Http\Livewire\admin\maintenance\education\EditEducation;
+use App\Http\Livewire\admin\maintenance\race\ListRace;
+use App\Http\Livewire\admin\maintenance\race\CreateRace;
+use App\Http\Livewire\admin\maintenance\race\EditRace;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,6 +103,11 @@ Route::get('doc', ComponentDoc::class)->name('doc');
     Route::get('educationcreate', AddEducation::class)->name('education.create');
     Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
     Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
+
+    //maintenance race
+    Route::get('racelist', ListRace::class)->name('race.list');
+    Route::get('racecreate', CreateRace::class)->name('race.create');
+    Route::get('raceedit/{id}', EditRace::class)->name('race.edit');
 
 // //profile
 // Route::get('profile', Index::class)->name('profile');
