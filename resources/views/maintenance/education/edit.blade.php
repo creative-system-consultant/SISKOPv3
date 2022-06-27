@@ -9,7 +9,7 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
-                                    label="Name" 
+                                    label="Educational Institution" 
                                     name="edu_description" 
                                     value="" 
                                     mandatory=""
@@ -24,21 +24,16 @@
                             </div>
 
                             <div>
-                                <x-form.dropdown 
-                                    label="Code"
-                                    value=""
+                                <x-form.input 
+                                    label="Code" 
                                     name="edu_code" 
-                                    id="edu_code"
+                                    value="" 
                                     mandatory=""
                                     disable=""
-                                    default="yes"  
-                
-                                    wire:model.defer='edu_code'
-                                >
-                                    <option value="SPM">SPM</option>
-                                    <option value="DIPLOMA">DIPLOMA</option>
-                                    <option value="DEGREE">DEGREE</option>
-                                </x-form.dropdown>
+                                    type="text"
+                                    
+                                    wire:model.defer='edu_code'    
+                                />
                 
                                 @error('edu_code')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -71,7 +66,7 @@
                                     Cancel
                                 </a>
                                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                                    Edit
+                                    Update
                                 </button>
                             </div>
                         </div>

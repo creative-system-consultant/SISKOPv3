@@ -16,7 +16,7 @@ class AddEducation extends Component
     {
         $this->validate([
             'edu_description' => ['required', 'string'],
-            'edu_code'        => ['required'],
+            'edu_code'        => ['required', 'string'],
         ]);
 
         $education = RefEducation::create([
