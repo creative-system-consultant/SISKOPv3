@@ -5,7 +5,7 @@
         <x-form.basic-form wire:submit.prevent="submit('{{ $RefBank->id }}')" class="p-4">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <x-form.input 
-                    label="Description"
+                    label="Financial Institution"
                     type="text" 
                     name="description" 
                     value="" 

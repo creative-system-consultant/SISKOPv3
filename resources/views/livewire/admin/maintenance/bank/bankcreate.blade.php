@@ -5,7 +5,7 @@
                     <x-form.basic-form wire:submit.prevent="submit" class="p-4">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                 <x-form.input
-                                    label="Description" 
+                                    label="Financial Institution" 
                                     name="description" 
                                     value="" 
                                     mandatory=""
@@ -64,7 +64,7 @@
                                     Cancel
                                 </a>
                                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                                    Submit
+                                    Create
                                 </button>
                             </div>
                         </div>

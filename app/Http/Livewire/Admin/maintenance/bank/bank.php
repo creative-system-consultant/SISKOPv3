@@ -18,7 +18,12 @@ class bank extends Component
     {
         $data=RefBank::find($id);
         $data->delete();
-        return redirect('bank');
+
+        session()->flash('message', 'Bank Record Deleted');
+        session()->flash('success');
+        session()->flash('title');
+
+        return redirect()->route('bank');
     }
 
     public function render()
