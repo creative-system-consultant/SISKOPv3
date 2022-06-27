@@ -10,6 +10,17 @@ use App\Http\Livewire\Admin\Maintenance\coop\coop;
 use App\Http\Livewire\admin\maintenance\education\AddEducation;
 use App\Http\Livewire\admin\maintenance\education\EditEducation;
 use App\Http\Livewire\admin\maintenance\education\ListEducation;
+use App\Http\Livewire\Admin\Maintenance\countries\countrycreate;
+use App\Http\Livewire\Admin\Maintenance\countries\countryedit;
+use App\Http\Livewire\Admin\Maintenance\gender\gender;
+use App\Http\Livewire\Admin\Maintenance\gender\gendercreate;
+use App\Http\Livewire\Admin\Maintenance\gender\genderedit;
+use App\Http\Livewire\Admin\Maintenance\religion\religion;
+use App\Http\Livewire\Admin\Maintenance\religion\religioncreate;
+use App\Http\Livewire\Admin\Maintenance\religion\religionedit;
+use App\Http\Livewire\Admin\Maintenance\state\state;
+use App\Http\Livewire\Admin\Maintenance\state\statecreate;
+use App\Http\Livewire\Admin\Maintenance\state\stateedit;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -86,12 +97,35 @@ Route::middleware('auth')->group(function () {
     Route::get('bankedit/{id}', bankedit::class)->name('bankedit');
     Route::get('delete/{id}', bank::class)->name('delete');
 
-    //Admin > Maintenance > education
+    //Admin > Maintenance > Education
     Route::get('educationlist', ListEducation::class)->name('education.list');
     Route::get('educationcreate', AddEducation::class)->name('education.create');
     Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
     Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
 
+    //Admin > Maintenance > Country
+    Route::get('country', country::class)->name('country');
+    Route::get('countrycreate', countrycreate::class)->name('countrycreate');
+    Route::get('countryedit/{id}', countryedit::class)->name('countryedit');
+    Route::get('delete/{id}', country::class)->name('delete');
+
+    //Admin > Maintenance > Religion
+    Route::get('religion', religion::class)->name('religion');
+    Route::get('religioncreate', religioncreate::class)->name('religioncreate');
+    Route::get('religionedit/{id}', religionedit::class)->name('religionedit');
+    Route::get('delete/{id}', religion::class)->name('delete');
+
+    //Admin > Maintenance > State
+    Route::get('state', state::class)->name('state');
+    Route::get('statecreate', statecreate::class)->name('statecreate');
+    Route::get('statenedit/{id}', stateedit::class)->name('stateedit');
+    Route::get('delete/{id}', state::class)->name('delete');
+
+    //Admin > Maintenance > Gender
+    Route::get('gender', gender::class)->name('gender');
+    Route::get('gendercreate', gendercreate::class)->name('gendercreate');
+    Route::get('gendernedit/{id}', genderedit::class)->name('genderedit');
+    Route::get('delete/{id}', gender::class)->name('delete');
 
     //------------------------Reporting------------------------------//
     //Report > Sample
