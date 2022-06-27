@@ -1,34 +1,35 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\RedirectController;
-use App\Http\Livewire\Admin\Maintenance\Coop;
-use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
-use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
-use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
+use App\Http\Livewire\Admin\Maintenance\Bank\bank;
+use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
+use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
+use App\Http\Livewire\Admin\Maintenance\coop\coop;
+use App\Http\Livewire\admin\maintenance\education\AddEducation;
+use App\Http\Livewire\admin\maintenance\education\EditEducation;
 use App\Http\Livewire\admin\maintenance\education\ListEducation;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
-use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Register;
+use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\ComponentDoc;
-use App\Http\Livewire\Page\Home;
-use App\Http\Livewire\Page\Profile\Index;
-use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
+use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
+use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
+use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
+use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
+use App\Http\Livewire\Page\Home;
+use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
-use App\Http\Livewire\Admin\Maintenance\Bank\bank;
-use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
-use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
-use App\Http\Livewire\admin\maintenance\education\AddEducation;
-use App\Http\Livewire\admin\maintenance\education\EditEducation;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,50 +66,38 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', Index::class)->name('profile');
 
 
-    //Reporting
-    Route::get('list-reporting', ListReport::class)->name('list-reporting');
-    Route::get('user-reporting', UserReporting::class)->name('user-reporting');
-
     //------------------------admin------------------------------//
-
-    //Special Aid
+    //Admin > Maintenance > Special Aid
     Route::prefix('specialAid')->group(function(){
         Route::get('list', ListSpecialAid::class)->name('special_aid.list');
         Route::get('create', CreateSpecialAid::class)->name('special_aid.create');            
         Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');            
     });
 
-    //Maintenance
+    //Admin > Maintenance > sample
     Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
     Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
     Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
-});
+    Route::get('admin/coop', Coop::class)->name('maintenanceCoop');
 
-//-------------- component doc -------------------//
-Route::get('doc', ComponentDoc::class)->name('doc');
-
-    //--------------------------------- Bank Maintenance ----------------------------------//
+    //Admin > Maintenance > Bank
     Route::get('bank', bank::class)->name('bank');
     Route::get('bankcreate', bankcreate::class)->name('bankcreate');
     Route::get('bankedit/{id}', bankedit::class)->name('bankedit');
     Route::get('delete/{id}', bank::class)->name('delete');
 
-    //maintenance education
-
+    //Admin > Maintenance > education
     Route::get('educationlist', ListEducation::class)->name('education.list');
     Route::get('educationcreate', AddEducation::class)->name('education.create');
     Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
     Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
 
-// //profile
-// Route::get('profile', Index::class)->name('profile');
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified'
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
+    //------------------------Reporting------------------------------//
+    //Report > Sample
+    Route::get('list-reporting', ListReport::class)->name('list-reporting');
+    Route::get('user-reporting', UserReporting::class)->name('user-reporting');
+});
+
+//-------------- component doc -------------------//
+Route::get('doc', ComponentDoc::class)->name('doc');
