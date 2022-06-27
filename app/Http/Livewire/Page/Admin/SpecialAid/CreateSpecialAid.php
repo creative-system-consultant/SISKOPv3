@@ -12,6 +12,8 @@ class CreateSpecialAid extends Component
     public $specialAid_name;
     public $enabled_apply_amt;
     public $default_apply_amount;
+    public $start_date;
+    public $end_date;
     public $specialAid;
     public $field;
     public $Fname  = [''];
@@ -46,9 +48,11 @@ class CreateSpecialAid extends Component
 
         $this->validate([
             'specialAid_name'       => ['required', 'string'],
-            'default_apply_amount'  => ['required', 'numeric'],
+            'default_apply_amount'  => ['nullable', 'numeric'],
             'Fname.*'               => ['required', 'min:4'],
             'Flabel.*'              => ['required', 'min:4'],
+            'start_date'            => ['nullable', 'string'],
+            'end_date'              => ['nullable', 'string'],
         ]);
 
         $specialAid = SpecialAid::create([
@@ -56,6 +60,8 @@ class CreateSpecialAid extends Component
             'name'               => $this->specialAid_name,
             'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
             'default_apply_amt'  => $this->default_apply_amount,
+            'start_date'         => date_format($this->start_date, "Y-m-d"),
+            'end_date'           => date_format($this->end_date, "Y-m-d"),
         ]);
 
         foreach ($this->Fname as $index => $name) {

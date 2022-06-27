@@ -15,8 +15,7 @@
                                     value="" 
                                     mandatory=""
                                     disable=""
-                                    type="text"
-                                    
+                                    type="text"                                    
                                     wire:model.defer='specialAid_name'    
                                 />
                                 @error('specialAid_name')
@@ -57,6 +56,38 @@
                                 />
 
                                 @error('default_apply_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <x-form.input 
+                                    label="Start Date" 
+                                    name="start_date" 
+                                    value="" 
+                                    mandatory=""
+                                    disable=""
+                                    type="date"
+                                    wire:model.defer='start_date'
+                                />     
+
+                                @error('start_date')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            
+                            <div>
+                                <x-form.input 
+                                    label="End Date" 
+                                    name="end_date" 
+                                    value="" 
+                                    mandatory=""
+                                    disable=""
+                                    type="date"
+                                    wire:model.defer='end_date'
+                                />  
+
+                                @error('end_date')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

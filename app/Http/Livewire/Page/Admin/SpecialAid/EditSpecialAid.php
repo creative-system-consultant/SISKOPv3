@@ -13,6 +13,8 @@ class EditSpecialAid extends Component
     public $enabled_apply_amt;
     public $default_apply_amount;
     public $specialAid;
+    public $start_date;
+    public $end_date;
     public $Fname  = [''];
     public $Flabel = [''];
     public $Ftype  = [''];
@@ -52,20 +54,24 @@ class EditSpecialAid extends Component
 
     public function submit($uuid)
     {
-        // dd($this->Fstatus);     
+        // dd($this->start_date);  
         $specialAid = SpecialAid::where('uuid', $uuid)->first();
 
         $this->validate([
             'specialAid_name'       => ['required', 'string'],
-            'default_apply_amount'  => ['required', 'numeric'],
+            'default_apply_amount'  => ['nullable', 'numeric'],
             'Fname.*'               => ['required', 'min:4'],
             'Flabel.*'              => ['required', 'min:4'],
+            'start_date'            => ['nullable'],
+            'end_date'              => ['nullable'],
         ]);
         
         $specialAid->update([
             'name'               => $this->specialAid_name,
             'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
             'default_apply_amt'  => $this->default_apply_amount,
+            'start_date'         => $this->start_date,
+            'end_date'           => $this->end_date,
         ]);
                 
         foreach ($this->Fname as $index => $input) {  
@@ -100,6 +106,8 @@ class EditSpecialAid extends Component
         $this->specialAid_name      = $specialAid->name;
         $this->default_apply_amount = $specialAid->default_apply_amt;
         $this->enabled_apply_amt    = $specialAid->apply_amt_enable == true ? 'checked' : '';
+        $this->start_date           = $specialAid?->start_date ? date_format($specialAid->start_date, "Y-m-d") : '';
+        $this->end_date             = $specialAid?->end_date ? date_format($specialAid->end_date, "Y-m-d") : '';
         
         foreach ($specialAid->field as $index => $input) {                      
             $this->Flabel[$index]  = $input->label;
@@ -124,3 +132,4 @@ class EditSpecialAid extends Component
         return view('livewire.page.admin.special-aid.edit-special-aid')->extends('layouts.head');
     }
 }
+

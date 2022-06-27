@@ -3,7 +3,7 @@
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
             <x-general.header-title title="Edit Special Aid" route="{{route('special_aid.list')}}"/>
                  
-            <div class="pt-4 bg-white ">
+            <div class="pt-4 bg-white ">    
                 <div class="pl-4 pb-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit('{{ $specialAid->uuid }}')">
                         <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
@@ -59,6 +59,37 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div>
+                                <x-form.input 
+                                    label="Start Date" 
+                                    name="start_date"                                 
+                                    value="" 
+                                    mandatory=""
+                                    disable=""
+                                    type="date"
+                                    wire:model.defer='start_date'
+                                />     
+
+                                @error('start_date')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror                            
+                            </div>
+                            
+                            <div>
+                                <x-form.input 
+                                    label="End Date" 
+                                    value="" 
+                                    name="end_date" 
+                                    mandatory=""
+                                    disable=""
+                                    type="date"
+                                    wire:model.defer='end_date'
+                                />                                                          
+                                @error('end_date')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror                        
+                            </div>
                         </div>
 
                         <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
@@ -92,10 +123,21 @@
                                     <label for="field_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
                                         Field Status
                                     </label>
-                                    <div class="pt-1 mt-1 rounded-md justify-end">
-                                        <input type="checkbox" class="" value="" wire:model='Fstatus.{{ $index }}' />
+                                    <div class="flex items-center w-full mt-2">
+                                        <label for="Fstatus.{{ $index }}" class="flex items-center cursor-pointer">
+                                            <div class="relative">
+                                                <input 
+                                                    type="checkbox" 
+                                                    id="Fstatus.{{ $index }}" 
+                                                    class="sr-only"
+                                                    wire:model='Fstatus.{{ $index }}'
+                                                >
+                                                <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                                <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                            </div>
+                                        </label>
                                     </div>
-                                </div>
+                                </div>  
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
                                     <div class="pt-4 mt-1 rounded-md justify-end">
                                         <button wire:click.prevent="alertDelete('{{ $specialAid->uuid }}', '{{ $index }}')" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
