@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.sys_field_special_aid', function (Blueprint $table) {
+        Schema::create('SISKOP.apply_special_aid_field', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
@@ -24,6 +24,12 @@ return new class extends Migration
             $table->string('status',1)->default('1');
 
             $table->string('type',20)->default('string');
+            $table->string('string')->nullable();
+            $table->unsignedDecimal('decimal',8,2)->nullable();
+            $table->unsignedDecimal('decimal4',8,4)->nullable();
+            $table->bigInteger('bigint')->nullable();
+            $table->date('date')->nullable();
+            $table->dateTime('datetime')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -41,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.sys_field_special_aid');
+        Schema::dropIfExists('SISKOP.apply_special_aid_field');
     }
 };

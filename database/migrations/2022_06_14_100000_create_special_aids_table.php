@@ -22,6 +22,12 @@ return new class extends Migration
 
             $table->string('apply_amt_enable',1)->default('1');
             $table->unsignedDecimal('default_apply_amt',8,2)->nullable();
+            $table->unsignedDecimal('min_apply_amt',8,2)->nullable();
+            $table->unsignedDecimal('max_apply_amt',8,2)->nullable();
+
+            $table->string('status',1)->default('0');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
