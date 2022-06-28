@@ -21,6 +21,7 @@ class EditSpecialAid extends Component
     public $Flabel = [''];
     public $Ftype  = [''];
     public $Fstatus = [''];
+    public $Frequired = [''];
     public $Fuuid = [''];
 
     //Need protected $listerners to run the Livewire.emit event
@@ -53,6 +54,26 @@ class EditSpecialAid extends Component
         return redirect()->route('special_aid.edit', $uuid);
     }
 
+    public function fieldStatus($uuid, $index)
+    {
+        $specialAid = SpecialAid::where('uuid', $uuid)->first();
+
+        $Fupdate = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
+        $Fupdate->update([
+            'status' => $this->Fstatus[$index],
+        ]);
+    }
+
+
+    public function fieldRequired($uuid, $index)
+    {
+        $specialAid = SpecialAid::where('uuid', $uuid)->first();
+
+        $updateF = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
+        $updateF->update([
+            'required' => $this->Frequired[$index],
+        ]);
+    }
 
     public function submit($uuid)
     {
@@ -118,11 +139,12 @@ class EditSpecialAid extends Component
         $this->end_date             = $specialAid?->end_date ? date_format($specialAid->end_date, "Y-m-d") : '';
         
         foreach ($specialAid->field as $index => $input) {                      
-            $this->Flabel[$index]  = $input->label;
-            $this->Fname[$index]   = $input->name;
-            $this->Ftype[$index]   = $input->type;
-            $this->Fuuid[$index]   = $input->uuid;
-            $this->Fstatus[$index] = $input->status == '1' ? true : false;
+            $this->Flabel[$index]      = $input->label;
+            $this->Fname[$index]       = $input->name;
+            $this->Ftype[$index]       = $input->type;
+            $this->Fuuid[$index]       = $input->uuid;
+            $this->Fstatus[$index]     = $input->status   == '1' ? true : false;
+            $this->Frequired[$index]   = $input->required == '1' ? true : false;
         }   
     }
 
