@@ -7,21 +7,27 @@ use App\Http\Livewire\Admin\Maintenance\Bank\bank;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
 use App\Http\Livewire\Admin\Maintenance\coop\coop;
-use App\Http\Livewire\admin\maintenance\education\AddEducation;
-use App\Http\Livewire\admin\maintenance\education\EditEducation;
-use App\Http\Livewire\admin\maintenance\education\ListEducation;
 use App\Http\Livewire\Admin\Maintenance\countries\country;
 use App\Http\Livewire\Admin\Maintenance\countries\countrycreate;
 use App\Http\Livewire\Admin\Maintenance\countries\countryedit;
+use App\Http\Livewire\admin\maintenance\education\AddEducation;
+use App\Http\Livewire\admin\maintenance\education\EditEducation;
+use App\Http\Livewire\admin\maintenance\education\ListEducation;
 use App\Http\Livewire\Admin\Maintenance\gender\gender;
 use App\Http\Livewire\Admin\Maintenance\gender\gendercreate;
 use App\Http\Livewire\Admin\Maintenance\gender\genderedit;
+use App\Http\Livewire\admin\maintenance\race\CreateRace;
+use App\Http\Livewire\admin\maintenance\race\EditRace;
+use App\Http\Livewire\admin\maintenance\race\ListRace;
 use App\Http\Livewire\Admin\Maintenance\religion\religion;
 use App\Http\Livewire\Admin\Maintenance\religion\religioncreate;
 use App\Http\Livewire\Admin\Maintenance\religion\religionedit;
 use App\Http\Livewire\Admin\Maintenance\state\state;
 use App\Http\Livewire\Admin\Maintenance\state\statecreate;
 use App\Http\Livewire\Admin\Maintenance\state\stateedit;
+use App\Http\Livewire\admin\maintenance\title\CreateTitle;
+use App\Http\Livewire\admin\maintenance\title\EditTitle;
+use App\Http\Livewire\admin\maintenance\title\ListTitle;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -40,7 +46,6 @@ use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +114,16 @@ Route::middleware('auth')->group(function () {
     Route::get('countrycreate', countrycreate::class)->name('countrycreate');
     Route::get('countryedit/{id}', countryedit::class)->name('countryedit');
     Route::get('delete/{id}', country::class)->name('delete');
+
+    //Admin > Maintenance >  cust_title
+    Route::get('titlelist', ListTitle::class)->name('title.list');
+    Route::get('titlecreate', CreateTitle::class)->name('title.create');
+    Route::get('titleedit/{id}', EditTitle::class)->name('title.edit');
+
+    //Admin > Maintenance > race
+    Route::get('racelist', ListRace::class)->name('race.list');
+    Route::get('racecreate', CreateRace::class)->name('race.create');
+    Route::get('raceedit/{id}', EditRace::class)->name('race.edit');
 
     //Admin > Maintenance > Religion
     Route::get('religion', religion::class)->name('religion');

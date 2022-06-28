@@ -22,6 +22,10 @@ class ListEducation extends Component
         $data = RefEducation::find($id);
         $data->delete();
 
+        session()->flash('message', 'Education Deleted');
+        session()->flash('success');
+        session()->flash('title', 'Success!');
+
         return redirect()->route('education.list');
     }
 

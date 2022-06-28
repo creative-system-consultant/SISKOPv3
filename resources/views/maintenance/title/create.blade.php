@@ -1,7 +1,7 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl"> Create Education </h1>
+    <h1 class="text-base font-semibold md:text-2xl"> Create Title </h1>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-            <x-general.header-title title="Education List" route="{{route('education.list')}}"/>
+            <x-general.header-title title="Title List" route="{{route('title.list')}}"/>
 
             <div class="pt-4 bg-white ">
                 <div class="pl-4 pb-4 pr-4">
@@ -9,16 +9,16 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
-                                    label="Educational Institution" 
-                                    name="edu_description" 
+                                    label="Title" 
+                                    name="title_description" 
                                     value="" 
                                     mandatory=""
                                     disable=""
                                     type="text"
                                     
-                                    wire:model.defer='edu_description'    
+                                    wire:model.defer='title_description'    
                                 />
-                                @error('edu_description')
+                                @error('title_description')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -26,32 +26,32 @@
                             <div>
                                 <x-form.input 
                                     label="Code" 
-                                    name="edu_code" 
+                                    name="title_code" 
                                     value="" 
                                     mandatory=""
                                     disable=""
                                     type="text"
                                     
-                                    wire:model.defer='edu_code'    
+                                    wire:model.defer='title_code'    
                                 />
                 
-                                @error('edu_code')
+                                @error('title_code')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                                 </div>
     
                             <div class="flex items-center w-full mt-3">
-                                <label for="edu_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                <label for="title_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
                                     Status 
                                 </label>
-                                <label for="edu_status" class="flex items-center cursor-pointer">                                
+                                <label for="title_status" class="flex items-center cursor-pointer">                                
                                     <div class="relative">
                                         <input 
                                             type="checkbox" 
-                                            id="edu_status" 
+                                            id="title_status" 
                                             class="sr-only"
-                                            name="edu_status"
-                                            wire:model.defer='edu_status'                                            
+                                            name="title_status"
+                                            wire:model.defer='title_status'                                            
                                         >
                                         <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
                                         <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
