@@ -20,19 +20,19 @@
                 <x-table.table-header class="text-left" value="END DATE" sort="" />
                 <x-table.table-header class="text-left" value="ACTION" sort="" />
             </x-slot>
-            <x-slot name="tbody">
+            <x-slot name="tbody" >
                 @forelse ($specialAids as $index => $specialAid)
-                    <tr>
-                        <x-table.table-body colspan="" class="text-left">
+                <tr x-data="{isActive: {{ $specialAid->status }}}">
+                        <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             {{ $loop->iteration }}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
+                        <x-table.table-body colspan="" class="text-left " x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             {{ $specialAid->name }}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
+                        <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             {{ $specialAid->coop_id }}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
+                        <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             <div class="flex items-center w-full mt-3">
                                 <label for="statusTabung.{{ $index }}" class="flex items-center cursor-pointer">                                
                                     <div class="relative">
@@ -40,6 +40,7 @@
                                             type="checkbox" 
                                             id="statusTabung.{{ $index }}" 
                                             class="sr-only"
+                                            @click="isActive = !isActive"
                                             wire:model="statusTabung.{{ $index }}";
                                             wire:click="statusUpdate('{{ $specialAid->uuid }}', '{{ $index }}')"
                                         >
@@ -49,14 +50,14 @@
                                 </label>
                             </div>
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
+                        <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             {{ $specialAid?->start_date ? date_format($specialAid->start_date, "Y-m-d") : '' }}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
+                        <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             {{ $specialAid?->end_date ? date_format($specialAid->end_date, "Y-m-d") : '' }}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
-                            <a href="{{route('special_aid.edit', $specialAid->uuid)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
+                        <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
+                            <a href="{{route('special_aid.edit', $specialAid->uuid)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400" {{-- @if($specialAid->status==0)style="display:none"@endif --}}>
                                 <x-heroicon-o-pencil-alt class="w-4 h-4 mr-2"/>
                                 Edit
                             </a>

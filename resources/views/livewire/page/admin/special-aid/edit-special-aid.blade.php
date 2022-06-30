@@ -23,7 +23,9 @@
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+                        </div>
     
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                             <div class="flex items-center w-full mt-3">
                                 <label for="enable_applyAmt" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
                                     Enabled Apply Amount 
@@ -60,6 +62,44 @@
                                 @enderror
                             </div>
 
+                            <div>
+                                <x-form.input-tag 
+                                    label="Default Minimum Amount" 
+                                    type="text"
+                                    name="default_min_amount" 
+                                    value=""
+                                    leftTag="RM"
+                                    rightTag=""
+                                    mandatory=""
+                                    disable=""
+                                    wire:model.defer='default_min_amount'
+                                />
+
+                                @error('default_min_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <x-form.input-tag 
+                                    label="Default Maximum Amount" 
+                                    type="text"
+                                    name="default_max_amount" 
+                                    value=""
+                                    leftTag="RM"
+                                    rightTag=""
+                                    mandatory=""
+                                    disable=""
+                                    wire:model.defer='default_max_amount'
+                                />
+
+                                @error('default_max_amount')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
                                     label="Start Date" 
@@ -98,7 +138,7 @@
                         </button>
                         <div id="fields">
                         @foreach($Fname as $index => $list )
-                            <div class="mt-6 grid grid-cols-12 gap-6" x-data>
+                            <div class="mt-6 grid grid-cols-12 gap-6">
                                 @php if ($Fstatus[$index] == false ){ $status = 'true';} else { $status = 'false'; } @endphp
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
                                     <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="" mandatory="" disable="{{ $status }}" type="text" wire:model.debounce.500ms="Flabel.{{ $index }}"/>
@@ -119,9 +159,9 @@
                                         @endforeach
                                     </x-form.dropdown>
                                 </div>
-                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
+                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                                     <label for="field_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
-                                        Field Status
+                                        Enable
                                     </label>
                                     <div class="flex items-center w-full mt-2">
                                         <label for="Fstatus.{{ $index }}" class="flex items-center cursor-pointer">
@@ -131,6 +171,7 @@
                                                     id="Fstatus.{{ $index }}" 
                                                     class="sr-only"
                                                     wire:model='Fstatus.{{ $index }}'
+                                                    wire:click="fieldStatus('{{ $specialAid->uuid }}', '{{ $index }}')"
                                                 >
                                                 <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
                                                 <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
@@ -138,8 +179,28 @@
                                         </label>
                                     </div>
                                 </div>  
-                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
-                                    <div class="pt-4 mt-1 rounded-md justify-end">
+                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+                                    <label for="field_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                        Required
+                                    </label>
+                                    <div class="flex items-center w-full mt-2">
+                                        <label for="Frequired.{{ $index }}" class="flex items-center cursor-pointer">
+                                            <div class="relative">
+                                                <input 
+                                                    type="checkbox" 
+                                                    id="Frequired.{{ $index }}" 
+                                                    class="sr-only"
+                                                    wire:model='Frequired.{{ $index }}'
+                                                    wire:click="fieldRequired('{{ $specialAid->uuid }}', '{{ $index }}')"
+                                                >
+                                                <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                                <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div> 
+                                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+                                    <div class="pt-4 mt-3 rounded-md justify-end">
                                         <button wire:click.prevent="alertDelete('{{ $specialAid->uuid }}', '{{ $index }}')" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                                             Delete
                                         </button>

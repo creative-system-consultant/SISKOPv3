@@ -97,7 +97,7 @@
                             <x-heroicon-o-document-search class="w-7 h-7" />
                         </x-slot>
                         <div class="leading-5">
-                            <x-sidebar.dropdown-item title="Menu" href="#" uri="">
+                            <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
                                 <x-slot name="icon">
                                     <x-heroicon-o-document-text class="w-7 h-7" />
                                 </x-slot>
