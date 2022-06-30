@@ -12,7 +12,6 @@ class ApplySpecialAid extends Model
     protected $table = 'SISKOP.apply_special_aid';
     
     protected $guarded = [];
-    protected $dates   = ['start_date', 'end_date'];
 
     public function field()
     {

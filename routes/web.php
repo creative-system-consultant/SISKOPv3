@@ -66,10 +66,15 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', Index::class)->name('profile');
 
 
+    //------------------------------- Applications -------------------------------//
+    //Applications > Special Aid
+    Route::get('/applySpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
+
+
     //------------------------admin------------------------------//
     //Admin > Maintenance > Special Aid
     Route::prefix('specialAid')->group(function(){
-        Route::get('list', ListSpecialAid::class)->name('special_aid.list');
+        Route::get('/', ListSpecialAid::class)->name('special_aid.list');
         Route::get('create', CreateSpecialAid::class)->name('special_aid.create');            
         Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');            
     });
