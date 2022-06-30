@@ -69,4 +69,9 @@ class User extends Authenticatable implements Auditable
     {
         return '1';
     }
+
+    public function customer()
+    {
+        return $this->belongsToMany(Coop::class)->using(CoopCust::class);
+    }
 }
