@@ -53,6 +53,8 @@ use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
+use App\Http\Livewire\customers\SearchCustomer;
+use App\Http\Livewire\customers\EditCustomer;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,7 @@ Route::middleware('auth')->group(function () {
 
     //profile
     Route::get('profile', Index::class)->name('profile');
+    Route::get('Index', Index::class)->name('Index');
 
 
     //------------------------------- Applications -------------------------------//
@@ -164,6 +167,10 @@ Route::middleware('auth')->group(function () {
     Route::get('maritallist', ListMarital::class)->name('marital.list');
     Route::get('maritalcreate', CreateMarital::class)->name('marital.create');
     Route::get('maritaledit/{id}', EditMarital::class)->name('marital.edit');
+
+    //customers
+    Route::get('searchcustomer', SearchCustomer::class)->name('searchcustomer');
+    Route::get('edit/{id}', EditCustomer::class)->name('edit');
 
     //------------------------Reporting------------------------------//
     //Report > Sample
