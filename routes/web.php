@@ -24,6 +24,7 @@ use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
+use App\Http\Livewire\Page\ApplySpecialAid\Apply_SpecialAid;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
