@@ -16,6 +16,9 @@ use App\Http\Livewire\admin\maintenance\education\ListEducation;
 use App\Http\Livewire\Admin\Maintenance\gender\gender;
 use App\Http\Livewire\Admin\Maintenance\gender\gendercreate;
 use App\Http\Livewire\Admin\Maintenance\gender\genderedit;
+use App\Http\Livewire\Admin\maintenance\marital\CreateMarital;
+use App\Http\Livewire\Admin\maintenance\marital\EditMarital;
+use App\Http\Livewire\Admin\maintenance\marital\ListMarital;
 use App\Http\Livewire\admin\maintenance\race\CreateRace;
 use App\Http\Livewire\admin\maintenance\race\EditRace;
 use App\Http\Livewire\admin\maintenance\race\ListRace;
@@ -28,6 +31,9 @@ use App\Http\Livewire\Admin\Maintenance\state\stateedit;
 use App\Http\Livewire\admin\maintenance\title\CreateTitle;
 use App\Http\Livewire\admin\maintenance\title\EditTitle;
 use App\Http\Livewire\admin\maintenance\title\ListTitle;
+use App\Http\Livewire\Admin\maintenance\relationship\CreateRelationship;
+use App\Http\Livewire\Admin\maintenance\relationship\EditRelationship;
+use App\Http\Livewire\Admin\maintenance\relationship\ListRelationship;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -148,6 +154,16 @@ Route::middleware('auth')->group(function () {
     Route::get('gendercreate', gendercreate::class)->name('gendercreate');
     Route::get('gendernedit/{id}', genderedit::class)->name('genderedit');
     Route::get('delete/{id}', gender::class)->name('delete');
+
+    //Admin > Maintenance > Relationship
+    Route::get('relationshiplist', ListRelationship::class)->name('relationship.list');
+    Route::get('relationshipcreate', CreateRelationship::class)->name('relationship.create');
+    Route::get('relationshipedit/{id}', EditRelationship::class)->name('relationship.edit');
+
+    //Admin > Maintenance > Marital
+    Route::get('maritallist', ListMarital::class)->name('marital.list');
+    Route::get('maritalcreate', CreateMarital::class)->name('marital.create');
+    Route::get('maritaledit/{id}', EditMarital::class)->name('marital.edit');
 
     //------------------------Reporting------------------------------//
     //Report > Sample
