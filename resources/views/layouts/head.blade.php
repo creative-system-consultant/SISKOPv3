@@ -52,6 +52,15 @@
             </div>
         </div>
 
+        @if (session('error'))
+            <x-swall.error  message="{{ session('message') }}"/>
+        @elseif (session('info'))
+            <x-swall.info  message="{{ session('message') }}"/>
+        @elseif (session('success'))
+            <x-swall.success message="{{ session('message') }}"/>
+        @elseif (session('warning'))
+            <x-swall.warning  message="{{ session('message') }}"/>
+        @endif
         @livewireScripts
         @powerGridScripts
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.4/dist/sweetalert2.all.min.js"></script>
