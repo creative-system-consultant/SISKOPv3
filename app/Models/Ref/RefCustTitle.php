@@ -10,7 +10,7 @@ class RefCustTitle extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'ref_cust_titles';
+    protected $table = 'ref.cust_titles';
     protected $primaryKey = 'id';
 
     protected $fillable = ['description', 'code', 'status'];

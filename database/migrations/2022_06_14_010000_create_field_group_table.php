@@ -20,10 +20,9 @@ return new class extends Migration
             $table->string('description');
             $table->string('description_bm')->nullable();
             $table->string('code',20)->nullable();
-            $table->string('status',1)->default('0');
 
             $table->string('readonly')->default('0');
-            $table->string('status')->default('1');
+            $table->string('status',1)->default('1');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ref_address_types', function (Blueprint $table) {
+        Schema::create('ref.address_types', function (Blueprint $table) {
             $table->id();
             $table->string('description');
             $table->string('description_bm',150)->nullable();
-            $table->string('status',1)->default('1');
+            $table->string('status',1)->default('0');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ref_address_types');
+        Schema::dropIfExists('ref.address_types');
     }
 };

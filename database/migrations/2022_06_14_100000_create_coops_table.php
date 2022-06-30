@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('name2');
             $table->string('reg_num')->nullable();
+            $table->string('description')->nullable();
             $table->bigInteger('address_id');
+
+            $table->string('status',1)->default('0');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

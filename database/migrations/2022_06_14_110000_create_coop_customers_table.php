@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ref.cust_titles', function (Blueprint $table) {
+        Schema::create('SISKOP.Coop_Cust', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->string('description_bm')->nullable();
-            $table->string('code',20)->nullable();
-            $table->string('status',1)->default('0');
-            $table->bigInteger('coop_id')->nullable();
+
+            $table->bigInteger('coop_id');
+            $table->bigInteger('cust_id');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -37,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ref.cust_titles');
+        Schema::dropIfExists('SISKOP.Coop_Cust');
     }
 };

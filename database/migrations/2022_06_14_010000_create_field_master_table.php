@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->bigint('group_id')->nullable();
+            $table->bigInteger('group_id')->nullable();
             $table->string('name')->nullable();
             $table->string('name2')->nullable();
             $table->string('value')->nullable();

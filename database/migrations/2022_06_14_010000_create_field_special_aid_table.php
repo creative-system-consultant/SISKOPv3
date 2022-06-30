@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('label')->nullable();
             $table->string('status',1)->default('1');
+            $table->string('required',1)->default('1');
 
             $table->string('type',20)->default('string');
 

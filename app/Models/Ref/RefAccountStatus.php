@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RefAccountStatus extends Model
 {
     use HasFactory;
+
+    protected $table = 'ref.account_statuses';
+
 }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class RefAddressType extends Model
 {
     use HasFactory;
+
+    protected $table = 'ref.address_types';
 }

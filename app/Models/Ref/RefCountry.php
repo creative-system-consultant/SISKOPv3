@@ -10,12 +10,7 @@ class RefCountry extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'ref_countries';
-    protected $fillable = [
-        'id',
-        'description', 
-        'code', 
-        'status'
-    ];
+    protected $table   = 'ref.countries';
+    protected $guarded = [];
 
 }

@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ref_gender', function (Blueprint $table) {
+        Schema::create('ref.gender', function (Blueprint $table) {
             $table->id();
             $table->string('description');
             $table->string('description_bm')->nullable();
             $table->string('code',20)->nullable();
             $table->string('status',1)->default('0');
+            $table->bigInteger('coop_id')->nullable();
+
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
             $table->timestamp('deleted_at')->nullable();
@@ -35,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ref_gender');
+        Schema::dropIfExists('ref.gender');
     }
 };

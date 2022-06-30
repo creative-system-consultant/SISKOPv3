@@ -10,12 +10,7 @@ class RefBank extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'ref_banks';
-    protected $fillable = [
-        'id',
-        'description', 
-        'code', 
-        'status'
-    ];
+    protected $table   = 'ref.banks';
+    protected $guarded = [];
 
 }
