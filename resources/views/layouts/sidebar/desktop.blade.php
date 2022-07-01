@@ -29,9 +29,22 @@
                     <x-sidebar.nav-item title="Report" route="{{route('list-reporting')}}" uri="list-reporting">
                         <x-heroicon-o-clipboard-list class="w-7 h-7" />
                     </x-sidebar.nav-item>
+
+                    <x-sidebar.dropdown-nav-item active="open" title="APPLICATION" uri="application/*">
+                        <x-slot name="icon">
+                            <x-heroicon-o-document-search class="w-7 h-7" />
+                        </x-slot>
+                        <div class="leading-5">
+                            <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-document-text class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
+                        </div>
+                    </x-sidebar.dropdown-nav-item> 
+
                     <x-sidebar.nav-item title="Customer Search" route="{{route('searchcustomer')}}" uri="searchcustomer">
-                        <x-heroicon-o-search-circle class="w-7 h-7" />
-                        
+                        <x-heroicon-o-search-circle class="w-7 h-7" />                        
                     </x-sidebar.nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="MAINTENANCE" uri="maintenance/*">
