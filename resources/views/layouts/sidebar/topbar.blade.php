@@ -1,6 +1,6 @@
 <header class="relative py-2 bg-primary-800" >
     <div class="flex items-center justify-between px-6 mx-auto">
-        <div class="flex items-center space-x-2 ">
+        <div class="flex items-center space-x-0 ">
             <!-- Mobile hamburger -->
             <button class="p-2 -ml-1 bg-gray-800 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple "
                 @click="toggleSideMenu" aria-label="Menu">
@@ -9,13 +9,16 @@
 
             <!-- Desktop hamburger -->
             <div class="hidden sm:block" >
-                <div class="flex justify-center ">
+                <div class="flex justify-center px-2 py-1 rounded-md bg-primary-600 hover:bg-primary-700">
                     <button class="p-1 -ml-1 rounded-md focus:outline-none"
                         @click="toggleSideMenuDesktop" aria-label="Menu">
-                        <x-heroicon-o-menu-alt-1  x-show="isSideMenuOpenDesktop" class="w-8 h-8 text-white" x-cloak />
-                        <x-heroicon-o-menu  x-show="!isSideMenuOpenDesktop" class="w-8 h-8 text-white"  x-cloak/>
+                        <x-heroicon-o-menu-alt-1  x-show="isSideMenuOpenDesktop" class="w-6 h-6 text-white" x-cloak />
+                        <x-heroicon-o-menu  x-show="!isSideMenuOpenDesktop" class="w-6 h-6 text-white"  x-cloak/>
                     </button>
                 </div>
+            </div>
+            <div class="flex justify-center pl-4 text-white">
+                <p class="text-xl italic font-semibold uppercase">{{ config('app.name') }}</p>
             </div>
         </div>
         <ul class="flex items-center flex-shrink-0 space-x-4">
