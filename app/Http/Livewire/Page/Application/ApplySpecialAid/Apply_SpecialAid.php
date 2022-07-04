@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Page\ApplySpecialAid;
+namespace App\Http\Livewire\Page\Application\ApplySpecialAid;
 
 use App\Models\ApplySpecialAid;
 use App\Models\Customer;
@@ -108,6 +108,6 @@ class Apply_SpecialAid extends Component
 
     public function render()
     {
-        return view('livewire.page.applySpecialAid.apply-special-aid')->extends('layouts.head');
+        return view('livewire.page.application.applySpecialAid.apply-special-aid')->extends('layouts.head');
     }
 }
