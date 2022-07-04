@@ -2,49 +2,62 @@
     <h1 class="text-base font-semibold md:text-2xl">Dashboard</h1>
     
     <div class="mt-4">
-        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3">
-            <!-- card 1 -->
+        <div class="grid h-[82vh] grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
+            
             <div class="p-4 bg-white rounded-lg shadow-md">
                 <div>
-                    <!-- content -->
+                    content 1
                 </div>
             </div>
             
-            <!-- card 2 -->
             <div class="p-4 bg-white rounded-lg shadow-md">
                 <div>
-                    <!-- content -->
+                    content 2
                 </div>
             </div>
 
-            <!-- card 1 -->
             <div class="p-4 bg-white rounded-lg shadow-md">
                 <div>
-                    <!-- content -->
+                    content 3
                 </div>
             </div>
 
-            <!-- card 3 -->
             <div class="p-4 bg-white rounded-lg shadow-md">
                 <div>
-                    <!-- content -->
+                    content 4
                 </div>
             </div>
 
-            <!-- card 4 -->
             <div class="p-4 bg-white rounded-lg shadow-md">
                 <div>
-                    <!-- content -->
+                    content 5
                 </div>
             </div>
 
-            <!-- card 5 -->
             <div class="p-4 bg-white rounded-lg shadow-md">
                 <div>
-                    <!-- content -->
+                    content 6
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-12 gap-10 mt-10 h-[82vh]">
+            <div class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <div>
+                    content 7
+                </div>
+            </div>
+            <div class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <div>
+                    content 8
                 </div>
             </div>
             
+            <div class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 ">
+                <div>
+                    content 9
+                </div>
+            </div>
         </div>
     </div>
 </div>
