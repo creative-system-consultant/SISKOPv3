@@ -47,4 +47,9 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany(Coop::class)->using(CoopCust::class);
     }
+
+    public function files()
+    {
+        return $this->morphMany(FileMaster::class,'fileable');
+    }
 }

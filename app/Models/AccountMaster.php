@@ -19,4 +19,14 @@ class AccountMaster extends Model implements Auditable
     {
         return $this->hasMany(Customer::class,'id','cust_id');
     }
+
+    public function position()
+    {
+        return $this->hasMany(AccountPosition::class,'account_no','account_no');
+    }
+
+    public function files()
+    {
+        return $this->morphMany(FileMaster::class,'fileable');
+    }
 }

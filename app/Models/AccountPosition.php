@@ -19,4 +19,9 @@ class AccountPosition extends Model implements Auditable
     {
         return $this->hasMany(Customer::class,'id','cust_id');
     }
+
+    public function master()
+    {
+        return $this->belongsTo(AccountMaster::class,'account_no','account_no');
+    }
 }

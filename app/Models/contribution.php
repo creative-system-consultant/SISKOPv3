@@ -24,4 +24,9 @@ class contribution extends Model implements Auditable
     {
         return $this->belongsTo(Coop::class,'coop_id');
     }
+
+    public function files()
+    {
+        return $this->morphMany(FileMaster::class,'fileable');
+    }
 }

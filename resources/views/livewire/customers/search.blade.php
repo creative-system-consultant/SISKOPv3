@@ -1,9 +1,6 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl"> Search Customer </h1>
     <div class="p-6 mt-4 bg-white rounded-md shadow-md">
-        @if (session('success'))
-            <x-swall.success message="{{ session('message') }}"/>
-        @endif
         <div>
             <div class="flex flex-wrap space-x-0 space-y-4 sm:space-x-4 sm:space-y-0">
                 <div class="w-full sm:w-64">
@@ -43,10 +40,11 @@
                     <button wire:click="search" type="submit" class="p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         Search
                     </button>
-                </div>      
-            </div>         
+                </div>
+            </div>
         </div>
-        <div class="pt-6">
+        <div class="pt-6 rounded-md">
+            <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Search Result</h2>
             <x-table.table>
                 <x-slot name="thead">
                     <x-table.table-header class="text-left " value="No" sort="" />

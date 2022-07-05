@@ -20,4 +20,9 @@ class Customer extends Model implements Auditable
         return '1';
     }
 
+    public function files()
+    {
+        return $this->morphMany(FileMaster::class,'fileable');
+    }
+
 }
