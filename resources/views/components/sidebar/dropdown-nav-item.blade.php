@@ -41,14 +41,14 @@
         <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0"
             x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300"
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-            class="p-1 mt-2 space-y-2 overflow-hidden text-xs font-medium rounded-md shadow-inner hide-element lg:text-sm bg-primary-800 "
+            class="p-2 mt-2 overflow-hidden text-xs font-medium rounded-md shadow-inner hide-element lg:text-sm bg-primary-800 "
             aria-label="submenu">
             {{$slot}}
         </ul>
     </div>
 </li>
 @else
-<li class="relative px-4 pb-2" x-data="{ {{$active}}:  @if(\Request::is($uri)) true @else false @endif }">
+<li class="relative px-4 py-1" x-data="{ {{$active}}:  @if(\Request::is($uri)) true @else false @endif }">
     <div class="flex justify-center text-white">
         <div 
             class="inline-flex items-center justify-between w-full text-lg font-semibold text-white cursor-pointer"
@@ -69,7 +69,7 @@
         <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0"
             x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300"
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-            class="p-1 mt-2 ml-3 space-y-2 overflow-hidden text-xs font-medium border-l-[1.5px] border-white hide-element lg:text-sm "
+            class="p-2 mt-2 ml-3  overflow-hidden text-xs font-medium border-l-[1.5px] border-white hide-element lg:text-sm "
             aria-label="submenu">
             {{$slot}}
         </ul>
