@@ -1,11 +1,17 @@
 <div>
-    <div class="p-4">
+    <div class="p-4" x-cloak>
         <div x-data="{active : 0}">
             <div class="flex w-full mb-2 overflow-x-auto bg-white rounded-md flex-nowrap">
                 <x-tab.title name="6" livewire="">
                     <div class="flex items-center w-36 md:w-full">
                         <x-heroicon-o-code class="w-6 h-6 mr-2"/> 
                         <p>Create Livewire</p>
+                    </div>
+                </x-tab.title>
+                <x-tab.title name="7" livewire="">
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-presentation-chart-bar class="w-6 h-6 mr-2"/> 
+                        <p>Chart</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="0" livewire="">
@@ -30,7 +36,7 @@
             <div class="pt-4 bg-white border-t-2">
                 
                 <x-tab.content name="6">
-                    <div class="p-4" x-data="{selected : 0}">
+                    <div class="p-4" x-data="{selected : 0}" >
                         <h1 class="mb-6 text-base font-semibold md:text-2xl"></h1>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             <div class="p-6 bg-white rounded-md shadow-md ">
@@ -42,6 +48,16 @@ php artisan make:livewire Page/YourPageName
                                     </code>
                                 </pre>        
                             </div> 
+                        </div>
+                    </div>
+                </x-tab.content>
+
+                <x-tab.content name="7">
+                    <div class="p-4" x-data="{selected : 0}">
+                        <h1 class="mb-2 text-base font-semibold md:text-2xl">Chart</h1>
+                        <p class="mb-6 text-base font-normal md:text-base">for more type of chart you can visit this link <a href="https://apexcharts.com/javascript-chart-demos/" target="_blank" class="text-blue-500 hover:text-blue-400">https://apexcharts.com/javascript-chart-demos/</a></p>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                            @include('doc.doc-chart')
                         </div>
                     </div>
                 </x-tab.content>
