@@ -21,7 +21,7 @@ class RefSeeder extends Seeder
             ['description' => 'MASTER',  'code' => 'MAS', 'coop_id' => '1'],
             ['description' => 'PHD',     'code' => 'PHD', 'coop_id' => '1'],
         ];
-        DB::table('ref.educations')->insert($education);
+        DB::table('ref.education')->insert($education);
 
         $bank = [
             ['description' => 'BANK MUAMALAT MALAYSIA', 'code' => 'BMMB', 'coop_id' => '1'],
@@ -46,22 +46,22 @@ class RefSeeder extends Seeder
             ['description' => 'MARRIED', 'code' => 'M', 'coop_id' => '1'],
             ['description' => 'DIVORCED','code' => 'D', 'coop_id' => '1'],
         ];
-        DB::table('ref.countries')->insert($marital);
+        DB::table('ref.marital')->insert($marital);
 
         $titles = [
-            ['description' => 'Mr',     'code' => 'MR',     'coop_id' => '1'],
-            ['description' => 'Mrs',    'code' => 'MRS',    'coop_id' => '1'],
-            ['description' => 'Ms',     'code' => 'MS',     'coop_id' => '1'],
-            ['description' => 'Dr',     'code' => 'DR',     'coop_id' => '1'],
-            ['description' => 'Sir',    'code' => 'SIR',    'coop_id' => '1'],
-            ['description' => 'Tun',    'code' => 'TUN',    'coop_id' => '1'],
-            ['description' => 'Tan Sri','code' => 'TS',     'coop_id' => '1'],
-            ['description' => 'Puan Sri','code' => 'PS',    'coop_id' => '1'],
-            ['description' => 'Dato\'', 'code' => 'DATO\'', 'coop_id' => '1'],
-            ['description' => 'Datuk',  'code' => 'DATUK',  'coop_id' => '1'],
-            ['description' => 'Datin',  'code' => 'DATIN',  'coop_id' => '1'],
+            ['description' => 'MR',     'code' => 'MR',     'coop_id' => '1'],
+            ['description' => 'MRS',    'code' => 'MRS',    'coop_id' => '1'],
+            ['description' => 'MS',     'code' => 'MS',     'coop_id' => '1'],
+            ['description' => 'DR',     'code' => 'DR',     'coop_id' => '1'],
+            ['description' => 'SIR',    'code' => 'SIR',    'coop_id' => '1'],
+            ['description' => 'TUN',    'code' => 'TUN',    'coop_id' => '1'],
+            ['description' => 'TAN SRI','code' => 'TS',     'coop_id' => '1'],
+            ['description' => 'PUAN SRI','code' => 'PS',    'coop_id' => '1'],
+            ['description' => 'DATO\'', 'code' => 'DATO\'', 'coop_id' => '1'],
+            ['description' => 'DATUK',  'code' => 'DATUK',  'coop_id' => '1'],
+            ['description' => 'DATIN',  'code' => 'DATIN',  'coop_id' => '1'],
         ];
-        DB::table('ref.countries')->insert($titles);
+        DB::table('ref.cust_titles')->insert($titles);
 
         $gender = [
             ['description' => 'MALE',   'code' => 'M', 'coop_id' => '1'],
@@ -86,7 +86,7 @@ class RefSeeder extends Seeder
             ['description' => 'BUMIPUTERA SARAWAK','code' => 'BA',  'coop_id' => '1'],
             ['description' => 'OTHERS',       'code' => 'L',  'coop_id' => '1'],
         ];
-        DB::table('ref.race')->insert($race);
+        DB::table('ref.races')->insert($race);
 
         $religion = [
             ['description' => 'ISLAM',   'code' => 'I', 'coop_id' => '1'],
@@ -121,11 +121,11 @@ class RefSeeder extends Seeder
         DB::table('ref.states')->insert($state);
 
         $address = [
-            ['description' => 'HOME',     'code' => 'H', 'coop_id' => '1'],
-            ['description' => 'PERMANENT','code' => 'P', 'coop_id' => '1'],
-            ['description' => 'OFFICE',   'code' => 'O', 'coop_id' => '1'],
-            ['description' => 'EMPLOYER', 'code' => 'E', 'coop_id' => '1'],
-            ['description' => 'FAMILY',   'code' => 'F', 'coop_id' => '1'],
+            ['description' => 'HOME',      'coop_id' => '1'],
+            ['description' => 'PERMANENT', 'coop_id' => '1'],
+            ['description' => 'OFFICE',    'coop_id' => '1'],
+            ['description' => 'EMPLOYER',  'coop_id' => '1'],
+            ['description' => 'FAMILY',    'coop_id' => '1'],
         ];
         DB::table('ref.address_types')->insert($address);
 

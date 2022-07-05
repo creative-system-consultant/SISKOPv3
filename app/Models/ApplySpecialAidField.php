@@ -13,6 +13,7 @@ class ApplySpecialAidField extends Model implements Auditable
     protected $table    = 'SISKOP.apply_special_aid_field';
     protected $guarded  = [];
     protected $appends  = [ 'value', ];
+    protected $dates    = ['created_at','deleted_at','updated_at'];
 
     public function fieldable()
     {

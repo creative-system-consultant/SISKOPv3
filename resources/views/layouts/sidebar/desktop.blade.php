@@ -48,13 +48,16 @@
                         <x-slot name="icon">
                             <x-heroicon-o-cog class="w-7 h-7" />
                         </x-slot>
-                        <div class="leading-5">
-                            <x-sidebar.dropdown-item title="SPECIAL AID" href="{{ route('special_aid.list') }}" uri="specialAid/list">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-document-text class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                        </div>
+                        <x-sidebar.dropdown-item title="SPECIAL AID" href="{{ route('special_aid.list') }}" uri="specialAid/list">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-text class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="COOP" href="{{ route('CoopIndex') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-text class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-nav-item type="2" active="open" title="REFERENCE" uri="reference/*">
                             <x-slot name="icon">
                                 <x-heroicon-o-document-search class="w-7 h-7" />

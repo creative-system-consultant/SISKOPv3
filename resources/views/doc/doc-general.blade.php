@@ -454,4 +454,29 @@
     </x-general.accordion>
     <!-- end page component -->
 
+     <!-- start page  component -->
+     <x-general.accordion active="selected" tab="11" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                <p class="text-sm">Header Title (without Link) </p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="px-6 border-t-2">
+                <div class="p-4 my-4 bg-white shadow-lg">
+                    <div class="p-4">
+                        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Your Title</h2>
+                    </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="-mt-4 language-html" wire:ignore>
+                    <code class="language-html"> 
+&lt;h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"&gt;Your Title&lt;/h2>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end page component -->
+
 </div>

@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.Coop', function (Blueprint $table) {
+        Schema::create('ref.marital', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(DB::raw('newid()'));
-
-            $table->string('name');
-            $table->string('name2');
-            $table->string('reg_num')->nullable();
-            $table->string('description')->nullable();
-            $table->bigInteger('address_id');
-
+            $table->string('description');
+            $table->string('description_bm')->nullable();
+            $table->string('code',20)->nullable();
             $table->string('status',1)->default('0');
+            $table->bigInteger('coop_id')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -32,9 +28,6 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
-
-        DB::statement("DBCC CHECKIDENT ('SISKOP.Coop',RESEED,100)");
-
     }
 
     /**
@@ -44,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.Coop');
+        Schema::dropIfExists('ref.marital');
     }
 };

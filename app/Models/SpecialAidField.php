@@ -8,11 +8,13 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class SpecialAidField extends Model implements Auditable
 {
+    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'SISKOP.sys_field_special_aid';
     protected $guarded = [];
     protected $appends = [];
+    protected $dates   = ['created_at','deleted_at','updated_at'];
 
     public function fieldable()
     {

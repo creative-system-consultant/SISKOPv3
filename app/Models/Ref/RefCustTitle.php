@@ -2,16 +2,15 @@
 
 namespace App\Models\Ref;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RefCustTitle extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = 'ref.cust_titles';
-    protected $primaryKey = 'id';
+    protected $table   = 'ref.cust_titles';
+    protected $guarded = [];
+    protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    protected $fillable = ['description', 'code', 'status'];
 }

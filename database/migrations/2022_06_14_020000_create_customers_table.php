@@ -33,6 +33,12 @@ return new class extends Migration
             $table->bigInteger('language_id')->nullable();
             $table->bigInteger('country_id')->nullable();
 
+            $table->unsignedDecimal('member_fee',8,2)->default('0.00');
+            $table->unsignedDecimal('share',8,2)->default('0.00');
+            $table->unsignedDecimal('share_monthly',8,2)->default('0.00');
+            $table->unsignedDecimal('contribution',8,2)->default('0.00');
+            $table->unsignedDecimal('contribution_monthly',8,2)->default('0.00');
+
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
             $table->timestamp('deleted_at')->nullable();

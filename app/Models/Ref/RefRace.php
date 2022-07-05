@@ -2,16 +2,15 @@
 
 namespace App\Models\Ref;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RefRace extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = 'ref_races';
-    protected $primaryKey = 'id';
+    protected $table   = 'ref.races';
+    protected $guarded = [];
+    protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    protected $fillable = ['description', 'code', 'status'];
 }

@@ -13,25 +13,27 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('FMS.Account_Masters', function (Blueprint $table) {
+        Schema::create('siskop.contribution', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->string('mbr_no');
-            $table->bigInteger('agent_id')->nullable();
-            $table->bigInteger('cust_id');
             $table->bigInteger('coop_id');
+            $table->bigInteger('cust_id');
 
-            $table->string('account_no');
-            $table->string('product_id');
-            $table->bigInteger('account_status')->default('0');
+            $table->string('method')->default('online');
+            $table->unsignedDecimal('amt_before',8,2);
+            $table->unsignedDecimal('apply_amt',8,2);
+            $table->unsignedDecimal('approved_amt',8,2)->nullable();
 
-            $table->decimal('purchase_price',16,2);
-            $table->decimal('selling_price',16,2);
-            $table->decimal('approved_limit',16,2);
+            $table->string('flag',2)->default('0');
+            $table->string('step',2)->default('0');
 
-            $table->decimal('profit_rate',4,4);
-            $table->decimal('instal_amount',16,4);
+            $table->string('bank_code')->nullable();
+            $table->string('cheque_no')->nullable();
+            $table->date('cheque_date')->nullable();
+            $table->date('cheque_clear')->nullable();
+            $table->date('cdm_date')->nullable();
+            $table->date('online_date')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -49,6 +51,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Masters');
+        Schema::dropIfExists('siskop.contribution');
     }
 };

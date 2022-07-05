@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class AccountPosition extends Model implements Auditable
+class CustomerStatement extends Model implements Auditable
 {
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "FMS.Account_Positions";
+    protected $table   = 'CIF.customer_statements';
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 

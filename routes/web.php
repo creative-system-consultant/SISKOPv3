@@ -6,7 +6,8 @@ use App\Http\Controllers\RedirectController;
 use App\Http\Livewire\Admin\Maintenance\Bank\bank;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
 use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
-use App\Http\Livewire\Admin\Maintenance\coop\coop;
+use App\Http\Livewire\Admin\Maintenance\coop\coopAdmin;
+use App\Http\Livewire\Admin\Maintenance\Coop\CoopCreate;
 use App\Http\Livewire\Admin\Maintenance\countries\country;
 use App\Http\Livewire\Admin\Maintenance\countries\countrycreate;
 use App\Http\Livewire\Admin\Maintenance\countries\countryedit;
@@ -110,7 +111,10 @@ Route::middleware('auth')->group(function () {
     Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
     Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
     Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
-    Route::get('admin/coop', Coop::class)->name('maintenanceCoop');
+
+    //Admin > Maintenance > Coop
+    Route::get('admin/coop', CoopAdmin::class)->name('CoopIndex');
+    Route::get('admin/coop/create', CoopCreate::class)->name('CoopCreate');
 
     //Admin > Maintenance > Bank
     Route::get('bank', bank::class)->name('bank');

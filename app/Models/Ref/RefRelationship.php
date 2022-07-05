@@ -2,16 +2,15 @@
 
 namespace App\Models\Ref;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RefRelationship extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = 'ref_relationships';
-    protected $primaryKey = 'id';
+    protected $table   = 'ref.relationships';
+    protected $guarded = [];
+    protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    protected $fillable = ['description', 'code', 'status'];
 }
