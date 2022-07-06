@@ -37,6 +37,16 @@
                                     <x-heroicon-o-document-text class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Add Share" href="{{ route('share.apply') }}" uri="applyShare">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-chart-pie class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Sell / Exchange Share" href="{{ route('share.sell') }}" uri="applySellShare">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-switch-horizontal class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item> 
 

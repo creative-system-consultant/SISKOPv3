@@ -13,7 +13,7 @@ class share extends Model implements Auditable
 
     protected $table   = 'siskop.shares';
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $dates   = ['online_date','cdm_date','cheque_date','created_at','deleted_at','updated_at'];
 
     public function customer()
     {
@@ -23,5 +23,10 @@ class share extends Model implements Auditable
     public function coop()
     {
         return $this->belongsTo(Coop::class,'coop_id');
+    }
+
+    public function files()
+    {
+        return $this->morphMany(FileMaster::class,'fileable');
     }
 }

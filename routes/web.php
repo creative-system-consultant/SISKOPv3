@@ -98,7 +98,12 @@ Route::middleware('auth')->group(function () {
     //Applications > Special Aid
     Route::get('/applySpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
 
+    //Applications > Add Share
+    Route::get('/applyShare', Apply_Share::class)->name('share.apply');
 
+    //Applications > Sell/Exchange Share
+    Route::get('/applySellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
+    
     //------------------------admin------------------------------//
     //Admin > Maintenance > Special Aid
     Route::prefix('specialAid')->group(function(){
