@@ -11,7 +11,7 @@ class SpecialAid extends Model
 
     protected $table   = 'SISKOP.special_aids';
     protected $guarded = [];
-    protected $dates   = ['start_date', 'end_date'];
+    protected $dates   = ['start_date', 'end_date','created_at','deleted_at','updated_at'];
 
     public function field()
     {

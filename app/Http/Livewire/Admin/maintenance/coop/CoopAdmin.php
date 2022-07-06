@@ -24,7 +24,7 @@ class CoopAdmin extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('CoopIndex');
+        return redirect()->route('Coop.Index');
     }
 
     public function render()

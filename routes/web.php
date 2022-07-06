@@ -98,88 +98,101 @@ Route::middleware('auth')->group(function () {
     //Applications > Special Aid
     Route::get('/applySpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
 
+    //------------------------------- End Applications ---------------------------//
 
-    //------------------------admin------------------------------//
+    //------------------------ admin ------------------------------//
     //Admin > Maintenance > Special Aid
-    Route::prefix('specialAid')->group(function(){
-        Route::get('/', ListSpecialAid::class)->name('special_aid.list');
-        Route::get('create', CreateSpecialAid::class)->name('special_aid.create');            
-        Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');            
+    Route::prefix('admin/maintenance')->group(function(){
+        Route::prefix('specialAid')->group(function(){
+            Route::get('/', ListSpecialAid::class)->name('special_aid.list');
+            Route::get('create', CreateSpecialAid::class)->name('special_aid.create');            
+            Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');            
+        });
+
+        //Admin > Maintenance > sample
+        Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
+        Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
+        Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
+
+        //Admin > Maintenance > Coop
+        Route::prefix('coop')->group(function(){
+            Route::get('/', CoopAdmin::class)->name('CoopIndex');
+            Route::get('create', CoopCreate::class)->name('CoopCreate');
+        });
+
+        //Admin > Maintenance > Bank
+        Route::prefix('bank')->group(function(){
+            Route::get('/', bank::class)->name('bank');
+            Route::get('create', bankcreate::class)->name('bankcreate');
+            Route::get('edit/{id}', bankedit::class)->name('bankedit');
+            Route::get('delete/{id}', bank::class)->name('delete');
+        });
+
+        //Admin > Maintenance > Education
+        Route::get('educationlist', ListEducation::class)->name('education.list');
+        Route::get('educationcreate', AddEducation::class)->name('education.create');
+        Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
+        Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
+
+        //Admin > Maintenance > Country
+        Route::get('country', country::class)->name('country');
+        Route::get('countrycreate', countrycreate::class)->name('countrycreate');
+        Route::get('countryedit/{id}', countryedit::class)->name('countryedit');
+        Route::get('delete/{id}', country::class)->name('delete');
+
+        //Admin > Maintenance >  cust_title
+        Route::get('titlelist', ListTitle::class)->name('title.list');
+        Route::get('titlecreate', CreateTitle::class)->name('title.create');
+        Route::get('titleedit/{id}', EditTitle::class)->name('title.edit');
+
+        //Admin > Maintenance > race
+        Route::get('racelist', ListRace::class)->name('race.list');
+        Route::get('racecreate', CreateRace::class)->name('race.create');
+        Route::get('raceedit/{id}', EditRace::class)->name('race.edit');
+
+        //Admin > Maintenance > Religion
+        Route::get('religion', religion::class)->name('religion');
+        Route::get('religioncreate', religioncreate::class)->name('religioncreate');
+        Route::get('religionedit/{id}', religionedit::class)->name('religionedit');
+        Route::get('delete/{id}', religion::class)->name('delete');
+
+        //Admin > Maintenance > State
+        Route::get('state', state::class)->name('state');
+        Route::get('statecreate', statecreate::class)->name('statecreate');
+        Route::get('statenedit/{id}', stateedit::class)->name('stateedit');
+        Route::get('delete/{id}', state::class)->name('delete');
+
+        //Admin > Maintenance > Gender
+        Route::get('gender', gender::class)->name('gender.list');
+        Route::get('gendercreate', gendercreate::class)->name('gender.create');
+        Route::get('gendernedit/{id}', genderedit::class)->name('gender.edit');
+
+        //Admin > Maintenance > Relationship
+        Route::get('relationshiplist', ListRelationship::class)->name('relationship.list');
+        Route::get('relationshipcreate', CreateRelationship::class)->name('relationship.create');
+        Route::get('relationshipedit/{id}', EditRelationship::class)->name('relationship.edit');
+
+        //Admin > Maintenance > Marital
+        Route::get('maritallist', ListMarital::class)->name('marital.list');
+        Route::get('maritalcreate', CreateMarital::class)->name('marital.create');
+        Route::get('maritaledit/{id}', EditMarital::class)->name('marital.edit');
     });
 
-    //Admin > Maintenance > sample
-    Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
-    Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
-    Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
+    //----------------------- end Admin -------------------------------------//
+    //----------------------- Executive -------------------------------------//
+    //Exec > edit customer
+    Route::prefix('exec/editcustomer')->group(function(){
+        Route::get('search', SearchCustomer::class)->name('searchcustomer');
+        Route::get('edit/{id}', EditCustomer::class)->name('edit');
+    });
+    //----------------------- End Executive --------------------------------//
 
-    //Admin > Maintenance > Coop
-    Route::get('admin/coop', CoopAdmin::class)->name('CoopIndex');
-    Route::get('admin/coop/create', CoopCreate::class)->name('CoopCreate');
-
-    //Admin > Maintenance > Bank
-    Route::get('bank', bank::class)->name('bank');
-    Route::get('bankcreate', bankcreate::class)->name('bankcreate');
-    Route::get('bankedit/{id}', bankedit::class)->name('bankedit');
-    Route::get('delete/{id}', bank::class)->name('delete');
-
-    //Admin > Maintenance > Education
-    Route::get('educationlist', ListEducation::class)->name('education.list');
-    Route::get('educationcreate', AddEducation::class)->name('education.create');
-    Route::get('educationedit/{id}', EditEducation::class)->name('education.edit');
-    Route::get('educationdelete/{id}', ListEducation::class)->name('education.delete');
-
-    //Admin > Maintenance > Country
-    Route::get('country', country::class)->name('country');
-    Route::get('countrycreate', countrycreate::class)->name('countrycreate');
-    Route::get('countryedit/{id}', countryedit::class)->name('countryedit');
-    Route::get('delete/{id}', country::class)->name('delete');
-
-    //Admin > Maintenance >  cust_title
-    Route::get('titlelist', ListTitle::class)->name('title.list');
-    Route::get('titlecreate', CreateTitle::class)->name('title.create');
-    Route::get('titleedit/{id}', EditTitle::class)->name('title.edit');
-
-    //Admin > Maintenance > race
-    Route::get('racelist', ListRace::class)->name('race.list');
-    Route::get('racecreate', CreateRace::class)->name('race.create');
-    Route::get('raceedit/{id}', EditRace::class)->name('race.edit');
-
-    //Admin > Maintenance > Religion
-    Route::get('religion', religion::class)->name('religion');
-    Route::get('religioncreate', religioncreate::class)->name('religioncreate');
-    Route::get('religionedit/{id}', religionedit::class)->name('religionedit');
-    Route::get('delete/{id}', religion::class)->name('delete');
-
-    //Admin > Maintenance > State
-    Route::get('state', state::class)->name('state');
-    Route::get('statecreate', statecreate::class)->name('statecreate');
-    Route::get('statenedit/{id}', stateedit::class)->name('stateedit');
-    Route::get('delete/{id}', state::class)->name('delete');
-
-    //Admin > Maintenance > Gender
-    Route::get('gender', gender::class)->name('gender');
-    Route::get('gendercreate', gendercreate::class)->name('gendercreate');
-    Route::get('gendernedit/{id}', genderedit::class)->name('genderedit');
-    Route::get('delete/{id}', gender::class)->name('delete');
-
-    //Admin > Maintenance > Relationship
-    Route::get('relationshiplist', ListRelationship::class)->name('relationship.list');
-    Route::get('relationshipcreate', CreateRelationship::class)->name('relationship.create');
-    Route::get('relationshipedit/{id}', EditRelationship::class)->name('relationship.edit');
-
-    //Admin > Maintenance > Marital
-    Route::get('maritallist', ListMarital::class)->name('marital.list');
-    Route::get('maritalcreate', CreateMarital::class)->name('marital.create');
-    Route::get('maritaledit/{id}', EditMarital::class)->name('marital.edit');
-
-    //customers
-    Route::get('searchcustomer', SearchCustomer::class)->name('searchcustomer');
-    Route::get('edit/{id}', EditCustomer::class)->name('edit');
-
-    //------------------------Reporting------------------------------//
+    //----------------------- Reporting ------------------------------------//
     //Report > Sample
     Route::get('list-reporting', ListReport::class)->name('list-reporting');
     Route::get('user-reporting', UserReporting::class)->name('user-reporting');
+    //----------------------- End Reporting --------------------------------//
+
 });
 
 //-------------- component doc -------------------//
