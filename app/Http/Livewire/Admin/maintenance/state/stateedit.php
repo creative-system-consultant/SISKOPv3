@@ -23,16 +23,18 @@ class stateedit extends Component
         $RefState = RefState::where('id', $id)->first();
         
         $RefState->update([
-            'description'     => $this->description,
-            'code'            => $this->code,
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
+            'updated_at'      => now(),
+            'updated_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'State Details Updated');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('state');
+        return redirect()->route('state.list');
     }
 
     public function  loadUser($id)

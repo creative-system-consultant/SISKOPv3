@@ -23,7 +23,7 @@ class gender extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('gender');
+        return redirect()->route('gender.list');
     }
 
     public function render()

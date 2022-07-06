@@ -20,16 +20,18 @@ class religioncreate extends Component
         ]);
 
         $RefBank = RefReligion::create([
-            'description'       => $this->description,
-            'code'              => $this->code,
-            'status'            => $this->status == true ? '1' : '0',
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
+            'status'          => $this->status == true ? '1' : '0',
+            'created_at'      => now(),
+            'created_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Religion Information Created');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('religion');
+        return redirect()->route('religion.list');
     }
 
     public function render()

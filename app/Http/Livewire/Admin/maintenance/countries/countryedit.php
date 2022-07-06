@@ -23,16 +23,18 @@ class countryedit extends Component
         $RefCountry = RefCountry::where('id', $id)->first();
         
         $RefCountry->update([
-            'description'     => $this->description,
-            'code'            => $this->code,
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
+            'updated_at'      => now(),
+            'updated_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Country Details Updated');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('country');
+        return redirect()->route('country.list');
     }
 
     public function  loadUser($id)

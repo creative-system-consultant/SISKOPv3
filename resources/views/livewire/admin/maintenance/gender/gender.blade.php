@@ -24,10 +24,10 @@
                             {{ $loop->iteration }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            {{ Str::upper(Str::limit($gender->description,110)) }}
+                            {{ $gender->description }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            {{ Str::upper(Str::limit($gender->code,110)) }}
+                            {{ $gender->code }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
                             {{ $gender->status }}

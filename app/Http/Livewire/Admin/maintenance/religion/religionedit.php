@@ -23,16 +23,18 @@ class religionedit extends Component
         $RefReligion = RefReligion::where('id', $id)->first();
         
         $RefReligion->update([
-            'description'     => $this->description,
-            'code'            => $this->code,
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
+            'updated_at'      => now(),
+            'updated_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Religion Details Updated');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('religion');
+        return redirect()->route('religion.list');
     }
 
     public function  loadUser($id)

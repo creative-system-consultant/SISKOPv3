@@ -22,9 +22,11 @@ class EditRace extends Component
         $race = RefRace::where('id', $id)->first(); 
 
         $race->update([
-            'description' => $this->race_description,
-            'code'        => $this->race_code,
+            'description' => trim(strtoupper($this->race_description)),
+            'code'        => trim(strtoupper($this->race_code)),
             'status'      => $this->race_status == true ? '1' : '0',
+            'updated_at'  => now(),
+            'updated_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Race Edited');
@@ -52,6 +54,6 @@ class EditRace extends Component
 
     public function render()
     {
-        return view ('maintenance.race.edit')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.race.edit')->extends('layouts.head');
     }
 }

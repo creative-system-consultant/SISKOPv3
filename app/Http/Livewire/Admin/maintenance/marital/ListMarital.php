@@ -29,7 +29,7 @@ class ListMarital extends Component
 
     public function render()
     {
-        return view ('maintenance.marital.index')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.marital.index')->extends('layouts.head');
     }
 
 }

@@ -23,16 +23,18 @@ class genderedit extends Component
         $RefGender = RefGender::where('id', $id)->first();
         
         $RefGender->update([
-            'description'     => $this->description,
-            'code'            => $this->code,
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
+            'updated_at'      => now(),
+            'updated_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Gender Details Updated');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('gender');
+        return redirect()->route('gender.list');
     }
 
     public function  loadUser($id)

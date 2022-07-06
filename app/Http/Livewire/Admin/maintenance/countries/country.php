@@ -23,7 +23,7 @@ class country extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('country');
+        return redirect()->route('country.list');
     }
 
     public function render()

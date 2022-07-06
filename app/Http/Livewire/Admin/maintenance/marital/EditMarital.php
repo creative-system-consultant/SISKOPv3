@@ -22,9 +22,11 @@ class EditMarital extends Component
         $marital = RefMarital::where('id', $id)->first(); 
 
         $marital->update([
-            'description' => $this->marital_description,
-            'code'        => $this->marital_code,
-            'status'      => $this->marital_status == true ? '1' : '0',
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
+            'status'          => $this->status == true ? '1' : '0',
+            'updated_at'      => now(),
+            'updated_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Marital Edited');
@@ -52,6 +54,6 @@ class EditMarital extends Component
 
     public function render()
     {
-        return view ('maintenance.marital.edit')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.marital.edit')->extends('layouts.head');
     }
 }

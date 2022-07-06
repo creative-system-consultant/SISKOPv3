@@ -29,7 +29,7 @@ class ListRelationship extends Component
 
     public function render()
     {
-        return view ('maintenance.relationship.index')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.relationship.index')->extends('layouts.head');
     }
 
 }

@@ -20,16 +20,18 @@ class countrycreate extends Component
         ]);
 
         $RefCountry = RefCountry::create([
-            'description'       => $this->description,
-            'code'              => $this->code,
-            'status'            => $this->status == true ? '1' : '0',
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
+            'status'          => $this->status == true ? '1' : '0',
+            'created_at'      => now(),
+            'created_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Country Information Created');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('country');
+        return redirect()->route('country.list');
     }
 
     public function render()

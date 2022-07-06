@@ -20,9 +20,11 @@ class CreateRelationship extends Component
         ]);
 
         $relationship = RefRelationship::create([
-            'description' => $this->relationship_description,
-            'code'        => $this->relationship_code,
+            'description' => trim(strtoupper($this->relationship_description)),
+            'code'        => trim(strtoupper($this->relationship_code)),
             'status'      => $this->relationship_status == true ? '1' : '0',
+            'created_at'  => now(),
+            'created_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Relationship Created');
@@ -34,6 +36,6 @@ class CreateRelationship extends Component
 
     public function render()
     {
-        return view ('maintenance.relationship.create')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.relationship.create')->extends('layouts.head');
     }
 }

@@ -23,7 +23,7 @@ class bank extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('bank');
+        return redirect()->route('bank.list');
     }
 
     public function render()
