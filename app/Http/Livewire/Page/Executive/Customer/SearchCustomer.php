@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\customers;
+namespace App\Http\Livewire\Page\Executive\Customer;
 
 use Livewire\Component;
 use App\Models\Customer;
