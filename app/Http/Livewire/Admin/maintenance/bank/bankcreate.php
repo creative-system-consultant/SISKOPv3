@@ -20,16 +20,18 @@ class bankcreate extends Component
         ]);
 
         $RefBank = RefBank::create([
-            'description'       => $this->description,
-            'code'              => $this->code,
-            'status'            => $this->status == true ? '1' : '0',
+            'description'     => trim(strtoupper($this->description)),
+            'code'            => trim(strtoupper($this->code)),
+            'status'          => $this->status == true ? '1' : '0',
+            'created_at'      => now(),
+            'created_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Bank Information Created');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('bank');
+        return redirect()->route('bank.list');
     }
 
     public function render()

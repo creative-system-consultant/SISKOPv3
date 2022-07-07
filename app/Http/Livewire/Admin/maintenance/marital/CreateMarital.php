@@ -20,9 +20,11 @@ class CreateMarital extends Component
         ]);
 
         $marital = RefMarital::create([
-            'description' => $this->marital_description,
-            'code'        => $this->marital_code,
+            'description' => trim(strtoupper($this->marital_description)),
+            'code'        => trim(strtoupper($this->marital_code)),
             'status'      => $this->marital_status == true ? '1' : '0',
+            'created_at'  => now(),
+            'created_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Marital Created');
@@ -34,6 +36,6 @@ class CreateMarital extends Component
 
     public function render()
     {
-        return view ('maintenance.marital.create')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.marital.create')->extends('layouts.head');
     }
 }

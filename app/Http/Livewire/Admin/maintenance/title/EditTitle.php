@@ -22,9 +22,11 @@ class EditTitle extends Component
         $title = RefCustTitle::where('id', $id)->first();
 
         $title->update([
-            'description' => $this->title_description,
-            'code'        => $this->title_code,
+            'description' => trim(strtoupper($this->title_description)),
+            'code'        => trim(strtoupper($this->title_code)),
             'status'      => $this->title_status == true ? '1' : '0',
+            'updated_at'  => now(),
+            'updated_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Title Edited');
@@ -52,6 +54,6 @@ class EditTitle extends Component
 
     public function render()
     {
-        return view ('maintenance.title.edit')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.title.edit')->extends('layouts.head');
     }
 }

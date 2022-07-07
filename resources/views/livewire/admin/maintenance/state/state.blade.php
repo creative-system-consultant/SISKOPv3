@@ -5,7 +5,7 @@
             <x-swall.success message="{{ session('message') }}"/>
         @endif
 
-        <a href="{{route('statecreate')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
+        <a href="{{route('state.create')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
             <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
             Add
         </a>
@@ -24,14 +24,14 @@
                             {{ $loop->iteration }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            {{ Str::upper(Str::limit($state->description,110)) }}                        </x-table.table-body>
+                            {{ $state->description }}                        </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            {{ Str::upper(Str::limit($state->code,110)) }}                        </x-table.table-body>
+                            {{ $state->code }}                        </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
                             {{ $state->status }}
                         </x-table.table-body>              
                         <x-table.table-body colspan="" class="text-left">
-                            <a href="{{route('stateedit',$state->id)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
+                            <a href="{{route('state.edit',$state->id)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
                                 <x-heroicon-o-pencil-alt class="w-4 h-4 mr-2"/>
                                 Edit
                             </a>

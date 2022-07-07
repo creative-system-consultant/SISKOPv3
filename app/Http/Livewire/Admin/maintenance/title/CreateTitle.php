@@ -20,9 +20,11 @@ class CreateTitle extends Component
         ]);
 
         $title = RefCustTitle::create([
-            'description' => $this->title_description,
-            'code'        => $this->title_code,
+            'description' => trim(strtoupper($this->title_description)),
+            'code'        => trim(strtoupper($this->title_code)),
             'status'      => $this->title_status == true ? '1' : '0',
+            'created_at'  => now(),
+            'created_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Title Created');
@@ -34,6 +36,6 @@ class CreateTitle extends Component
 
     public function render()
     {
-        return view ('maintenance.title.create')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.title.create')->extends('layouts.head');
     }
 }

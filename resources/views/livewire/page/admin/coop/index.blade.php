@@ -1,7 +1,7 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">COOP Maintenance</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <a href="{{route('CoopCreate')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
+        <a href="{{route('coop.create')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
             <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
             Add
         </a>

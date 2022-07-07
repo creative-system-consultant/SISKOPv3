@@ -29,7 +29,7 @@ class ListRace extends Component
 
     public function render()
     {
-        return view ('maintenance.race.index')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.race.index')->extends('layouts.head');
     }
 
 }

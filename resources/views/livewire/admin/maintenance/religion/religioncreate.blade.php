@@ -1,7 +1,7 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Religion Maintenance > Create</h1>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-            <x-general.header-title title="Religion Create Information" route="{{route('religion')}}"/>
+            <x-general.header-title title="Religion Create Information" route="{{route('religion.list')}}"/>
                     <x-form.basic-form wire:submit.prevent="submit" class="p-4">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                 <x-form.input

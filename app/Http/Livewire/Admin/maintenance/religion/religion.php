@@ -23,7 +23,7 @@ class religion extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('religion');
+        return redirect()->route('religion.list');
     }
 
     public function render()

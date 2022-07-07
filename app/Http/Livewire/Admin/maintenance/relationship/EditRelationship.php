@@ -22,9 +22,11 @@ class EditRelationship extends Component
         $race = RefRelationship::where('id', $id)->first(); 
 
         $race->update([
-            'description' => $this->relationship_description,
-            'code'        => $this->relationship_code,
+            'description' => trim(strtoupper($this->relationship_description)),
+            'code'        => trim(strtoupper($this->relationship_code)),
             'status'      => $this->relationship_status == true ? '1' : '0',
+            'updated_at'  => now(),
+            'updated_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Relationship Edited');
@@ -52,6 +54,6 @@ class EditRelationship extends Component
 
     public function render()
     {
-        return view ('maintenance.relationship.edit')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.relationship.edit')->extends('layouts.head');
     }
 }

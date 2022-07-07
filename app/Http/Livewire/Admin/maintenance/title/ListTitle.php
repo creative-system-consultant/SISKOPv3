@@ -29,7 +29,7 @@ class ListTitle extends Component
 
     public function render()
     {
-        return view ('maintenance.title.index')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.title.index')->extends('layouts.head');
     }
 
 }

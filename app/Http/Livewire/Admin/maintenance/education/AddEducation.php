@@ -20,9 +20,11 @@ class AddEducation extends Component
         ]);
 
         $education = RefEducation::create([
-            'description' => $this->edu_description,
-            'code'        => $this->edu_code,
+            'description' => trim(strtoupper($this->edu_description)),
+            'code'        => trim(strtoupper($this->edu_code)),
             'status'      => $this->edu_status == true ? '1' : '0',
+            'created_at'  => now(),
+            'created_by'  => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Education Created');
@@ -34,6 +36,6 @@ class AddEducation extends Component
 
     public function render()
     {
-        return view ('maintenance.education.create')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.education.create')->extends('layouts.head');
     }
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Admin\maintenance\coop;
+namespace App\Http\Livewire\Page\Admin\coop;
 
 use App\Models\Coop;
 use Livewire\Component;
-use App\Models\Ref\RefBank;
 
 class CoopAdmin extends Component
 {
@@ -24,12 +23,12 @@ class CoopAdmin extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('CoopIndex');
+        return redirect()->route('Coop.Index');
     }
 
     public function render()
     {
-        return view('livewire.admin.maintenance.coop.index')->extends('layouts.head');
+        return view('livewire.page.admin.coop.index')->extends('layouts.head');
     }
 }
 

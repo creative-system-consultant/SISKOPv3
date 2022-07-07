@@ -31,7 +31,7 @@ class ListEducation extends Component
 
     public function render()
     {
-        return view ('maintenance.education.index')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.education.index')->extends('layouts.head');
     }
 
 }

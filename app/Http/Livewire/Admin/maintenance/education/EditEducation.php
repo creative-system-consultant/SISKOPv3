@@ -22,9 +22,11 @@ class EditEducation extends Component
         $education = RefEducation::where('id', $id)->first();
 
         $education->update([
-            'description' => $this->edu_description,
-            'code'        => $this->edu_code,
-            'status'      => $this->edu_status == true ? '1' : '0',
+            'description'     => trim(strtoupper($this->edu_description)),
+            'code'            => trim(strtoupper($this->edu_code)),
+            'status'          => $this->status == true ? '1' : '0',
+            'updated_at'      => now(),
+            'updated_by'      => Auth()->user()->name,
         ]);
 
         session()->flash('message', 'Education Edited');
@@ -52,6 +54,6 @@ class EditEducation extends Component
 
     public function render()
     {
-        return view ('maintenance.education.edit')->extends('layouts.head');
+        return view ('livewire.admin.maintenance.education.edit')->extends('layouts.head');
     }
 }

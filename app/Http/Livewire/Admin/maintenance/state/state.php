@@ -23,7 +23,7 @@ class state extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('state');
+        return redirect()->route('state.list');
     }
 
     public function render()

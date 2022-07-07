@@ -5,7 +5,7 @@
             <x-swall.success message="{{ session('message') }}"/>
         @endif
 
-        <a href="{{route('countrycreate')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
+        <a href="{{route('country.create')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
             <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
             Add
         </a>
@@ -24,16 +24,16 @@
                             {{ $loop->iteration }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            {{ Str::upper(Str::limit($country->description,110)) }}
+                            {{ $country->description }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            {{ Str::upper(Str::limit($country->code,110)) }}
+                            {{ $country->code }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
                             {{ $country->status }}
                         </x-table.table-body>              
                         <x-table.table-body colspan="" class="text-left">
-                            <a href="{{route('countryedit',$country->id)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
+                            <a href="{{route('country.edit',$country->id)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
                                 <x-heroicon-o-pencil-alt class="w-4 h-4 mr-2"/>
                                 Edit
                             </a>

@@ -12,29 +12,30 @@ class SearchCustomer extends Component
     public $customers = [];
     public $searchby;
     public $search;
-    // public $result;
-    // public $cust;
 
     public function mount()
     {
-        $this->customers = Customer::all();
+        // $this->customers = Customer::all();
     }
 
     public function search()
     {
-        // $this->result = true;
-        // $this->cust = false;
 
         // dd($this->search);
         $this->validate([
             'searchby'   => ['required'],
             'search'     => ['required', 'string'], 
         ]);
-        
 
-        $this->customers = Customer::where('name', 'like', '%' .$this->search. '%')
-        ->orwhere('icno', 'like', '%' .$this->search. '%')->get();
-        $this->render();
+        if ($this->searchby == 'name'){
+            $this->customers = Customer::where('name', 'like', '%' .$this->search. '%')->get();
+        }
+        else if (($this->searchby == 'icno') ){
+            $this->customers = Customer::where('icno', 'like', '%' .$this->search. '%')->get();
+        }
+        else {
+            [];
+        }
         
     }
 
