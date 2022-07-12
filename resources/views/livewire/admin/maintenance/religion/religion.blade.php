@@ -7,7 +7,7 @@
 
         <a href="{{route('religion.create')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
             <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
-            Add
+            Create
         </a>
         <x-table.table>
             <x-slot name="thead">
