@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="pt-6 rounded-md">
-            <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Search Result</h2>
+            <x-general.header-title title="Search Result" route=""/>  
             <x-table.table>
                 <x-slot name="thead">
                     <x-table.table-header class="text-left " value="No" sort="" />
