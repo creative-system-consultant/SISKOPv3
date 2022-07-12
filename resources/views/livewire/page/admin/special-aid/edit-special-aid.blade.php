@@ -2,11 +2,10 @@
     <h1 class="text-base font-semibold md:text-2xl">Special Aid List > Edit</h1>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
             <x-general.header-title title="Edit Special Aid" route="{{route('special_aid.list')}}"/>
-                 
             <div class="pt-4 bg-white ">    
-                <div class="pl-4 pb-4 pr-4">
+                <div class="pb-4 pl-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit('{{ $specialAid->uuid }}')">
-                        <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
+                        <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
                                 <x-form.input 
@@ -27,7 +26,7 @@
     
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                             <div class="flex items-center w-full mt-3">
-                                <label for="enable_applyAmt" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                <label for="enable_applyAmt" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
                                     Enabled Apply Amount 
                                 </label>
                                 <label for="enabled_apply_amt" class="flex items-center cursor-pointer">                                
@@ -132,13 +131,13 @@
                             </div>
                         </div>
 
-                        <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
+                        <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
                         <button wire:click.prevent="createField" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                             Add Field
                         </button>
                         <div id="fields">
                         @foreach($Fname as $index => $list )
-                            <div class="mt-6 grid grid-cols-12 gap-6">
+                            <div class="grid grid-cols-12 gap-6 mt-6">
                                 @php if ($Fstatus[$index] == false ){ $status = 'true';} else { $status = 'false'; } @endphp
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
                                     <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="" mandatory="" disable="{{ $status }}" type="text" wire:model.debounce.500ms="Flabel.{{ $index }}"/>
@@ -160,7 +159,7 @@
                                     </x-form.dropdown>
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
-                                    <label for="field_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                    <label for="field_status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
                                         Enable
                                     </label>
                                     <div class="flex items-center w-full mt-2">
@@ -180,7 +179,7 @@
                                     </div>
                                 </div>  
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
-                                    <label for="field_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                    <label for="field_status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
                                         Required
                                     </label>
                                     <div class="flex items-center w-full mt-2">
@@ -200,7 +199,7 @@
                                     </div>
                                 </div> 
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
-                                    <div class="pt-4 mt-3 rounded-md justify-end">
+                                    <div class="justify-end pt-4 mt-3 rounded-md">
                                         <button wire:click.prevent="alertDelete('{{ $specialAid->uuid }}', '{{ $index }}')" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                                             Delete
                                         </button>
