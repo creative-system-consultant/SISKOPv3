@@ -9,7 +9,7 @@
 
 @if($type == 1 )
 <li class="relative px-4 py-2" x-data="{ {{$active}}:  @if(\Request::is($uri)) true @else false @endif }">
-    <div class="flex justify-center px-2 py-2 bg-gray-100 rounded-md shadow-sm">
+    <div class="flex justify-center ">
         <div 
             class="inline-flex items-center justify-between w-full text-lg font-semibold  
             cursor-pointer
@@ -25,7 +25,9 @@
                 @else
                     text-gray-600 hover:text-primary-800
                 @endif">
-                {{ $icon }}
+                <div class="px-2 py-2 bg-white rounded-md shadow-md">
+                    {{ $icon }}
+                </div>
                 <span class="ml-4 text-xs uppercase lg:text-sm">{{$title}}</span>
             </a>
             <div class="invisible ml-4 text-xs">aa</div>

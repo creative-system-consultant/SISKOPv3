@@ -1,4 +1,4 @@
-<header class="relative py-2 bg-primary-800" >
+<header class="relative py-2 bg-gradient-to-r from-primary-600 to-primary-700" >
     <div class="flex items-center justify-between px-6 mx-auto">
         <div class="flex items-center space-x-0 ">
             <!-- Mobile hamburger -->
@@ -8,17 +8,17 @@
             </button>
 
             <!-- Desktop hamburger -->
-            <div class="hidden sm:block" >
-                <div class="flex justify-center px-2 py-1 rounded-md bg-primary-600 hover:bg-primary-700">
+            <div class="hidden md:block" >
+                <div class="flex justify-center px-2 py-1 rounded-md bg-primary-800 hover:bg-primary-700" @click="toggleSideMenuDesktop">
                     <button class="p-1 -ml-1 rounded-md focus:outline-none"
-                        @click="toggleSideMenuDesktop" aria-label="Menu">
+                            aria-label="Menu">
                         <x-heroicon-o-menu-alt-1  x-show="isSideMenuOpenDesktop" class="w-6 h-6 text-white" x-cloak />
                         <x-heroicon-o-menu  x-show="!isSideMenuOpenDesktop" class="w-6 h-6 text-white"  x-cloak/>
                     </button>
                 </div>
             </div>
             <div class="flex justify-center pl-4 text-white">
-                <p class="text-xl italic font-semibold uppercase">{{ config('app.name') }}</p>
+                <p class="text-sm italic font-semibold uppercase md:text-xl">{{ config('app.name') }}</p>
             </div>
         </div>
         <ul class="flex items-center flex-shrink-0 space-x-4">
@@ -57,8 +57,8 @@
                     class="p-2 text-white align-middle rounded-md focus:outline-none "
                     @click="open=!open" @keydown.escape="open=false" aria-haspopup="true">
                     <div class="flex items-center space-x-2">
-                        <img class="w-10 h-10 rounded-full" src="{{asset('img/defaultUser.png')}}" alt="Rounded avatar">
-                        <p>USER</p>
+                        <img class="w-10 h-10 border-2 rounded-full border-primary-600" src="{{asset('img/defaultUser.png')}}" alt="Rounded avatar">
+                        <p class="text-sm uppercase">{{auth()->user()->name}}</p>
                     </div>
                 </button>
                 <div x-show="open" x-cloak>
