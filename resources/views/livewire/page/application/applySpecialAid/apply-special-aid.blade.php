@@ -1,13 +1,12 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Special Aid</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <div class="pt-4 bg-white ">
+        <x-general.header-title title="Information" route=""/>    
+        <div class="p-4">
             @if (session('success'))
                 <x-swall.success message="{{ session('message') }}"/>
             @endif
-            
-            <div class="pl-4 pb-4 pr-4" x-data="{isShowing: '' }">
-                <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
+            <div x-data="{isShowing: '' }">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                     <div>
                         <x-form.dropdown 
@@ -45,7 +44,7 @@
                                         <p class="mt-2 text-sm text-red-600">{{ session('nameError') }}</p>
                                     @endif
                                 </div>
-        
+
                                 @php if ($listField->apply_amt_enable == 0) {$isDisabled = 'true';} else{$isDisabled = 'false';} @endphp
                                 <div>                            
                                     <x-form.input-tag                 
@@ -104,4 +103,3 @@
         </div>
     </div>
 </div>
-       
