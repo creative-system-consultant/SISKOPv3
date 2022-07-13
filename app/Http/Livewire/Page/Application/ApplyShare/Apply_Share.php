@@ -23,7 +23,9 @@ class Apply_Share extends Component
     public $cheque_no;
     public $cheque_date;
     public $banks;
-    public $share;
+
+    //Need protected $listerners to run the Livewire.emit event
+    protected $listeners = ['submit'];    
 
     protected $rules = [
         'cust.name'       => 'required',
@@ -31,17 +33,17 @@ class Apply_Share extends Component
         'cust.share'      => 'required',
         'share_apply'     => 'required|numeric',
         'pay_method'      => 'required',
-        'online_date'     => 'required_if:payment_method,==,online',
-        'online_file'     => 'required_if:payment_method,==,online',
-        'cdm_date'        => 'required_if:payment_method,==,cash',
-        'cdm_file'        => 'required_if:payment_method,==,cash',
-        'cheque_no'       => 'required_if:payment_method,==,cheque',
-        'cheque_date'     => 'required_if:payment_method,==,cheque',
+        'online_date'     => 'required_if:pay_method,==,online',
+        'online_file'     => 'required_if:pay_method,==,online',
+        'cdm_date'        => 'required_if:pay_method,==,cash',
+        'cdm_file'        => 'required_if:pay_method,==,cash',
+        'cheque_no'       => 'required_if:pay_method,==,cheque',
+        'cheque_date'     => 'required_if:pay_method,==,cheque',
     ];
     
     protected $messages = [
         'share_apply.required'        => ':attribute field is required',
-        'payment_method.required'     => ':attribute field is required',
+        'pay_method.required'         => ':attribute is required',
         'online_date.required_if'     => ':attribute field is required',
         'online_file.required_if'     => ':attribute field is required',
         'cdm_date.required_if'        => ':attribute field is required',
@@ -65,12 +67,19 @@ class Apply_Share extends Component
     {
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
+        $share = share::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
 
         $this->validate();
+
+        if ($this->share_apply == 0) {
+            session()->flash('message', 'Application must be more than RM0');
+            session()->flash('warning');
+            session()->flash('title');
+
+            return redirect()->route('share.apply');
+        }
         
-        $share = share::create([
-            'coop_id'      => $customer->coop_id,
-            'cust_id'      => $customer->id,
+        $share->update([
             'method'       => $this->pay_method,
             'online_date'  => $this->online_date ??= NULL,
             'cdm_date'     => $this->cdm_date ??= NULL,
@@ -135,6 +144,14 @@ class Apply_Share extends Component
             return redirect()->route('home');              
         }   
     }
+    
+    public function alertConfirm()
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type'      => 'warning',  
+            'text'      => 'Are you sure you want to apply for add share?',
+        ]);   
+    }
 
     public function restricApply($id)
     {
@@ -155,20 +172,21 @@ class Apply_Share extends Component
         $this->cust = Customer::where('icno', $user->icno)->first();
         $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
         
-        $this->share = share::where('cust_id', $this->cust->id)->firstOrCreate([
+        $share = share::where('cust_id', $this->cust->id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
             'amt_before'  => $this->cust->share,
-            'apply_amt'   => '0.00',
             'flag'        => 0, 
             'step'        => 0
+        ], [
+            'apply_amt'   => '0.00',        
         ]);
 
-        $this->share_apply = $this->share?->apply_amt;
-        $this->online_date = $this->share?->online_date?->format('Y-m-d');
-        $this->cdm_date = $this->share?->cdm_date?->format('Y-m-d');
-        $this->cheque_no = $this->share?->cheque_no;
-        $this->cheque_date = $this->share?->cheque_date?->format('Y-m-d');
+        $this->share_apply = $share->apply_amt;
+        $this->online_date = $share?->online_date?->format('Y-m-d');
+        $this->cdm_date = $share?->cdm_date?->format('Y-m-d');
+        $this->cheque_no = $share?->cheque_no;
+        $this->cheque_date = $share?->cheque_date?->format('Y-m-d');
 
         $this->restricApply($this->cust->id);
     }

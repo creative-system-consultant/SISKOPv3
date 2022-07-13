@@ -37,7 +37,7 @@
             </div>
 
             <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
-            <x-form.basic-form wire:submit.prevent="submit" x-data="{isSelect : '', show: false }">
+            <x-form.basic-form wire:submit.prevent="alertConfirm" x-data="{isSelect : '', show: false }">
                 <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.input-tag 
@@ -45,7 +45,6 @@
                             type="text"
                             name="share_apply" 
                             value=""
-                            placeholder="0.00"
                             leftTag="RM"
                             rightTag=""
                             mandatory=""
@@ -224,4 +223,21 @@
         </div>
     </div>
 </div>
+
+@push('js')
+<script>
+    window.addEventListener('swal:confirm', event => { 
+        swal.fire({
+            icon: event.detail.type,
+            title: event.detail.text,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel'
+        }).then(function(result){
+            if(result.isConfirmed){
+                window.Livewire.emit('submit');
+            }
+        });
+    });    
+</script>
+@endpush
          

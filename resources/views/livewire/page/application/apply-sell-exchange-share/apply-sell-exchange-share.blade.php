@@ -37,9 +37,9 @@
             </div>
 
             <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
-            <x-form.basic-form wire:submit.prevent="submit" x-data="{types: '', selected: false}">
-                <div class="grid grid-cols-1 gap-6 mb-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                    <div>
+            <x-form.basic-form wire:submit.prevent="alertConfirm" x-data="{types: '', selected: false}">
+                <div class="grid grid-cols-12 gap-6">
+                    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.input-tag 
                             label="Reimbursement of Share Capital applied" 
                             type="text"
@@ -57,45 +57,144 @@
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-                    
-                    <div>
+                        
+                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.dropdown 
-                            label="Bank"
+                            label="Types of Share Reimbursement"
                             value=""
-                            name="bank_name" 
-                            id="bank_name"
+                            name="share_type" 
+                            id="share_type"
                             mandatory=""
                             disable=""
-                            default="yes"  
-                            wire:model.defer="bank_name"
+                            default="yes"
+                            x-model="types"
+                            wire:model="share_type"
                             >
-                            @foreach ($banks as $bank)
-                                <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
-                            @endforeach
-                        </x-form.dropdown>    
+                            <option value="coop">To Corporation </option>
+                            <option value="mbr">To Member</option>
+                        </x-form.dropdown>         
                         
-                        @error('bank_name')
+                        @error('share_type')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
+                                                        
+                <div  x-cloak x-show="types == 'coop' ? selected = true : selected = false">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                        <div>
+                            <x-form.dropdown 
+                                label="Bank"
+                                value=""
+                                name="bank_name" 
+                                id="bank_name"
+                                mandatory=""
+                                disable=""
+                                default="yes"  
+                                wire:model.defer="bank_name"
+                                >
+                                @foreach ($banks as $bank)
+                                    <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
+                                @endforeach
+                            </x-form.dropdown>    
+                            
+                            @error('bank_name')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <div>
-                        <x-form.input 
-                            label="Account Bank No." 
-                            name="bank_account" 
-                            id="bank_account"
-                            value="" 
-                            mandatory=""
-                            disable=""
-                            type="text"
-                            wire:model.defer="bank_account"
-                        />             
+                        <div>
+                            <x-form.input 
+                                label="Account Bank No." 
+                                name="bank_account" 
+                                id="bank_account"
+                                value="" 
+                                mandatory=""
+                                disable=""
+                                type="text"
+                                wire:model.defer="bank_account"
+                            />             
+                            
+                            @error('bank_account')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>     
+                </div>
+
+                <div  x-cloak x-show="types == 'mbr' ? selected = true : selected = false">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">                        
+                        <div>
+                            <x-form.input 
+                                label="Member IC No." 
+                                name="mbr_icno" 
+                                value=""                     
+                                mandatory=""
+                                disable=""
+                                type="text"
+                                wire:model.debounce.1000ms="mbr_icno"                            
+                            />  
+                            
+                            @error('mbr_icno')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>   
                         
-                        @error('bank_account')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>     
+                        <div>
+                            <x-form.input 
+                                label="Member Name" 
+                                name="mbr_name" 
+                                value="" 
+                                mandatory=""
+                                disable="true"
+                                type="text"
+                                wire:model="mbr_name"                                
+                            />  
+                                                        
+                            @error('mbr_name')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <x-form.dropdown 
+                                label="Bank"
+                                value=""
+                                name="bank_code" 
+                                id="bank_code"
+                                mandatory=""
+                                disable=""
+                                default="yes"  
+                                wire:model.defer="bank_code"
+                                >
+                                @foreach ($banks as $bank)
+                                    <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
+                                @endforeach
+                            </x-form.dropdown>    
+                            
+                            @error('bank_code')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <x-form.input 
+                                label="Account Bank No." 
+                                name="bank_acct" 
+                                id="bank_acct"
+                                value="" 
+                                mandatory=""
+                                disable=""
+                                type="text"
+                                wire:model.defer="bank_acct"
+                            />             
+                            
+                            @error('bank_acct')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>     
+                </div>
                 
                 <div class="p-4 mt-6 rounded-md bg-gray-50">
                     <div class="flex items-center justify-center space-x-2">
@@ -109,3 +208,19 @@
     </div>
 </div>
          
+@push('js')
+<script>
+    window.addEventListener('swal:confirm', event => { 
+        swal.fire({
+            icon: event.detail.type,
+            title: event.detail.text,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel'
+        }).then(function(result){
+            if(result.isConfirmed){
+                window.Livewire.emit('submit');
+            }
+        });
+    });    
+</script>
+@endpush
