@@ -3,36 +3,36 @@
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\RedirectController;
-use App\Http\Livewire\Admin\Maintenance\Bank\bank;
-use App\Http\Livewire\Admin\Maintenance\Bank\bankcreate;
-use App\Http\Livewire\Admin\Maintenance\Bank\bankedit;
-use App\Http\Livewire\Admin\Maintenance\countries\country;
-use App\Http\Livewire\Admin\Maintenance\countries\countrycreate;
-use App\Http\Livewire\Admin\Maintenance\countries\countryedit;
-use App\Http\Livewire\admin\maintenance\education\AddEducation;
-use App\Http\Livewire\admin\maintenance\education\EditEducation;
-use App\Http\Livewire\admin\maintenance\education\ListEducation;
-use App\Http\Livewire\Admin\Maintenance\gender\gender;
-use App\Http\Livewire\Admin\Maintenance\gender\gendercreate;
-use App\Http\Livewire\Admin\Maintenance\gender\genderedit;
-use App\Http\Livewire\Admin\maintenance\marital\CreateMarital;
-use App\Http\Livewire\Admin\maintenance\marital\EditMarital;
-use App\Http\Livewire\Admin\maintenance\marital\ListMarital;
-use App\Http\Livewire\admin\maintenance\race\CreateRace;
-use App\Http\Livewire\admin\maintenance\race\EditRace;
-use App\Http\Livewire\admin\maintenance\race\ListRace;
-use App\Http\Livewire\Admin\Maintenance\religion\religion;
-use App\Http\Livewire\Admin\Maintenance\religion\religioncreate;
-use App\Http\Livewire\Admin\Maintenance\religion\religionedit;
-use App\Http\Livewire\Admin\Maintenance\state\state;
-use App\Http\Livewire\Admin\Maintenance\state\statecreate;
-use App\Http\Livewire\Admin\Maintenance\state\stateedit;
-use App\Http\Livewire\admin\maintenance\title\CreateTitle;
-use App\Http\Livewire\admin\maintenance\title\EditTitle;
-use App\Http\Livewire\admin\maintenance\title\ListTitle;
-use App\Http\Livewire\Admin\maintenance\relationship\CreateRelationship;
-use App\Http\Livewire\Admin\maintenance\relationship\EditRelationship;
-use App\Http\Livewire\Admin\maintenance\relationship\ListRelationship;
+use App\Http\Livewire\Page\Admin\Maintenance\Bank\BankList;
+use App\Http\Livewire\Page\Admin\Maintenance\Bank\BankCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Bank\BankEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryList;
+use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Education\EducationList;
+use App\Http\Livewire\Page\Admin\Maintenance\Education\EducationCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Education\EducationEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Gender\GenderList;
+use App\Http\Livewire\Page\Admin\Maintenance\Gender\GenderCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Gender\GenderEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Marital\MaritalList;
+use App\Http\Livewire\Page\Admin\Maintenance\Marital\MaritalCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Marital\MaritalEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Race\RaceList;
+use App\Http\Livewire\Page\Admin\Maintenance\Race\RaceCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Race\RaceEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Religion\ReligionList;
+use App\Http\Livewire\Page\Admin\Maintenance\Religion\ReligionCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Religion\ReligionEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\State\StateList;
+use App\Http\Livewire\Page\Admin\Maintenance\State\StateCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\State\StateEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Title\TitleList;
+use App\Http\Livewire\Page\Admin\Maintenance\Title\TitleCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Title\TitleEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Relationship\RelationshipList;
+use App\Http\Livewire\Page\Admin\Maintenance\Relationship\RelationshipCreate;
+use App\Http\Livewire\Page\Admin\Maintenance\Relationship\RelationshipEdit;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -54,8 +54,8 @@ use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
-use App\Http\Livewire\customers\SearchCustomer;
-use App\Http\Livewire\customers\EditCustomer;
+use App\Http\Livewire\Page\Executive\Customer\SearchCustomer;
+use App\Http\Livewire\Page\Executive\Customer\EditCustomer;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\Apply_Sell_ExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\Apply_Share;
 
@@ -128,72 +128,72 @@ Route::middleware('auth')->group(function () {
 
         //Admin > Maintenance > Bank
         Route::prefix('bank')->group(function(){
-            Route::get('/', bank::class)->name('bank.list');
-            Route::get('create', bankcreate::class)->name('bank.create');
-            Route::get('edit/{id}', bankedit::class)->name('bank.edit');
+            Route::get('/', BankList::class)->name('bank.list');
+            Route::get('create', BankCreate::class)->name('bank.create');
+            Route::get('edit/{id}', BankEdit::class)->name('bank.edit');
         });
 
         //Admin > Maintenance > Education
         Route::prefix('education')->group(function(){
-            Route::get('/', ListEducation::class)->name('education.list');
-            Route::get('create', AddEducation::class)->name('education.create');
-            Route::get('edit/{id}', EditEducation::class)->name('education.edit');
+            Route::get('/', EducationList::class)->name('education.list');
+            Route::get('create', EducationCreate::class)->name('education.create');
+            Route::get('edit/{id}', EducationEdit::class)->name('education.edit');
         });
 
         //Admin > Maintenance > Country
         Route::prefix('country')->group(function(){
-            Route::get('/', country::class)->name('country.list');
-            Route::get('create', countrycreate::class)->name('country.create');
-            Route::get('edit/{id}', countryedit::class)->name('country.edit');
+            Route::get('/', CountryList::class)->name('country.list');
+            Route::get('create', CountryCreate::class)->name('country.create');
+            Route::get('edit/{id}', CountryEdit::class)->name('country.edit');
         });
 
         //Admin > Maintenance >  cust_title
         Route::prefix('title')->group(function(){
-            Route::get('/', ListTitle::class)->name('title.list');
-            Route::get('create', CreateTitle::class)->name('title.create');
-            Route::get('edit/{id}', EditTitle::class)->name('title.edit');
+            Route::get('/', TitleList::class)->name('title.list');
+            Route::get('create', TitleCreate::class)->name('title.create');
+            Route::get('edit/{id}', TitleEdit::class)->name('title.edit');
         });
 
         //Admin > Maintenance > race
         Route::prefix('race')->group(function(){
-            Route::get('/', ListRace::class)->name('race.list');
-            Route::get('create', CreateRace::class)->name('race.create');
-            Route::get('edit/{id}', EditRace::class)->name('race.edit');
+            Route::get('/', RaceList::class)->name('race.list');
+            Route::get('create', RaceCreate::class)->name('race.create');
+            Route::get('edit/{id}', RaceEdit::class)->name('race.edit');
         });
 
         //Admin > Maintenance > Religion
         Route::prefix('religion')->group(function(){
-            Route::get('/', religion::class)->name('religion.list');
-            Route::get('create', religioncreate::class)->name('religion.create');
-            Route::get('edit/{id}', religionedit::class)->name('religion.edit');
+            Route::get('/', ReligionList::class)->name('religion.list');
+            Route::get('create', ReligionCreate::class)->name('religion.create');
+            Route::get('edit/{id}', ReligionEdit::class)->name('religion.edit');
         });
 
         //Admin > Maintenance > State
         Route::prefix('state')->group(function(){
-            Route::get('/', state::class)->name('state.list');
-            Route::get('create', statecreate::class)->name('state.create');
-            Route::get('edit/{id}', stateedit::class)->name('state.edit');
+            Route::get('/', StateList::class)->name('state.list');
+            Route::get('create', StateCreate::class)->name('state.create');
+            Route::get('edit/{id}', StateEdit::class)->name('state.edit');
          });
 
         //Admin > Maintenance > Gender
         Route::prefix('gender')->group(function(){
-            Route::get('/', gender::class)->name('gender.list');
-            Route::get('create', gendercreate::class)->name('gender.create');
-            Route::get('edit/{id}', genderedit::class)->name('gender.edit');
+            Route::get('/', GenderList::class)->name('gender.list');
+            Route::get('create', GenderCreate::class)->name('gender.create');
+            Route::get('edit/{id}', GenderEdit::class)->name('gender.edit');
         });
 
         //Admin > Maintenance > Relationship
         Route::prefix('relationship')->group(function(){
-            Route::get('/', ListRelationship::class)->name('relationship.list');
-            Route::get('create', CreateRelationship::class)->name('relationship.create');
-            Route::get('edit/{id}', EditRelationship::class)->name('relationship.edit');
+            Route::get('/', RelationshipList::class)->name('relationship.list');
+            Route::get('create', RelationshipCreate::class)->name('relationship.create');
+            Route::get('edit/{id}', RelationshipEdit::class)->name('relationship.edit');
          });
 
         //Admin > Maintenance > Marital
         Route::prefix('marital')->group(function(){
-            Route::get('/', ListMarital::class)->name('marital.list');
-            Route::get('create', CreateMarital::class)->name('marital.create');
-            Route::get('edit/{id}', EditMarital::class)->name('marital.edit');
+            Route::get('/', MaritalList::class)->name('marital.list');
+            Route::get('create', MaritalCreate::class)->name('marital.create');
+            Route::get('edit/{id}', MaritalEdit::class)->name('marital.edit');
         });
         
     });
