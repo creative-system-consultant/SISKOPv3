@@ -4,20 +4,15 @@
         <x-general.header-title title="Religion Create Information" route="{{route('religion.list')}}"/>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                    <x-form.input
-                        label="Religion Name" 
-                        name="description" 
-                        value="" 
-                        mandatory=""
-                        disable=""
-                        type="text"
-                        
-                        wire:model.defer='description'    
-                    />
-                    @error('description')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                
+                <x-form.input
+                    label="Religion Name" 
+                    name="description" 
+                    value="" 
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    wire:model.defer='description'    
+                />
                 <div>
                     <x-form.input 
                         label="Code" 
@@ -26,12 +21,8 @@
                         mandatory=""
                         disable=""
                         type="text"
-                        
                         wire:model.defer='code'    
                     />
-                    @error('code')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
                 <div class="flex items-center w-full mt-3">
                     <label for="status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">

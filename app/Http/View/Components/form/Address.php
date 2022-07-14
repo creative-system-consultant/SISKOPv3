@@ -7,27 +7,40 @@ use Illuminate\View\Component;
 class Address extends Component
 {
     public $label;
-    public $value1;
-    public $value2;
-    public $value3;
-    public $value4;
-    public $value5;
-    public $value6;
+    public $name1;
+    public $name2;
+    public $name3;
+    public $name4;
+    public $name5;
+    public $name6;
     public $condition;
     public $state;
     public $mandatory;
+    public $disable;
 
-    public function __construct($label, $value1, $value2, $value3, $value4, $value5, $value6, $condition, $mandatory="false")
+    public function __construct(
+        $label, 
+        $name1,
+        $name2,
+        $name3,
+        $name4,
+        $name5,
+        $name6,
+        $condition, 
+        $mandatory="false",
+        $disable="false"
+    )
     {
         $this->label = $label;
-        $this->value1 = $value1;
-        $this->value2 = $value2;
-        $this->value3 = $value3;
-        $this->value4 = $value4;
-        $this->value5 = $value5;
-        $this->value6 = $value6;
+        $this->name1 = $name1;
+        $this->name2 = $name2;
+        $this->name3 = $name3;
+        $this->name4 = $name4;
+        $this->name5 = $name5;
+        $this->name6 = $name6;
         $this->condition = $condition;
         $this->mandatory = $mandatory;
+        $this->disable = $disable;
         // $this->state = RefState::all();
         $this->state = "";
     }

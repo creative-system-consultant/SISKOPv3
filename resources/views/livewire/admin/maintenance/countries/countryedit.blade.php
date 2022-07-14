@@ -13,9 +13,6 @@
                     disable=""
                     wire:model.defer="description"  
                 />      
-                @error('description')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
                 <div>
                     <x-form.input 
                         label="Code"
@@ -26,9 +23,6 @@
                         disable=""
                         wire:model.defer="code" 
                     /> 
-                    @error('code')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
 
                 <div class="flex items-center w-full mt-3">

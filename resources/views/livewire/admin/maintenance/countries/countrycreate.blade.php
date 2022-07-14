@@ -11,13 +11,8 @@
                         mandatory=""
                         disable=""
                         type="text"
-                        
                         wire:model.defer='description'    
                     />
-                    @error('description')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                
                 <div>
                     <x-form.input 
                         label="Code" 
@@ -26,12 +21,8 @@
                         mandatory=""
                         disable=""
                         type="text"
-                        
                         wire:model.defer='code'    
                     />
-                    @error('code')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
                 <div class="flex items-center w-full mt-3">
                     <label for="status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
@@ -51,9 +42,9 @@
                         </div>
                     </label>
                 </div>
-                    @error('status')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                @error('status')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
                 
             </div>
             <div class="p-4 mt-6 rounded-md bg-gray-50">

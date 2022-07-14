@@ -4,7 +4,7 @@
             <x-general.header-title title="Title List" route="{{route('title.list')}}"/>
 
             <div class="pt-4 bg-white ">
-                <div class="pl-4 pb-4 pr-4">
+                <div class="pb-4 pl-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
@@ -15,12 +15,8 @@
                                     mandatory=""
                                     disable=""
                                     type="text"
-                                    
                                     wire:model.defer='title_description'    
                                 />
-                                @error('title_description')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
 
                             <div>
@@ -31,17 +27,12 @@
                                     mandatory=""
                                     disable=""
                                     type="text"
-                                    
                                     wire:model.defer='title_code'    
                                 />
-                
-                                @error('title_code')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                                </div>
+                            </div>
     
                             <div class="flex items-center w-full mt-3">
-                                <label for="title_status" class="block text-sm font-semibold leading-5 text-gray-700 mr-3">
+                                <label for="title_status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
                                     Status 
                                 </label>
                                 <label for="title_status" class="flex items-center cursor-pointer">                                

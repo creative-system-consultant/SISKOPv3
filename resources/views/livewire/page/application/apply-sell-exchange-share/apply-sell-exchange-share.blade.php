@@ -1,8 +1,8 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Share Reimbursement</h1>
     <div class="pt-4 mt-4 bg-white rounded-md shadow-md">
-        <div class="pl-4 pb-4 pr-4" x-data="{isSelect : '', show: false }">
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
+        <div class="pb-4 pl-4 pr-4" x-data="{isSelect : '', show: false }">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.input 
                     label="Name" 
@@ -36,7 +36,7 @@
                 />                 
             </div>
 
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
             <x-form.basic-form wire:submit.prevent="alertConfirm" x-data="{types: '', selected: false}">
                 <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -52,10 +52,6 @@
                             disable=""
                             wire:model.defer="share_apply"
                         />
-
-                        @error('share_apply')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
                         
                     <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -73,10 +69,6 @@
                             <option value="coop">To Corporation </option>
                             <option value="mbr">To Member</option>
                         </x-form.dropdown>         
-                        
-                        @error('share_type')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
                 </div>
                                                         
@@ -97,10 +89,6 @@
                                     <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
                                 @endforeach
                             </x-form.dropdown>    
-                            
-                            @error('bank_name')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div>
@@ -114,10 +102,6 @@
                                 type="text"
                                 wire:model.defer="bank_account"
                             />             
-                            
-                            @error('bank_account')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
                     </div>     
                 </div>
@@ -134,10 +118,6 @@
                                 type="text"
                                 wire:model.debounce.1000ms="mbr_icno"                            
                             />  
-                            
-                            @error('mbr_icno')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>   
                         
                         <div>
@@ -150,10 +130,6 @@
                                 type="text"
                                 wire:model="mbr_name"                                
                             />  
-                                                        
-                            @error('mbr_name')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div>
@@ -171,10 +147,6 @@
                                     <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
                                 @endforeach
                             </x-form.dropdown>    
-                            
-                            @error('bank_code')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div>
@@ -188,10 +160,6 @@
                                 type="text"
                                 wire:model.defer="bank_acct"
                             />             
-                            
-                            @error('bank_acct')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
                     </div>     
                 </div>
@@ -207,7 +175,6 @@
         </div>
     </div>
 </div>
-         
 @push('js')
 <script>
     window.addEventListener('swal:confirm', event => { 

@@ -17,10 +17,6 @@
                                     type="text"          
                                     wire:model.defer="specialAid_name"              
                                 />
-
-                                @error('specialAid_name')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
     
@@ -56,9 +52,6 @@
                                     disable=""
                                     wire:model="default_apply_amount"
                                 />                                                        
-                                @error('default_apply_amount')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
 
                             <div>
@@ -73,10 +66,6 @@
                                     disable=""
                                     wire:model.defer='default_min_amount'
                                 />
-
-                                @error('default_min_amount')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
 
                             <div>
@@ -91,10 +80,6 @@
                                     disable=""
                                     wire:model.defer='default_max_amount'
                                 />
-
-                                @error('default_max_amount')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
 
@@ -108,11 +93,7 @@
                                     disable=""
                                     type="date"
                                     wire:model.defer='start_date'
-                                />     
-
-                                @error('start_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror                            
+                                />                      
                             </div>
                             
                             <div>
@@ -124,10 +105,7 @@
                                     disable=""
                                     type="date"
                                     wire:model.defer='end_date'
-                                />                                                          
-                                @error('end_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror                        
+                                />                                                                     
                             </div>
                         </div>
 
@@ -141,15 +119,9 @@
                                 @php if ($Fstatus[$index] == false ){ $status = 'true';} else { $status = 'false'; } @endphp
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
                                     <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="" mandatory="" disable="{{ $status }}" type="text" wire:model.debounce.500ms="Flabel.{{ $index }}"/>
-                                    @error('Flabel.'.$index)
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
                                     <x-form.input label="Field Name" name="Fname.{{ $index }}" value="" mandatory="" disable="{{ $status }}" type="text" wire:model.debounce.500ms="Fname.{{ $index }}"/>
-                                    @error('Fname.'.$index)
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
                                     <x-form.dropdown label="Field Type" value="" name="Ftype.{{ $index }}" id="" disable="{{ $status }}" mandatory="" default="" wire:model.debounce.500ms="Ftype.{{ $index }}">
