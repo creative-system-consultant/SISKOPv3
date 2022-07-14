@@ -1,8 +1,8 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Add Share</h1>
     <div class="pt-4 mt-4 bg-white rounded-md shadow-md">
-        <div class="pl-4 pb-4 pr-4">
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
+        <div class="pb-4 pl-4 pr-4">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.input 
                     label="Name" 
@@ -36,7 +36,7 @@
                 />                 
             </div>
 
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
             <x-form.basic-form wire:submit.prevent="alertConfirm" x-data="{isSelect : '', show: false }">
                 <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -51,10 +51,6 @@
                             disable=""
                             wire:model.defer="share_apply"
                         />
-
-                        @error('share_apply')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -73,10 +69,6 @@
                             <option value="cash">Cash Payment</option>
                             <option value="cheque">By Cheque</option>
                         </x-form.dropdown>         
-                        
-                        @error('pay_method')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
                 </div>
                 
@@ -93,10 +85,6 @@
                                 wire:model.defer="online_date"
                                 
                             />  
-
-                            @error('online_date')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div>
@@ -110,11 +98,7 @@
                                 type="file"
                                 accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
                                 wire:model.defer="online_file"
-                            />  
-
-                            @error('online_file')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            />
                         </div>
                     </div>
                 </div>   
@@ -131,11 +115,7 @@
                                 disable=""
                                 type="date"
                                 wire:model.defer="cdm_date"
-                            />  
-
-                            @error('cdm_date')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            />
                         </div>
 
                         <div>
@@ -148,11 +128,7 @@
                                 disable=""
                                 type="file"
                                 wire:model.defer="cdm_file"
-                            />  
-
-                            @error('cdm_file')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            />
                         </div>
 
                     </div>
@@ -170,11 +146,7 @@
                                 disable=""
                                 type="text"
                                 wire:model="cheque_no"
-                            />                        
-
-                            @error('cheque_no')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            />
                         </div>
 
                         <div>
@@ -187,10 +159,6 @@
                                 type="date"
                                 wire:model.defer="cheque_date"
                             />   
-
-                            @error('cheque_date')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div>
@@ -240,4 +208,3 @@
     });    
 </script>
 @endpush
-         

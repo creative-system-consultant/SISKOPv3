@@ -32,9 +32,6 @@
                         type="text" 
                         wire:model="search"
                     />
-                    @error('search')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
                 <div class="flex items-center justify-center pt-0 sm:pt-4">
                     <button wire:click="search" type="submit" class="p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">

@@ -6,13 +6,17 @@ use Illuminate\View\Component;
 
 class TextArea extends Component
 {
-    public $value;
+    public $name;
     public $label;
+    public $disable;
+    public $mandatory;
     
-    public function __construct($value,$label)
+    public function __construct($name,$label,$disable="false",$mandatory="false")
     {
-        $this->value    = $value;
+        $this->name    = $name;
         $this->label    = $label;
+        $this->disable  = $disable;
+        $this->mandatory = $mandatory;
     }
 
     

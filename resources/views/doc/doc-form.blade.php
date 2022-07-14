@@ -168,9 +168,10 @@
                         label="Text Area Label" 
                         value="" 
                         name="" 
-                        id="" 
                         rows=""
                         placeholder="Place Holder" 
+                        disable=""
+                        mandatory=""
                     />
                 </div>
                 <p class="font-semibold">Code</p>
@@ -180,8 +181,9 @@
     label="Text Area Label" 
     value="" 
     name="" 
-    id="" 
     rows=""
+    disable=""
+    mandatory=""
     placeholder="Place Holder" 
 />
                     </code>
@@ -191,7 +193,7 @@
     </x-general.accordion>
     <!-- end Textarea Input component -->
 
-     <!-- start addrress Input component -->
+    <!-- start addrress Input component -->
     <x-general.accordion active="selected" tab="564" bg="white">
         <x-slot name="title">
             <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
@@ -203,12 +205,14 @@
                 <div class="p-4 my-4 bg-white shadow-lg">
                     <x-form.address class="mt-6"
                         label="Address"
-                        value1="address1"
-                        value2="address2"
-                        value3="address3"
-                        value4="town"
-                        value5="postcode"
-                        value6="state"
+                        mandatory=""
+                        disable="true"
+                        name1="your_wire_model_address1"
+                        name2="your_wire_model_address2"
+                        name3="your_wire_model_address3"
+                        name4="your_wire_model_town"
+                        name5="your_wire_model_postcode"
+                        name6="your_wire_model_state"
                         {{-- :state="$states" --}}
                         state="$states"
                         condition="state"
@@ -219,13 +223,16 @@
                     <code class="language-html"> 
 &lt;x-form.address class="mt-6"
     label="Address"
-    value1="address1"
-    value2="address2"
-    value3="address3"
-    value4="town"
-    value5="postcode"
-    value6="state"
+    mandatory=""
+    disable=""
+    name1="your_wire_model_address1"
+    name2="your_wire_model_address2"
+    name3="your_wire_model_address3"
+    name4="your_wire_model_town"
+    name5="your_wire_model_postcode"
+    name6="your_wire_model_state"
     &#x7b;&#x7b; -- :state="$states" -- &#x7d;&#x7d;
+    state="$states"
     condition="state"
 />
                     </code>

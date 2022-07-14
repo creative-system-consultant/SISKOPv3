@@ -11,13 +11,8 @@
                     mandatory=""
                     disable=""
                     type="text"
-                    
                     wire:model.defer='description'    
                 />
-                @error('description')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-                
                 <div>
                     <x-form.input 
                         label="Code" 
@@ -29,9 +24,6 @@
                         
                         wire:model.defer='code'    
                     />
-                    @error('code')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
                 <div class="flex items-center w-full mt-3">
                     <label for="status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">

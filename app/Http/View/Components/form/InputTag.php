@@ -13,8 +13,9 @@ class InputTag extends Component
     public $mandatory;
     public $leftTag;
     public $rightTag;
+    public $name;
 
-    public function __construct($label, $value, $type = "text", $disable = "false" , $mandatory="false", $leftTag , $rightTag , $textred="no")
+    public function __construct($label, $value, $type = "text", $disable = "false" , $mandatory="false", $leftTag , $rightTag , $textred="no", $name="")
     {
         $this->label    = $label;
         $this->value    = $value;
@@ -23,6 +24,7 @@ class InputTag extends Component
         $this->mandatory  = $mandatory;
         $this->leftTag  = $leftTag;
         $this->rightTag  = $rightTag;
+        $this->name     = $name;
     }
 
     public function render()

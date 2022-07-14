@@ -17,9 +17,6 @@
                                     type="text"                                    
                                     wire:model.defer='specialAid_name'    
                                 />
-                                @error('specialAid_name')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
     
@@ -57,10 +54,6 @@
                                     disable=""
                                     wire:model.defer='default_apply_amount'
                                 />
-
-                                @error('default_apply_amount')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
 
                             <div>
@@ -75,10 +68,6 @@
                                     disable=""
                                     wire:model.defer='default_min_amount'
                                 />
-
-                                @error('default_min_amount')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
 
                             <div>
@@ -93,10 +82,6 @@
                                     disable=""
                                     wire:model.defer='default_max_amount'
                                 />
-
-                                @error('default_max_amount')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
                     
@@ -110,11 +95,7 @@
                                     disable=""
                                     type="date"
                                     wire:model.defer='start_date'
-                                />     
-
-                                @error('start_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                />
                             </div>
                             
                             <div>
@@ -126,11 +107,7 @@
                                     disable=""
                                     type="date"
                                     wire:model.defer='end_date'
-                                />  
-
-                                @error('end_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                /> 
                             </div>                            
                         </div>
                         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Fields</h2>
@@ -142,15 +119,9 @@
                             <div class="grid grid-cols-12 gap-6 mt-6">
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
                                     <x-form.input label="Field Label" name="Flabel.{{ $index }}" value="" mandatory="" disable="" type="text" wire:model="Flabel.{{ $index }}"/>
-                                    @error('Flabel.'.$index)
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2">
                                     <x-form.input label="Field Name" name="Fname.{{ $index }}" value="" mandatory="" disable="" type="text" wire:model="Fname.{{ $index }}"/>
-                                    @error('Fname.'.$index)
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
                                     <x-form.dropdown label="Field Type" value="" name="Ftype.{{ $index }}" id="" mandatory="" disable="" default="" wire:model="Ftype.{{ $index}}">
