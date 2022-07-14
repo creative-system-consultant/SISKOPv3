@@ -56,8 +56,10 @@ use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
 use App\Http\Livewire\Page\Executive\Customer\SearchCustomer;
 use App\Http\Livewire\Page\Executive\Customer\EditCustomer;
+use App\Http\Livewire\Page\Application\ApplyContribution\Apply_Contribution;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\Apply_Sell_ExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\Apply_Share;
+use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\Apply_WithdrawContribution;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +107,12 @@ Route::middleware('auth')->group(function () {
 
     //Applications > Sell/Exchange Share
     Route::get('/applySellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
+
+    //Application > Add Contribution
+    Route::get('/applyContribution', Apply_Contribution::class)->name('contribution.apply');
+
+    //Application > W/D Contribution
+    Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
     //------------------------------- End Applications ---------------------------//
 
 

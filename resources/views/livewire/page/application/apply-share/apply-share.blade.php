@@ -147,6 +147,7 @@
                                 mandatory=""
                                 disable=""
                                 type="file"
+                                accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
                                 wire:model.defer="cdm_file"
                             />  
 

@@ -47,6 +47,16 @@
                                     <x-heroicon-o-switch-horizontal class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Contribution" href="{{ route('contribution.apply') }}" uri="applyContribution">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-document-add class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Withdrawal Contribution" href="{{ route('contribution.withdraw') }}" uri="withdrawContribution">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-document-add class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item> 
 
