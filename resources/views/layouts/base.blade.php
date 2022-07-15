@@ -11,7 +11,7 @@
         @endif
 
         <!-- Favicon -->
-		<link rel="icon" href="{{ asset('img/logo.png')}}">
+		<link rel="icon"sizes="16x16"  type="image/png" href="{{ asset('img/logo.png')}}">
         
 
         <!-- Fonts -->
