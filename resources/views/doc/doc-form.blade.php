@@ -214,7 +214,6 @@
                         name5="your_wire_model_postcode"
                         name6="your_wire_model_state"
                         {{-- :state="$states" --}}
-                        state="$states"
                         condition="state"
                     />
                 </div>
@@ -232,7 +231,6 @@
     name5="your_wire_model_postcode"
     name6="your_wire_model_state"
     &#x7b;&#x7b; -- :state="$states" -- &#x7d;&#x7d;
-    state="$states"
     condition="state"
 />
                     </code>

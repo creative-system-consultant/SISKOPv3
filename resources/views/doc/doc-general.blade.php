@@ -455,7 +455,7 @@
     <!-- end page component -->
 
      <!-- start page  component -->
-     <x-general.accordion active="selected" tab="11" bg="white">
+     <x-general.accordion active="selected" tab="110" bg="white">
         <x-slot name="title">
             <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
                 <p class="text-sm">Header Title (without Link) </p>

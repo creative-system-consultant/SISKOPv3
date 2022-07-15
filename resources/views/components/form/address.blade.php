@@ -11,7 +11,7 @@
             wire:model="{{ $name1 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
             {{ ($errors->has($name1)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
             {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}"
-            
+            placeholder="Address Line 1"
         >
     </div>
     @if($errors->has($name1)) <p class="text-sm text-red-600">{{ $errors->first($name1) }}</p> @endif
@@ -22,6 +22,7 @@
             wire:model="{{ $name2 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
             {{ ($errors->has($name2)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
             {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}" 
+            placeholder="Address Line 2"
         >
     </div>
     @if($errors->has($name2)) <p class="text-sm text-red-600">{{ $errors->first($name2) }}</p> @endif
@@ -32,6 +33,7 @@
             wire:model="{{ $name3 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
             {{ ($errors->has($name3)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
             {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}" 
+            placeholder="Address Line 3"
         >
     </div>
     @if($errors->has($name3)) <p class="text-sm text-red-600">{{ $errors->first($name3) }}</p> @endif
@@ -50,6 +52,7 @@
                 wire:model="{{ $name4 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
                 {{ ($errors->has($name4)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
                 {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
+                placeholder="Town"
             >
         </div>
         @if($errors->has($name4)) <p class="text-sm text-red-600">{{ $errors->first($name4) }}</p> @endif
@@ -66,7 +69,8 @@
                 {{ $disable == "true" ? 'disabled' : '' }}
                 wire:model="{{ $name5 }}" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
                 {{ ($errors->has($name5)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-                {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}  " 
+                {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
+                placeholder="88888"
             >
         </div>
         @if($errors->has($name5)) <p class="text-sm text-red-600">{{ $errors->first($name5) }}</p> @endif
@@ -87,9 +91,11 @@
                 {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }} "
                 >
                 <option value="" hide selected>SELECT STATE</option>
-                {{-- @foreach ($state as $item)
+                @isset($state)
+                @foreach ($state as $item)
                     <option value="{{ $item->id }}" >{{ $item->description }}</option>
-                @endforeach --}}
+                @endforeach
+                @endisset
             </select>
         </div>
         @if($name6 !="" && $errors->has($name6)) <p class="text-sm text-red-600">{{ $errors->first($name6) }}</p> @endif

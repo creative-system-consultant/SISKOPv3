@@ -24,7 +24,7 @@
         @livewireStyles
 
         <!-- Scripts -->
-        <script src="{{ url(mix('js/app.js')) }}" defer></script>
+        <script src="{{ url(mix('js/app.js')) }}?v=@php echo date('ymdgis') @endphp" defer></script>
 
     </head>
 
