@@ -1,12 +1,12 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Organization > {{ $page }}</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <x-general.header-title title="Create New Organization" route="{{route('list-maintenance')}}"/>
+        <x-general.header-title title="Create New Organization" route="{{url()->previous()}}"/>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
-            <div class="grid grid-cols-12 gap-6 mt-4">
+            <div class="mt-4 mb-8">
                 <div class="flex items-center space-x-4">
                     <img 
-                        class="border-4 h-30 w-30 border-primary-800" 
+                        class="w-auto h-32 p-2 rounded-xl ring-2 ring-gray-200 " 
                         @if($logo)
                             src="{{ $logo->temporaryUrl() }}"
                         @elseif($coop->logo_path != '')
@@ -18,11 +18,11 @@
                     > 
                     <label for="logo">
                         <div wire:loading wire:target="logo">generating preview...</div>
-                        <a class="text-sm font-semibold cursor-pointer text-primary-600 hover:text-primary-700">
+                        <a class="p-2 text-xs font-semibold text-white rounded-md cursor-pointer bg-primary-600">
                             Change LOGO
                         </a>
                     </label>
-                       @if($errors->has('logo')) <p class="text-sm text-red-600">{{ $errors->first('logo') }}</p> @endif
+                    @if($errors->has('logo')) <p class="text-sm text-red-600">{{ $errors->first('logo') }}</p> @endif
                 </div>
                 <input 
                     type="file" 
