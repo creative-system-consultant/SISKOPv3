@@ -15,5 +15,8 @@ class Address extends Model implements Auditable
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    //
+    public function addressable()
+    {
+        return $this->morphTo();
+    }
 }

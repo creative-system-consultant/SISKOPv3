@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RefSeeder extends Seeder
@@ -128,6 +127,12 @@ class RefSeeder extends Seeder
             ['description' => 'FAMILY',    'coop_id' => '1'],
         ];
         DB::table('ref.address_types')->insert($address);
+
+        $cooptype = [
+            ['description' => 'COOP', 'code' => 'CC'],
+            ['description' => 'CLUB', 'code' => 'CL'],
+        ];
+        DB::table('ref.coop_types')->insert($cooptype);
 
         $product = [
             ['description' => 'HOME FINANCING',      'code' => 'HF', 'coop_id' => '1'],
