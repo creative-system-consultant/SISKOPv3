@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Page\Admin\coop;
+namespace App\Http\Livewire\Page\Admin\Coop;
 
 use App\Models\Coop;
 use Livewire\Component;

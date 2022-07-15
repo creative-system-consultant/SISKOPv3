@@ -14,7 +14,7 @@
         <link rel="icon" href="{{ asset('img/logo.png')}}">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
+        <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}?v=@php echo date('ymdgis') @endphp">
 
         <!-- Swall css -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.4/dist/sweetalert2.min.css">

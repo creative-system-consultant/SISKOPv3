@@ -14,10 +14,10 @@
             {{ ($errors->has($name)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}"
             {{ $attributes }}  {{ $disable == "true" ? 'disabled' : '' }} >
             @if($default == 'yes')
-                <option value="" selected>Please Choose </option>
+                <option value="">Please Choose </option>
             @endif
             {{ $slot }}
         </select>
     </div>
-    @if($value !="" && $errors->has($name)) <p class="text-sm text-red-600">{{ $errors->first($name) }}</p> @endif
+    @if($errors->has($name)) <p class="text-sm text-red-600">{{ $errors->first($name) }}</p> @endif
 </div>

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('def_state_id')->nullable();
             $table->unsignedSmallInteger('def_country_id')->nullable();
 
+            $table->bigInteger('type')->nullable();
             $table->string('phone_1',20)->nullable();
             $table->string('phone_2',20)->nullable();
             $table->string('fax',25)->nullable();
@@ -39,6 +40,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        DB::statement("DBCC CHECKIDENT ('CIF.Address',RESEED,100)");
     }
 
     /**

@@ -1111,8 +1111,26 @@ video {
 .z-40 {
   z-index: 40;
 }
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+.col-span-4 {
+  grid-column: span 4 / span 4;
+}
 .col-span-6 {
   grid-column: span 6 / span 6;
+}
+.col-span-8 {
+  grid-column: span 8 / span 8;
+}
+.col-span-10 {
+  grid-column: span 10 / span 10;
 }
 .col-span-12 {
   grid-column: span 12 / span 12;
@@ -1369,9 +1387,6 @@ video {
 }
 .h-1\/2 {
   height: 50%;
-}
-.h-\[\] {
-  height: ;
 }
 .h-\[50vh\] {
   height: 50vh;
@@ -3409,20 +3424,32 @@ input:checked ~ .body {
     top: 0.5rem;
   }
 
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
+  .md\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
   .md\:col-span-4 {
     grid-column: span 4 / span 4;
+  }
+
+  .md\:col-span-6 {
+    grid-column: span 6 / span 6;
   }
 
   .md\:col-span-8 {
     grid-column: span 8 / span 8;
   }
 
-  .md\:col-span-12 {
-    grid-column: span 12 / span 12;
+  .md\:col-span-10 {
+    grid-column: span 10 / span 10;
   }
 
-  .md\:col-span-6 {
-    grid-column: span 6 / span 6;
+  .md\:col-span-12 {
+    grid-column: span 12 / span 12;
   }
 
   .md\:m-2 {
@@ -3543,24 +3570,28 @@ input:checked ~ .body {
 }
 @media (min-width: 1024px) {
 
-  .lg\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-
-  .lg\:col-span-8 {
-    grid-column: span 8 / span 8;
+  .lg\:col-span-1 {
+    grid-column: span 1 / span 1;
   }
 
   .lg\:col-span-2 {
     grid-column: span 2 / span 2;
   }
 
-  .lg\:col-span-1 {
-    grid-column: span 1 / span 1;
+  .lg\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .lg\:col-span-6 {
     grid-column: span 6 / span 6;
+  }
+
+  .lg\:col-span-8 {
+    grid-column: span 8 / span 8;
+  }
+
+  .lg\:col-span-10 {
+    grid-column: span 10 / span 10;
   }
 
   .lg\:col-span-12 {
@@ -3586,6 +3617,22 @@ input:checked ~ .body {
 
   .lg\:w-1\/2 {
     width: 50%;
+  }
+
+  .lg\:grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-4 {
@@ -3631,24 +3678,27 @@ input:checked ~ .body {
 }
 @media (min-width: 1280px) {
 
-  .xl\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-
-  .xl\:col-span-8 {
-    grid-column: span 8 / span 8;
+  .xl\:col-span-1 {
+    grid-column: span 1 / span 1;
   }
 
   .xl\:col-span-2 {
     grid-column: span 2 / span 2;
   }
 
-  .xl\:col-span-1 {
-    grid-column: span 1 / span 1;
+  .xl\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
-
   .xl\:col-span-6 {
     grid-column: span 6 / span 6;
+  }
+
+  .xl\:col-span-8 {
+    grid-column: span 8 / span 8;
+  }
+
+  .xl\:col-span-10 {
+    grid-column: span 10 / span 10;
   }
 
   .xl\:col-span-12 {
@@ -3659,16 +3709,32 @@ input:checked ~ .body {
     max-width: 42rem;
   }
 
+  .xl\:grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
   .xl\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .xl\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .xl\:grid-cols-1 {
