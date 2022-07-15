@@ -13,7 +13,7 @@ class contribution extends Model implements Auditable
 
     protected $table   = 'siskop.contribution';
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $dates   = ['start_apply','online_date','cdm_date','cheque_date','created_at','deleted_at','updated_at'];
 
     public function customer()
     {
