@@ -26,7 +26,7 @@ class Apply_Sell_ExchangeShare extends Component
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
         'cust.share'      => 'required',
-        'share_apply'     => 'required|numeric',
+        'share_apply'     => 'required|numeric|lte:cust.share|gt:0',
         'share_type'      => 'required',
         'bank_name'       => 'required_if:share_type,==,coop',
         'bank_account'    => 'required_if:share_type,==,coop',
@@ -39,6 +39,8 @@ class Apply_Sell_ExchangeShare extends Component
         'mbr_icno.required_if'       => ':attribute field is required',   
         'share_apply.required'       => ':attribute field is required',
         'share_apply.numeric'        => ':attribute field must be a number',
+        'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
+        'share_apply.gt'             => 'Application must be more than RM0',
         'share_type.required'        => ':attribute is required',
         'bank_name.required_if'      => ':attribute field is required',
         'bank_code.required_if'      => ':attribute field is required',
@@ -61,23 +63,6 @@ class Apply_Sell_ExchangeShare extends Component
     {
         $user = auth()->user();
         $customer = new Customer;        
-
-        $this->validate();
-
-        if ($this->share_apply <= 0) {
-            session()->flash('message', 'Application must be more than RM0');
-            session()->flash('warning');
-            session()->flash('title');
-
-            return redirect()->route('share.sell');
-        }
-        elseif($this->share_apply > $this->cust['share']){
-            session()->flash('message', 'Application must be less than RM'.$this->cust['share']);
-            session()->flash('warning');
-            session()->flash('title');
-
-            return redirect()->route('share.sell');
-        }
 
         if ($this->share_type == 'coop') {
             $cust = $customer->where('icno', $user->icno)->first();
@@ -131,10 +116,13 @@ class Apply_Sell_ExchangeShare extends Component
 
     public function alertConfirm()
     {
+        $this->validate();
+
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',  
             'text'      => 'Are you sure you want to apply for share reimbursement?',
         ]);   
+        
     }
 
     public function restricApplySell($id)
@@ -169,14 +157,17 @@ class Apply_Sell_ExchangeShare extends Component
         $share = share::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
-            'amt_before'  => $this->cust->share,
             'direction'   => 'exchange',
+        ], [
+            'amt_before'  => $this->cust->share,
             'flag'        => 0, 
-            'step'        => 0
-            ], [
-                'apply_amt'   => '0.00',  
-        ]);        
+            'step'        => 0,
+            'apply_amt'   => '0.00',  
+        ]);     
+        
+        $customer = Customer::where('id', $share->exc_cust_id)->first();
 
+        $this->mbr_icno     = $customer?->icno;
         $this->share_apply  = $share?->apply_amt;
         $this->bank_acct    = $share?->bank_account;
         $this->bank_code    = $share?->bank_code;  
@@ -187,12 +178,12 @@ class Apply_Sell_ExchangeShare extends Component
         $share = share::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
-            'amt_before'  => $this->cust->share,
             'direction'   => 'sell',
+        ], [
+            'amt_before'  => $this->cust->share,
             'flag'        => 0, 
-            'step'        => 0
-            ], [
-                'apply_amt'   => '0.00',  
+            'step'        => 0,
+            'apply_amt'   => '0.00',  
         ]);
 
         $this->share_apply  = $share?->apply_amt;
@@ -203,7 +194,7 @@ class Apply_Sell_ExchangeShare extends Component
     public function updated()
     {
         $user = auth()->user();       
-        $customer = Customer::where([['icno', $this->mbr_icno],['icno' ,'<>', $user->icno]])->first();
+        $customer = Customer::where('icno', $this->mbr_icno)->first();
 
         if (strlen($this->mbr_icno) < 12) {
             $this->mbr_name = ''; 
@@ -224,6 +215,16 @@ class Apply_Sell_ExchangeShare extends Component
                 'timer' => 1500,
             ]);
             $this->mbr_name = '';    
+        }
+        elseif ($this->mbr_icno == $user->icno) {
+            $this->dispatchBrowserEvent('swal',[
+                'title' => '',
+                'text'  => 'IC No. Cannot Be Yourself',
+                'icon'  => 'warning',
+                'showConfirmButton' => false,
+                'timer' => 1500,
+            ]);
+            $this->mbr_name = ''; 
         }
         else{
             $this->mbr_name = $customer->name;        

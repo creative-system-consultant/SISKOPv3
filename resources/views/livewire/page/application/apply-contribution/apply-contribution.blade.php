@@ -64,10 +64,6 @@
                             disable=""
                             wire:model.defer="cont_apply"
                         />
-
-                        @error('cont_apply')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -84,11 +80,7 @@
                             >
                             <option value="pay_once">Pay Once </option>
                             <option value="cont_date">Change Monthly Contribution From Date</option>
-                        </x-form.dropdown>         
-                        
-                        @error('cont_type')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        </x-form.dropdown>                                 
                     </div>
                     <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <div x-cloak x-show ="select == 'cont_date'">
@@ -99,13 +91,8 @@
                                 mandatory=""
                                 disable=""
                                 type="date"
-                                wire:model.defer="start_contDate"
-                                
+                                wire:model.defer="start_contDate"                    
                             />  
-    
-                            @error('start_contDate')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
                     </div>
                 </div>
@@ -127,11 +114,7 @@
                                 <option value="online">Online Banking</option>
                                 <option value="cash">Cash Payment</option>
                                 <option value="cheque">By Cheque</option>
-                            </x-form.dropdown>         
-                            
-                            @error('payment_method')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            </x-form.dropdown>                                 
                         </div>
                     </div>
                     
@@ -148,10 +131,6 @@
                                     wire:model.defer="online_date"
                                     
                                 />  
-    
-                                @error('online_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
     
                             <div>
@@ -166,10 +145,6 @@
                                     accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
                                     wire:model.defer="online_file"
                                 />  
-    
-                                @error('online_file')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         </div>
                     </div>   
@@ -187,10 +162,6 @@
                                     type="date"
                                     wire:model.defer="cdm_date"
                                 />  
-    
-                                @error('cdm_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
     
                             <div>
@@ -205,10 +176,6 @@
                                     accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
                                     wire:model.defer="cdm_file"
                                 />  
-    
-                                @error('cdm_file')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
     
                         </div>
@@ -220,17 +187,13 @@
                             <div>
                                 <x-form.input 
                                     label="Cheque No." 
-                                    name="" 
+                                    name="cheque_no" 
                                     value="" 
                                     mandatory=""
                                     disable=""
                                     type="text"
                                     wire:model="cheque_no"
                                 />                        
-    
-                                @error('cheque_no')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
     
                             <div>
@@ -242,11 +205,7 @@
                                     disable=""
                                     type="date"
                                     wire:model.defer="cheque_date"
-                                />   
-    
-                                @error('cheque_date')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                />       
                             </div>
     
                             <div>

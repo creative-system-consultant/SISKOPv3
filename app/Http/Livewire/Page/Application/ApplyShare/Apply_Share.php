@@ -31,25 +31,37 @@ class Apply_Share extends Component
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
         'cust.share'      => 'required',
-        'share_apply'     => 'required|numeric',
+        'share_apply'     => 'required|numeric|not_in:0',
         'pay_method'      => 'required',
-        'online_date'     => 'required_if:pay_method,==,online',
+        'online_date'     => 'exclude_if:pay_method,==,cash,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
+                             'required_if:pay_method,==,online|before:first day of january next year|after_or_equal:today',
         'online_file'     => 'required_if:pay_method,==,online',
-        'cdm_date'        => 'required_if:pay_method,==,cash',
+        'cdm_date'        => 'exclude_if:pay_method,==,online,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
+                             'required_if:pay_method,==,cash|before:first day of january next year|after_or_equal:today',
         'cdm_file'        => 'required_if:pay_method,==,cash',
         'cheque_no'       => 'required_if:pay_method,==,cheque',
-        'cheque_date'     => 'required_if:pay_method,==,cheque',
+        'cheque_date'     => 'exclude_if:pay_method,==,online,&&,pay_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|'.
+                             'required_if:pay_method,==,cheque|before:first day of january next year|after_or_equal:today',
+        'banks'           => 'required',
     ];
     
     protected $messages = [
         'share_apply.required'        => ':attribute field is required',
+        'share_apply.not_in'          => 'Application must be more than RM0',
         'pay_method.required'         => ':attribute is required',
         'online_date.required_if'     => ':attribute field is required',
+        'online_date.before'          => 'Please enter date in this year',
+        'online_date.after_or_equal'  => 'Please enter latest date',
         'online_file.required_if'     => ':attribute field is required',
         'cdm_date.required_if'        => ':attribute field is required',
+        'cdm_date.before'             => 'Please enter date in this year',
+        'cdm_date.after_or_equal'     => 'Please enter latest date',
         'cdm_file.required_if'        => ':attribute field is required',
         'cheque_no.required_if'       => ':attribute field is required',
         'cheque_date.required_if'     => ':attribute field is required',
+        'cheque_date.before'          => 'Please enter date in this year',
+        'cheque_date.after_or_equal'  => 'Please enter latest date',
+        'banks.required'              => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
@@ -61,15 +73,24 @@ class Apply_Share extends Component
         'cdm_file'        => 'Upload Cdm Payment Receipt',
         'cheque_no'       => 'Cheque No.',
         'cheque_date'     => 'Cheque Date',
+        'banks'           => 'Bank',
     ];
+
+    public function alertConfirm()
+    {
+        $this->validate();
+        
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type'      => 'warning',  
+            'text'      => 'Are you sure you want to apply for add share?',
+        ]);   
+    }
 
     public function submit()
     {
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
         $share = share::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
-
-        $this->validate();
 
         if ($this->share_apply == 0) {
             session()->flash('message', 'Application must be more than RM0');
@@ -144,14 +165,6 @@ class Apply_Share extends Component
             return redirect()->route('home');              
         }   
     }
-    
-    public function alertConfirm()
-    {
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
-            'text'      => 'Are you sure you want to apply for add share?',
-        ]);   
-    }
 
     public function restricApply($id)
     {
@@ -166,19 +179,15 @@ class Apply_Share extends Component
         }
     }
 
-    public function mount()
+    public function contApply($cust_id)
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
-        
-        $share = share::where('cust_id', $this->cust->id)->firstOrCreate([
+        $share = share::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
+        ], [
             'amt_before'  => $this->cust->share,
             'flag'        => 0, 
-            'step'        => 0
-        ], [
+            'step'        => 0,
             'apply_amt'   => '0.00',        
         ]);
 
@@ -187,8 +196,16 @@ class Apply_Share extends Component
         $this->cdm_date = $share?->cdm_date?->format('Y-m-d');
         $this->cheque_no = $share?->cheque_no;
         $this->cheque_date = $share?->cheque_date?->format('Y-m-d');
+    }
+
+    public function mount()
+    {
+        $user = auth()->user();
+        $this->cust = Customer::where('icno', $user->icno)->first();
+        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
 
         $this->restricApply($this->cust->id);
+        $this->contApply($this->cust->id);
     }
 
     public function render()

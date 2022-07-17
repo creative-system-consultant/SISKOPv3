@@ -28,7 +28,7 @@ class Apply_WithdrawContribution extends Component
         'cust.icno'                 => 'required',
         'cust.contribution'         => 'required',
         'cust.contribution_monthly' => 'required',
-        'cont_apply'                => 'required|numeric',  
+        'cont_apply'                => 'required|numeric|lte:cust.contribution|gt:0',  
         'support_file'              => 'required',
         'bank_code'                 => 'required',
         'bank_account'              => 'required',
@@ -36,6 +36,8 @@ class Apply_WithdrawContribution extends Component
 
     protected $messages = [
         'cont_apply.required'         => ':attribute field is required',
+        'cont_apply.lte'              => 'Application must be less than Current Contribution RM:value' ,
+        'cont_apply.gt'               => 'Application must be more than RM0',
         'cont_apply.numeric'          => ':attribute field must be number',
         'support_file.required'       => ':attribute field is required',
         'bank_code.required'          => ':attribute field is required',
@@ -51,6 +53,8 @@ class Apply_WithdrawContribution extends Component
 
     public function alertConfirm()
     {
+        $this->validate();
+
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',  
             'text'      => 'Are you sure you want to apply for withdrawal contribution?',
@@ -59,26 +63,10 @@ class Apply_WithdrawContribution extends Component
 
     public function submit()
     {
-        if ($this->cont_apply <= 0) {
-            session()->flash('message', 'Application must be more than RM0');
-            session()->flash('warning');
-            session()->flash('title');
-
-            return redirect()->route('contribution.withdraw');
-        }
-        elseif($this->cont_apply > $this->cust['contribution']){
-            session()->flash('message', 'Application must be less than RM'.$this->cust['contribution']);
-            session()->flash('warning');
-            session()->flash('title');
-
-            return redirect()->route('contribution.withdraw');
-        }
-
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
         $contribution = contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
-
-        $this->validate();
+        
 
         $contribution->update([
             'direction'      => 'withdraw',
@@ -127,19 +115,16 @@ class Apply_WithdrawContribution extends Component
 
     public function applyCont($cust_id)
     {
-        $contribution = contribution::where('cust_id', $cust_id)->firstOrNew([
+        $contribution = contribution::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
+            'direction'   => 'withdraw',
+        ], [
+            'amt_before'  => $this->cust->contribution,
+            'flag'        => 0, 
+            'step'        => 0,
+            'apply_amt'   => '0.00',   
         ]);
-
-
-        $contribution->amt_before  = $this->cust->contribution;
-        $contribution->direction   = 'withdraw';
-        $contribution->step        = 0;
-        $contribution->flag        = 0; 
-        $contribution->apply_amt   = '0.00';
-
-        $contribution->save();
 
         $this->cont_apply   = $contribution?->apply_amt;
         $this->bank_account = $contribution?->bank_account;
