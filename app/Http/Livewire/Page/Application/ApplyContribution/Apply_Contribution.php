@@ -34,31 +34,45 @@ class Apply_Contribution extends Component
         'cust.icno'                 => 'required',
         'cust.contribution'         => 'required',
         'cust.contribution_monthly' => 'required',
-        'cont_apply'                => 'required|numeric',
+        'cont_apply'                => 'required|numeric|not_in:0',
         'cont_type'                 => 'required',
-        'start_contDate'            => 'required_if:cont_type,==,cont_date',
+        'start_contDate'            => 'exclude_if:cont_type,==,pay_once,&&,cont_type,null|required_if:cont_type,==,cont_date'.
+                                       '|before:first day of january next year|after_or_equal:today',     
         'payment_method'            => 'required_if:cont_type,==,pay_once',
-        'online_date'               => 'required_if:payment_method,==,online',
+        'online_date'               => 'exclude_if:payment_method,==,cash,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
+                                       'required_if:payment_method,==,online|before:first day of january next year|after_or_equal:today',
         'online_file'               => 'required_if:payment_method,==,online',
-        'cdm_date'                  => 'required_if:payment_method,==,cash',
+        'cdm_date'                  => 'exclude_if:payment_method,==,online,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
+                                       'required_if:payment_method,==,cash|before:first day of january next year|after_or_equal:today',
         'cdm_file'                  => 'required_if:payment_method,==,cash',
         'cheque_no'                 => 'required_if:payment_method,==,cheque',
-        'cheque_date'               => 'required_if:payment_method,==,cheque',
-        
+        'cheque_date'               => 'exclude_if:payment_method,==,online,&&,payment_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|'.
+                                       'required_if:payment_method,==,cheque|before:first day of january next year|after_or_equal:today',
+        'banks'                     => 'required',
     ];
 
     protected $messages = [
-        'cont_apply.required'         => ':attribute field is required',
-        'cont_apply.numeric'          => ':attribute field must be number',
-        'cont_type.required'          => ':attribute field is required',
-        'start_contDate.required_if'  => ':attribute field is required',
-        'payment_method.required_if'  => ':attribute is required',
-        'online_date.required_if'     => ':attribute field is required',
-        'online_file.required_if'     => ':attribute field is required',
-        'cdm_date.required_if'        => ':attribute field is required',
-        'cdm_file.required_if'        => ':attribute field is required',
-        'cheque_no.required_if'       => ':attribute field is required',
-        'cheque_date.required_if'     => ':attribute field is required',
+        'cont_apply.required'           => ':attribute field is required',
+        'cont_apply.numeric'            => ':attribute field must be number',
+        'cont_apply.not_in'             => 'Application must be more than RM0',
+        'start_contDate.required_if'    => ':attribute is required',
+        'start_contDate.before'         => 'Please enter date in this year',
+        'start_contDate.after_or_equal' => 'Please enter latest date',
+        'cont_type.required'            => ':attribute field is required',
+        'payment_method.required_if'    => ':attribute is required',
+        'online_date.required_if'       => ':attribute field is required',
+        'online_date.before'            => 'Please enter date in this year',
+        'online_date.after_or_equal'    => 'Please enter latest date',
+        'online_file.required_if'       => ':attribute field is required',
+        'cdm_date.required_if'          => ':attribute field is required',
+        'cdm_date.before'               => 'Please enter date in this year',
+        'cdm_date.after_or_equal'       => 'Please enter latest date',
+        'cdm_file.required_if'          => ':attribute field is required',
+        'cheque_no.required_if'         => ':attribute field is required',
+        'cheque_date.required_if'       => ':attribute field is required',
+        'cheque_date.before'            => 'Please enter date in this year',
+        'cheque_date.after_or_equal'    => 'Please enter latest date',
+        'banks.required'                => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
@@ -72,10 +86,13 @@ class Apply_Contribution extends Component
         'cdm_file'        => 'Upload Cdm Payment Receipt',
         'cheque_no'       => 'Cheque No.',
         'cheque_date'     => 'Cheque Date',
+        'banks'           => 'Bank',
     ];
 
     public function alertConfirm()
     {
+        $this->validate();
+
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',  
             'text'      => 'Are you sure you want to apply for add contribution?',
@@ -84,19 +101,10 @@ class Apply_Contribution extends Component
 
     public function submit()
     {
-        if ($this->cont_apply == 0) {
-            session()->flash('message', 'Application must be more than RM0');
-            session()->flash('warning');
-            session()->flash('title');
-
-            return redirect()->route('contribution.apply');
-        }
     
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
         $contribution = contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
-
-        $this->validate();
 
         $contribution->update([
             'direction'      => 'buy',
@@ -166,8 +174,7 @@ class Apply_Contribution extends Component
             return redirect()->route('home');              
         }    
     }
-    
-
+        
     public function restrictApply($id)
     {
         $contribution = contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
@@ -180,16 +187,21 @@ class Apply_Contribution extends Component
             return redirect()->route('home');                                
         }
     }
-
-    public function contApply($id)
+    
+    public function mount()
     {
-        $contribution = contribution::where('cust_id', $id)->firstOrCreate([
+        $user = auth()->user();
+        $this->cust = Customer::where('icno', $user->icno)->first();
+        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
+
+        $contribution = contribution::where('cust_id', $this->cust->id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
+            'direction'   => 'buy',
+        ], [
             'amt_before'  => $this->cust->contribution,
             'flag'        => 0, 
-            'step'        => 0
-        ], [
+            'step'        => 0,
             'apply_amt'   => '0.00',        
         ]);
 
@@ -199,17 +211,9 @@ class Apply_Contribution extends Component
         $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
         $this->cheque_no        = $contribution?->cheque_no;
         $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
-        $this->start_contDate   = $contribution?->start_apply?->format('Y-m-d');        
-    }
-    
-    public function mount()
-    {
-        $user = auth()->user();
-        $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
+        $this->start_contDate   = $contribution?->start_apply?->format('Y-m-d');    
 
         $this->restrictApply($this->cust->id);
-        $this->contApply($this->cust->id);
     }
 
     public function render()

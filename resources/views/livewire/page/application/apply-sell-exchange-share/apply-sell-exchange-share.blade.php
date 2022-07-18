@@ -38,8 +38,8 @@
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>  
             <x-form.basic-form wire:submit.prevent="alertConfirm" x-data="{types: '', selected: false}">
-                <div class="grid grid-cols-12 gap-6">
-                    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <div class="grid grid-cols-12 gap-6" x-cloak x-bind:class="types == 'mbr' ? 'grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4' : ''">
+                    <div x-bind:class="types == 'mbr' ? '' : 'col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4'">
                         <x-form.input-tag 
                             label="Reimbursement of Share Capital applied" 
                             type="text"
@@ -54,7 +54,7 @@
                         />
                     </div>
                         
-                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <div x-bind:class="types == 'mbr' ? '' : 'col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4'">
                         <x-form.dropdown 
                             label="Types of Share Reimbursement"
                             value=""
@@ -66,9 +66,39 @@
                             x-model="types"
                             wire:model="share_type"
                             >
-                            <option value="coop">To Corporation </option>
+                            <option value="coop">To Co-operative </option>
                             <option value="mbr">To Member</option>
                         </x-form.dropdown>         
+                    </div>
+
+                    <div x-cloak x-show="types == 'mbr' ? selected = true : selected = false">
+                        <x-form.dropdown 
+                            label="Bank"
+                            value=""
+                            name="bank_code" 
+                            id="bank_code"
+                            mandatory=""
+                            disable=""
+                            default="yes"  
+                            wire:model.defer="bank_code"
+                            >
+                            @foreach ($banks as $bank)
+                                <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
+                            @endforeach
+                        </x-form.dropdown>              
+                    </div>
+
+                    <div x-cloak x-show="types == 'mbr' ? selected = true : selected = false">
+                        <x-form.input 
+                        label="Account Bank No." 
+                        name="bank_acct" 
+                        id="bank_acct"
+                        value="" 
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:model.defer="bank_acct"
+                    />   
                     </div>
                 </div>
                                                         
@@ -106,8 +136,8 @@
                     </div>     
                 </div>
 
-                <div  x-cloak x-show="types == 'mbr' ? selected = true : selected = false">
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">                        
+                <div x-cloak x-show="types == 'mbr' ? selected = true : selected = false">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">                        
                         <div>
                             <x-form.input 
                                 label="Member IC No." 
@@ -130,36 +160,6 @@
                                 type="text"
                                 wire:model="mbr_name"                                
                             />  
-                        </div>
-
-                        <div>
-                            <x-form.dropdown 
-                                label="Bank"
-                                value=""
-                                name="bank_code" 
-                                id="bank_code"
-                                mandatory=""
-                                disable=""
-                                default="yes"  
-                                wire:model.defer="bank_code"
-                                >
-                                @foreach ($banks as $bank)
-                                    <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
-                                @endforeach
-                            </x-form.dropdown>    
-                        </div>
-
-                        <div>
-                            <x-form.input 
-                                label="Account Bank No." 
-                                name="bank_acct" 
-                                id="bank_acct"
-                                value="" 
-                                mandatory=""
-                                disable=""
-                                type="text"
-                                wire:model.defer="bank_acct"
-                            />             
                         </div>
                     </div>     
                 </div>
