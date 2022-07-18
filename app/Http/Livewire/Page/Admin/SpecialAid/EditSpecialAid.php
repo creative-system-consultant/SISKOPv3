@@ -27,6 +27,31 @@ class EditSpecialAid extends Component
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['remField'];
 
+    protected $rules = [
+        'specialAid_name'       => ['required', 'string'],
+        'default_apply_amount'  => ['nullable', 'numeric'],
+        'default_min_amount'    => ['nullable', 'numeric'],
+        'default_max_amount'    => ['nullable', 'numeric'],
+        'Fname.*'               => ['required', 'min:4'],
+        'Flabel.*'              => ['required', 'min:4'],
+        'start_date'            => ['nullable', 'string'],
+        'end_date'              => ['nullable', 'string'],
+    ];
+
+    protected $messages = [
+        'specialAid_name.required'  => ':attribute field is required',
+        'Fname.*.required'          => ':attribute field is required', 
+        'Fname.*.min'               => ':attribute must be at least 4 characters',
+        'Flabel.*.required'         => ':attribute is required',
+        'Flabel.*.min'              => ':attribute must be at least 4 characters',
+    ];
+
+    protected $validationAttributes = [
+        'specialAid_name'      => 'Name', 
+        'Fname.*'              => 'Field Name', 
+        'Flabel.*'             => 'Field Label',
+    ];
+
     public function createField()
     {
         $this->Fname[]  = '';
@@ -80,25 +105,16 @@ class EditSpecialAid extends Component
         // dd($this->start_date);  
         $specialAid = SpecialAid::where('uuid', $uuid)->first();
 
-        $this->validate([
-            'specialAid_name'       => ['required', 'string'],
-            'default_apply_amount'  => ['nullable', 'numeric'],
-            'default_min_amount'    => ['nullable', 'numeric'],
-            'default_max_amount'    => ['nullable', 'numeric'],
-            'Fname.*'               => ['required', 'min:4'],
-            'Flabel.*'              => ['required', 'min:4'],
-            'start_date'            => ['nullable'],
-            'end_date'              => ['nullable'],
-        ]);
+        $this->validate();
         
         $specialAid->update([
             'name'               => $this->specialAid_name,
             'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
-            'min_apply_amt'      => $this->default_min_amount,
-            'max_apply_amt'      => $this->default_max_amount,
-            'default_apply_amt'  => $this->default_apply_amount,
-            'start_date'         => $this->start_date,
-            'end_date'           => $this->end_date,
+            'default_apply_amt'  => $this->default_apply_amount ?? NULL,
+            'min_apply_amt'      => $this->default_min_amount ?? NULL,
+            'max_apply_amt'      => $this->default_max_amount ?? NULL,
+            'start_date'         => $this->start_date  ? $specialAid->start_date->format('Y-m-d') : NULL,
+            'end_date'           => $this->end_date ? $specialAid->end_date->format('Y-m-d') : NULL,
         ]);
                 
         foreach ($this->Fname as $index => $input) {  
@@ -135,8 +151,8 @@ class EditSpecialAid extends Component
         $this->default_min_amount   = $specialAid->min_apply_amt;
         $this->default_max_amount   = $specialAid->max_apply_amt;
         $this->enabled_apply_amt    = $specialAid->apply_amt_enable == true ? 'checked' : '';
-        $this->start_date           = $specialAid?->start_date ? date_format($specialAid->start_date, "Y-m-d") : '';
-        $this->end_date             = $specialAid?->end_date ? date_format($specialAid->end_date, "Y-m-d") : '';
+        $this->start_date           = $specialAid?->start_date ? $specialAid->start_date->format('Y-m-d') : '';
+        $this->end_date             = $specialAid?->end_date ? $specialAid->end_date->format('Y-m-d') : '';
         
         foreach ($specialAid->field as $index => $input) {                      
             $this->Flabel[$index]      = $input->label;

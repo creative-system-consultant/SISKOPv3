@@ -1,11 +1,8 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Special Aid</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <x-general.header-title title="Information" route=""/>    
-        <div class="p-4">
-            @if (session('success'))
-                <x-swall.success message="{{ session('message') }}"/>
-            @endif
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Information</h2>
+        <div class="p-4">      
             <div x-data="{isShowing: '' }">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                     <div>
@@ -18,16 +15,17 @@
                             disable=""
                             default="yes"  
                             x-model="isShowing"
+                            wire:model="type_specialAid"
                             >
                             @foreach ($specialAids as $type)
-                                <option x-bind:value="'{{ $type->name }}'" value="{{ $type->name }}">{{ ucwords($type->name) }}</option>                                        
+                                <option value="{{ $type->name }}">{{ ucwords($type->name) }}</option>                                        
                             @endforeach
                         </x-form.dropdown>                            
                     </div>
                 </div>
                 
                 @foreach ($specialAids as $index => $listField)
-                    <div x-cloak x-show="isShowing === '{{ $listField->name }}'">
+                    <div x-cloak x-show="isShowing == '{{ $listField->name }}'">
                         <x-form.basic-form wire:submit.prevent="submit('{{ $listField->uuid }}','{{ $index }}')">
                             <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                                 <div>
@@ -38,7 +36,7 @@
                                         mandatory=""
                                         disable=""
                                         type="text"                                    
-                                        wire:model.lazy='customer_name'    
+                                        wire:model.defer="customer_name"    
                                     />
                                     @if (session('nameError'))
                                         <p class="mt-2 text-sm text-red-600">{{ session('nameError') }}</p>
@@ -70,16 +68,12 @@
                                             <x-form.input 
                                                 label="{{ ucwords($list->label) }}" 
                                                 name="{{ $list->name }}" 
-                                                value="" 
+                                                value=""    
                                                 mandatory=""
                                                 disable=""
                                                 type="{{ $list->type }}"                                    
                                                 wire:model.lazy='FspecialAid.{{ $key }}'    
-                                            />
-                                            @error('FspecialAid.'.$key)
-                                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror                                            
-
+                                            />                                      
                                             @if ($list->required == '1')
                                                 @if (session('warning'))
                                                     <p class="mt-2 text-sm text-red-600">{{ session('warning') }}</p>
