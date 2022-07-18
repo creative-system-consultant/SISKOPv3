@@ -44,7 +44,19 @@
                         <li class="flex">
                             <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
                                 href="#">
-                                <span>No Notification</span>
+                                <span>Membership is being processed</span>
+                            </a>
+                        </li>
+                        <li class="flex">
+                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                href="#">
+                                <span>Membership is rejected</span>
+                            </a>
+                        </li>
+                        <li class="flex">
+                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                href="#">
+                                <span>Show All Notification</span>
                             </a>
                         </li>
                     </ul>
