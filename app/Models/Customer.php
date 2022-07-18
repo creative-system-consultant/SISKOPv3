@@ -25,4 +25,9 @@ class Customer extends Model implements Auditable
         return $this->morphMany(FileMaster::class,'fileable');
     }
 
+    public function family()
+    {
+        return $this->hasMany(CustFamily::class,'id','family_id');
+    }
+
 }

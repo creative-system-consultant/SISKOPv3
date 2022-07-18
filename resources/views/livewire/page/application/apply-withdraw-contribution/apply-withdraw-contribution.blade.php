@@ -64,10 +64,6 @@
                             disable=""
                             wire:model.defer="cont_apply"
                         />
-
-                        @error('cont_apply')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>           
                     
                     <div>
@@ -84,11 +80,7 @@
                             @foreach ($banks as $bank)
                                 <option value="{{ $bank->code }}">{{ $bank->description }}</option>                            
                             @endforeach
-                        </x-form.dropdown>    
-                        
-                        @error('bank_code')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        </x-form.dropdown>                            
                     </div>
 
                     <div>
@@ -101,11 +93,7 @@
                             disable=""
                             type="text"
                             wire:model.defer="bank_account"
-                        />             
-                        
-                        @error('bank_account')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        />                                     
                     </div>
                 </div>
 
@@ -122,11 +110,7 @@
                             type="file"
                             accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
                             wire:model.defer="support_file"
-                        />  
-
-                        @error('support_file')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        /> 
                     </div>
                 </div>
 

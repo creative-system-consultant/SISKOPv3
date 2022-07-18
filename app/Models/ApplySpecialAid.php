@@ -27,4 +27,9 @@ class ApplySpecialAid extends Model
     {
         return $this->belongsTo(Coop::class,'coop_id');
     }
+
+    public function notification()
+    {
+        return $this->morphMany(Notification::class,'fieldable');
+    }
 }

@@ -13,19 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.Coop', function (Blueprint $table) {
+        Schema::create('CIF.Cust_Family', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
-
-            $table->string('name');
-            $table->string('name2');
-            $table->bigInteger('type_id');
-            $table->string('reg_num')->nullable();
-            $table->string('description')->nullable();
-            $table->bigInteger('address_id')->nullable();
-
-            $table->string('status',1)->default('0');
-            $table->string('logo_path')->nullable();
+            $table->bigInteger('family_id')->nullable();                // to who this family is
+            $table->bigInteger('cust_id')->nullable();                  // the family data at customer
+            $table->bigInteger('relationship_id');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -35,8 +28,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.Coop',RESEED,100)");
-
+        DB::statement("DBCC CHECKIDENT ('CIF.Cust_Family',RESEED,100)");
     }
 
     /**
@@ -46,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.Coop');
+        Schema::dropIfExists('CIF.Cust_Family');
     }
 };

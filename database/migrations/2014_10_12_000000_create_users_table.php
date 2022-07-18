@@ -15,7 +15,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('SISKOP.users', function (Blueprint $table) {
-            $table->id()->from(100);
+            $table->id();
+            $table->uuid('uuid')->default(DB::raw('newid()'));
             $table->string('name');
             $table->string('email')->unique();
             $table->string('icno')->unique();

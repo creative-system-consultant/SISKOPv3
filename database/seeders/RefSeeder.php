@@ -129,8 +129,8 @@ class RefSeeder extends Seeder
         DB::table('ref.address_types')->insert($address);
 
         $cooptype = [
-            ['description' => 'COOP', 'code' => 'CC'],
-            ['description' => 'CLUB', 'code' => 'CL'],
+            ['description' => 'COOP', 'code' => 'CC', 'status' => '1'],
+            ['description' => 'CLUB', 'code' => 'CL', 'status' => '1'],
         ];
         DB::table('ref.coop_types')->insert($cooptype);
 
@@ -143,5 +143,22 @@ class RefSeeder extends Seeder
             ['description' => 'TAKAFUL',             'code' => 'TK', 'coop_id' => '1'],
         ];
         DB::table('ref.product_types')->insert($product);
+
+        $memberDocument = [
+            ['description' => 'IDENTIFICATION CARD (FRONT & BACK)',     'code' => 'IC', 'coop_id' => '1'],
+            ['description' => 'WORKER CARD (FRONT)',                    'code' => 'WC', 'coop_id' => '1'],
+            ['description' => 'LATEST PAYCHECK',                        'code' => 'P1', 'coop_id' => '1'],
+            ['description' => 'LAST MONTH PAYCHECK',                    'code' => 'P2', 'coop_id' => '1'],
+            ['description' => 'LAST 2 MONTH PAYCHECK',                  'code' => 'P3', 'coop_id' => '1'],
+            ['description' => 'EMPLOYER VERIFICATION',                  'code' => 'EV', 'coop_id' => '1'],
+        ];
+        DB::table('ref.membership_documents')->insert($memberDocument);
+
+        $notification = [
+            ['description' => 'MEMBERSHIP',     'code' => 'MBR'],
+            ['description' => 'FINANCING',      'code' => 'FIN'],
+            ['description' => 'SPECIAL AID',    'code' => 'AID'],
+        ];
+        DB::table('ref.notification')->insert($notification);
     }
 }
