@@ -11,9 +11,9 @@ class Notification extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = 'siskop.notification';
+    protected $table   = 'siskop.notifications';
     protected $guarded = [];
-    protected $dates   = ['start_apply','online_date','cdm_date','cheque_date','created_at','deleted_at','updated_at'];
+    protected $dates   = ['created_at','deleted_at','updated_at'];
 
     public function notifiable()
     {

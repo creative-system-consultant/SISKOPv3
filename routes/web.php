@@ -60,6 +60,7 @@ use App\Http\Livewire\Page\Application\ApplyContribution\Apply_Contribution;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\Apply_Sell_ExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\Apply_Share;
 use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\Apply_WithdrawContribution;
+use App\Http\Livewire\Page\Notification\notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,10 @@ Route::middleware('auth')->group(function () {
     //profile
     Route::get('profile', Index::class)->name('profile');
     Route::get('Index', Index::class)->name('Index');
+
+    //--------------------------------- Notification ---------------------------------//
+    Route::get('/notification', notification::class)->name('notification');
+    //------------------------------- End Notification -------------------------------//
 
 
     //------------------------------- Applications -------------------------------//

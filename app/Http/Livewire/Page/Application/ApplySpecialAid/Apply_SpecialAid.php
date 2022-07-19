@@ -83,11 +83,19 @@ class Apply_SpecialAid extends Component
             }
         }    
 
+        $applySpecialAid->notification()->create([
+            'title'       => 'Special Aid is being processed',
+            'type'        =>  3,
+            'description' => 'Your Application has been sent',
+            'link'        => url('/applySpecialAid'),
+        ]);
+
         session()->flash('message', 'Special Aid Applied');
         session()->flash('success');
         session()->flash('title');
 
         return redirect()->route('special-aid.apply');
+        
     }
 
     public function mount()

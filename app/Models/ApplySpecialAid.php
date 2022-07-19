@@ -30,6 +30,6 @@ class ApplySpecialAid extends Model
 
     public function notification()
     {
-        return $this->morphMany(Notification::class,'fieldable');
+        return $this->morphMany(Notification::class,'notifiable');
     }
 }
