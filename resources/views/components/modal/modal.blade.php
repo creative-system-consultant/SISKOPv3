@@ -29,11 +29,11 @@
         x-transition:leave="transition ease-in duration-300"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-4 sm:translate-y-4">
-		<div {{ $attributes->merge(['class' => 'bg-white rounded-lg shadow-xl relative overflow-hidden']) }}>
-            <div class="p-4 flex justify-between w-full items-center border-b-2">
+		<div {{ $attributes->merge(['class' => 'bg-white rounded-lg shadow-xl relative overflow-hidden dark:bg-gray-700']) }}>
+            <div class="flex items-center justify-between w-full p-4 border-b-2">
                 <p class="text-xl font-semibold">{{$title}}</p>
                 @if ($close == "true")
-                    <button type="button" class="flex items-center justify-center w-8 h-8 transition duration-300 ease-in-out rounded-lg bg-primary-800 text-white hover:bg-primary-900 focus:outline-none z-10 p-2" 
+                    <button type="button" class="z-10 flex items-center justify-center w-8 h-8 p-2 text-white transition duration-300 ease-in-out rounded-lg bg-primary-800 hover:bg-primary-900 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-600" 
                     x-on:click="modal=false, bsd(false)">
                         <x-heroicon-o-x class="w-5 h-5"/>
                     </button>

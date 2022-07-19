@@ -1,6 +1,6 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Bank Maintenance</h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         @if (session('success'))
             <x-swall.success message="{{ session('message') }}"/>
         @endif
@@ -54,7 +54,7 @@
                 @endforelse
             </x-slot>
         </x-table.table>
-    </div>
+    </x-general.card>
 </div>
 
 

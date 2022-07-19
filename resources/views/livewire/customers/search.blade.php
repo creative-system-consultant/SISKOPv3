@@ -1,6 +1,6 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl"> Search Customer </h1>
-    <div class="p-6 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-6 mt-4 bg-white rounded-md shadow-md">
         <div>
             <div class="flex flex-wrap space-x-0 space-y-4 sm:space-x-4 sm:space-y-0">
                 <div class="w-full sm:w-64">
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="pt-6 rounded-md">
-            <x-general.header-title title="Search Result" route=""/>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Search Result</h2>
             <x-table.table>
                 <x-slot name="thead">
                     <x-table.table-header class="text-left " value="No" sort="" />
@@ -77,5 +77,5 @@
                 </x-slot>
             </x-table.table>
         </div>
-    </div>
+    </x-general.card>
 </div>

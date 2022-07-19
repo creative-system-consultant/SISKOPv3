@@ -408,9 +408,9 @@
                 <div class="p-4 my-4 bg-white shadow-lg">
                     <div class="p-4">
                         <h1 class="text-base font-semibold md:text-2xl">Title</h1>
-                        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+                        <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
                             //content
-                        </div>
+                        </x-general.card>
                     </div>
                 </div>
                 <p class="font-semibold">Code</p>
@@ -418,9 +418,9 @@
                     <code class="language-html"> 
 &lt;div class="p-4">
     &lt;h1 class="text-base font-semibold md:text-2xl">Title&lt;/h1>
-    &lt;div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    &lt;x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         //content
-    &lt;/div>
+    &lt;/x-general.card>
 &lt;/div>
                     </code>
                 </pre>

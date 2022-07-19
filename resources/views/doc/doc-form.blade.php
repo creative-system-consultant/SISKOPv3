@@ -301,9 +301,9 @@
                    &lt;x-form.basic-form wire:submit.prevent=""><br> 
                    // content<br> 
                    &lt;/x-form.basic-form>
-                <div class="p-4 mt-6 rounded-md bg-gray-50">
+                <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">
-                        <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
+                        <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
                             Cancel
                         </a>
                         <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
@@ -315,9 +315,9 @@
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
                     <code class="language-html"> 
-&lt;div class="p-4 mt-6 rounded-md bg-gray-50">
+&lt;div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
     &lt;div class="flex items-center justify-center space-x-2">
-        &lt;a href="&#x7b;&#x7b;url()->previous()&#x7d;&#x7d;" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
+        &lt;a href="&#x7b;&#x7b;url()->previous()&#x7d;&#x7d;" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
             Cancel
         &lt;/a>
         &lt;button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">

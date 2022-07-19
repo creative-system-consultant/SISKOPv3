@@ -15,7 +15,7 @@
     
     <aside
         x-cloak
-        class="fixed inset-y-0 z-20 flex-shrink-0 w-64 overflow-y-auto bg-white  md:hidden"
+        class="fixed inset-y-0 z-20 flex-shrink-0 w-64 overflow-y-auto bg-white md:hidden dark:bg-gray-800"
         x-show="isSideMenuOpen"
         x-transition:enter="transition ease-in-out duration-150"
         x-transition:enter-start="opacity-0 transform -translate-x-20"
@@ -29,7 +29,7 @@
                 <div class="flex justify-center pt-4">
                     <x-logo class="w-auto h-10" /> 
                 </div>
-                <div class="flex justify-center text-black">
+                <div class="flex justify-center text-black dark:text-white">
                     <p class="italic font-semibold">{{ config('app.name') }}</p>
                 </div>
                 <div>

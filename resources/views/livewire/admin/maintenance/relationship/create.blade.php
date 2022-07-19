@@ -1,9 +1,8 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl"> Create Relationship </h1>
-        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+        <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
             <x-general.header-title title="Relationship List" route="{{route('relationship.list')}}"/>
-
-            <div class="pt-4 bg-white ">
+            <div class="pt-4">
                 <div class="pb-4 pl-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
@@ -51,7 +50,7 @@
                             </div>
                         </div>
 
-                        <div class="p-4 mt-6 rounded-md bg-gray-50">
+                        <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                             <div class="flex items-center justify-center space-x-2">
                                 <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                                     Cancel
@@ -64,6 +63,6 @@
                     </x-form.basic-form>                   
                 </div>
             </div>
-        </div>
+        </x-general.card>
     </h1>
 </div>
