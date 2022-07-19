@@ -12,20 +12,21 @@
     <div class="flex justify-center ">
         <div 
             class="inline-flex items-center justify-between w-full text-lg font-semibold  
-            cursor-pointer
+            cursor-pointer 
             @if(\Request::is($uri))
                 text-primary-800
             @else
                 text-gray-600 hover:text-primary-800
             @endif"
             x-on:click="{{$active}} = !{{$active}}">
-            <a href="#" class="inline-flex items-center text-sm font-semibold  
+            <a href="#" class="inline-flex items-center text-sm font-semibold 
+            hover:text-primary-800 
                 @if(\Request::is($uri))
-                    text-primary-800
+                    text-primary-800 dark:text-primary-700
                 @else
-                    text-gray-600 hover:text-primary-800
+                    text-gray-600 dark:text-white dark:hover:text-primary-600
                 @endif">
-                <div class="px-2 py-2 bg-white rounded-md shadow-md">
+                <div class="px-2 py-2 bg-white rounded-md shadow-md dark:bg-gray-900">
                     {{ $icon }}
                 </div>
                 <span class="ml-4 text-xs uppercase lg:text-sm">{{$title}}</span>

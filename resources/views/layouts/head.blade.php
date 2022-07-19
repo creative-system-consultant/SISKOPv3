@@ -41,11 +41,14 @@
         @powerGridStyles
     </head>
 
-    <body class="bg-gray-100">
-        <div class="flex h-screen " :class="{ 'overflow-hidden': isSideMenuOpen }"  >
+    <body
+        x-data="{'darkMode': false,profile:false}"
+        x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+        $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))">
+        <div class="flex h-screen" :class="{ 'overflow-hidden': isSideMenuOpen , 'dark': darkMode === true}">
             @include('layouts.sidebar.desktop')
             @include('layouts.sidebar.mobile')
-            <div class="flex flex-col flex-1 w-full overflow-y-auto">
+            <div class="flex flex-col flex-1 w-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 @include('layouts.sidebar.topbar')
                 {{-- content --}}
                 @yield('content')

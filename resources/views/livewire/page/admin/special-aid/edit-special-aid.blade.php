@@ -1,8 +1,8 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Special Aid List > Edit</h1>
-        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+        <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
             <x-general.header-title title="Edit Special Aid" route="{{route('special_aid.list')}}"/>
-            <div class="pt-4 bg-white ">    
+            <div class="pt-4">    
                 <div class="pb-4 pl-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit('{{ $specialAid->uuid }}')">
                         <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
@@ -184,7 +184,7 @@
                         @endforeach
                         </div>
 
-                        <div class="p-4 mt-6 rounded-md bg-gray-50">
+                        <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                             <div class="flex items-center justify-center space-x-2">
                                 <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
                                     Cancel
@@ -197,7 +197,7 @@
                     </x-form.basic-form>
                 </div>
             </div>
-        </div>
+        </x-general.card>
     </h1>
 </div>
 

@@ -1,7 +1,7 @@
 <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto">
-        <div class="py-2 align-middle inline-block min-w-full">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white">
+        <div class="inline-block min-w-full py-2 align-middle">
+            <div class="overflow-hidden bg-white border-b border-gray-200 shadow sm:rounded-lg dark:bg-gray-700">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>

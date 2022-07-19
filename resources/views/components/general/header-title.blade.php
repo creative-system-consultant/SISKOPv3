@@ -1,4 +1,4 @@
-<div class="px-4 py-2 mb-1 bg-gray-900 rounded-lg">
+<div class="px-4 py-2 mb-1 bg-gray-900 rounded-lg dark:bg-gray-800">
     <div class="flex items-center justify-between text-white">
         <h1 class="text-base">{{$title}}</h1>
         @if($route == '')

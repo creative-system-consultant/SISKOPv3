@@ -1,6 +1,6 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Country Maintenance > Edit</h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-general.header-title title="Country Edit Information" route="{{route('country.list')}}"/>       
         <x-form.basic-form wire:submit.prevent="submit('{{ $RefCountry->id }}')" class="p-4">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -47,7 +47,7 @@
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="p-4 mt-6 rounded-md bg-gray-50">
+            <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                         Cancel
@@ -58,5 +58,5 @@
                 </div>
             </div>
         </x-form.basic-form>
-    </div>
+    </x-general.card>
 </div>

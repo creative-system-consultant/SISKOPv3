@@ -10,7 +10,7 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0 transform -translate-x-20"
     @keydown.escape="closeSideMenuDesktop"
-    class="z-20 flex-shrink-0 hidden px-2 overflow-y-auto border-r-2 bg-gray-50 md:block" id="sidebar">
+    class="z-20 flex-shrink-0 hidden px-2 overflow-y-auto border-r-2 bg-gray-50 md:block dark:bg-gray-800 dark:border-gray-700" id="sidebar">
 
     <div class="mb-6 animate" id="nav-items">
         <div class="text-primary">

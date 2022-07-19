@@ -1,6 +1,6 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Special Aid</h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Information</h2>
         <div class="p-4">      
             <div x-data="{isShowing: '' }">
@@ -83,7 +83,7 @@
                                     </div>                                        
                                 @endforeach
                             </div>
-                            <div class="p-4 mt-6 rounded-md bg-gray-50">
+                            <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                                 <div class="flex items-center justify-center space-x-2">
                                     <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                                         Submit
@@ -95,5 +95,5 @@
                 @endforeach                
             </div>
         </div>
-    </div>
+    </x-general.card>
 </div>
