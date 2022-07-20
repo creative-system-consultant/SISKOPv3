@@ -46,6 +46,7 @@ use App\Http\Livewire\Page\Admin\Coop\CoopCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
+use App\Http\Livewire\Page\Admin\Membership\MembershipAdmin;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
@@ -128,6 +129,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/', CoopAdmin::class)->name('coop.list');
             Route::get('create', CoopCreate::class)->name('coop.create');
             Route::get('edit/{coop_id}', CoopCreate::class)->name('coop.edit');
+        });
+        Route::prefix('membership')->group(function(){
+            Route::get('/', MembershipAdmin::class)->name('membership.admin');
         });
 
         //Admin > Maintenance > sample
