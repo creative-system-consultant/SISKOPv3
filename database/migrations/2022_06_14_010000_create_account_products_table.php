@@ -13,25 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('FMS.Account_Masters', function (Blueprint $table) {
+        Schema::create('SISKOP.Account_Products', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->string('mbr_no');
-            $table->bigInteger('agent_id')->nullable();
-            $table->bigInteger('cust_id');
+            $table->string('name');
             $table->bigInteger('coop_id');
-
-            $table->string('account_no');
-            $table->string('product_id');
-            $table->bigInteger('account_status')->default('15');
-
-            $table->decimal('purchase_price',16,2);
-            $table->decimal('selling_price',16,2);
-            $table->decimal('approved_limit',16,2);
-
             $table->decimal('profit_rate',4,4);
-            $table->decimal('instal_amount',16,4);
+            $table->decimal('amt_default',8,2);
+            $table->decimal('amt_min',8,2)->nullable();
+            $table->decimal('amt_max',8,2)->nullable();
+            $table->smallInteger('term_default');
+            $table->smallInteger('term_min')->nullable();
+            $table->smallInteger('term_max')->nullable();
+            $table->decimal('min_share',8,2)->nullable();
+            $table->decimal('max_share',8,2)->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

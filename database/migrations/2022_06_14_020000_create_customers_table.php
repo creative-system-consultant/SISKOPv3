@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('icno');
             $table->string('otheric')->nullable();
             $table->bigInteger('ictype')->nullable();
+            $table->string('mobile_num')->nullable();
+            $table->string('email')->nullable();
 
             $table->date('birthdate')->nullable();
             $table->string('birthplace')->nullable();
@@ -32,6 +34,7 @@ return new class extends Migration
             $table->bigInteger('race_id')->nullable();
             $table->bigInteger('language_id')->nullable();
             $table->bigInteger('country_id')->nullable();
+            $table->bigInteger('education_id')->nullable();
 
             $table->unsignedDecimal('member_fee',8,2)->default('0.00');
             $table->unsignedDecimal('share',8,2)->default('0.00');

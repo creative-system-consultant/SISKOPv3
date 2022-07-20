@@ -160,5 +160,41 @@ class RefSeeder extends Seeder
             ['description' => 'SPECIAL AID',    'code' => 'AID'],
         ];
         DB::table('ref.notification')->insert($notification);
+
+        $account_status = [
+            ['description' => 'ACTIVE',         'code' => '1'],
+            ['description' => 'CLOSE',          'code' => '2'],
+            ['description' => 'TRANSFERRED',    'code' => '3'],
+            ['description' => 'TO BE TRANSFER', 'code' => '4'],
+            ['description' => 'EXPIRED',        'code' => '5'],
+            ['description' => 'JUDGMENT',       'code' => '6'],
+            ['description' => 'FROZEN',         'code' => '7'],
+            ['description' => 'LEGAL ACTION',   'code' => '8'],
+            ['description' => 'WRITE-OFF',      'code' => '9'],
+            ['description' => 'RECALL',         'code' => '10'],
+            ['description' => 'CANCEL',         'code' => '11'],
+            ['description' => 'FAILED',         'code' => '12'],
+            ['description' => 'reserved',       'code' => '13'],
+            ['description' => 'reserved',       'code' => '14'],
+            ['description' => 'APPLYING',       'code' => '15'],
+            ['description' => 'MAKER',          'code' => '16'],
+            ['description' => 'CHECKER',        'code' => '17'],
+            ['description' => 'APPROVAL',       'code' => '18'],
+            ['description' => 'COMITTEE',       'code' => '19'],
+            ['description' => 'ACCEPTANCE',     'code' => '20'],
+            ['description' => 'REJECT',         'code' => '21'],
+        ];
+        DB::table('ref.account_statuses')->insert($account_status);
+
+        $ic_type = [
+            ['description' => 'MyKAD',      'code' => '1', 'status' => '1'],
+            ['description' => 'OLD IC',     'code' => '2', 'status' => '1'],
+            ['description' => 'MyPR',       'code' => '3', 'status' => '1'],
+            ['description' => 'MyKAS',      'code' => '4', 'status' => '1'],
+            ['description' => 'MyKID',      'code' => '5', 'status' => '1'],
+            ['description' => 'POLICE',     'code' => '6', 'status' => '1'],
+            ['description' => 'MILITARY',   'code' => '7', 'status' => '1'],
+        ];
+        DB::table('ref.identification_type')->insert($ic_type);
     }
 }

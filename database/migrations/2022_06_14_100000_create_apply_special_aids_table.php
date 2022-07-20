@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('coop_id');
             $table->bigInteger('cust_id');
+            $table->bigInteger('special_aid_id');
 
             $table->string('step',3)->default('0');
             $table->string('flag',3)->default('0');

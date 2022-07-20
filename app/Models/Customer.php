@@ -30,4 +30,9 @@ class Customer extends Model implements Auditable
         return $this->hasMany(CustFamily::class,'id','family_id');
     }
 
+    public function address()
+    {
+        return $this->morphMany(Address::class,'addressable');
+    }
+
 }

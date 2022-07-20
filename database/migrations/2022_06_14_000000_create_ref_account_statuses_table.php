@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->string('description_bm',150)->nullable();
+            $table->string('code',20)->nullable();
             $table->string('status',1)->default('0');
 
             $table->timestamp('created_at')->useCurrent();
