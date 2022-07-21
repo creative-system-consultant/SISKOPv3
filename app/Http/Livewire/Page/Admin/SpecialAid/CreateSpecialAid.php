@@ -90,7 +90,7 @@ class CreateSpecialAid extends Component
             $specialAid->field()->create([
                 'name'      => $this->Fname[$index],
                 'label'     => $this->Flabel[$index],
-                'type'      => $this->Ftype[$index] ??= 'string',
+                'type'      => $this->Ftype[$index] == '' ? 'string' : $this->Ftype[$index],
             ]);
         }
 

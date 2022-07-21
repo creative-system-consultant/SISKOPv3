@@ -29,10 +29,24 @@ class Customer extends Model implements Auditable
     {
         return $this->hasMany(CustFamily::class,'id','family_id');
     }
+    
+    public function specialAid()
+    {
+        return $this->hasOne(ApplySpecialAid::class,'cust_id','id');
+    }
 
     public function address()
     {
         return $this->morphMany(Address::class,'addressable');
     }
 
+    public function shares()
+    {
+        return $this->hasMany(Share::class, 'cust_id', 'id');
+    }
+
+    public function contribution()
+    {
+        return $this->hasOne(Contribution::class,'cust_id','id');
+    }
 }

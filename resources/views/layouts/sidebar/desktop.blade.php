@@ -34,7 +34,7 @@
                         <div class="leading-5">
                             <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-document-text class="w-7 h-7" />
+                                    <x-heroicon-o-archive class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Add Share" href="{{ route('share.apply') }}" uri="applyShare">
@@ -54,11 +54,15 @@
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Withdrawal Contribution" href="{{ route('contribution.withdraw') }}" uri="withdrawContribution">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-document-add class="w-7 h-7" />
+                                    <x-heroicon-o-document-remove class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item> 
+
+                    <x-sidebar.nav-item title="List of Application" route="{{route('application.list')}}" uri="applicationList">
+                        <x-heroicon-o-document-text class="w-7 h-7" />                        
+                    </x-sidebar.nav-item>
 
                     <x-sidebar.nav-item title="Customer Search" route="{{route('searchcustomer')}}" uri="searchcustomer">
                         <x-heroicon-o-search-circle class="w-7 h-7" />                        

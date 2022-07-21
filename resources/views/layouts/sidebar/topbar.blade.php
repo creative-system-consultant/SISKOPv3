@@ -47,23 +47,33 @@
                     <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
                         x-transition:leave-end="opacity-0" @keydown.escape="open=false"
                         @click.away="open = !open"
-                        class="absolute right-0 z-50 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white rounded-md shadow-md dark:bg-gray-800">
+                        class="absolute right-0 z-50 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white rounded-md shadow-md">
+                        @php
+                            $user = Auth::user();
+                            $customer = \App\Models\Customer::where('icno', $user->icno)->first();
+                            $specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();                            
+                        @endphp
+                        @if ($specialAid != NULL)
+                            @foreach ($specialAid->notification as $notifyAid)
+                                <li class="flex">
+                                    <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                        href="{{ url($notifyAid->link) }}">
+                                        <span>{{ $notifyAid->title }}</span>
+                                    </a>
+                                </li>                                         
+                            @endforeach
+                        @else
+                            <li class="flex">
+                                <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                    href="#">
+                                    <span>No Notification</span>
+                                </a>
+                            </li> 
+                        @endif
                         <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md dark:text-white"
-                                href="#">
-                                <span>Membership is being processed</span>
-                            </a>
-                        </li>
-                        <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md dark:text-white"
-                                href="#">
-                                <span>Membership is rejected</span>
-                            </a>
-                        </li>
-                        <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md dark:text-white"
-                                href="#">
-                                <span>Show All Notification</span>
+                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                href="{{ route('notification') }}">
+                                <span class="text-blue-500">Show All Notification</span>
                             </a>
                         </li>
                     </ul>

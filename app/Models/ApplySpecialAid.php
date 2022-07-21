@@ -20,7 +20,7 @@ class ApplySpecialAid extends Model
 
     public function customer()
     {
-        return $this->hasMany(Customer::class,'id','cust_id');
+        return $this->belongsTo(Customer::class,'cust_id','id');
     }
 
     public function coop()
@@ -30,6 +30,6 @@ class ApplySpecialAid extends Model
 
     public function notification()
     {
-        return $this->morphMany(Notification::class,'fieldable');
+        return $this->morphMany(Notification::class,'notifiable');
     }
 }

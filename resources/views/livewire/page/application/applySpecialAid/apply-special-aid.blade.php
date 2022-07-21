@@ -18,14 +18,14 @@
                             wire:model="type_specialAid"
                             >
                             @foreach ($specialAids as $type)
-                                <option value="{{ $type->name }}">{{ ucwords($type->name) }}</option>                                        
+                                <option value="{{ $type->id }}"> {{ ucwords($type->name) }} </option>                                        
                             @endforeach
                         </x-form.dropdown>                            
                     </div>
                 </div>
                 
                 @foreach ($specialAids as $index => $listField)
-                    <div x-cloak x-show="isShowing == '{{ $listField->name }}'">
+                    <div x-cloak x-show="isShowing == '{{ $listField->id }}'">
                         <x-form.basic-form wire:submit.prevent="submit('{{ $listField->uuid }}','{{ $index }}')">
                             <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                                 <div>
