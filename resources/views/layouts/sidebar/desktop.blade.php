@@ -64,7 +64,7 @@
                         <x-heroicon-o-document-text class="w-7 h-7" />                        
                     </x-sidebar.nav-item>
 
-                    <x-sidebar.nav-item title="Customer Search" route="{{route('searchcustomer')}}" uri="searchcustomer">
+                    <x-sidebar.nav-item title="Customer Search" route="{{route('customer.search')}}" uri="searchcustomer">
                         <x-heroicon-o-search-circle class="w-7 h-7" />                        
                     </x-sidebar.nav-item>
 
@@ -78,6 +78,11 @@
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="COOP" href="{{ route('coop.list') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-text class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Add Customer Field" href="{{ route('coop.cust') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-document-text class="w-7 h-7" />
                             </x-slot>

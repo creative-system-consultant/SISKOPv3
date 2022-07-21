@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Page\Executive\Customer;
 
+use App\Models\Coop;
+use App\Models\CustCustomField;
 use Livewire\Component;
 use App\Models\Customer;
 use App\Models\Ref\RefCustTitle;
@@ -12,86 +14,94 @@ use App\Models\Ref\RefRace;
 use App\Models\Ref\RefLangugage;
 use App\Models\Ref\RefCountry;
 
-
 class EditCustomer extends Component
 {
-        public Customer $cust;
-        public $customers;
-        public $name;
-        public $icno;
-        public $birthdate;
-        public $birthplace;
-        public $title_id;
-        public $education_id;
-        public $gender_id;
-        public $marital_id;
-        public $race_id;
-        public $language_id;
-        public $country_id;
-        protected $rules=[
-            'cust.name'         =>'required',
-            'cust.icno'         =>'required',
-            'cust.birthdate'    =>'required',
-            'cust.birthplace'   =>'required',
-            'cust.birthdate'    =>'required',
-            'cust.title_id'     =>'required',
-            'cust.education_id' =>'required',
-            'cust.gender_id'    =>'required',
-            'cust.marital_id'   =>'required',
-            'cust.race_id'      =>'required',
-            'cust.language_id'  =>'required',
-            'cust.country_id'   =>'required',
-        ];
-        
-        public function submit($id)
-        {
-        // $this->validate();
+    public Customer $Cust;
+    public Coop $Coop;
+    public $title_id;
+    public $education;
+    public $gender;
+    public $marital;
+    public $race;
+    public $language;
+    public $country;
+    public $Fname  = [];
+    public $Flabel = [];
+    public $Ftype  = [];
+    public $Fvalue = [];
+    protected $rules=[
+        'Cust.name'         =>'required',
+        'Cust.icno'         =>'required',
+        'Cust.birthdate'    =>'required',
+        'Cust.birthplace'   =>'required',
+        'Cust.birthdate'    =>'required',
+        'Cust.title_id'     =>'required',
+        'Cust.education_id' =>'required',
+        'Cust.gender_id'    =>'required',
+        'Cust.marital_id'   =>'required',
+        'Cust.race_id'      =>'required',
+        'Cust.language_id'  =>'required',
+        'Cust.country_id'   =>'required',
+    ];
 
-        $customers = Customer::where('id', $id)->first();
-        
-        $customers->update([
-            'name'                => $this->cust['name'],
-            'icno'                => $this->cust['icno'],
-            'birthdate'           => $this->cust['birthdate'],
-            'birthplace'          => $this->cust['birthplace'],
-            'title_id'            => $this->cust['title_id'],
-            'education_id'        => $this->cust['education_id'],
-            'gender_id'           => $this->cust['gender_id'],
-            'marital_id'          => $this->cust['marital_id'],
-            'race_id'             => $this->cust['race_id'],
-            'language_id'         => $this->cust['language_id'],
-            'country_id'          => $this->cust['country_id'],
-
+    public function submit()
+    {
+        $this->Cust->update([
+            'name'                => $this->Cust['name'],
+            'icno'                => $this->Cust['icno'],
+            'birthdate'           => $this->Cust['birthdate'],
+            'birthplace'          => $this->Cust['birthplace'],
+            'title_id'            => $this->Cust['title_id'],
+            'education_id'        => $this->Cust['education_id'],
+            'gender_id'           => $this->Cust['gender_id'],
+            'marital_id'          => $this->Cust['marital_id'],
+            'race_id'             => $this->Cust['race_id'],
+            'language_id'         => $this->Cust['language_id'],
+            'country_id'          => $this->Cust['country_id'],
         ]);
+
+        foreach ($this->Fname as $key => $value) {
+            $field = CustCustomField::updateOrCreate([
+                'fieldable_type'    => get_class($this->Cust),
+                'fieldable_id'      => $this->Cust->id,
+                'name'              => $value,
+            ],[
+                'label'     => $this->Flabel[$key],
+                'type'      => $this->Ftype[$key],
+                'value'     => $this->Fvalue[$key],
+            ]);
+        }
 
         session()->flash('message', 'Profile Updated');
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('searchcustomer');
+        return redirect()->route('customer.search');
     }
 
-    public function  loadUser($id)
+    public function mount($uuid = NULL)
     {
-        $customers = Customer::where('id', $id)->first();
-    }
-    
-    public function mount($id)
-    {
-        $this->cust             = Customer::where('id', $id)->first();
-        $this->title_id         = RefCustTitle::all();
-        $this->education_id     = RefEducation::all();
-        $this->gender_id        = RefGender::all();
-        $this->marital_id       = RefMarital::all();
-        $this->race_id          = RefRace::all();
-        // $this->language_id   = RefLanguage::all();
-        $this->country_id       = RefCountry::all();
-        $this->loadUser($id);
+        $this->Coop             = Coop::find(auth()->user()->coop_id);
+        $this->Cust             = Customer::where('uuid', $uuid)->first();
+        $this->title            = RefCustTitle::all();
+        $this->education        = RefEducation::all();
+        $this->gender           = RefGender::all();
+        $this->marital          = RefMarital::all();
+        $this->race             = RefRace::all();
+        $this->country          = RefCountry::all();
+        //$this->language         = RefLanguage::all();
+
+        foreach ($this->Coop->fields as $key => $value) {
+            $this->Fname[$key]  = $value->name;
+            $this->Flabel[$key] = $value->label;
+            $this->Ftype[$key]  = $value->type;
+            $this->Fvalue[$key] = $this->Cust->field_value($value->name);
+        }
+
     }
 
     public function render()
     {
-        return view('livewire.customers.edit')->extends('layouts.head');
+        return view('livewire.Customers.edit')->extends('layouts.head');
     }
-
 }

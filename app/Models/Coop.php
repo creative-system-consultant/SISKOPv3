@@ -57,4 +57,9 @@ class Coop extends Model implements Auditable
         if ($this->status == 1) { return 'ACTIVE'; } 
         else { return 'INACTIVE'; } 
     }
+
+    public function fields()
+    {
+        return $this->morphMany(CustomField::class,'fieldable');
+    }
 }

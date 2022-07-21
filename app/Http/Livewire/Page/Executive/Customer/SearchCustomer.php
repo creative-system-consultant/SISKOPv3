@@ -8,7 +8,6 @@ use App\Models\Customer;
 
 class SearchCustomer extends Component
 {
-    
     public $customers = [];
     public $searchby;
     public $search;
@@ -20,8 +19,6 @@ class SearchCustomer extends Component
 
     public function search()
     {
-
-        // dd($this->search);
         $this->validate([
             'searchby'   => ['required'],
             'search'     => ['required', 'string'], 
@@ -34,9 +31,8 @@ class SearchCustomer extends Component
             $this->customers = Customer::where('icno', 'like', '%' .$this->search. '%')->get();
         }
         else {
-            [];
+            $this->customers = [];
         }
-        
     }
 
     public function render()

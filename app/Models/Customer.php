@@ -49,4 +49,15 @@ class Customer extends Model implements Auditable
     {
         return $this->hasOne(Contribution::class,'cust_id','id');
     }
+
+    public function field()
+    {
+        return $this->morphMany(CustCustomField::class,'fieldable');
+    }
+
+    public function field_value($name)
+    {
+        return $this->field->where('name', $name)->first()?->value;
+    }
+
 }

@@ -43,6 +43,7 @@ use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\ComponentDoc;
 use App\Http\Livewire\Page\Admin\coop\coopAdmin;
 use App\Http\Livewire\Page\Admin\Coop\CoopCreate;
+use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
@@ -139,6 +140,9 @@ Route::middleware('auth')->group(function () {
             Route::get('create', CoopCreate::class)->name('coop.create');
             Route::get('edit/{coop_id}', CoopCreate::class)->name('coop.edit');
         });
+        Route::prefix('CustCoop')->group(function(){
+            Route::get('/', CustomerCoop::class)->name('coop.cust');
+        });
 
         //Admin > Maintenance > sample
         Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
@@ -222,8 +226,8 @@ Route::middleware('auth')->group(function () {
     //----------------------- Executive -------------------------------------//
     //Exec > edit customer
     Route::prefix('exec/editcustomer')->group(function(){
-        Route::get('search', SearchCustomer::class)->name('searchcustomer');
-        Route::get('edit/{id}', EditCustomer::class)->name('edit');
+        Route::get('search', SearchCustomer::class)->name('customer.search');
+        Route::get('edit/{uuid}', EditCustomer::class)->name('customer.edit');
     });
 
     //Exec > Application List

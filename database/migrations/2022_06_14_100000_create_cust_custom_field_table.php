@@ -13,11 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.Coop_Cust', function (Blueprint $table) {
+        Schema::create('SISKOP.SYS_CUSTOM_FIELD', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('coop_id');
-            $table->bigInteger('cust_id');
+            $table->morphs('fieldable');
+
+            $table->string('name')->nullable();
+            $table->string('label')->nullable();
+            $table->string('status',1)->default('1');
+
+            $table->string('type',20)->default('string');
+            $table->string('string')->nullable();
+            $table->unsignedDecimal('decimal',10,2)->nullable();
+            $table->unsignedDecimal('decimal4',12,4)->nullable();
+            $table->bigInteger('bigint')->nullable();
+            $table->date('date')->nullable();
+            $table->dateTime('datetime')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -35,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.Coop_Cust');
+        Schema::dropIfExists('SISKOP.sys_custom_field');
     }
 };
