@@ -17,7 +17,7 @@ class Apply_SpecialAid extends Component
     public $FspecialAid = [''];
 
     public function submit($uuid, $index)
-    {
+    {   
         $user = auth()->user();
         $specialAids = SpecialAid::where([['uuid', $uuid], ['status', 1]])->first();
         $customer = Customer::where('icno', $user->icno)->first();         
@@ -37,14 +37,15 @@ class Apply_SpecialAid extends Component
         }
         else{
             $applySpecialAid = ApplySpecialAid::create([
-                'name'          => $this->customer_name,
-                'coop_id'       => $customer->coop_id,
-                'cust_id'       => $customer->id,
-                'step'          => 0,
-                'flag'          => 0,
-                'apply_amt'     => $this->apply_amt[$index],  
-                'approved_amt'  => NULL,
-                'created_by'    => strtoupper($customer->name)
+                'name'              => $this->customer_name,
+                'coop_id'           => $customer->coop_id,
+                'cust_id'           => $customer->id,
+                'special_aid_id'    => $this->type_specialAid,
+                'step'              => 1,
+                'flag'              => 1,
+                'apply_amt'         => $this->apply_amt[$index],  
+                'approved_amt'      => NULL,
+                'created_by'        => strtoupper($customer->name)
             ]);                                        
         }
 

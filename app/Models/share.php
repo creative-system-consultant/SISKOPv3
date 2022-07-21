@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class share extends Model implements Auditable
+class Share extends Model implements Auditable
 {
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
@@ -17,7 +17,7 @@ class share extends Model implements Auditable
 
     public function customer()
     {
-        return $this->hasMany(Customer::class,'id','cust_id');
+        return $this->belongsTo(Customer::class,'cust_id','id');
     }
 
     public function coop()
@@ -28,5 +28,10 @@ class share extends Model implements Auditable
     public function files()
     {
         return $this->morphMany(FileMaster::class,'fileable');
+    }
+
+    public function buyer()
+    {
+        return $this->belongsTo(Customer::class, 'exc_cust_id', 'id');
     }
 }

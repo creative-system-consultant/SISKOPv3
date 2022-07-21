@@ -20,7 +20,7 @@ class ApplySpecialAid extends Model
 
     public function customer()
     {
-        return $this->hasMany(Customer::class,'id','cust_id');
+        return $this->belongsTo(Customer::class,'cust_id','id');
     }
 
     public function coop()

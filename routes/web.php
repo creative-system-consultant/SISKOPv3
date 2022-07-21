@@ -49,6 +49,11 @@ use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
+use App\Http\Livewire\Page\Application\ApplicationList\Contribution;
+use App\Http\Livewire\Page\Application\ApplicationList\Sell_ExchangeShare;
+use App\Http\Livewire\Page\Application\ApplicationList\Share;
+use App\Http\Livewire\Page\Application\ApplicationList\SpecialAid;
+use App\Http\Livewire\Page\Application\ApplicationList\Withdrawal_Contribution;
 use App\Http\Livewire\Page\Application\ApplySpecialAid\Apply_SpecialAid;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
@@ -220,6 +225,24 @@ Route::middleware('auth')->group(function () {
         Route::get('search', SearchCustomer::class)->name('searchcustomer');
         Route::get('edit/{id}', EditCustomer::class)->name('edit');
     });
+
+    //Exec > Application List
+    Route::prefix('applicationList')->group(function(){
+        Route::get('/', function(){
+            return view('livewire.page.application.application-list.application-list');
+        })->name('application.list');
+        
+        Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
+
+        Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
+
+        Route::get('/sellShare/{uuid}', [Sell_ExchangeShare::class, 'showApplication'])->name('application.sell');
+
+        Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
+
+        Route::get('/withdrawContribution/{uuid}', [Withdrawal_Contribution::class, 'showApplication'])->name('application.withdrawal');
+    }); 
+
     //----------------------- End Executive --------------------------------//
 
 
