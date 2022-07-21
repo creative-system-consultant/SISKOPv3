@@ -2,9 +2,9 @@
 @section('content')
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Withdrawal Contribution</h1>
-    <div class="pt-4 mt-4 bg-white rounded-md shadow-md">
-        <div class="pl-4 pb-4 pr-4">
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
+    <x-general.card class="pt-4 mt-4 bg-white rounded-md shadow-md">
+        <div class="pb-4 pl-4 pr-4">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input 
                     label="Name" 
@@ -47,7 +47,7 @@
                 />  
             </div>
 
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>  
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
                     <x-form.input-tag 
@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <h2 class="mb-4 mt-6 text-lg font-semibold border-b-2 border-gray-300">Upload Document</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Upload Document</h2>  
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <div>
                     @forelse ($custApply->files as $supportDoc)
@@ -115,11 +115,11 @@
                             Show
                         </a>
                     @empty
-                        <h2 class="ml-4 mb-4 text-base border-gray-300">No Document</h2> 
+                        <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2> 
                     @endforelse
                 </div>
             </div>
-            <div class="p-4 mt-6 rounded-md bg-gray-50">
+            <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <a href="{{route('application.list')}}" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
                         Close
@@ -127,6 +127,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </x-general.card>
 </div>   
 @endsection

@@ -46,7 +46,7 @@ class CustomerCoop extends Component
         $this->Ftype  = array_values($this->Ftype);
 
         if(isset($this->Coop->fields[$index])){
-            $this->Coop->fields[$index];
+            $this->Coop->fields[$index]->delete();
         }
     }
 
