@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.APPLY_MEMBERSHIP', function (Blueprint $table) {
+        Schema::create('ref.status', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(DB::raw('newid()'));
-
-            $table->string('mbr_no')->nullable();
-            $table->bigInteger('agent_id')->nullable();
-            $table->bigInteger('cust_id');
-            $table->bigInteger('coop_id');
-            $table->bigInteger('flag')->default(0);
-            $table->bigInteger('step')->default(1);
+            $table->string('description');
+            $table->string('description_bm',150)->nullable();
+            $table->string('code',20)->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -31,8 +26,6 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
-
-        DB::statement("DBCC CHECKIDENT ('SISKOP.APPLY_MEMBERSHIP',RESEED,100)");
     }
 
     /**
@@ -42,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.APPLY_MEMBERSHIP');
+        Schema::dropIfExists('ref.status');
     }
 };

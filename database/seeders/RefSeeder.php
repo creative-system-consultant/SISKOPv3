@@ -196,5 +196,27 @@ class RefSeeder extends Seeder
             ['description' => 'MILITARY',   'code' => '7', 'status' => '1'],
         ];
         DB::table('ref.identification_type')->insert($ic_type);
+
+        $statuses = [
+            ['description' => 'APPLYING',      'code' => '0'],
+            ['description' => 'PROCESS START', 'code' => '1'],
+            ['description' => 'reserved',      'code' => '2'],
+            ['description' => 'CANCEL',        'code' => '3'],
+            ['description' => 'REJECT',        'code' => '4'],
+            ['description' => 'reserved',      'code' => '5'],
+            ['description' => 'APPROVED',      'code' => '6'],
+        ];
+        DB::table('ref.status')->insert($statuses);
+
+        $steps = [
+            ['description' => 'APPLYING',             'code' => '0', 'type' => 'share_sell', 'status' => '1'],
+            ['description' => 'WAITING CONFIRMATION', 'code' => '1', 'type' => 'share_sell', 'status' => '1'],
+            ['description' => 'PROCESSING',           'code' => '2', 'type' => 'share_sell', 'status' => '1'],
+            ['description' => 'APPROVED',             'code' => '3', 'type' => 'share_sell', 'status' => '1'],
+            ['description' => 'APPLYING',             'code' => '0', 'type' => 'membership', 'status' => '1'],
+            ['description' => 'APPLIED',              'code' => '1', 'type' => 'membership', 'status' => '1'],
+            ['description' => 'PROCESSING',           'code' => '2', 'type' => 'membership', 'status' => '1'],
+        ];
+        DB::table('ref.steps')->insert($steps);
     }
 }
