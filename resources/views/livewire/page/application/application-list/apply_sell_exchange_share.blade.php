@@ -30,7 +30,7 @@
                     disable="true"
                     default="yes"  
                     >
-                    @foreach ($banks as $bank)
+                    @foreach ($banks ?? [] as $bank)
                         <option @if ($bank->code == $custApply->bank_code) selected @endif>{{ $bank->description }}</option>                            
                     @endforeach
                 </x-form.dropdown>   

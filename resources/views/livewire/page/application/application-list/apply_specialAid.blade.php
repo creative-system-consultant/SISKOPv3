@@ -1,14 +1,11 @@
-@extends('layouts.head')
-@section('content')
-<div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Special Aid Application</h1> 
-    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+<div>
+    <x-general.card class="px-4">
         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2> 
         <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
             <x-form.input 
                 label="Name" 
                 name="applicant_name" 
-                value="{{ $custApply->name }}" 
+                value="{{ $custApply->name ?? '' }}" 
                 mandatory=""
                 disable="true"
                 type="text"
@@ -17,7 +14,7 @@
             <x-form.input 
                 label="IC No." 
                 name="applicant_icno" 
-                value="{{ $custApply->customer->icno }}" 
+                value="{{ $custApply->customer->icno ?? '' }}" 
                 mandatory=""
                 disable="true"
                 type="text"
@@ -26,7 +23,7 @@
             <x-form.input 
                 label="Special Aid Type" 
                 name="specialAid_type" 
-                value="{{ $type->name }}" 
+                value="{{ $type->name ?? '' }}" 
                 mandatory=""
                 disable="true"
                 type="text"
@@ -35,13 +32,13 @@
             <x-form.input 
                 label="Apply Amount" 
                 name="apply_amt" 
-                value="{{ $custApply->apply_amt }}" 
+                value="{{ $custApply->apply_amt ?? '' }}" 
                 mandatory=""
                 disable="true"
                 type="text"
             />   
             
-            @foreach ($custApply->field as $list)
+            @foreach ($custApply->field ?? [] as $list)
                 <x-form.input 
                     label="{{ $list->label }}" 
                     name="{{ $list->name }}"
@@ -62,4 +59,3 @@
         </div>
     </x-general.card>
 </div>
-@endsection

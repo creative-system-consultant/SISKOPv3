@@ -42,19 +42,12 @@
                         @endif             
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{-- <a href="{{ route('application.sell', $sell->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
+                        <button  
+                            wire:click="showApplication('{{$sell->uuid}}')"
+                            @click="openModal = true"
+                            class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
                             <x-heroicon-o-eye class="w-5 h-5"/>
-                        </a> --}}
-                        <div >
-                            <button  
-                                wire:click="showApplication('{{$sell->uuid}}')"
-                                @click="openModal = true"
-                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
-                                <x-heroicon-o-eye class="w-5 h-5"/>
-                            </button>
-
-                            
-                        </div>
+                        </button>
                     </x-table.table-body>
                 </tr>  
             @empty
