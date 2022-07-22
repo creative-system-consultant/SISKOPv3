@@ -9,14 +9,12 @@ use Livewire\Component;
 
 class Sell_ExchangeShare extends Component
 {
-    public $sellShare;
+    public $sellShare,$custApply,$banks=[];
 
     public function showApplication($uuid)
     {
-        $custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();         
-        $banks = RefBank::where('coop_id', $custApply->coop_id)->get();   
-
-        return view('livewire.page.application.application-list.apply_sell_exchange_share', compact('custApply', 'banks'));
+        $this->custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();         
+        $this->banks = RefBank::where('coop_id', $this->custApply->coop_id)->get(); 
     }
 
     public function mount()    

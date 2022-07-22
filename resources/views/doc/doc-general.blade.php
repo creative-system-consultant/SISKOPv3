@@ -224,18 +224,18 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <div>
-                        <x-modal.trigger target="open">
-                            <button type="button" class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
-                                open modal
-                            </button>
-                        </x-modal.trigger>
+                    <div x-data="{openModal:false}">
+                        <button 
+                            @click="openModal = true" 
+                            type="button" 
+                            class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
+                            open modal
+                        </button>
                         <x-modal.modal 
-                            id="open"
-                            title="Modal Title" 
-                            close="true" 
-                            autoClose="true" 
-                            width="2xl"
+                            modalActive="openModal" 
+                            title="Title" 
+                            modalSize="xl" 
+                            closeBtn="yes"
                         >
                             <div class="p-4">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
@@ -253,18 +253,18 @@
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
                     <code class="language-html"> 
-&lt;div>
-    &lt;x-modal.trigger target="open">
-        &lt;button type="button" class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
-            open modal
-        &lt;/button>
-    &lt;/x-modal.trigger>
+&lt;div x-data="{openModal:false}">
+    &lt;button 
+        @click="openModal = true" 
+        type="button" 
+        class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
+        open modal
+    &lt;/button>
     &lt;x-modal.modal 
-        id="open"
-        title="Modal Title" 
-        close="true" 
-        autoClose="true" 
-        width="2xl"
+        modalActive="openModal" 
+        title="Title" 
+        modalSize="xl" 
+        closeBtn="yes"
     >
         &lt;div class="p-4">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
