@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Sell_ExchangeShare extends Component
 {
-    public $sellShare,$custApply,$banks=[];
+    public $sellShare,$custApply,$banks;
 
     public function showApplication($uuid)
     {

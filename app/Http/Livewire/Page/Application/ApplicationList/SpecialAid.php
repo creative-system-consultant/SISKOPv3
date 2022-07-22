@@ -10,14 +10,12 @@ class SpecialAid extends Component
 {    
     public $specialAid;
     public $specialAid_type;
-    public $custApply;
+    public $custApply,$type;
 
     public function showApplication($uuid)
     {
-        $custApply = ApplySpecialAid::where('uuid', $uuid)->first();        
-        $type = SpecialAidType::where('id', $custApply->special_aid_id)->first();
-
-        return view('livewire.page.application.application-list.apply_specialAid', compact('custApply', 'type'));
+        $this->custApply = ApplySpecialAid::where('uuid', $uuid)->first(); 
+        $this->type = SpecialAidType::where('id', $this->custApply->special_aid_id)->first();
     }
 
     public function mount()    
