@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Page\Application\ApplyWithdrawContribution;
 
-use App\Models\contribution;
+use App\Models\Contribution;
 use App\Models\Customer;
 use App\Models\Ref\RefBank;
 use Livewire\Component;
@@ -65,7 +65,7 @@ class Apply_WithdrawContribution extends Component
     {
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
-        $contribution = contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
+        $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
         
 
         $contribution->update([
@@ -80,14 +80,12 @@ class Apply_WithdrawContribution extends Component
             'created_by'     => strtoupper($customer->name),  
         ]);
 
-        $files = $this->support_file->getClientOriginalName();
-        $filename = pathinfo($files, PATHINFO_FILENAME);
-        $filepath = 'Files/'.$customer->id.'/'.$filename.'.'.$this->support_file->extension(); 
+        $filepath = 'Files/'.$customer->id.'/'.'support_doc'.'.'.$this->support_file->extension(); 
         
-        Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->support_file, $filename.'.'.$this->support_file->extension());
+        Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->support_file, 'support_doc'.'.'.$this->support_file->extension());
 
         $contribution->files()->create([
-            'filename' => $filename,
+            'filename' => 'support_doc',
             'filedesc' => 'Support Document',
             'filetype' => $this->support_file->extension(),
             'filepath' => $filepath,
@@ -102,7 +100,7 @@ class Apply_WithdrawContribution extends Component
 
     public function restrictApply($id)   
     {
-        $contribution = contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'withdraw']])->first();
+        $contribution = Contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'withdraw']])->first();
 
         if ($contribution != null) {
             session()->flash('message', 'Withdrawal contribution application is been processed. If you want to make another application, please wait until the application is processed');
@@ -115,7 +113,7 @@ class Apply_WithdrawContribution extends Component
 
     public function applyCont($cust_id)
     {
-        $contribution = contribution::where('cust_id', $cust_id)->firstOrCreate([
+        $contribution = Contribution::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
             'direction'   => 'withdraw',

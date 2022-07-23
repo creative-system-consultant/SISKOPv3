@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Page\Application\ApplyContribution;
 
-use App\Models\contribution;
+use App\Models\Contribution;
 use App\Models\Customer;
 use App\Models\Ref\RefBank;
 use Livewire\Component;
@@ -104,7 +104,7 @@ class Apply_Contribution extends Component
     
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
-        $contribution = contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
+        $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
 
         $contribution->update([
             'direction'      => 'buy',
@@ -125,14 +125,12 @@ class Apply_Contribution extends Component
     
         if ($this->payment_method == 'online') {
             // dd('Online Banking');
-            $files = $this->online_file->getClientOriginalName();
-            $filename = pathinfo($files, PATHINFO_FILENAME);
-            $filepath = 'Files/'.$customer->id.'/'.$filename.'.'.$this->online_file->extension();     
+            $filepath = 'Files/'.$customer->id.'/'.'online_receipt'.'.'.$this->online_file->extension();     
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->online_file, $filename.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
 
             $contribution->files()->create([
-                'filename' => $filename,
+                'filename' => 'online_receipt',
                 'filedesc' => 'Online Payment Receipt',
                 'filetype' => $this->online_file->extension(),
                 'filepath' => $filepath,
@@ -146,14 +144,12 @@ class Apply_Contribution extends Component
         }
         elseif ($this->payment_method == 'cash') {
             // dd('CDM');
-            $files = $this->cdm_file->getClientOriginalName();
-            $filename = pathinfo($files, PATHINFO_FILENAME);
-            $filepath = 'Files/'.$customer->id.'/'.$filename.'.'.$this->cdm_file->extension(); 
+            $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension(); 
             
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->cdm_file, $filename.'.'.$this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
 
             $contribution->files()->create([
-                'filename' => $filename,
+                'filename' => 'cdm_receipt',
                 'filedesc' => 'CDM Payment Receipt',
                 'filetype' => $this->cdm_file->extension(),
                 'filepath' => $filepath,
@@ -177,7 +173,7 @@ class Apply_Contribution extends Component
         
     public function restrictApply($id)
     {
-        $contribution = contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
+        $contribution = Contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
 
         if ($contribution != null) {
             session()->flash('message', 'Add contribution application is been processed. If you want to make another application, please wait until the application is processed');
@@ -194,7 +190,7 @@ class Apply_Contribution extends Component
         $this->cust = Customer::where('icno', $user->icno)->first();
         $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
 
-        $contribution = contribution::where('cust_id', $this->cust->id)->firstOrCreate([
+        $contribution = Contribution::where('cust_id', $this->cust->id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
             'direction'   => 'buy',

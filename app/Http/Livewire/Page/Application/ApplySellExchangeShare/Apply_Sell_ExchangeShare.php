@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplySellExchangeShare;
 
 use App\Models\Customer;
 use App\Models\Ref\RefBank;
-use App\Models\share;
+use App\Models\Share;
 use Livewire\Component;
 
 class Apply_Sell_ExchangeShare extends Component
@@ -66,7 +66,7 @@ class Apply_Sell_ExchangeShare extends Component
 
         if ($this->share_type == 'coop') {
             $cust = $customer->where('icno', $user->icno)->first();
-            $share = share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
+            $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
 
             $share->update([
                 'amt_before'   => $this->cust['share'],
@@ -88,7 +88,7 @@ class Apply_Sell_ExchangeShare extends Component
         elseif ($this->share_type == 'mbr') {
             $cust = $customer->where('icno', $user->icno)->first();
             $cust_member = $customer->where([['icno', $this->mbr_icno],['icno' ,'<>', $user->icno]])->first();
-            $share = share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'exchange']])->first();
+            $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'exchange']])->first();
 
             $share->update([
                 'amt_before'   => $this->cust['share'],
@@ -127,7 +127,7 @@ class Apply_Sell_ExchangeShare extends Component
 
     public function restricApplySell($id)
     {
-        $share = share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'sell']])->first();
+        $share = Share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'sell']])->first();
 
         if ($share != null) {
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
@@ -140,7 +140,7 @@ class Apply_Sell_ExchangeShare extends Component
 
     public function restricApplyExc($id)
     {
-        $share = share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'exchange']])->first();
+        $share = Share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'exchange']])->first();
 
         if ($share != null) {
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
@@ -154,7 +154,7 @@ class Apply_Sell_ExchangeShare extends Component
 
     public function contApplyMember($cust_id)
     {
-        $share = share::where('cust_id', $cust_id)->firstOrCreate([
+        $share = Share::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
             'direction'   => 'exchange',
@@ -175,7 +175,7 @@ class Apply_Sell_ExchangeShare extends Component
 
     public function contApplyCoop($cust_id)
     {
-        $share = share::where('cust_id', $cust_id)->firstOrCreate([
+        $share = Share::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
             'direction'   => 'sell',

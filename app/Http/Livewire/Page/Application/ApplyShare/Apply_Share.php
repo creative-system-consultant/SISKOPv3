@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplyShare;
 
 use App\Models\Customer;
 use App\Models\Ref\RefBank;
-use App\Models\share;
+use App\Models\Share;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -90,7 +90,7 @@ class Apply_Share extends Component
     {
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
-        $share = share::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
+        $share = Share::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
 
         if ($this->share_apply == 0) {
             session()->flash('message', 'Application must be more than RM0');
@@ -116,14 +116,12 @@ class Apply_Share extends Component
 
         if ($this->pay_method == 'online') {
             // dd('Online Banking');
-            $files = $this->online_file->getClientOriginalName();
-            $filename = pathinfo($files, PATHINFO_FILENAME);
-            $filepath = 'Files/'.$customer->id.'/'.$filename.'.'.$this->online_file->extension();                    
+            $filepath = 'Files/'.$customer->id.'/'.'online_receipt'.'.'.$this->online_file->extension();                    
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->online_file, $filename.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
 
             $share->files()->create([
-                'filename' => $filename,
+                'filename' => 'online_receipt',
                 'filedesc' => 'Online Payment Receipt',
                 'filetype' => $this->online_file->extension(),
                 'filepath' => $filepath,
@@ -137,15 +135,13 @@ class Apply_Share extends Component
         }
         elseif ($this->pay_method == 'cash') {
             // dd('CDM');
-            $files = $this->cdm_file->getClientOriginalName();
-            $filename = pathinfo($files, PATHINFO_FILENAME);
-            $filepath = 'Files/'.$customer->id.'/'.$filename.'.'.$this->cdm_file->extension(); 
+            $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension(); 
             
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->cdm_file, $filename.'.'.$this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
 
             $share->files()->create([
-                'filename' => $filename,
-                'filedesc' => 'Online Payment Receipt',
+                'filename' => 'cdm_receipt',
+                'filedesc' => 'CDM Payment Receipt',
                 'filetype' => $this->cdm_file->extension(),
                 'filepath' => $filepath,
             ]);
@@ -168,7 +164,7 @@ class Apply_Share extends Component
 
     public function restricApply($id)
     {
-        $share = share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
+        $share = Share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
 
         if ($share != null) {
             session()->flash('message', 'Add share application is been processed. If you want to make another application, please wait until the application is processed');
@@ -181,7 +177,7 @@ class Apply_Share extends Component
 
     public function contApply($cust_id)
     {
-        $share = share::where('cust_id', $cust_id)->firstOrCreate([
+        $share = Share::where('cust_id', $cust_id)->firstOrCreate([
             'coop_id'     => $this->cust->coop_id, 
             'cust_id'     => $this->cust->id, 
         ], [
