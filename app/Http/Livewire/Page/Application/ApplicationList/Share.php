@@ -7,13 +7,11 @@ use Livewire\Component;
 
 class Share extends Component
 {
-    public $shares;
+    public $shares, $custApply;
 
     public function showApplication($uuid)
     {
-        $custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();            
-
-        return view('livewire.page.application.application-list.apply_share', compact('custApply'));
+        $this->custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();     
     }
     
     public function mount()    

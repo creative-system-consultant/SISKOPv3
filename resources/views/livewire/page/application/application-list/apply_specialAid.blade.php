@@ -52,9 +52,9 @@
 
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
             <div class="flex items-center justify-center space-x-2">
-                <a href="{{route('application.list')}}" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
+                <button @click="openModal = false" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
                     Close
-                </a>
+                </button>
             </div>
         </div>
     </x-general.card>

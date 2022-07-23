@@ -9,14 +9,13 @@ use Livewire\Component;
 class Withdrawal_Contribution extends Component
 {
     public $withdrawal;
+    public $custApply, $bankName;
     public $banks;
 
     public function showApplication($uuid)
     {
-        $custApply = ApplyContribution::where('uuid', $uuid)->with('customer')->first();    
-        $banks = RefBank::where('coop_id', $custApply->coop_id)->get();      
-
-        return view('livewire.page.application.application-list.apply_withdraw_contribution', compact('custApply', 'banks'));
+        $this->custApply = ApplyContribution::where('uuid', $uuid)->with('customer')->first();    
+        $this->bankName = RefBank::where('coop_id', $this->custApply->coop_id)->get();      
     }
 
     public function mount()    
