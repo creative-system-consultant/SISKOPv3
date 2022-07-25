@@ -35,4 +35,9 @@ class Customer extends Model implements Auditable
         return $this->morphMany(Address::class,'addressable');
     }
 
+    public function employer()
+    {
+        return $this->hasOne(CustEmployer::class,'cust_id', 'id');
+    }
+
 }
