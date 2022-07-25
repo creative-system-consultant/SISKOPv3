@@ -1,6 +1,6 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Notification List</h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-table.table>
             <x-slot name="thead">
                 <x-table.table-header class="text-left " value="No" sort="" />
@@ -38,5 +38,5 @@
                 @endif
             </x-slot>
         </x-table.table>
-    </div>
+    </x-general.card>
 </div>

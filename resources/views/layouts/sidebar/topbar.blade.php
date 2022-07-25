@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between px-6 mx-auto">
         <div class="flex items-center space-x-0 ">
             <!-- Mobile hamburger -->
-            <button class="p-2 -ml-1 bg-gray-800 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple "
+            <button class="p-2 -ml-1 rounded-md bg-primary-800 hover:bg-primary-700 md:hidden focus:outline-none focus:shadow-outline-purple "
                 @click="toggleSideMenu" aria-label="Menu">
                 <x-heroicon-o-menu class="w-6 h-6 text-white" />
             </button>
@@ -48,7 +48,7 @@
                         @if ($specialAid != NULL)
                             {{ count($specialAid->notification) }}                                                         
                         @else       
-                          0
+                            0
                         @endif                 
                     </span>
                 </button>
@@ -56,11 +56,11 @@
                     <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
                         x-transition:leave-end="opacity-0" @keydown.escape="open=false"
                         @click.away="open = !open"
-                        class="absolute right-0 z-50 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white rounded-md shadow-md">
+                        class="absolute right-0 z-50 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white rounded-md shadow-md dark:bg-gray-800">
                         @if ($specialAid != NULL)
                             @foreach ($specialAid->notification as $notifyAid)
                                 <li class="flex">
-                                    <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                    <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white"
                                         href="{{ url($notifyAid->link) }}">
                                         <span>{{ $notifyAid->title }}</span>
                                     </a>
@@ -68,16 +68,16 @@
                             @endforeach
                         @else
                             <li class="flex">
-                                <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                                <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white"
                                     href="#">
                                     <span>No Notification</span>
                                 </a>
                             </li> 
                         @endif
                         <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md "
+                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white"
                                 href="{{ route('notification') }}">
-                                <span class="text-blue-500">Show All Notification</span>
+                                <span class="text-primary-500">Show All Notification</span>
                             </a>
                         </li>
                     </ul>
