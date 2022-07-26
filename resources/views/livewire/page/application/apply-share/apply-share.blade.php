@@ -82,7 +82,7 @@
                                 mandatory=""
                                 disable=""
                                 type="date"
-                                wire:model.defer="online_date"
+                                wire:model="online_date"
                                 
                             />  
                         </div>
@@ -97,7 +97,7 @@
                                 disable=""
                                 type="file"
                                 accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                                wire:model.defer="online_file"
+                                wire:model="online_file"
                             />
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                                 mandatory=""
                                 disable=""
                                 type="date"
-                                wire:model.defer="cdm_date"
+                                wire:model="cdm_date"
                             />
                         </div>
 
@@ -128,7 +128,7 @@
                                 disable=""
                                 type="file"
                                 accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                                wire:model.defer="cdm_file"
+                                wire:model="cdm_file"
                             />
                         </div>
 
@@ -158,7 +158,7 @@
                                 mandatory=""
                                 disable=""
                                 type="date"
-                                wire:model.defer="cheque_date"
+                                wire:model="cheque_date"
                             />   
                         </div>
 
