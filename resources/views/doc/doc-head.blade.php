@@ -27,9 +27,6 @@
         <!-- apexChart js -->
         <script src="{{ asset('dist/apexcharts.min.js')}}"></script>
 
-        <!-- alpine js -->
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
         <!-- jquery js -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

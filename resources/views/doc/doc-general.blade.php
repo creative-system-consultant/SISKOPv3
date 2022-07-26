@@ -224,13 +224,21 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <div x-data="{openModal:false}">
-                        <button 
-                            @click="openModal = true" 
-                            type="button" 
-                            class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
-                            open modal
-                        </button>
+                    <div x-data="{openModal:false , deleteModal:false}">
+                        <div class="flex space-x-4">
+                            <button 
+                                @click="openModal = true" 
+                                type="button" 
+                                class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
+                                open modal
+                            </button>
+                            <button 
+                                @click="deleteModal = true" 
+                                type="button" 
+                                class="flex items-center p-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
+                                delete modal
+                            </button>
+                        </div>
                         <x-modal.modal 
                             modalActive="openModal" 
                             title="Title" 
@@ -248,11 +256,18 @@
                                 publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                             </div>
                         </x-modal.modal>
+
+                        <x-modal.delete-modal 
+                            modalActive="deleteModal" 
+                            {{-- deleteFunction="" --}}
+                        />
                     </div>
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
                     <code class="language-html"> 
+
+// general modal
 &lt;div x-data="{openModal:false}">
     &lt;button 
         @click="openModal = true" 
@@ -267,16 +282,23 @@
         closeBtn="yes"
     >
         &lt;div class="p-4">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-            when an unknown printer took a galley of type and scrambled it to make a 
-            type specimen book. It has survived not only five centuries, but also 
-            the leap into electronic typesetting, remaining essentially unchanged. 
-            It was popularised in the 1960s with the release of Letraset sheets 
-            containing Lorem Ipsum passages, and more recently with desktop 
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            //content
         &lt;/div>
     &lt;/x-modal.modal>
+&lt;/div>
+
+// delete modal
+&lt;div x-data="{deleteModal:false}">
+    &lt;button 
+        @click="deleteModal = true" 
+        type="button" 
+        class="flex items-center p-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
+        delete modal
+    &lt;/button>
+    &lt;x-modal.delete-modal 
+        modalActive="deleteModal" 
+        &#x7b;&#x7b;-- deleteFunction="YourFunction-to-delete" --&#x7d;&#x7d;
+    />
 &lt;/div>
                     </code>
                 </pre>
