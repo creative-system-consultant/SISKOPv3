@@ -47,6 +47,7 @@ use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\Membership\MembershipAdmin;
+use App\Http\Livewire\Page\Admin\Membership\MembershipApply;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
@@ -132,6 +133,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('membership')->group(function(){
             Route::get('/', MembershipAdmin::class)->name('membership.admin');
+            Route::get('apply', MembershipApply::class)->name('membership.apply');
         });
 
         //Admin > Maintenance > sample
