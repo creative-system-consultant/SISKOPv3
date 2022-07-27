@@ -66,6 +66,26 @@ use App\Http\Livewire\Page\Application\ApplyContribution\Apply_Contribution;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\Apply_Sell_ExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\Apply_Share;
 use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\Apply_WithdrawContribution;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionApproval;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionChecker;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionCommittee;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionMaker;
+use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareApproval;
+use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareChecker;
+use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareCommittee;
+use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareMaker;
+use App\Http\Livewire\Page\Executive\Approval\Share\ShareApproval;
+use App\Http\Livewire\Page\Executive\Approval\Share\ShareChecker;
+use App\Http\Livewire\Page\Executive\Approval\Share\ShareCommittee;
+use App\Http\Livewire\Page\Executive\Approval\Share\ShareMaker;
+use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidApproval;
+use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidChecker;
+use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidCommittee;
+use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidMaker;
+use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionApproval;
+use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionChecker;
+use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionCommittee;
+use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionMaker;
 use App\Http\Livewire\Page\Notification\notification;
 
 /*
@@ -224,29 +244,71 @@ Route::middleware('auth')->group(function () {
 
 
     //----------------------- Executive -------------------------------------//
-    //Exec > edit customer
-    Route::prefix('exec/editcustomer')->group(function(){
-        Route::get('search', SearchCustomer::class)->name('customer.search');
-        Route::get('edit/{uuid}', EditCustomer::class)->name('customer.edit');
+    Route::prefix('exec')->group(function(){
+        //Exec > edit customer
+        Route::prefix('/editcustomer')->group(function(){
+            Route::get('search', SearchCustomer::class)->name('customer.search');
+            Route::get('edit/{uuid}', EditCustomer::class)->name('customer.edit');
+        });
+    
+        //Exec > Application List
+        Route::prefix('applicationList')->group(function(){
+            Route::get('/', function(){
+                return view('livewire.page.application.application-list.application-list');
+            })->name('application.list');
+            
+            Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
+    
+            Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
+    
+            Route::get('/sellShare/{uuid}', [Sell_ExchangeShare::class, 'showApplication'])->name('application.sell');
+    
+            Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
+    
+            Route::get('/withdrawContribution/{uuid}', [Withdrawal_Contribution::class, 'showApplication'])->name('application.withdrawal');
+        }); 
+
+        Route::prefix('approval')->group(function(){
+            //Exec > approval > specialAid
+            Route::prefix('specialAid')->group(function(){
+                Route::get('maker/{uuid}', SpecialAidMaker::class)->name('specialAid.maker');
+                Route::get('checker/{uuid}', SpecialAidChecker::class)->name('specialAid.checker');
+                Route::get('committee/{uuid}', SpecialAidCommittee::class)->name('specialAid.committee');
+                Route::get('approval/{uuid}', SpecialAidApproval::class)->name('specialAid.approval');
+            });            
+
+            //Exec > approval > share
+            Route::prefix('share')->group(function(){
+                Route::get('maker/{uuid}', ShareMaker::class)->name('share.maker');
+                Route::get('checker/{uuid}', ShareChecker::class)->name('share.checker');
+                Route::get('committee/{uuid}', ShareCommittee::class)->name('share.committee');
+                Route::get('approval/{uuid}', ShareApproval::class)->name('share.approval');
+            });
+
+            //Exec > approval > sell/exchange share
+            Route::prefix('sellShare')->group(function(){
+                Route::get('maker/{uuid}', SellShareMaker::class)->name('sellShare.maker');
+                Route::get('checker/{uuid}', SellShareChecker::class)->name('sellShare.checker');
+                Route::get('committee/{uuid}', SellShareCommittee::class)->name('sellShare.committee');
+                Route::get('approval/{uuid}', SellShareApproval::class)->name('sellShare.approval');
+            });            
+
+            Route::prefix('contribution')->group(function(){
+                Route::get('maker/{uuid}', ContributionMaker::class)->name('contribution.maker');
+                Route::get('checker/{uuid}', ContributionChecker::class)->name('contribution.checker');
+                Route::get('committee/{uuid}', ContributionCommittee::class)->name('contribution.committee');
+                Route::get('approval/{uuid}', ContributionApproval::class)->name('contribution.approval');
+            });      
+
+            Route::prefix('withdrawContribution')->group(function(){
+                Route::get('maker/{uuid}', WithdrawalContributionMaker::class)->name('withdrawal.maker');
+                Route::get('checker/{uuid}', WithdrawalContributionChecker::class)->name('withdrawal.checker');
+                Route::get('committee/{uuid}', WithdrawalContributionCommittee::class)->name('withdrawal.committee');
+                Route::get('approval/{uuid}', WithdrawalContributionApproval::class)->name('withdrawal.approval');
+            }); 
+        });
+
     });
-
-    //Exec > Application List
-    Route::prefix('applicationList')->group(function(){
-        Route::get('/', function(){
-            return view('livewire.page.application.application-list.application-list');
-        })->name('application.list');
-        
-        Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
-
-        Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
-
-        Route::get('/sellShare/{uuid}', [Sell_ExchangeShare::class, 'showApplication'])->name('application.sell');
-
-        Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
-
-        Route::get('/withdrawContribution/{uuid}', [Withdrawal_Contribution::class, 'showApplication'])->name('application.withdrawal');
-    }); 
-
     //----------------------- End Executive --------------------------------//
 
 

@@ -92,13 +92,11 @@
                             Show Upload Online Payment Receipt
                         </label>
                         @if (isset($custApply->files) != NULL)
-                            @forelse ($custApply->files as $doc)
-                                @if ($doc->filename == 'online_receipt')
-                                    <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
-                                        <x-heroicon-o-document class="w-5 h-5 mr-2"/>
-                                        Show
-                                    </a>                                    
-                                @endif
+                            @forelse ($custApply->files as $doc)            
+                                <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
+                                    <x-heroicon-o-document class="w-5 h-5 mr-2"/>
+                                    Show
+                                </a>                                    
                             @empty
                                 <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2>                                 
                             @endforelse
@@ -126,12 +124,10 @@
                         </label>
                         @if (isset($custApply->files) != NULL)                        
                             @forelse ($custApply->files as $doc)
-                                @if ($doc->filename == 'cdm_receipt')
-                                    <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
-                                        <x-heroicon-o-document class="w-5 h-5 mr-2"/>
-                                        Show
-                                    </a>
-                                @endif
+                                <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
+                                    <x-heroicon-o-document class="w-5 h-5 mr-2"/>
+                                    Show
+                                </a>
                             @empty
                                 <h2 class="mb-4 ml-4 text-base border-gray-300">No File</h2> 
                             @endforelse

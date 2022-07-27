@@ -49,12 +49,18 @@
                         @endif             
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        <button  
-                            wire:click="showApplication('{{$withdraw->uuid}}')"
-                            @click="openModal = true"
-                            class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
-                            <x-heroicon-o-eye class="w-5 h-5"/>
-                        </button>
+                        <div class="row">
+                            <button  
+                                wire:click="showApplication('{{$withdraw->uuid}}')"
+                                @click="openModal = true"
+                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
+                                <x-heroicon-o-eye class="w-5 h-5"/>
+                            </button>
+
+                            <a href="{{route('withdrawal.maker', $withdraw->uuid)}}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>                    
+                            </a>
+                        </div>
                     </x-table.table-body>
                 </tr>  
             @empty

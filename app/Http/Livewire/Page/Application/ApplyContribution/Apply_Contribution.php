@@ -125,9 +125,9 @@ class Apply_Contribution extends Component
     
         if ($this->payment_method == 'online') {
             // dd('Online Banking');
-            $filepath = 'Files/'.$customer->id.'/'.'online_receipt'.'.'.$this->online_file->extension();     
+            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'online_receipt'.'.'.$this->online_file->extension();     
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/contribution//'.$contribution->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
 
             $contribution->files()->create([
                 'filename' => 'online_receipt',
@@ -144,9 +144,9 @@ class Apply_Contribution extends Component
         }
         elseif ($this->payment_method == 'cash') {
             // dd('CDM');
-            $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension(); 
+            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension(); 
             
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/'.$customer->id.'/contribution//'.$contribution->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
 
             $contribution->files()->create([
                 'filename' => 'cdm_receipt',
