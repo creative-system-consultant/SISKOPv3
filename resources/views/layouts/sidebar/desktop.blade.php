@@ -63,6 +63,9 @@
                     <x-sidebar.nav-item title="Customer Search" route="{{route('searchcustomer')}}" uri="searchcustomer">
                         <x-heroicon-o-search-circle class="w-7 h-7" />                        
                     </x-sidebar.nav-item>
+                    <x-sidebar.nav-item title="Membership Maintenance" route="{{route('membership.admin')}}" uri="membership">
+                        <x-heroicon-o-search-circle class="w-7 h-7" />                        
+                    </x-sidebar.nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="MAINTENANCE" uri="maintenance/*">
                         <x-slot name="icon">
