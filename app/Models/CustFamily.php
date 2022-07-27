@@ -17,17 +17,19 @@ class CustFamily extends Model implements Auditable
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class,'family_id', 'id');
+        return $this->belongsTo(Customer::class,'cust_id', 'id');
     }
 
-    public function cust()
+    public function address()
     {
-        return $this->belongsTo(Customer::class,'cust_id','id');
+        return $this->morphMany(Address::class,'addressable');
     }
 
     public function files()
     {
         return $this->morphMany(FileMaster::class,'fileable');
     }
+
+    
 
 }

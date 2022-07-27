@@ -13,7 +13,7 @@ class Customer extends Model implements Auditable
 
     protected $table   = "CIF.customers";
     protected $guarded = ['uuid'];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $dates   = ['birthdate','created_at','deleted_at','updated_at'];
 
     public function getCoopIdAttribute()
     {
@@ -38,6 +38,11 @@ class Customer extends Model implements Auditable
     public function employer()
     {
         return $this->hasOne(CustEmployer::class,'cust_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'icno', 'icno');
     }
 
 }
