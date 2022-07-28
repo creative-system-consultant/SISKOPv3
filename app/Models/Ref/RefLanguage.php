@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Ref;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FileMaster extends Model
+class RefLanguage extends Model
 {
     use SoftDeletes;
 
-    protected $table   = 'SISKOP.FILE_MASTER';
+    protected $table   = 'ref.language';
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    public function fileable()
-    {
-        return $this->morphTo();
-    }
 }

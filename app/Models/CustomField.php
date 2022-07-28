@@ -20,4 +20,13 @@ class CustomField extends Model
     {
         return ['string', 'decimal','decimal4', 'date', 'datetime', 'bigint'];
     }
+
+    public function inputType()
+    {
+        switch ($this->type) {
+            case 'string' : return 'text'; break;
+            case 'date'   : return 'date'; break;
+            default:        return 'text'; break;
+        }
+    }
 }

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             FieldMasterSeeder::class,
             RefSeeder::class,
             CoopSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }

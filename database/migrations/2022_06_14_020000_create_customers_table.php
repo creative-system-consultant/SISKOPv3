@@ -36,11 +36,12 @@ return new class extends Migration
             $table->bigInteger('country_id')->nullable();
             $table->bigInteger('education_id')->nullable();
 
-            $table->unsignedDecimal('member_fee',8,2)->default('0.00');
-            $table->unsignedDecimal('share',8,2)->default('0.00');
-            $table->unsignedDecimal('share_monthly',8,2)->default('0.00');
-            $table->unsignedDecimal('contribution',8,2)->default('0.00');
-            $table->unsignedDecimal('contribution_monthly',8,2)->default('0.00');
+            $table->unsignedDecimal('member_fee',12,2)->default('0.00');
+            $table->unsignedDecimal('share',12,2)->default('0.00');
+            $table->unsignedDecimal('share_monthly',12,2)->default('0.00');
+            $table->unsignedDecimal('contribution',12,2)->default('0.00');
+            $table->unsignedDecimal('contribution_monthly',12,2)->default('0.00');
+            $table->unsignedDecimal('divident',12,2)->default('0.00');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

@@ -196,5 +196,11 @@ class RefSeeder extends Seeder
             ['description' => 'MILITARY',   'code' => '7', 'status' => '1'],
         ];
         DB::table('ref.identification_type')->insert($ic_type);
+
+        $language = [
+            ['description' => 'ENGLISH',       'coop_id' => '1', 'code' => 'EN', 'status' => '1'],
+            ['description' => 'BAHASA MELAYU', 'coop_id' => '1', 'code' => 'BM', 'status' => '1'],
+        ];
+        DB::table('ref.language')->insert($language);
     }
 }

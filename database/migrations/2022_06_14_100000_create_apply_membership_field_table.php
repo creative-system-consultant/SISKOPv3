@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.SYS_CUSTOM_FIELD', function (Blueprint $table) {
+        Schema::create('SISKOP.apply_membership_field', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->default(DB::raw('newid()'));
 
             $table->morphs('fieldable');
 
@@ -24,8 +25,8 @@ return new class extends Migration
 
             $table->string('type',20)->default('string');
             $table->string('string')->nullable();
-            $table->unsignedDecimal('decimal',10,2)->nullable();
-            $table->unsignedDecimal('decimal4',12,4)->nullable();
+            $table->unsignedDecimal('decimal',8,2)->nullable();
+            $table->unsignedDecimal('decimal4',8,4)->nullable();
             $table->bigInteger('bigint')->nullable();
             $table->date('date')->nullable();
             $table->dateTime('datetime')->nullable();
@@ -46,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.sys_custom_field');
+        Schema::dropIfExists('SISKOP.apply_membership_field');
     }
 };

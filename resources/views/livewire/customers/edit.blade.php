@@ -160,7 +160,7 @@
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-3">
                     <x-form.input 
                         label="{{ $list->label }}"
-                        type="text" 
+                        type="{{ $list->inputType() }}" 
                         name="{{ $list->name }}" 
                         value="" 
                         mandatory=""

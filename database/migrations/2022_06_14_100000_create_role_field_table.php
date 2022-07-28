@@ -13,22 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.Account_Products', function (Blueprint $table) {
+        Schema::create('SISKOP.SYS_ROLE', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(DB::raw('newid()'));
+            $table->bigInteger('coop_id')->nullable();
 
             $table->string('name');
-            $table->bigInteger('coop_id');
-            $table->bigInteger('product_type');
-            $table->decimal('profit_rate',8,4);
-            $table->decimal('amt_default',10,2)->nullable();
-            $table->decimal('amt_min',10,2)->nullable();
-            $table->decimal('amt_max',10,2)->nullable();
-            $table->smallInteger('term_default')->nullable();
-            $table->smallInteger('term_min')->nullable();
-            $table->smallInteger('term_max')->nullable();
-            $table->decimal('min_share',10,2)->nullable();
-            $table->decimal('max_share',10,2)->nullable();
+            $table->string('description')->nullable();
+            $table->string('status',1)->default('1');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -46,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Masters');
+        Schema::dropIfExists('SISKOP.SYS_ROLE');
     }
 };

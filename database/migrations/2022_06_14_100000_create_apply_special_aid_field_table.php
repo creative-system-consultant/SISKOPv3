@@ -25,8 +25,8 @@ return new class extends Migration
 
             $table->string('type',20)->default('string');
             $table->string('string')->nullable();
-            $table->unsignedDecimal('decimal',8,2)->nullable();
-            $table->unsignedDecimal('decimal4',8,4)->nullable();
+            $table->unsignedDecimal('decimal',10,2)->nullable();
+            $table->unsignedDecimal('decimal4',10,4)->nullable();
             $table->bigInteger('bigint')->nullable();
             $table->date('date')->nullable();
             $table->dateTime('datetime')->nullable();

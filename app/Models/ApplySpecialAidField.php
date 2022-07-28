@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class ApplySpecialAidField extends Model implements Auditable
+class ApplySpecialAidField extends Model
 {
-    use \OwenIt\Auditing\Auditable;
-
     protected $table    = 'SISKOP.apply_special_aid_field';
     protected $guarded  = [];
     protected $appends  = [ 'value', ];

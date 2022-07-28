@@ -60,7 +60,7 @@ class CoopCreate extends Component
     {
         if ($coop_id != NULL){
             $this->coop     = Coop::find($coop_id);
-            $this->address  = $this->coop->address->first();
+            $this->address  = $this->coop->address()->firstOrCreate();
             $this->page     = "Edit";
         } else {
             $this->coop     = new Coop;
