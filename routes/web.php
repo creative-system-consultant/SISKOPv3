@@ -47,6 +47,8 @@ use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
+use App\Http\Livewire\Page\Admin\Role\RoleGroupCreate;
+use App\Http\Livewire\Page\Admin\Role\RoleGroupManagement;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
@@ -148,6 +150,14 @@ Route::middleware('auth')->group(function () {
 
 
     //------------------------ admin ------------------------------//
+    //Admin > Role > Role Group
+    Route::prefix('User')->group(function(){
+        Route::get('RoleGroup', RoleGroupManagement::class)->name('user.rolegroup');
+        Route::get('CreateGroup', RoleGroupCreate::class)->name('user.creategroup');
+        Route::get('EditGroup/{uuid}', RoleGroupCreate::class)->name('user.editgroup');
+    });
+
+
     Route::prefix('admin/maintenance')->group(function(){
         //Admin > Maintenance > Special Aid
         Route::prefix('specialAid')->group(function(){
@@ -256,15 +266,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/', function(){
                 return view('livewire.page.application.application-list.application-list');
             })->name('application.list');
-            
+
             Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
-    
+
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
-    
+
             Route::get('/sellShare/{uuid}', [Sell_ExchangeShare::class, 'showApplication'])->name('application.sell');
-    
+
             Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
-    
+
             Route::get('/withdrawContribution/{uuid}', [Withdrawal_Contribution::class, 'showApplication'])->name('application.withdrawal');
         }); 
 
@@ -275,7 +285,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', SpecialAidChecker::class)->name('specialAid.checker');
                 Route::get('committee/{uuid}', SpecialAidCommittee::class)->name('specialAid.committee');
                 Route::get('approval/{uuid}', SpecialAidApproval::class)->name('specialAid.approval');
-            });            
+            });
 
             //Exec > approval > share
             Route::prefix('share')->group(function(){
@@ -291,14 +301,14 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', SellShareChecker::class)->name('sellShare.checker');
                 Route::get('committee/{uuid}', SellShareCommittee::class)->name('sellShare.committee');
                 Route::get('approval/{uuid}', SellShareApproval::class)->name('sellShare.approval');
-            });            
+            });
 
             Route::prefix('contribution')->group(function(){
                 Route::get('maker/{uuid}', ContributionMaker::class)->name('contribution.maker');
                 Route::get('checker/{uuid}', ContributionChecker::class)->name('contribution.checker');
                 Route::get('committee/{uuid}', ContributionCommittee::class)->name('contribution.committee');
                 Route::get('approval/{uuid}', ContributionApproval::class)->name('contribution.approval');
-            });      
+            });
 
             Route::prefix('withdrawContribution')->group(function(){
                 Route::get('maker/{uuid}', WithdrawalContributionMaker::class)->name('withdrawal.maker');

@@ -61,12 +61,28 @@
                     </x-sidebar.dropdown-nav-item> 
 
                     <x-sidebar.nav-item title="List of Application" route="{{route('application.list')}}" uri="applicationList">
-                        <x-heroicon-o-document-text class="w-7 h-7" />                        
+                        <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
                     <x-sidebar.nav-item title="Customer Search" route="{{route('customer.search')}}" uri="searchcustomer">
-                        <x-heroicon-o-search-circle class="w-7 h-7" />                        
+                        <x-heroicon-o-search-circle class="w-7 h-7" />
                     </x-sidebar.nav-item>
+
+                    <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
+                        <x-slot name="icon">
+                            <x-heroicon-o-user class="w-7 h-7" />
+                        </x-slot>
+                        <x-sidebar.dropdown-item title="COOP" href="{{ route('coop.list') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-library class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="USER ROLE" href="{{ route('user.rolegroup') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-user-group class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                    </x-sidebar.dropdown-nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="MAINTENANCE" uri="maintenance/*">
                         <x-slot name="icon">
@@ -74,17 +90,13 @@
                         </x-slot>
                         <x-sidebar.dropdown-item title="SPECIAL AID" href="{{ route('special_aid.list') }}" uri="specialAid/list">
                             <x-slot name="icon">
-                                <x-heroicon-o-document-text class="w-7 h-7" />
+                                <x-heroicon-o-archive class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="COOP" href="{{ route('coop.list') }}" uri="">
-                            <x-slot name="icon">
-                                <x-heroicon-o-document-text class="w-7 h-7" />
-                            </x-slot>
-                        </x-sidebar.dropdown-item>
+                        
                         <x-sidebar.dropdown-item title="Add Customer Field" href="{{ route('coop.cust') }}" uri="">
                             <x-slot name="icon">
-                                <x-heroicon-o-document-text class="w-7 h-7" />
+                                <x-heroicon-o-user-add class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-nav-item type="2" active="open" title="REFERENCE" uri="reference/*">
@@ -95,9 +107,7 @@
                                 
                                 <x-sidebar.dropdown-item title="BANK" href="{{ route('bank.list') }}" uri="bank">
                                     <x-slot name="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                        </svg>
+                                        <x-heroicon-o-cash class="w-7 h-7" />
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
                                 

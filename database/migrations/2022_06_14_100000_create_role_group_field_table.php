@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('coop_id')->nullable();
             $table->bigInteger('role_id')->nullable();
 
-            $table->string('name');
+            $table->string('name',50);
             $table->string('description')->nullable();
             $table->string('status',1)->default('1');
 

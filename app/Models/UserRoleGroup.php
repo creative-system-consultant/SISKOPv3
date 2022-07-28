@@ -16,5 +16,8 @@ class UserRoleGroup extends Model implements Auditable
     protected $appends = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    //
+    public function status()
+    {
+        if ($this->status = 1){ return 'ACTIVE'; } else { return 'INACTIVE'; };
+    }
 }
