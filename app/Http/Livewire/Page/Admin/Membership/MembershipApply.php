@@ -24,7 +24,6 @@ class MembershipApply extends Component
     public ApplyMembership $applymember;
     public Customer $Cust;
     public Customer $CustFamily;
-    // public CustFamily $Family;
     public CustEmployer $Employer;
     public Address $CustAddress;
     public Address $EmployAddress;
@@ -103,10 +102,9 @@ class MembershipApply extends Component
         $this->member            = Membership::where('coop_id', $user->coop_id)->first();
         $this->Cust              = Customer::where([['icno', $user->icno],['coop_id', $user->coop_id]])->first();
         $this->CustAddress       = $this->Cust->Address()->firstOrCreate();
-        // $this->Family            = Customer::where([['icno', $user->icno],['coop_id', $user->coop_id]])->first();
         $this->Family            = CustFamily::firstOrCreate(['cust_id' => $this->Cust->id],['relationship_id' => 0]);
-        $this->FamilyAddress     = $this->Family->Address()->firstOrCreate();
-        // $this->CustFamily        = $this->Cust->customer()->firstOrCreate();
+        $this->FamilyAddress     = $this->Family->Address()->firstOrCreate();  
+        $this->CustFamily        = Customer::firstOrCreate(['id' => $this->Family->cust->id]);
         $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'coop_id' =>$user->coop_id],);
         $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id],);
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate();
@@ -134,7 +132,6 @@ class MembershipApply extends Component
         $this->Cust->address()->save($this->CustAddress);
         $this->Employer->address()->save($this->EmployAddress);
         $this->Family->address()->save($this->FamilyAddress);
-        // $this->Family->customer()->save($this->CustFamily);
 
         //cara 1
         // $this->applymember->flag  = 1;
@@ -144,6 +141,13 @@ class MembershipApply extends Component
         $this->applymember->update([
             'flag' => 1,
             'step' => 1,
+        ]);
+
+        $this->CustFamily->update([
+            'name'          => $this->CustFamily['name'],
+            'icno'          => $this->CustFamily['icno'],
+            'email'         => $this->CustFamily['email'],
+            'mobile_num'    => $this->CustFamily['mobile_num'],
         ]);
 
         session()->flash('message', 'Membership Application Registered');
