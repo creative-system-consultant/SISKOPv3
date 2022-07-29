@@ -99,6 +99,68 @@
                 <x-form.input 
                     label="Approve By" 
                     name="approved_by" 
+                    value=""
+                    mandatory=""
+                    disable="true"
+                    type="text"                            
+                />   
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <x-form.text-area 
+                    label="Note / Comment By Maker" 
+                    value="approval_note" 
+                    name="" 
+                    rows=""
+                    disable="true"
+                    mandatory=""
+                    placeholder="" 
+                />                    
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6 mt-6">                    
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <x-form.input 
+                    label="Committee" 
+                    name="committee_by" 
+                    value=""
+                    mandatory=""
+                    disable="true"
+                    type="text"                            
+                />   
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <x-form.text-area 
+                    label="Note / Comment By Committee" 
+                    value="committee_note" 
+                    name="" 
+                    rows=""
+                    disable="true"
+                    mandatory=""
+                    placeholder="" 
+                />                                      
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <x-form.input 
+                    label="Vote" 
+                    name="committee_vote" 
+                    value=""
+                    mandatory=""
+                    disable="true"
+                    type="text"                            
+                />   
+            </div>
+        </div>
+
+        
+        <div class="grid grid-cols-12 gap-6 mt-8">
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <x-form.input 
+                    label="Approval" 
+                    name="approval_by" 
                     value="{{ auth()->user()->name }}"
                     mandatory=""
                     disable="true"
@@ -108,7 +170,7 @@
 
             <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                 <x-form.text-area 
-                    label="Note / Comment" 
+                    label="Note / Comment By Approval" 
                     value="approval_note" 
                     name="" 
                     rows=""
@@ -124,9 +186,9 @@
                 <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                     Cancel Application
                 </button>
-                {{-- <a href="{{route('specialAid.maker', $this->checker->uuid)}}" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 border-2 rounded-md focus:outline-none">
+                <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     Previous
-                </a> --}}
+                 </button>
                 <button type="button" wire:click.prevent="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                     Approved
                 </button>

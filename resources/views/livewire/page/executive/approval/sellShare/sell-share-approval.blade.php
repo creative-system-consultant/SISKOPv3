@@ -157,6 +157,79 @@
                     <x-form.input 
                         label="Checker" 
                         name="approved_by" 
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        type="text"                            
+                    />   
+                </div>
+
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input 
+                        label="Result" 
+                        name="buyershare_result" 
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        type="text"                            
+                    />   
+                </div>
+
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.text-area 
+                        label="Note / Comment by Checker" 
+                        value="" 
+                        name="approved_note" 
+                        rows=""
+                        disable="true"
+                        mandatory=""
+                        placeholder="" 
+                    />                    
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-6 mt-6">                    
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input 
+                        label="Committee" 
+                        name="committee_by" 
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        type="text"                            
+                    />   
+                </div>
+    
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.text-area 
+                        label="Note / Comment By Committee" 
+                        value="committee_note" 
+                        name="" 
+                        rows=""
+                        disable="true"
+                        mandatory=""
+                        placeholder="" 
+                    />                                      
+                </div>
+    
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input 
+                        label="Vote" 
+                        name="committee_vote" 
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        type="text"                            
+                    />   
+                </div>
+            </div>
+    
+            
+            <div class="grid grid-cols-12 gap-6 mt-8">
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input 
+                        label="Approval" 
+                        name="approval_by" 
                         value="{{ auth()->user()->name }}"
                         mandatory=""
                         disable="true"
@@ -174,12 +247,12 @@
                         type="text"                            
                     />   
                 </div>
-
+    
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.text-area 
-                        label="Note / Comment" 
-                        value="" 
-                        name="approved_note" 
+                        label="Note / Comment By Approval" 
+                        value="approval_note" 
+                        name="" 
                         rows=""
                         disable=""
                         mandatory=""
@@ -187,11 +260,15 @@
                     />                    
                 </div>
             </div>
+
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                         Cancel Application
-                    </a>
+                    </button>
+                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                        Previous
+                     </button>
                     <button type="button" wire:click="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         Approved
                     </button>

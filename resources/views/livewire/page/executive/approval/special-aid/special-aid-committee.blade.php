@@ -83,7 +83,7 @@
 
             <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                 <x-form.text-area 
-                    label="Note / Comment By Checker" 
+                    label="Note / Comment By Maker" 
                     value="" 
                     name="precheck_note" 
                     rows=""
@@ -102,13 +102,13 @@
                     value=""
                     mandatory=""
                     disable="true"
-                    type="text"                            
+                    type="text"                            W
                 />   
             </div>
 
             <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                 <x-form.text-area 
-                    label="Note / Comment" 
+                    label="Note / Comment By Cehcker" 
                     value="approval_note" 
                     name="" 
                     rows=""
@@ -143,7 +143,7 @@
                 />                                      
             </div>
 
-            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:coll/  -span-4 xl:col-span-4">
                 <x-form.input 
                     label="Vote" 
                     name="committee_vote" 
@@ -160,10 +160,10 @@
                 <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                     Cancel Application
                 </button>
-                {{-- <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 border-2 rounded-md focus:outline-none">
+                <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     Previous
-                </a> --}}
-                <button type="button" wire:click.prevent="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                 </button>
+                <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     Next
                 </button>
             </div>
