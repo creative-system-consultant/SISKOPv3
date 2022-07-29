@@ -218,5 +218,31 @@ class RefSeeder extends Seeder
             ['description' => 'PROCESSING',           'code' => '2', 'type' => 'membership', 'status' => '1'],
         ];
         DB::table('ref.steps')->insert($steps);
+
+
+        $relationship = [
+            ['description' => 'HUSBAND',          'code' => 'H',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'WIFE',             'code' => 'W',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'SON',              'code' => 'S',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'DAUGHTER',         'code' => 'D',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'FATHER',           'code' => 'F',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'MOTHER',           'code' => 'M',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'BROTHER',          'code' => 'B',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'SISTER',           'code' => 'S',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'UNCLE',            'code' => 'U',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'AUNT',             'code' => 'A',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'COUSIN',           'code' => 'C',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'NEPHEW',           'code' => 'N1', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'NIECE',            'code' => 'N2', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDFATHER',      'code' => 'GF', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDMOTHER',      'code' => 'GM', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDSON',         'code' => 'GS', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDDAUGHTER',    'code' => 'GD', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'OTHERS',           'code' => 'O',  'coop_id' => '1', 'status' => '1'],
+            ['description' => 'FRIEND',           'code' => 'FR', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'FIANCE',           'code' => 'FI', 'coop_id' => '1', 'status' => '1'],
+     
+        ];
+        DB::table('ref.relationships')->insert($relationship);
     }
 }
