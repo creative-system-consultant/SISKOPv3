@@ -30,4 +30,8 @@ class CustFamily extends Model implements Auditable
         return $this->morphMany(FileMaster::class,'fileable');
     }
 
+    public function address()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
 }
