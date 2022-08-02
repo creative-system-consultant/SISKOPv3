@@ -163,7 +163,7 @@ Route::middleware('auth')->group(function () {
             Route::prefix('specialAid')->group(function(){
                 Route::get('/', ListSpecialAid::class)->name('special_aid.list');
                 Route::get('create', CreateSpecialAid::class)->name('special_aid.create');
-                Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');
+                Route::get('edit/{uuid}', CreateSpecialAid::class)->name('special_aid.edit');
             });
             Route::prefix('coop')->group(function(){
                 Route::get('/', CoopAdmin::class)->name('coop.list');
@@ -316,7 +316,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', WithdrawalContributionChecker::class)->name('withdrawal.checker');
                 Route::get('committee/{uuid}', WithdrawalContributionCommittee::class)->name('withdrawal.committee');
                 Route::get('approval/{uuid}', WithdrawalContributionApproval::class)->name('withdrawal.approval');
-            }); 
+            });
         });
 
     });
