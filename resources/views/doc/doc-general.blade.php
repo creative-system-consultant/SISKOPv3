@@ -501,4 +501,39 @@
     </x-general.accordion>
     <!-- end page component -->
 
+     <!-- start page  component -->
+     <x-general.accordion active="selected" tab="234666" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                <p class="text-sm">Hover Question mark </p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="px-6 border-t-2">
+                <div class="p-4 my-4 bg-white shadow-lg">
+                    <div>
+                        <x-heroicon-s-question-mark-circle 
+                            class="w-8 h-8 text-primary-800 tooltipbtn" 
+                            data-title="Your-Title" 
+                            data-placement="top"
+                        />
+                    </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="-mt-4 language-html" wire:ignore>
+                    <code class="language-html"> 
+&lt;div>
+    &lt;x-heroicon-s-question-mark-circle 
+        class="w-8 h-8 text-primary-800 tooltipbtn" 
+        data-title="Your-Title" 
+        data-placement="top"
+    />
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end page component -->
+
 </div>
