@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Page\Admin\Role;
 
+use App\Models\User;
 use App\Models\UserRole;
 use App\Models\UserRoleGroup;
 use Livewire\Component;
@@ -10,6 +11,12 @@ class RoleGroupCreate extends Component
 {
     public $page = 'CREATE';
     public $roles;
+    public $users = [];
+    public $ids   = [];
+    public $idrem = [];
+    public $search;
+    public $searchResult = [];
+    public $selected;
     public UserRoleGroup $group;
 
     protected $rules    = [
@@ -27,16 +34,54 @@ class RoleGroupCreate extends Component
         if ($uuid != NULL){
             $this->page  = 'EDIT';
             $this->group = UserRoleGroup::where('uuid', $uuid)->firstOrFail();
+            $this->ids   = $this->group->getids();
+            $this->users = User::whereIn('id', $this->ids)->get();
         } else {
             $this->group = new UserRoleGroup;
         }
         $this->roles = UserRole::all();
     }
 
-    public function submit(){
+    public function searchUser()
+    {
+        if(strlen($this->search) > 2 ){
+            $this->searchResult = User::where('name', 'like', '%'.$this->search.'%')->select('id','name')->orderBy('name')->take(5)->get();
+            $this->selected = '';
+        }
+    }
+
+    public function add()
+    {
+        $this->ids   = [...$this->ids, $this->selected ];
+        $this->users = User::whereIn('id', $this->ids)->get();
+    }
+
+    public function deb()
+    {
+        dump($this->ids, $this->users);
+        dump($this->idrem);
+        dump($this->group->users);
+    }
+
+    public function rem($id)
+    {
+        $this->idrem = [...$this->idrem, $id ];
+        $this->ids = array_diff($this->ids, [$id]);
+        $this->users = User::whereIn('id', $this->ids)->get();
+    }
+
+    public function submit()
+    {
         $this->validate();
 
         $this->group->save();
+        foreach ($this->ids as $key => $value) {
+            $this->group->users()->updateOrCreate([
+                'user_id'   => $value,
+            ]);
+        }
+
+        $this->group->users()->whereIn('user_id', $this->idrem)->delete();
 
         session()->flash('message', 'Success');
         session()->flash('success');

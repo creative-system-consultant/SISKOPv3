@@ -3,6 +3,7 @@
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-general.header-title title="Create New Role Group" route="{{ route('user.rolegroup') }}"/>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
+            <h2 class="mb-6 mt-4 text-base font-semibold border-b-2 border-gray-300">Group Details</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-8">
                     <x-form.input 
@@ -60,8 +61,77 @@
                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                     @empty
                     @endforelse
-                        
                     </x-form.dropdown>
+                </div>
+            </div>
+
+            <h2 class="mb-6 mt-6 text-base font-semibold border-b-2 border-gray-300">Users</h2>
+            <div class="grid grid-cols-12 gap-6 mt-4">
+                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
+                    <x-form.input 
+                        label="SEARCH USER" 
+                        name="" 
+                        value="" 
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:keyup="searchUser"
+                        wire:model.debounce.1000ms="search"
+                    />
+                </div>
+                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+                    <x-form.dropdown 
+                        label="USERS (displays only 5)"
+                        value=""
+                        name="selected" 
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="selected"
+                    >
+                    @forelse ($searchResult as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @empty
+                        <option value="">Please Search For User</option>
+                    @endforelse
+                    </x-form.dropdown>
+                </div>
+                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
+                    <div class="p-6">
+                        <button type="button" wire:click="add" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                            ADD
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-6 mt-6">
+                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+                    <x-table.table>
+                        <x-slot name="thead">
+                            <x-table.table-header class="text-left" value="Name" sort="" />
+                            <x-table.table-header class="text-left" value="Action" sort="" />
+                        </x-slot>
+                        <x-slot name="tbody">
+                        @forelse ($users as $key => $user)
+                            <tr>
+                                <x-table.table-body colspan="" class="text-left">
+                                    {{ $user->name }}
+                                </x-table.table-body>
+                                <x-table.table-body colspan="" class="text-left">
+                                    <button type="button" wire:click="rem({{$user->id}})" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
+                                        REMOVE
+                                    </button>
+                                </x-table.table-body>
+                            </tr>
+                        @empty<tr>
+                            <x-table.table-body colspan="2" class="text-left">
+                                NO USERS ADDED
+                            </x-table.table-body>
+                        </tr>
+                        @endforelse
+                        </x-slot>
+                    </x-table.table>
                 </div>
             </div>
 

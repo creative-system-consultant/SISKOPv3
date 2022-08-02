@@ -150,105 +150,106 @@ Route::middleware('auth')->group(function () {
 
 
     //------------------------ admin ------------------------------//
-    //Admin > Role > Role Group
-    Route::prefix('User')->group(function(){
-        Route::get('RoleGroup', RoleGroupManagement::class)->name('user.rolegroup');
-        Route::get('CreateGroup', RoleGroupCreate::class)->name('user.creategroup');
-        Route::get('EditGroup/{uuid}', RoleGroupCreate::class)->name('user.editgroup');
-    });
-
-
-    Route::prefix('admin/maintenance')->group(function(){
-        //Admin > Maintenance > Special Aid
-        Route::prefix('specialAid')->group(function(){
-            Route::get('/', ListSpecialAid::class)->name('special_aid.list');
-            Route::get('create', CreateSpecialAid::class)->name('special_aid.create');
-            Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');
-        });
-        Route::prefix('coop')->group(function(){
-            Route::get('/', CoopAdmin::class)->name('coop.list');
-            Route::get('create', CoopCreate::class)->name('coop.create');
-            Route::get('edit/{coop_id}', CoopCreate::class)->name('coop.edit');
-        });
-        Route::prefix('CustCoop')->group(function(){
-            Route::get('/', CustomerCoop::class)->name('coop.cust');
+    Route::prefix('Admin')->group(function(){
+        //Admin > User
+        Route::prefix('User')->group(function(){
+            Route::get('RoleGroup', RoleGroupManagement::class)->name('user.rolegroup');
+            Route::get('CreateGroup', RoleGroupCreate::class)->name('user.creategroup');
+            Route::get('EditGroup/{uuid}', RoleGroupCreate::class)->name('user.editgroup');
         });
 
-        //Admin > Maintenance > sample
-        Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
-        Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
-        Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
+        Route::prefix('maintenance')->group(function(){
+            //Admin > Maintenance > Special Aid
+            Route::prefix('specialAid')->group(function(){
+                Route::get('/', ListSpecialAid::class)->name('special_aid.list');
+                Route::get('create', CreateSpecialAid::class)->name('special_aid.create');
+                Route::get('edit/{uuid}', EditSpecialAid::class)->name('special_aid.edit');
+            });
+            Route::prefix('coop')->group(function(){
+                Route::get('/', CoopAdmin::class)->name('coop.list');
+                Route::get('create', CoopCreate::class)->name('coop.create');
+                Route::get('edit/{coop_id}', CoopCreate::class)->name('coop.edit');
+            });
+            Route::prefix('CustCoop')->group(function(){
+                Route::get('/', CustomerCoop::class)->name('coop.cust');
+            });
 
-        //Admin > Maintenance > Bank
-        Route::prefix('bank')->group(function(){
-            Route::get('/', BankList::class)->name('bank.list');
-            Route::get('create', BankCreate::class)->name('bank.create');
-            Route::get('edit/{id}', BankEdit::class)->name('bank.edit');
+            //Admin > Maintenance > sample
+            Route::get('list-maintenance', ListMaintenance::class)->name('list-maintenance');
+            Route::get('add-maintenance', AddMaintenance::class)->name('add-maintenance');
+            Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
+
+            //Admin > Maintenance > Bank
+            Route::prefix('bank')->group(function(){
+                Route::get('/', BankList::class)->name('bank.list');
+                Route::get('create', BankCreate::class)->name('bank.create');
+                Route::get('edit/{id}', BankEdit::class)->name('bank.edit');
+            });
+
+            //Admin > Maintenance > Education
+            Route::prefix('education')->group(function(){
+                Route::get('/', EducationList::class)->name('education.list');
+                Route::get('create', EducationCreate::class)->name('education.create');
+                Route::get('edit/{id}', EducationEdit::class)->name('education.edit');
+            });
+
+            //Admin > Maintenance > Country
+            Route::prefix('country')->group(function(){
+                Route::get('/', CountryList::class)->name('country.list');
+                Route::get('create', CountryCreate::class)->name('country.create');
+                Route::get('edit/{id}', CountryEdit::class)->name('country.edit');
+            });
+
+            //Admin > Maintenance >  cust_title
+            Route::prefix('title')->group(function(){
+                Route::get('/', TitleList::class)->name('title.list');
+                Route::get('create', TitleCreate::class)->name('title.create');
+                Route::get('edit/{id}', TitleEdit::class)->name('title.edit');
+            });
+
+            //Admin > Maintenance > race
+            Route::prefix('race')->group(function(){
+                Route::get('/', RaceList::class)->name('race.list');
+                Route::get('create', RaceCreate::class)->name('race.create');
+                Route::get('edit/{id}', RaceEdit::class)->name('race.edit');
+            });
+
+            //Admin > Maintenance > Religion
+            Route::prefix('religion')->group(function(){
+                Route::get('/', ReligionList::class)->name('religion.list');
+                Route::get('create', ReligionCreate::class)->name('religion.create');
+                Route::get('edit/{id}', ReligionEdit::class)->name('religion.edit');
+            });
+
+            //Admin > Maintenance > State
+            Route::prefix('state')->group(function(){
+                Route::get('/', StateList::class)->name('state.list');
+                Route::get('create', StateCreate::class)->name('state.create');
+                Route::get('edit/{id}', StateEdit::class)->name('state.edit');
+            });
+
+            //Admin > Maintenance > Gender
+            Route::prefix('gender')->group(function(){
+                Route::get('/', GenderList::class)->name('gender.list');
+                Route::get('create', GenderCreate::class)->name('gender.create');
+                Route::get('edit/{id}', GenderEdit::class)->name('gender.edit');
+            });
+
+            //Admin > Maintenance > Relationship
+            Route::prefix('relationship')->group(function(){
+                Route::get('/', RelationshipList::class)->name('relationship.list');
+                Route::get('create', RelationshipCreate::class)->name('relationship.create');
+                Route::get('edit/{id}', RelationshipEdit::class)->name('relationship.edit');
+            });
+
+            //Admin > Maintenance > Marital
+            Route::prefix('marital')->group(function(){
+                Route::get('/', MaritalList::class)->name('marital.list');
+                Route::get('create', MaritalCreate::class)->name('marital.create');
+                Route::get('edit/{id}', MaritalEdit::class)->name('marital.edit');
+            });
+
         });
-
-        //Admin > Maintenance > Education
-        Route::prefix('education')->group(function(){
-            Route::get('/', EducationList::class)->name('education.list');
-            Route::get('create', EducationCreate::class)->name('education.create');
-            Route::get('edit/{id}', EducationEdit::class)->name('education.edit');
-        });
-
-        //Admin > Maintenance > Country
-        Route::prefix('country')->group(function(){
-            Route::get('/', CountryList::class)->name('country.list');
-            Route::get('create', CountryCreate::class)->name('country.create');
-            Route::get('edit/{id}', CountryEdit::class)->name('country.edit');
-        });
-
-        //Admin > Maintenance >  cust_title
-        Route::prefix('title')->group(function(){
-            Route::get('/', TitleList::class)->name('title.list');
-            Route::get('create', TitleCreate::class)->name('title.create');
-            Route::get('edit/{id}', TitleEdit::class)->name('title.edit');
-        });
-
-        //Admin > Maintenance > race
-        Route::prefix('race')->group(function(){
-            Route::get('/', RaceList::class)->name('race.list');
-            Route::get('create', RaceCreate::class)->name('race.create');
-            Route::get('edit/{id}', RaceEdit::class)->name('race.edit');
-        });
-
-        //Admin > Maintenance > Religion
-        Route::prefix('religion')->group(function(){
-            Route::get('/', ReligionList::class)->name('religion.list');
-            Route::get('create', ReligionCreate::class)->name('religion.create');
-            Route::get('edit/{id}', ReligionEdit::class)->name('religion.edit');
-        });
-
-        //Admin > Maintenance > State
-        Route::prefix('state')->group(function(){
-            Route::get('/', StateList::class)->name('state.list');
-            Route::get('create', StateCreate::class)->name('state.create');
-            Route::get('edit/{id}', StateEdit::class)->name('state.edit');
-         });
-
-        //Admin > Maintenance > Gender
-        Route::prefix('gender')->group(function(){
-            Route::get('/', GenderList::class)->name('gender.list');
-            Route::get('create', GenderCreate::class)->name('gender.create');
-            Route::get('edit/{id}', GenderEdit::class)->name('gender.edit');
-        });
-
-        //Admin > Maintenance > Relationship
-        Route::prefix('relationship')->group(function(){
-            Route::get('/', RelationshipList::class)->name('relationship.list');
-            Route::get('create', RelationshipCreate::class)->name('relationship.create');
-            Route::get('edit/{id}', RelationshipEdit::class)->name('relationship.edit');
-         });
-
-        //Admin > Maintenance > Marital
-        Route::prefix('marital')->group(function(){
-            Route::get('/', MaritalList::class)->name('marital.list');
-            Route::get('create', MaritalCreate::class)->name('marital.create');
-            Route::get('edit/{id}', MaritalEdit::class)->name('marital.edit');
-        });
-        
     });
     //----------------------- end Admin -------------------------------------//
 

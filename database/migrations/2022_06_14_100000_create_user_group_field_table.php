@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.COOP_ROLE_GROUP', function (Blueprint $table) {
+        Schema::create('SISKOP.USER_GROUP', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->bigInteger('coop_id')->nullable();
-            $table->bigInteger('role_id')->nullable();
-
-            $table->string('name',50);
-            $table->string('description')->nullable();
-            $table->string('status',1)->default('1');
+            $table->morphs('grouping');
+            $table->bigInteger('user_id')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -40,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.COOP_ROLE_GROUP');
+        Schema::dropIfExists('SISKOP.USER_GROUP');
     }
 };
