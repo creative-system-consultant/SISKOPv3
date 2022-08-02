@@ -34,6 +34,11 @@
 
         <!-- jquery js -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+
+        <!-- tippy js -->
+        <script src="{{ asset('js/popper.min.js')}}"></script>
+        <script src="{{ asset('js/tippy.min.js')}}"></script>
 
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}" defer></script>
@@ -70,6 +75,17 @@
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script>
             window.addEventListener('swal',function(e){Swal.fire(e.detail);});
+        </script>
+        <script>
+            tippy('.tooltipbtn', {
+                content:(reference)=>reference.getAttribute('data-title'),
+                onMount(instance) {
+                    instance.popperInstance.setOptions({
+                    placement :instance.reference.getAttribute('data-placement')
+                    });
+                },
+                allowHTML: true,
+            });
         </script>
         @stack('js')
     </body>

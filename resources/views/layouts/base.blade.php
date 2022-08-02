@@ -13,6 +13,7 @@
         <!-- Favicon -->
 		<link rel="icon"sizes="16x16"  type="image/png" href="{{ asset('img/logo.png')}}">
         
+        
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +26,10 @@
 
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}?v=@php echo date('ymdgis') @endphp" defer></script>
+
+        <!-- tippy js -->
+        <script src="{{ asset('js/popper.min.js')}}"></script>
+        <script src="{{ asset('js/tippy.min.js')}}"></script>
 
     </head>
 
@@ -39,4 +44,16 @@
 
         @livewireScripts
     </body>
+
+    <script>
+        tippy('.tooltipbtn', {
+            content:(reference)=>reference.getAttribute('data-title'),
+            onMount(instance) {
+                instance.popperInstance.setOptions({
+                placement :instance.reference.getAttribute('data-placement')
+                });
+            },
+            allowHTML: true,
+        });
+    </script>
 </html>
