@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class CreateSpecialAid extends Component
 {
-    public $page = 'Create';
+    public $page        = 'Create';
     public $field;
     public $specialAid_name;
     public $enabled_apply_amt;
@@ -18,12 +18,12 @@ class CreateSpecialAid extends Component
     public $specialAid;
     public $start_date;
     public $end_date;
-    public $Fname  = [''];
-    public $Flabel = [''];
-    public $Ftype  = [''];
-    public $Fstatus = [''];
-    public $Frequired = [''];
-    public $Fuuid = [''];
+    public $Fname       = [''];
+    public $Flabel      = [''];
+    public $Ftype       = [''];
+    public $Fstatus     = [''];
+    public $Frequired   = [''];
+    public $Fuuid       = [''];
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['remField'];
@@ -55,18 +55,18 @@ class CreateSpecialAid extends Component
 
     public function createField()
     {
-        $this->Fname[]  = '';
-        $this->Flabel[] = '';
-        $this->Ftype[]  = '';
-        $this->Fstatus[]  = '';
+        $this->Fname[]      = '';
+        $this->Flabel[]     = '';
+        $this->Ftype[]      = '';
+        $this->Fstatus[]    = '';
         $this->Frequired[]  = '';
     }
 
     public function alertDelete($uuid, $index)
     {
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
-            'text'      => 'Are you sure?', 
+            'type'      => 'warning',
+            'text'      => 'Are you sure?',
             'uuid'      => $uuid,
             'index'     => $index,
         ]);
@@ -75,7 +75,7 @@ class CreateSpecialAid extends Component
     public function remField($uuid, $index)
     {
         $specialAid = SpecialAid::where('uuid', $uuid)->first();
- 
+
         $Fdelete = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
         $Fdelete->delete();
 
@@ -90,7 +90,7 @@ class CreateSpecialAid extends Component
 
             $Fupdate->update([
                 'status' => $this->Fstatus[$index],
-            ]);   
+            ]);
         }
     }
 
@@ -98,7 +98,7 @@ class CreateSpecialAid extends Component
     {
         if ($uuid != NULL) {
             $specialAid = SpecialAid::where('uuid', $uuid)->first();
-    
+
             $updateF = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
             $updateF->update([
                 'required' => $this->Frequired[$index],
@@ -112,10 +112,10 @@ class CreateSpecialAid extends Component
 
         if ($uuid != NULL) {
             $specialAid = SpecialAid::where('uuid', $uuid)->first();
-    
+
             $this->validate();
-            
-            $specialAid->update([            
+
+            $specialAid->update([
                 'name'               => $this->specialAid_name,
                 'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
                 'default_apply_amt'  => $this->default_apply_amount ?? NULL,
@@ -123,8 +123,8 @@ class CreateSpecialAid extends Component
                 'max_apply_amt'      => $this->default_max_amount ?? NULL,
                 'start_date'         => $this->start_date != NULL ? $this->start_date : NULL,
                 'end_date'           => $this->end_date != NUll ? $this->end_date : NULL,
-            ]);            
-        }   
+            ]);
+        }
         else {
             $specialAid = SpecialAid::create([
                 'coop_id'            => $user->coop_id,  
@@ -137,14 +137,14 @@ class CreateSpecialAid extends Component
                 'end_date'           => $this->end_date ?? NULL,
             ]);
         }
-                
+
         foreach ($this->Fname as $index => $input) {  
             if (($this->Fuuid[$index] ?? NULL) == NULL){
                 $specialAid->field()->create([
                         'name'      => $this->Fname[$index],
                         'label'     => $this->Flabel[$index],
                         'type'      => $this->Ftype[$index] == '' ? 'string' : $this->Ftype[$index],
-                ]);                         
+                ]);
             } else {
                 $specialAid->field()->updateOrCreate([
                         'uuid'      =>  $this->Fuuid[$index],
@@ -167,7 +167,7 @@ class CreateSpecialAid extends Component
 
     public function  loadUser($uuid)
     {
-        $specialAid = SpecialAid::where('uuid', $uuid)->first();          
+        $specialAid = SpecialAid::where('uuid', $uuid)->first();
 
         $this->specialAid_name      = $specialAid?->name;
         $this->default_apply_amount = $specialAid?->default_apply_amt;
@@ -176,18 +176,18 @@ class CreateSpecialAid extends Component
         $this->enabled_apply_amt    = $specialAid?->apply_amt_enable == true ? 'checked' : '';
         $this->start_date           = $specialAid?->start_date ? $specialAid->start_date->format('Y-m-d') : '';
         $this->end_date             = $specialAid?->end_date ? $specialAid->end_date->format('Y-m-d') : '';
-        
-        foreach ($specialAid->field ?? [] as $index => $input) {                      
+
+        foreach ($specialAid->field ?? [] as $index => $input) {
             $this->Flabel[$index]      = $input?->label;
             $this->Fname[$index]       = $input?->name;
             $this->Ftype[$index]       = $input?->type;
             $this->Fuuid[$index]       = $input?->uuid;
             $this->Fstatus[$index]     = $input->status   == '1' ? true : false;
             $this->Frequired[$index]   = $input->required == '1' ? true : false;
-        }   
+        }
     }
 
-        public function mount($uuid = NULL)
+    public function mount($uuid = NULL)
     {
         if ($uuid != NULL) {
             $this->specialAid = SpecialAid::where('uuid', $uuid)->first();
@@ -196,7 +196,7 @@ class CreateSpecialAid extends Component
             $this->loadUser($uuid);
         }
         else {
-            $this->field = new SpecialAidField;        
+            $this->field = new SpecialAidField;
         }
     }
 

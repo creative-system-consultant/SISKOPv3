@@ -315,7 +315,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', WithdrawalContributionChecker::class)->name('withdrawal.checker');
                 Route::get('committee/{uuid}', WithdrawalContributionCommittee::class)->name('withdrawal.committee');
                 Route::get('approval/{uuid}', WithdrawalContributionApproval::class)->name('withdrawal.approval');
-            });             
+            });
         });
 
     });
@@ -326,7 +326,7 @@ Route::middleware('auth')->group(function () {
     //Report > Sample
     Route::get('list-reporting', ListReport::class)->name('list-reporting');
     Route::get('user-reporting', UserReporting::class)->name('user-reporting');
-    //----------------------- End Reporting --------------------------------// 
+    //----------------------- End Reporting --------------------------------//
 
 });
 
