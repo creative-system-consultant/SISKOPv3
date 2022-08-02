@@ -3,7 +3,7 @@
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-general.header-title title="Create New Role Group" route="{{ route('user.rolegroup') }}"/>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
-            <h2 class="mb-6 mt-4 text-base font-semibold border-b-2 border-gray-300">Group Details</h2>
+            <h2 class="mt-4 mb-6 text-base font-semibold border-b-2 border-gray-300">Group Details</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-8">
                     <x-form.input 
@@ -45,8 +45,8 @@
                     />
                 </div>
             </div>
-            <div class="grid grid-cols-12 gap-6 mt-4">
-                <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+            <div class="grid items-center grid-cols-12 gap-2 mt-4">
+                <div class="col-span-11 sm:col-span-11 md:col-span-8 lg:col-span-8 xl:col-span-4">
                     <x-form.dropdown 
                         label="ROLE"
                         value="group.role_id"
@@ -63,9 +63,16 @@
                     @endforelse
                     </x-form.dropdown>
                 </div>
+                <div class="col-span-1 sm:col-span-1 md:col-span-4 lg:col-span-4 xl:col-span-8">
+                    <x-heroicon-s-question-mark-circle 
+                        class="w-6 h-6 mt-6 text-primary-800 tooltipbtn dark:text-white" 
+                        data-title="Your-Title" 
+                        data-placement="right"
+                    />
+                </div>
             </div>
 
-            <h2 class="mb-6 mt-6 text-base font-semibold border-b-2 border-gray-300">Users</h2>
+            <h2 class="mt-6 mb-6 text-base font-semibold border-b-2 border-gray-300">Users</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
                     <x-form.input 
