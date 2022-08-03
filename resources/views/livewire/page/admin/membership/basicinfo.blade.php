@@ -36,7 +36,7 @@
             <p><x-form.input 
                 label="Birth Date" 
                 name="birthdate" 
-                value="{{ $Cust->birthdate->format('Y-m-d') }}" 
+                value="{{ $Cust->birthdate?->format('Y-m-d') }}" 
                 mandatory=""
                 disable=""
                 type="date"

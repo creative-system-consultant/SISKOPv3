@@ -116,7 +116,7 @@ class MembershipApply extends Component
         $this->relationship      = RefRelationship::all();
         $this->race_id           = RefRace::all();
         $this->state_id          = RefState::all();
-        $this->birthdate         = $this->Cust->birthdate->format('Y-m-d');
+        $this->birthdate         = $this->Cust->birthdate?->format('Y-m-d');
     }
 
 
