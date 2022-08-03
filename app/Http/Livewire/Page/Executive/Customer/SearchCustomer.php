@@ -37,6 +37,6 @@ class SearchCustomer extends Component
 
     public function render()
     {
-        return view('livewire.customers.search')->extends('layouts.head');
+        return view('livewire.page.executive.customers.search')->extends('layouts.head');
     }
 }

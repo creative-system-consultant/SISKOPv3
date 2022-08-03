@@ -97,11 +97,10 @@ class EditCustomer extends Component
             $this->Ftype[$key]  = $value->type;
             $this->Fvalue[$key] = $this->Cust->field_value($value->name);
         }
-
     }
 
     public function render()
     {
-        return view('livewire.Customers.edit')->extends('layouts.head');
+        return view('livewire.page.executive.customers.edit')->extends('layouts.head');
     }
 }

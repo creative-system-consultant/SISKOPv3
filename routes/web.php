@@ -58,6 +58,9 @@ use App\Http\Livewire\Page\Application\ApplicationList\Share;
 use App\Http\Livewire\Page\Application\ApplicationList\SpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\Withdrawal_Contribution;
 use App\Http\Livewire\Page\Application\ApplySpecialAid\Apply_SpecialAid;
+use App\Http\Livewire\Page\Product\ProductList;
+use App\Http\Livewire\Page\Product\ProductCreate;
+use App\Http\Livewire\Page\Product\ProductEdit;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
@@ -253,6 +256,13 @@ Route::middleware('auth')->group(function () {
     });
     //----------------------- end Admin -------------------------------------//
 
+    //Product > Create
+
+    Route::prefix('product')->group(function(){
+        Route::get('/', ProductList::class)->name('product.list');
+        Route::get('create', ProductCreate::class)->name('product.create');
+        Route::get('edit/{id}', ProductEdit::class)->name('product.edit');
+    });
 
     //----------------------- Executive -------------------------------------//
     Route::prefix('exec')->group(function(){

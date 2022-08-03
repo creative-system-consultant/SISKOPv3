@@ -59,13 +59,15 @@
                             </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item> 
-
                     <x-sidebar.nav-item title="List of Application" route="{{route('application.list')}}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
                     <x-sidebar.nav-item title="Customer Search" route="{{route('customer.search')}}" uri="searchcustomer">
                         <x-heroicon-o-search-circle class="w-7 h-7" />
+                    </x-sidebar.nav-item>
+                    <x-sidebar.nav-item title="Register / Update Product" route="{{route('product.list')}}" uri="product">
+                        <x-heroicon-o-briefcase class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
