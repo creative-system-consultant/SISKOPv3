@@ -92,6 +92,7 @@ use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalCon
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionCommittee;
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionMaker;
 use App\Http\Livewire\Page\Notification\notification;
+use App\Http\Livewire\Page\Financing\Apply_Financing;
 
 /*
 |--------------------------------------------------------------------------
@@ -332,6 +333,9 @@ Route::middleware('auth')->group(function () {
     });
     //----------------------- End Executive --------------------------------//
 
+    //Financing > Apply
+
+    Route::get('/applyFinancing', Apply_Financing::class)->name('financing.apply');
 
     //----------------------- Reporting ------------------------------------//
     //Report > Sample
