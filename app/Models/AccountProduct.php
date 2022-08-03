@@ -19,4 +19,9 @@ class AccountProduct extends Model implements Auditable
     {
         return $this->morphMany(FileMaster::class,'fileable');
     }
+
+    public function document()
+    {
+        return $this->hasMany(AccountProductDocument::class, 'product_id', 'id');
+    }
 }

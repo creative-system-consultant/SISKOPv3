@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Apply Financing</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Apply Financing > {{ $product->name }}</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-form.basic-form wire:submit.prevent="submit">
 

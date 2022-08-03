@@ -6,6 +6,7 @@ use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
 use Livewire\Component;
 
 use App\Models\AccountMaster;
+use App\Models\AccountProduct;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Models\CustFamily;
@@ -19,7 +20,8 @@ use App\Models\Ref\RefRelationship;
 
 class Apply_Financing extends Component
 {
-    public AccountMaster $master;
+    public AccountMaster $account;
+    public AccountProduct $product;
     public $numpage = 1;
     public Customer $Customer;
     public Address $CustAddress;
@@ -80,15 +82,21 @@ class Apply_Financing extends Component
         }
     }
 
-    public function mount()
+    public function mount($product_id)
     {
         $user = Auth()->user();
 
         $this->Customer         = Customer::where('icno', $user->icno)->first();
+        $this->account          = AccountMaster::firstOrCreate([
+            'cust_id'       => $this->Customer->id,
+            'coop_id'       => $user->coop_id,
+            'product_id'    => $product_id,
+        ]);
+        $this->product          = AccountProduct::find($product_id);
         $this->CustAddress      = $this->Customer->Address()->firstorCreate();
         $this->Family           = CustFamily::firstorCreate(['cust_id' => $this->Customer->id],['relationship_id' => 0]);
         $this->FamilyAddress    = $this->Family->Address()->firstorCreate();
-        $this->CustFamily       = Customer::firstorCreate(['id' => $this->Family->Customer->id]);
+        //$this->CustFamily       = Customer::firstorCreate(['id' => $this->Family->Customer->id]);
         // $this->Employer         = CustEmployer::firstorCreate(['cust_id' => $this->Customer->id]);
         // $this->EmployerAddress  = $this->Employer->Address()->firstorCreate();
         $this->title            = RefCustTitle::all();

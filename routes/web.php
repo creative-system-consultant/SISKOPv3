@@ -50,7 +50,6 @@ use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\Role\RoleGroupCreate;
 use App\Http\Livewire\Page\Admin\Role\RoleGroupManagement;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
-use App\Http\Livewire\Page\Admin\SpecialAid\EditSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\Contribution;
 use App\Http\Livewire\Page\Application\ApplicationList\Sell_ExchangeShare;
@@ -136,20 +135,26 @@ Route::middleware('auth')->group(function () {
 
 
     //------------------------------- Applications -------------------------------//
-    //Applications > Special Aid
-    Route::get('/applySpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
+    Route::prefix('apply')->group(function(){
+        //Applications > Special Aid
+        Route::get('/SpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
 
-    //Applications > Add Share
-    Route::get('/applyShare', Apply_Share::class)->name('share.apply');
+        //Applications > Add Share
+        Route::get('/Share', Apply_Share::class)->name('share.apply');
 
-    //Applications > Sell/Exchange Share
-    Route::get('/applySellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
+        //Applications > Sell/Exchange Share
+        Route::get('/SellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
 
-    //Application > Add Contribution
-    Route::get('/applyContribution', Apply_Contribution::class)->name('contribution.apply');
+        //Application > Add Contribution
+        Route::get('/Contribution', Apply_Contribution::class)->name('contribution.apply');
 
-    //Application > W/D Contribution
-    Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
+        //Application > W/D Contribution
+        Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
+
+        //Financing > Apply
+        //Route::get('/Financing', FinancingList::class)->name('financing.list');
+        Route::get('/Financing/{product_id}', Apply_Financing::class)->name('financing.apply');
+    });
     //------------------------------- End Applications ---------------------------//
 
 
@@ -332,10 +337,6 @@ Route::middleware('auth')->group(function () {
 
     });
     //----------------------- End Executive --------------------------------//
-
-    //Financing > Apply
-
-    Route::get('/applyFinancing', Apply_Financing::class)->name('financing.apply');
 
     //----------------------- Reporting ------------------------------------//
     //Report > Sample

@@ -24,25 +24,25 @@
                             <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-currency-dollar -alt class="w-4 h-4 mr-2"/> {{ $list->amt_max }} </div>
                             <div class="flex items-center justify-center space-x-2"> Maximum Financing </div>
                             <div class="mt-4 flex items-center justify-center space-x-2">
-                                <div>
-                                    <x-modal.trigger target="open">
-                                        <button type="button" class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
-                                            More Info
-                                        </button>
-                                    </x-modal.trigger>
+                                <div x-data="{open:false}">
+                                    <button 
+                                        @click="open = true" 
+                                        type="button" 
+                                        class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
+                                        Product Info
+                                    </button>
                                     <x-modal.modal 
-                                        id="open"
+                                        modalActive="open" 
                                         title="Product Info" 
-                                        close="true" 
-                                        autoClose="true" 
-                                        width="5xl"
+                                        modalSize="xl" 
+                                        closeBtn="yes"
                                     >
                                         <div class="p-4">
                                             <div>
                                                 <div class="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                                                     <div>
                                                         <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-identification -alt class="w-5 h-5 mr-2"/> Product Characteristic </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Duration of Approval </div>
+                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Duration of Approval</div>
                                                         <div class="font-bold text-red flex items-center justify-center space-x-2"> 1 Day </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Processing Fee Rates </div>
                                                         <div class="font-bold text-red flex items-center justify-center space-x-2"> RM 250.00 </div>
