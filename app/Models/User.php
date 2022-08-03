@@ -45,7 +45,12 @@ class User extends Authenticatable implements Auditable
 
     public function customer()
     {
-        return $this->belongsToMany(Coop::class)->using(CoopCust::class);
+        return $this->hasMany(Customer::class,'icno','icno');
+    }
+
+    public function coop_cust($id)
+    {
+        return $this->customer()->where('coop_id', $id)->first();
     }
 
     public function files()

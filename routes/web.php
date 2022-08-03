@@ -47,6 +47,8 @@ use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
+use App\Http\Livewire\Page\Admin\Membership\MembershipAdmin;
+use App\Http\Livewire\Page\Admin\Membership\MembershipApply;
 use App\Http\Livewire\Page\Admin\Role\RoleGroupCreate;
 use App\Http\Livewire\Page\Admin\Role\RoleGroupManagement;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
@@ -160,6 +162,10 @@ Route::middleware('auth')->group(function () {
             Route::get('RoleGroup', RoleGroupManagement::class)->name('user.rolegroup');
             Route::get('CreateGroup', RoleGroupCreate::class)->name('user.creategroup');
             Route::get('EditGroup/{uuid}', RoleGroupCreate::class)->name('user.editgroup');
+        });
+        Route::prefix('membership')->group(function(){
+            Route::get('/', MembershipAdmin::class)->name('membership.admin');
+            Route::get('apply', MembershipApply::class)->name('membership.apply');
         });
 
         Route::prefix('maintenance')->group(function(){
