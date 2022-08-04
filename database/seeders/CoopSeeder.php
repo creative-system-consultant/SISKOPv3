@@ -16,6 +16,7 @@ class CoopSeeder extends Seeder
     {
         DB::statement("DBCC CHECKIDENT ('SISKOP.coop',RESEED,1)");
         DB::statement("DBCC CHECKIDENT ('cif.address',RESEED,1)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.membership',RESEED,1)");
         $coop_type = DB::table('ref.coop_types')->select('id','description')->get();
         $allstate = DB::table('ref.states')->select('id','description')->get();
         $add_type = DB::table('ref.address_types')->select('id','description')->get();
@@ -46,9 +47,17 @@ class CoopSeeder extends Seeder
             ],
         ];
 
+        $membership = [
+            [
+                'coop_id'   => 1,
+            ],
+        ];
+        DB::table('SISKOP.membership')->insert($membership);
+
         DB::table('SISKOP.coop')->insert($coop);
 
         DB::statement("DBCC CHECKIDENT ('SISKOP.coop',RESEED,100)");
         DB::statement("DBCC CHECKIDENT ('cif.address',RESEED,100)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.membership',RESEED,100)");
     }
 }
