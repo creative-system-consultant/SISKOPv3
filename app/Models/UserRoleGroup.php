@@ -33,6 +33,6 @@ class UserRoleGroup extends Model implements Auditable
 
     public function status()
     {
-        if ($this->status = 1){ return 'ACTIVE'; } else { return 'INACTIVE'; };
+        if ($this->status == 1){ return 'ACTIVE'; } else { return 'INACTIVE'; };
     }
 }

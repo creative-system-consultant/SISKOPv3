@@ -76,6 +76,7 @@ class RoleGroupCreate extends Component
 
     public function submit()
     {
+        $this->group->name = strtoupper($this->group->name);
         $this->validate();
 
         $this->group->save();
