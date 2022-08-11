@@ -7,10 +7,14 @@
     </label>
     <div class="flex mt-1 mb-2 rounded-md shadow-sm">
         <input
-            {{ $disable == "true" ? 'disabled' : '' }}
+            @if( $disable == "true" )
+                disabled
+            @elseif( $disable == "readonly" )
+                readonly
+            @endif
             wire:model="{{ $name1 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
             {{ ($errors->has($name1)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-            {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+            {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
             placeholder="Address Line 1"
         >
     </div>
@@ -18,10 +22,14 @@
 
     <div class="flex mt-1 mb-2 rounded-md shadow-sm">
         <input 
-            {{ $disable == "true" ? 'disabled' : '' }}
+            @if( $disable == "true" )
+                disabled
+            @elseif( $disable == "readonly" )
+                readonly
+            @endif
             wire:model="{{ $name2 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
             {{ ($errors->has($name2)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-            {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}" 
+            {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  " 
             placeholder="Address Line 2"
         >
     </div>
@@ -29,10 +37,14 @@
 
     <div class="flex mt-1 mb-0 rounded-md shadow-sm">
         <input
-            {{ $disable == "true" ? 'disabled' : '' }} 
+            @if( $disable == "true" )
+                disabled
+            @elseif( $disable == "readonly" )
+                readonly
+            @endif
             wire:model="{{ $name3 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
             {{ ($errors->has($name3)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-            {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}" 
+            {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  " 
             placeholder="Address Line 3"
         >
     </div>
@@ -48,10 +60,14 @@
         </label>
         <div class="flex mt-1 mb-2 rounded-md shadow-sm">
             <input
-                {{ $disable == "true" ? 'disabled' : '' }}
+                @if( $disable == "true" )
+                    disabled
+                @elseif( $disable == "readonly" )
+                    readonly
+                @endif
                 wire:model="{{ $name4 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
                 {{ ($errors->has($name4)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-                {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
+                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
                 placeholder="Town"
             >
         </div>
@@ -66,10 +82,14 @@
         </label>
         <div class="flex mt-1 mb-2 rounded-md shadow-sm">
             <input 
-                {{ $disable == "true" ? 'disabled' : '' }}
+                @if( $disable == "true" )
+                    disabled
+                @elseif( $disable == "readonly" )
+                    readonly
+                @endif
                 wire:model="{{ $name5 }}" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 
                 {{ ($errors->has($name5)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-                {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
+                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
                 placeholder="88888"
             >
         </div>
@@ -84,11 +104,15 @@
         </label>
         <div class="mt-1 rounded-md shadow-sm">
             <select
-                {{ $disable == "true" ? 'disabled' : '' }}
+                @if( $disable == "true" )
+                    disabled
+                @elseif( $disable == "readonly" )
+                    readonly
+                @endif
                 wire:model="{{ $name6 }}"
                 class="block w-full transition duration-150 ease-in-out form-select sm:text-sm sm:leading-5 
                 {{ ($errors->has($name6)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
-                {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }} "
+                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}   "
                 >
                 <option value="" hide selected>SELECT STATE</option>
                 @isset($state)
