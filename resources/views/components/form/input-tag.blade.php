@@ -15,7 +15,11 @@
             </span>
         </div>
             <input 
-                {{ $disable == "true" ? 'disabled' : '' }}
+                @if( $disable == "true" )
+                    disabled
+                @elseif( $disable == "readonly" )
+                    readonly
+                @endif
                 type="{{ $type }}" {{ $attributes }} value="{{$value}}"
                 class="form-input text-sm block w-full transition duration-150 ease-in-out sm:leading-5 
                 @if ($leftTag != "")
@@ -23,7 +27,7 @@
                 @else
                 pl-2 pr-9
                 @endif
-                {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }} 
+                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  
                 {{ ($errors->has($name)) ? 'border-red-300 bg-red-50 text-red-900' : ''}}
                 "
             >
