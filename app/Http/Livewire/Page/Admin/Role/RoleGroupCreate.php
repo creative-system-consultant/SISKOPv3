@@ -11,6 +11,7 @@ class RoleGroupCreate extends Component
 {
     public $page = 'CREATE';
     public $roles;
+    public $user;
     public $users = [];
     public $ids   = [];
     public $idrem = [];
@@ -24,6 +25,7 @@ class RoleGroupCreate extends Component
         'group.description'     => 'max:255',
         'group.role_id'         => 'required',
         'group.status'          => '',
+        'group.coop_id'         => 'required',
     ];
     protected $messages = [
         'group.name.*'          => 'Please specify NAME (Min 5 character, Max 255 Character)',
@@ -31,13 +33,15 @@ class RoleGroupCreate extends Component
     ];
 
     public function mount($uuid = NULL){
+        $this->user = Auth()->user();
         if ($uuid != NULL){
             $this->page  = 'EDIT';
             $this->group = UserRoleGroup::where('uuid', $uuid)->firstOrFail();
             $this->ids   = $this->group->getids();
             $this->users = User::whereIn('id', $this->ids)->get();
         } else {
-            $this->group = new UserRoleGroup;
+            $this->group          = new UserRoleGroup;
+            $this->group->coop_id = $this->user->coop_id;
         }
         $this->roles = UserRole::all();
     }

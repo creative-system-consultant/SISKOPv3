@@ -15,6 +15,15 @@
                         disable="" 
                         wire:model="group.name"
                     />
+                    <x-form.input 
+                        label="" 
+                        type="hidden" 
+                        name="group.coop_id" 
+                        value="" 
+                        mandatory="" 
+                        disable="" 
+                        wire:model="group.name"
+                    />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-4">
                     <x-form.dropdown 
