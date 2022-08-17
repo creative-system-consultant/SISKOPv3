@@ -28,6 +28,7 @@
                 </div>
             </div>
         </div>
+
         <ul class="flex items-center flex-shrink-0 space-x-4">
             <div class="py-6"></div>
             <!-- Notifications menu -->
@@ -35,8 +36,8 @@
                 @php
                     $user = Auth::user();
                     $customer = \App\Models\Customer::where('icno', $user->icno)->first();
-                    $specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();                            
-                @endphp                
+                    $specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();
+                @endphp
                 <button class="p-2 text-white align-middle bg-gray-800 rounded-md shadow-xl focus:outline-none "
                     @click="open=!open" @keydown.escape="open=false" aria-haspopup="true">
                     <div class="flex">
@@ -46,10 +47,10 @@
                     <span aria-hidden="true"
                         class="absolute top-0 inline-block px-1 text-xs transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full -right-2 dark:border-gray-800">
                         @if ($specialAid != NULL)
-                            {{ count($specialAid->notification) }}                                                         
-                        @else       
+                            {{ count($specialAid->notification) }}
+                        @else
                             0
-                        @endif                 
+                        @endif
                     </span>
                 </button>
                 <div x-show="open" x-cloak>
@@ -64,7 +65,7 @@
                                         href="{{ url($notifyAid->link) }}">
                                         <span>{{ $notifyAid->title }}</span>
                                     </a>
-                                </li>                                         
+                                </li>
                             @endforeach
                         @else
                             <li class="flex">
@@ -83,7 +84,7 @@
                     </ul>
                 </div>
             </li>
-            
+
             <!-- Profile menu -->
             <li class="relative">
                 <button
@@ -130,7 +131,6 @@
                                 @csrf
                             </form>
                         </li>
-                        
                     </ul>
                 </div>
             </li>

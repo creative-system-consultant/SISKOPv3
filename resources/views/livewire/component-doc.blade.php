@@ -32,6 +32,12 @@
                         <p>Customize color</p>
                     </div>
                 </x-tab.title>
+                <x-tab.title name="3" livewire="">
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-annotation class="w-6 h-6 mr-2"/> 
+                        <p>Custom Helper</p>
+                    </div>
+                </x-tab.title>
             </div>
             <div class="pt-4 bg-white border-t-2">
                 
@@ -45,6 +51,15 @@
                                 <pre class="-mt-4 language-html" wire:ignore>
                                     <code class="language-html"> 
 php artisan make:livewire Page/YourPageName
+                                    </code>
+                                </pre>        
+                            </div>
+                            <div class="p-6 bg-white rounded-md shadow-md ">
+                                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">To rename livewire page (to refactor or typo), use this command</h2>
+                                <p class="font-semibold">Code</p>
+                                <pre class="-mt-4 language-html" wire:ignore>
+                                    <code class="language-html"> 
+php artisan livewire:move yourpageName Page/YourPageName
                                     </code>
                                 </pre>        
                             </div> 
@@ -102,6 +117,15 @@ php artisan make:livewire Page/YourPageName
                                 <!-- end Submit Icon component -->
                         </div>
                     </div>
+                    </div>
+                </x-tab.content>
+                <x-tab.content name="3">
+                    <div class="p-4" x-data="{selected : 0}">
+                        <h1 class="mb-2 text-base font-semibold md:text-2xl">Custom PHP Function / Helper</h1>
+                        <p class="mb-6 text-base font-normal md:text-base">All the functions are in App/Helper/Custom.php</p>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                            @include('doc.doc-custom')
+                        </div>
                     </div>
                 </x-tab.content>
                 <x-tab.content name="1">
@@ -393,7 +417,6 @@ php artisan make:livewire Page/YourPageName
         800: '#9f1239',
         900: '#881337',
     },
-},
 
                                         </code>
                                     </pre>
