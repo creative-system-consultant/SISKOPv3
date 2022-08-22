@@ -5,31 +5,41 @@ namespace App\Http\Livewire\Page\Admin\Membership;
 use App\Models\FieldMaster;
 use App\Models\Membership;
 use App\Models\MembershipField;
+use App\Models\MembershipDocument;
+use App\Models\Ref\RefMembershipDocument;
+use App\Models\User;
 use Livewire\Component;
 
 class MembershipAdmin extends Component
 {
-
+    public User $User;
     public Membership $membership;
     public $field = [];
-
+    public $document = [];
+    public $refdocument;
+    public $documentlist = [];
     protected $rules    = [];
     protected $messages = [];
     protected $validationAttributes = [];
 
     public function mount(){
+        $this->User = auth()->user();
+
         $this->membership = Membership::firstOrCreate([
-            'coop_id'       => auth()->user()->coop_id,
+            'coop_id'       => $this->User->coop_id,
         ],[
-            'created_by'    => auth()->user()->name,
+            'created_by'    => $this->User->name,
         ]);
+
+        $this->refdocument = RefMembershipDocument::where('coop_id', $this->User->coop_id)->get();
+        //$this->documentlist = $this->membership->documents;
     }
 
     public function enableFn($id)
     {
         $field = MembershipField::firstOrCreate([
             'membership_id' => $this->membership->id,
-            'coop_id'       => auth()->user()->coop_id,
+            'coop_id'       => $this->User->coop_id,
             'field_id'      => $id,
         ]);
 
@@ -37,6 +47,21 @@ class MembershipAdmin extends Component
             'status'    => !$field->status,
         ]);
     }
+    public function enableDoc($code,$name)
+    {
+        $document = MembershipDocument::firstOrCreate([
+            'membership_id' => $this->membership->id,
+            'coop_id'       => $this->User->coop_id,
+            'type'          => $code,
+            'name'          => $name,
+        ]);
+
+        $document->update([
+            'status'    => !$document->status,
+        ]);
+    }
+
+   
 
     public function submit(){
         
