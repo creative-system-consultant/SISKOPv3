@@ -35,7 +35,8 @@
                 @php
                     $user = Auth::user();
                     $customer = \App\Models\Customer::where('icno', $user->icno)->first();
-                    $specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();                            
+                    $specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();
+
                 @endphp                
                 <button class="p-2 text-white align-middle bg-gray-800 rounded-md shadow-xl focus:outline-none "
                     @click="open=!open" @keydown.escape="open=false" aria-haspopup="true">
