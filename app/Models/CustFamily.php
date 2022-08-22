@@ -15,7 +15,7 @@ class CustFamily extends Model implements Auditable
     protected $guarded = ['uuid'];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    public function customer()
+    public function data()
     {
         return $this->belongsTo(Customer::class,'family_id', 'id');
     }

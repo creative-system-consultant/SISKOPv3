@@ -24,4 +24,14 @@ class Membership extends Model implements Auditable
     {
         return $this->fields->where('field_id',$id)->first()?->status;
     }
+
+    public function documents()
+    {
+        return $this->hasMany(MembershipDocument::class,'membership_id','id');
+    }
+
+    public function document_status($code)
+    {
+        return $this->documents->where('type',$code)->first()?->status;
+    }
 }

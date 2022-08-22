@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Ref\RefMembershipDocument;
 use Illuminate\Database\Eloquent\Model;
 
-class MembershipField extends Model
+class MembershipDocument extends Model
 {
     protected $table   = "SISKOP.MEMBERSHIP_DOCUMENT";
     protected $guarded = [];
@@ -18,5 +19,10 @@ class MembershipField extends Model
     public function membership()
     {
         return $this->belongsTo(Membership::class,'membership_id','id');
+    }
+
+    public function document()
+    {
+        return $this->belongsTo(RefMembershipDocument::class,'type','code');
     }
 }
