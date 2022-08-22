@@ -1,11 +1,76 @@
 <div class="@if ($numpage != 2) hidden @endif">
-test
+<h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Introducer Details</h2>
+<div class="grid grid-cols-12 gap-6 mt-4">
+    <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
+        <x-form.input 
+            label="SEARCH INTRODUCER (by IC Number)" 
+            name="search" 
+            value="" 
+            mandatory=""
+            disable=""
+            type="text"
+            wire:keyup="searchUser"
+            wire:model.debounce.1000ms="search"
+        />
+    </div>
+</div>
+<div class="grid grid-cols-12 gap-6 mt-4">
+    <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+        <x-form.input 
+            label="INTRODUCER NAME" 
+            name="introducer.name" 
+            value="" 
+            mandatory=""
+            disable=""
+            type="text"
+            wire:model="introducer.name"
+            readonly
+            
+        />
+    </div>
+    <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+        <x-form.input 
+            label="INTRODUCER IC NUMBER" 
+            name="introducer.icno" 
+            value="" 
+            mandatory=""
+            disable=""
+            type="text"
+            wire:model="introducer.icno"
+            readonly
+        />
+    </div>
+</div>
+<div class="grid grid-cols-12 gap-6 mt-4">
+    <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+        <x-form.input 
+            label="INTRODUCER EMAIL" 
+            name="introducer.email" 
+            value="" 
+            mandatory=""
+            disable=""
+            type="text"
+            wire:model="introducer.email"
+            readonly
+        />
+    </div>
+    <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
+        <x-form.input 
+            label="INTRODUCER MEMBERSHIP NUMBER" 
+            name="introducer.mbr_no" 
+            value="" 
+            mandatory=""
+            disable=""
+            type="text"
+            wire:model="introducer.mbr_no"
+            readonly
+        />
+    </div>
+</div>
 
-<div class="p-4 mt-6 rounded-md bg-gray-50">
+
+
     <div class="flex items-center justify-center space-x-2">
-        
-
-
         <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             previous
         </button>
@@ -13,11 +78,6 @@ test
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>
-
-        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-            Submit
-        </button>
         
     </div>
-</div>
 </div>

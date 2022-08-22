@@ -1,7 +1,7 @@
 <div class="@if ($numpage != 1) hidden @endif">
 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
 
-    <div class="mt-4 container mx-auto">
+<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1"> 
       <div @if ($member->field_status(2) == '0') style="display: none" @endif >
         <div class="p-4 mt-8 text-green-900 bg-green-200">
             <p><x-form.input 
@@ -34,14 +34,14 @@
         <div @if ($member->field_status(5) == '0') style="display: none" @endif >
             <div class="p-4 text-green-900 bg-green-200">
             <p><x-form.input 
-                label="Birth Date" 
-                name="birthdate" 
-                value="{{ $Cust->birthdate?->format('Y-m-d') }}" 
+                label="Birthdate" 
+                name="Cust.birthdate" 
+                value="" 
                 mandatory=""
-                disable=""
-                type="date"
-                wire:model="birthdate"
-            />  </p>
+                disable="true"
+                type="text"
+                wire:model="Cust.birthdate"
+            /></p>
             </div>
         </div>
 
@@ -121,7 +121,7 @@
                name="Cust.gender_id" 
                id=""
                mandatory=""
-               disable=""
+               disable="true"
                default="yes"  
                wire:model="Cust.gender_id"
            >
@@ -129,6 +129,23 @@
                 <option value="{{ $list->id }}"> {{ $list->description }}</option>
            @endforeach
            </x-form.dropdown></p>
+           {{-- <p>
+            @foreach ($gender_id as $list)
+            <x-form.input 
+            label="Gender" 
+            name="Cust.gender_id" 
+            value="" 
+            mandatory=""
+            disable="true"
+            type="text"
+            wire:model="Cust.gender_id"
+        />
+
+        <option value="{{ $list->id }}"> {{ $list->description }}</option>
+   @endforeach
+    </p> --}}
+
+
         </div>
        </div>
 
@@ -285,7 +302,7 @@
         </div>
     </div>
 <br><h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Work Details</h2>
-<div class="mt-8 container mx-auto">
+<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1"> 
     <div @if ($member->field_status(19) == '0') style="display: none" @endif >
       <div class="p-4 mt-2 text-green-900 bg-green-200">
           <p><x-form.input 
@@ -392,11 +409,7 @@
 
   <div class="p-4 mt-6 rounded-md bg-gray-50">
     <div class="flex items-center justify-center space-x-2">
-
-        <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-            previous
-        </button>
-        
+       
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>
