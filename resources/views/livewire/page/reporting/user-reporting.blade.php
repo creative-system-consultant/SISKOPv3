@@ -42,10 +42,10 @@
                         <x-table.table-header class="text-left" value="Status" sort="" />
                     </x-slot>
                     <x-slot name="tbody">
-                        @forelse ($result as $item)
+                        @forelse ($result as $key => $item)
                         <tr>
                             <x-table.table-body colspan="" class="text-left">
-                                {{$loop->iteration}}
+                                {{ $key + 1 }}
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-left">
                                 {{$item->name}}
@@ -66,7 +66,9 @@
                         @endforelse
                     </x-slot>
                 </x-table.table>
-                {{ $result->links() }}
+                <div class="py-4">
+                    {{ $result->links('livewire::tailwind') }}
+                </div>
             </div>
     </x-general.card>
 </div>
