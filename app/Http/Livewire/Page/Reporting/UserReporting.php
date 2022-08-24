@@ -8,9 +8,12 @@ use OpenSpout\Writer\Common\Creator\Style\StyleBuilder;
 use OpenSpout\Common\Entity\Style\CellAlignment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\WithPagination;
 
 class UserReporting extends Component
 {
+    use WithPagination;
+    
     public $startDate;
     public $endDate;
     public $spData;
