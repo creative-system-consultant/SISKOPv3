@@ -43,7 +43,6 @@
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}" defer></script>
         @livewireStyles
-        @powerGridStyles
     </head>
 
     <body
@@ -70,7 +69,6 @@
             <x-swall.warning  message="{{ session('message') }}"/>
         @endif
         @livewireScripts
-        @powerGridScripts
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.4/dist/sweetalert2.all.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script>
