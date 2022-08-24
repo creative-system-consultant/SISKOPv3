@@ -28,6 +28,30 @@
     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
 
+.sm\:max-w-sm {
+    max-width: 24rem;
+  }
+
+  .sm\:max-w-xl {
+    max-width: 36rem;
+  }
+
+  .sm\:max-w-3xl {
+    max-width: 48rem;
+  }
+
+  .sm\:max-w-4xl {
+    max-width: 56rem;
+  }
+
+  .sm\:max-w-6xl {
+    max-width: 72rem;
+  }
+
+  .sm\:max-w-7xl {
+    max-width: 80rem;
+  }
+
 .bg-gradient-to-b {
     background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
