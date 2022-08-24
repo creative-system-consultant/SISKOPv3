@@ -1,77 +1,77 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl"> </h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        Product Dashboard
-    </div>
-    <div class="p-4 mt-4">
-        <a href="{{route('product.create')}}" class="inline-flex items-center px-4 py-2 mb-4 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
-            <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
-            New Product
-        </a>
-    </div>
-    <div class="p-4 bg-white rounded-md shadow-md grid grid-cols-1 gap-10">
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+        <p>Product Dashboard</p>
+    </x-general.card>
+    <x-general.card class="grid grid-cols-1 gap-10 p-4 mt-5 bg-white rounded-md shadow-md ">
         <div>
+            <div class="mb-5">
+                <a href="{{route('product.create')}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-green-500 rounded hover:bg-green-400">
+                    <x-heroicon-o-plus-circle class="w-4 h-4 mr-2" />
+                    New Product
+                </a>
+            </div>
             <div class="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 @foreach ( $Product as $list )
-                    <x-general.card class="p-4 bg-white rounded-lg shadow-md">
+                    <x-general.card class="p-4 bg-white border rounded-lg shadow-md">
                         <div>
                             <div class="flex justify-center pt-4">
-                                <x-logo class="w-auto h-8" />
+                                <x-logo class="w-auto h-12" />
                             </div>
-                            <div class="text-sm font-bold mt-2 flex items-center justify-center space-x-2"> {{ $list->name }} </div>
-                            <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-presentation-chart-line -alt class="w-4 h-4 mr-2"/> {{ $list->profit_rate }}% p.a. </div>
-                            <div class="flex items-center justify-center space-x-2"> Profit Rate </div>
-                            <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-currency-dollar -alt class="w-4 h-4 mr-2"/> {{ $list->amt_max }} </div>
-                            <div class="flex items-center justify-center space-x-2"> Maximum Financing </div>
-                            <div class="mt-4 flex items-center justify-center space-x-2">
-                                <div>
-                                    <x-modal.trigger target="open">
-                                        <button type="button" class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
-                                            More Info
-                                        </button>
-                                    </x-modal.trigger>
+                            <p class="flex items-center justify-center mt-2 space-x-2 text-sm font-bold"> {{ $list->name }} </p>
+                            <p class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-presentation-chart-line -alt class="w-4 h-4 mr-2"/> {{ $list->profit_rate }}% p.a. </p>
+                            <p class="flex items-center justify-center space-x-2"> Profit Rate </p>
+                            <p class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-currency-dollar -alt class="w-4 h-4 mr-2"/> {{ $list->amt_max }} </p>
+                            <p class="flex items-center justify-center space-x-2"> Maximum Financing </p>
+                            <div class="flex items-center justify-center mt-4 space-x-2">
+                                <div x-data="{openModal:false}">
+                                    <button 
+                                        @click="openModal = true" 
+                                        type="button" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white rounded bg-primary-700 hover:bg-primary-600">
+                                        <x-heroicon-s-information-circle class="w-4 h-4 mr-2"/>
+                                        More Info
+                                    </button>
                                     <x-modal.modal 
-                                        id="open"
+                                        modalActive="openModal" 
                                         title="Product Info" 
-                                        close="true" 
-                                        autoClose="true" 
-                                        width="5xl"
+                                        closeBtn="yes"
+                                        modalSize="7xl"
                                     >
                                         <div class="p-4">
                                             <div>
                                                 <div class="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                                                     <div>
-                                                        <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-identification -alt class="w-5 h-5 mr-2"/> Product Characteristic </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Duration of Approval </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> 1 Day </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Processing Fee Rates </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> RM 250.00 </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Highest Payout </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> 5.00 % </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Profit Rate </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> {{ $list->profit_rate }}% p.a. </div>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-identification -alt class="w-5 h-5 mr-2"/> Product Characteristic </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Duration of Approval </p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> 1 Day </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Processing Fee Rates </p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> RM 250.00 </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Highest Payout </p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> 5.00 % </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Profit Rate </p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> {{ $list->profit_rate }}% p.a. </p>
                                                     </div>
                                                     <div>
-                                                        <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-clipboard-check -alt class="w-5 h-5 mr-2"/> Eligibility </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Minimum Wage Scale </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> RM .00 </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Employment Qualifications</div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Minimum Age Eligibility </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-clipboard-check -alt class="w-5 h-5 mr-2"/> Eligibility </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Minimum Wage Scale </p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> RM .00 </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Employment Qualifications</p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500">  </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Minimum Age Eligibility </p>
+                                                        <p class="flex items-center justify-center space-x-2 font-bold text-red-500">  </p>
                                                     </div>
                                                     <div>
-                                                        <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-document-text -alt class="w-5 h-5 mr-2"/> Supporting Documents Required </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Copy of Identity Card (Front and Back) </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Copy of Latest Salary Statement (with employer's confirmation stamp) </div>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-document-text -alt class="w-5 h-5 mr-2"/> Supporting Documents Required </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Copy of Identity Card (Front and Back) </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Copy of Latest Salary Statement (with employer's confirmation stamp) </p>
                                                         <div>
                                                             <ul>
                                                                 <li>  </li>
-                                                              </ul>
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-dots-circle-horizontal -alt class="w-5 h-5 mr-2"/> Other Info </div>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-dots-circle-horizontal -alt class="w-5 h-5 mr-2"/> Other Info </p>
                                                     </div>
                                                 </div>  
                                             </div>
@@ -102,5 +102,5 @@
                 @endforeach
             </div>
         </div>
-    </div>
+    </x-general.card>
 </div>

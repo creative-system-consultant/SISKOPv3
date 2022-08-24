@@ -1,10 +1,10 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Membership Application Maintenance</h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
             <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
             
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="2" class="flex items-center cursor-pointer">
@@ -27,7 +27,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="3" class="flex items-center cursor-pointer">
@@ -51,7 +51,7 @@
             </div> --}}
             
             
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="5" class="flex items-center cursor-pointer">
@@ -74,7 +74,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="7" class="flex items-center cursor-pointer">
@@ -97,7 +97,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="13" class="flex items-center cursor-pointer">
@@ -120,8 +120,8 @@
                 </div>
             </div> --}}
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="11" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -138,13 +138,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Race
-                </div>
+                </p>
             </div>
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="9" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -161,13 +161,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Gender
-                </div>
+                </p>
             </div>
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="12" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -184,13 +184,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Education
-                </div>
+                </p>
             </div>
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="10" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -207,13 +207,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Marital
-                </div>
+                </p>
             </div>
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="8" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -230,13 +230,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Email
-                </div>
+                </p>
             </div>
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="1" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -253,14 +253,14 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Title
-                </div>
+                </p>
             </div>
  
             <h2 class="mt-8 mb-4 text-base font-semibold border-b-2 border-gray-300">Parent Details</h2>
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="14" class="flex items-center cursor-pointer">
@@ -283,7 +283,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="15" class="flex items-center cursor-pointer">
@@ -306,8 +306,8 @@
                 </div>
             </div> --}}
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="16" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -324,12 +324,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Email
-                </div>
+                </p>
             </div>
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="17" class="flex items-center cursor-pointer">
@@ -352,7 +352,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="18" class="flex items-center cursor-pointer">
@@ -376,7 +376,7 @@
             </div> --}}
 
             <h2 class="mt-8 mb-4 text-base font-semibold border-b-2 border-gray-300">Work Details</h2>
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="19" class="flex items-center cursor-pointer">
@@ -399,8 +399,8 @@
                 </div>
             </div> --}}
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="20" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -417,12 +417,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Name Of Department
-                </div>
+                </p>
             </div>
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="21" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -439,11 +439,11 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Position
-                </div>
+                </p>
             </div>
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="22" class="flex items-center cursor-pointer">
@@ -466,8 +466,8 @@
                 </div>
             </div> --}}
 
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="23" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -484,12 +484,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Salary
-                </div>
+                </p>
             </div>
 
-            {{-- <div class="mt-4 grid grid-cols-12 gap-6">
+            {{-- <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                     <div class="flex items-center w-full">
                         <label for="24" class="flex items-center cursor-pointer">
@@ -512,8 +512,8 @@
                 </div>
             </div> --}}
             
-            <div class="mt-4 grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+            <div class="flex items-center mb-4 space-x-4">
+                <div>
                     <div class="flex items-center w-full">
                         <label for="25" class="flex items-center cursor-pointer">
                             <div class="relative">
@@ -530,13 +530,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                <p>
                     Office Address
-                </div>
+                </p>
             </div>
 
 
 
         </x-form.basic-form>
-    </div>
+    </x-general.card>
 </div>

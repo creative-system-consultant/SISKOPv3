@@ -1,8 +1,10 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Create Product</h1>
-    <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+    <x-general.card class="p-4 mt-2 bg-white rounded-md shadow-md">
+        <div>
+            <x-general.header-title title="Create Product" route="{{route('product.list')}}"/>
+        </div>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
-            <div class="bg-white rounded-md">
+            <div>
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>
             </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
@@ -107,7 +109,7 @@
                 </x-form.dropdown>
 
             </div>
-            <div class="mb-4 mt-4 bg-white rounded-md">
+            <div class="mt-4 mb-4">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Form Information </h2>
                 <div class="mb-4">
                     <input type="radio" id="" name="" value="" class="" />
@@ -151,7 +153,7 @@
                 </div>
             </div>
             </div>
-            <div class="mt-4 bg-white rounded-md">
+            <div class="mt-4">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Brochure </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                     <x-form.input 
@@ -178,7 +180,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4 bg-white rounded-md">
+            <div class="mt-4">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Payment Table </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                     <x-form.input 
@@ -205,7 +207,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4 flex items-center justify-center space-x-2">
+            <div class="flex items-center justify-center mt-4 space-x-2">
                 <a href="{{route('product.list')}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                     Cancel
                 </a>
@@ -214,5 +216,5 @@
                 </button>
             </div>
         </x-form.basic-form>
-    </div>
+    </x-general.card>
 </div>
