@@ -20,15 +20,19 @@ class UserReporting extends Component
 
     public function mount()
     {
-        $this->spData =  "EXEC SISKOP.user_list '$this->startDate','$this->startDate'";
         $this->startDate = now()->format('Y-m-d');;
         $this->endDate = now()->format('Y-m-d');
+    }
+
+    //put SP on this function
+    public function getSp(){
+        return $this->spData =  "SISKOP.user_list '$this->startDate','$this->startDate'";
     }
 
     public function renderReportExcel()
     {
         foreach( DB::select(
-                    $this->spData
+                    $this->getSp()
                 ) as $item) {
                     $data = [
                         'Name'      => $item->name,
@@ -58,7 +62,8 @@ class UserReporting extends Component
 
     public function render()
     {
-        $data  = DB::select($this->spData);
+        
+        $data  = DB::select($this->getSp());
         $dataCollection = collect($data);
 
         $perPage = 1;
