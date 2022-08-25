@@ -34,4 +34,6 @@ class Membership extends Model implements Auditable
     {
         return $this->documents->where('type',$code)->first()?->status;
     }
+
+
 }

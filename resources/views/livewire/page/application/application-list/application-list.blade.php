@@ -37,7 +37,7 @@
                 </x-tab.title>
                 <x-tab.title name="5" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-document-remove class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/> 
+                        <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/> 
                             Membership
                         </div>
                 </x-tab.title>
