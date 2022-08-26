@@ -16,44 +16,6 @@
                 />  
             </div>
         </div>
-        <h2 class="mt-4 mb-4 text-base font-semibold border-b-2 border-gray-300"> Supporting Documents </h2>
-        <div class="mt-4 bg-white rounded-md">
-            <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-                <x-form.input 
-                    label="Copy of Identity Card (Front and Back)" 
-                    name="" 
-                    id=""
-                    value="" 
-                    mandatory=""
-                    disable=""
-                    type="file"
-                    accept=""
-                    wire:model=""
-                />  
-                <x-form.input 
-                    label="Copy of Latest Salary Statement" 
-                    name="" 
-                    id=""
-                    value="" 
-                    mandatory=""
-                    disable=""
-                    type="file"
-                    accept=""
-                    wire:model=""
-                /> 
-                <x-form.input 
-                    label="Copy of Identity Card (Guarantor) (Front and Back)" 
-                    name="" 
-                    id=""
-                    value="" 
-                    mandatory=""
-                    disable=""
-                    type="file"
-                    accept=""
-                    wire:model=""
-                /> 
-            </div>
-        </div>
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
             <div class="flex items-center justify-center space-x-2">
                 <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-yellow-500 rounded-md focus:outline-none">
