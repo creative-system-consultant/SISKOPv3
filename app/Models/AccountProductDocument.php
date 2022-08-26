@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ref\RefProductDocuments;
 use Illuminate\Database\Eloquent\Model;
 
 class AccountProductDocument extends Model
@@ -14,5 +15,10 @@ class AccountProductDocument extends Model
     public function product()
     {
         return $this->belongsTo(AccountProduct::class,'product_id','id');
+    }
+
+    public function document()
+    {
+        return $this->belongsTo(RefProductDocuments::class,'type','code');
     }
 }

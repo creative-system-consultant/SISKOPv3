@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Page\Product;
+namespace App\Http\Livewire\Page\Admin\Product;
 
 use Livewire\Component;
 use App\Models\AccountProduct;
@@ -17,6 +17,6 @@ class ProductList extends Component
 
     public function render()
     {
-        return view('livewire.page.product.productlist')->extends('layouts.head');
+        return view('livewire.page.admin.product.productlist')->extends('layouts.head');
     }
 }

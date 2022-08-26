@@ -43,18 +43,18 @@
                                                     <div>
                                                         <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-identification -alt class="w-5 h-5 mr-2"/> Product Characteristic </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Duration of Approval</div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> 1 Day </div>
+                                                        <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Processing Fee Rates </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> RM 250.00 </div>
+                                                        <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Highest Payout </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> 5.00 % </div>
+                                                        <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Profit Rate </div>
                                                         <div class="font-bold text-red flex items-center justify-center space-x-2"> {{ $list->profit_rate }}% p.a. </div>
                                                     </div>
                                                     <div>
                                                         <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-clipboard-check -alt class="w-5 h-5 mr-2"/> Eligibility </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Minimum Wage Scale </div>
-                                                        <div class="font-bold text-red flex items-center justify-center space-x-2"> RM .00 </div>
+                                                        <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Employment Qualifications</div>
                                                         <div class="font-bold text-red flex items-center justify-center space-x-2">  </div>
                                                         <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Minimum Age Eligibility </div>
@@ -62,13 +62,6 @@
                                                     </div>
                                                     <div>
                                                         <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-document-text -alt class="w-5 h-5 mr-2"/> Supporting Documents Required </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Copy of Identity Card (Front and Back) </div>
-                                                        <div class="text-sm mt-2 flex items-center justify-center space-x-2"> Copy of Latest Salary Statement (with employer's confirmation stamp) </div>
-                                                        <div>
-                                                            <ul>
-                                                                <li>  </li>
-                                                              </ul>
-                                                        </div>
                                                     </div>
                                                     <div>
                                                         <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-dots-circle-horizontal -alt class="w-5 h-5 mr-2"/> Other Info </div>

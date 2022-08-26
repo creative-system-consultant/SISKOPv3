@@ -1,7 +1,7 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Create Product</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Edit Product</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <x-form.basic-form wire:submit.prevent="submit" class="p-4">
+        <x-form.basic-form wire:submit.prevent="submit('{{ $Product->id }}')" class="p-4">
             <div class="bg-white rounded-md">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>
             </div>
@@ -9,11 +9,11 @@
                 <x-form.input 
                     label="Product Name"
                     type="text" 
-                    name="name" 
+                    name="Product.name" 
                     value="" 
                     mandatory=""
                     disable=""
-                    wire:model="name"
+                    wire:model="Product.name"
                 />
 
             </div>
@@ -21,12 +21,12 @@
                 <x-form.dropdown 
                     label="Financing Type"
                     value=""
-                    name="type" 
-                    id=""
+                    name="Product.product_type" 
+                    id="Product.product_type"
                     mandatory=""
                     disable=""
                     default="yes"  
-                    wire:model="type"
+                    wire:model="Product.product_type"
                 >
                 @foreach ($producttype_id as $list)
                     <option value="{{ $list->id }}"> {{ $list->description }} </option>
@@ -36,38 +36,38 @@
                 <x-form.input-tag 
                     label="Profit Rate" 
                     type="text"
-                    name="rate" 
+                    name="Product.profit_rate" 
                     value=""
                     leftTag=""
                     rightTag="%"
                     mandatory=""
                     disable=""
-                    wire:model="rate"
+                    wire:model="Product.profit_rate"
                 />
             </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <x-form.input-tag 
                     label="Minimum Financing" 
                     type="text"
-                    name="minfin" 
+                    name="Product.amt_min" 
                     value=""
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
                     disable=""
-                    wire:model="minfin"
+                    wire:model="Product.amt_min"
                 />
 
                 <x-form.input-tag 
                     label="Maximum Financing" 
                     type="text"
-                    name="maxfin" 
+                    name="Product.amt_max" 
                     value=""
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
                     disable=""
-                    wire:model="maxfin"
+                    wire:model="Product.amt_max"
                 />
 
             </div>
@@ -75,82 +75,85 @@
                 <x-form.dropdown 
                     label="Minimum Financing Term"
                     value=""
-                    name="minterm" 
+                    name="Product.term_min" 
                     id=""
                     leftTag=""
                     rightTag="Year"
                     mandatory=""
                     disable=""
                     default="yes"  
-                    wire:model="minterm"
+                    wire:model="Product.term_min"
                 >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
                 </x-form.dropdown>
 
                 <x-form.dropdown 
                     label="Maximum Financing Term"
                     value=""
-                    name="maxterm" 
+                    name="Product.term_max" 
                     id=""
                     leftTag=""
                     rightTag="Year"
                     mandatory=""
                     disable=""
                     default="yes"  
-                    wire:model="maxterm"
+                    wire:model="Product.term_max"
                 >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
                 </x-form.dropdown>
 
             </div>
-            <div class="mb-4 mt-4 bg-white rounded-md">
-                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Form Information </h2>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of latest Salary Statement </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of Latest Salary Statement (Guarantor) </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of Identity Card (Front and Back) </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of Child's Identity Card </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of Identity Card (Guarantor) (Front and Back) </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Job Confirmation Letter from the Employer </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of Previous 1 Month Salary Statement </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Copy of Previous 2 Months Salary Statement </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> Marriage Certificate </label>
-                </div>
-                <div class="mb-4">
-                    <input type="radio" id="" name="" value="" class="" />
-                    <label for=""> University Admission Offer Letter</label>
-                </div>
-            </div>
-            </div>
+            @foreach ($refdocument as $key => $list)
+                <div class="mt-4 grid grid-cols-12 gap-6">
+                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
+                        <div class="flex items-center w-full">
+                            <label for="{{ $list->code }}" class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input 
+                                        type="checkbox" 
+                                        id="{{ $list->code }}" 
+                                        class="sr-only"
+                                        @php
+                                            $item = $Product->documents()->where('type', $list->code)->first();
+                                        @endphp
+                                        @if ( $item != NULL)
+                                            @if ($item->status == 1)
+                                            checked
+                                            @else
+                                            @endif
+                                        @else
+                                        @endif
+                                        wire:click="enableDoc('{{ $list->code }}','{{ $list->description }}')"
+                                    >
+                                    <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                    <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
+                        {{ $list->description }}
+                    </div>
+                </div> 
+            @endforeach
             <div class="mt-4 bg-white rounded-md">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Brochure </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
@@ -167,15 +170,31 @@
                     />  
                     <div class="mt-4 mb-8">
                         <div class="flex items-center space-x-4">
+                            {{ dd(asset('storage/'.$brochure_file->filepath)) }}
+
                             <img 
                             class="w-auto h-32 p-2 rounded-xl ring-2 ring-gray-200 "
                             @if($brochure)
-                            src="{{ $brochure->temporaryUrl() }}"
+                                src="{{ $brochure->temporaryUrl() }}"
+                            @elseif ($brochure_file != NULL)
+                                src="{{ asset('storage/'.$brochure_file->filepath) }}"
                             @endif
                             alt="Brochure"
                             > 
                         </div>
                     </div>
+                    {{-- <div>
+                        @if (isset($accproduct->files) != NULL)
+                        @forelse ($accproduct->files as $brochure)
+                            <a href="{{ asset('storage/'.$brochure->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
+                                <x-heroicon-o-document class="w-5 h-5 mr-2"/>
+                                Show
+                            </a>
+                        @empty
+                            <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2> 
+                        @endforelse
+                    @endif
+                    </div> --}}
                 </div>
             </div>
             <div class="mt-4 bg-white rounded-md">
@@ -197,7 +216,7 @@
                             <img 
                             class="w-auto h-32 p-2 rounded-xl ring-2 ring-gray-200 "
                             @if($payment_table)
-                            src="{{ $payment_table->temporaryUrl() }}"
+                                src="{{ $payment_table->temporaryUrl() }}"
                             @endif
                             alt="Payment Table"
                             > 
@@ -210,7 +229,7 @@
                     Cancel
                 </a>
                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                    Create
+                    Update
                 </button>
             </div>
         </x-form.basic-form>
