@@ -13,7 +13,7 @@ class Customer extends Model implements Auditable
 
     protected $table   = "CIF.customers";
     protected $guarded = ['uuid'];
-    protected $dates   = ['birthdate','created_at','deleted_at','updated_at'];
+    protected $dates   = ['created_at','deleted_at','updated_at'];
 
     public function getCoopIdAttribute()
     {
@@ -27,7 +27,7 @@ class Customer extends Model implements Auditable
 
     public function family()
     {
-        return $this->hasMany(CustFamily::class,'id','family_id');
+        return $this->hasMany(CustFamily::class,'cust_id');
     }
     
     public function specialAid()
@@ -69,5 +69,15 @@ class Customer extends Model implements Auditable
     {
         return $this->hasOne(User::class,'icno', 'icno');
     }
+
+    public function membership()
+    {
+        return $this->hasOne(ApplyMembership::class,'cust_id');
+    }
+
+    // public function Introducer()
+    // {
+    //     return $this->morphMany(UserGroup::class,'grouping');
+    // }
 
 }

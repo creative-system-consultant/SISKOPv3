@@ -62,16 +62,16 @@
                     <x-sidebar.nav-item title="List of Application" route="{{route('application.list')}}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
+                    <x-sidebar.nav-item title="Apply Membership" route="{{route('membership.apply')}}" uri="">
+                        <x-heroicon-o-document-text class="w-7 h-7" />
+                    </x-sidebar.nav-item>
+                    <x-sidebar.nav-item title="Admin Membership" route="{{route('membership.admin')}}" uri="">
+                        <x-heroicon-o-document-text class="w-7 h-7" />
+                    </x-sidebar.nav-item>
 
                     <x-sidebar.nav-item title="Customer Search" route="{{route('customer.search')}}" uri="searchcustomer">
                         <x-heroicon-o-search-circle class="w-7 h-7" />
-                    </x-sidebar.nav-item>
-                    <x-sidebar.nav-item title="Register / Update Product" route="{{route('product.list')}}" uri="product">
-                        <x-heroicon-o-briefcase class="w-7 h-7" />
-                    </x-sidebar.nav-item>
-                    <x-sidebar.nav-item title="Membership Maintenance" route="{{route('membership.admin')}}" uri="membership">
-                        <x-heroicon-o-search-circle class="w-7 h-7" />                        
-                    </x-sidebar.nav-item>
+                    </x-sidebar.nav-item>              
 
                     <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
                         <x-slot name="icon">
@@ -85,6 +85,11 @@
                         <x-sidebar.dropdown-item title="USER ROLE" href="{{ route('user.rolegroup') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-user-group class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item  title="Register / Update Product" route="{{route('product.list')}}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-briefcase class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                     </x-sidebar.dropdown-nav-item>

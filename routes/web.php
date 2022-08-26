@@ -137,20 +137,29 @@ Route::middleware('auth')->group(function () {
 
 
     //------------------------------- Applications -------------------------------//
-    //Applications > Special Aid
-    Route::get('/applySpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
+    Route::prefix('apply')->group(function(){
+        //Applications > Special Aid
+        Route::get('/SpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
 
-    //Applications > Add Share
-    Route::get('/applyShare', Apply_Share::class)->name('share.apply');
+        //Applications > Add Share
+        Route::get('/Share', Apply_Share::class)->name('share.apply');
 
-    //Applications > Sell/Exchange Share
-    Route::get('/applySellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
+        //Applications > Sell/Exchange Share
+        Route::get('/SellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
 
-    //Application > Add Contribution
-    Route::get('/applyContribution', Apply_Contribution::class)->name('contribution.apply');
+        //Application > Add Contribution
+        Route::get('/Contribution', Apply_Contribution::class)->name('contribution.apply');
 
-    //Application > W/D Contribution
-    Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
+        //Application > W/D Contribution
+        Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
+
+        //Financing > Apply
+        //Route::get('/Financing', FinancingList::class)->name('financing.list');
+        Route::get('/Financing/{product_id}', Apply_Financing::class)->name('financing.apply');
+
+        //membership > apply
+        Route::get('membership', MembershipApply::class)->name('membership.apply');
+    });
     //------------------------------- End Applications ---------------------------//
 
 
@@ -164,7 +173,6 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('membership')->group(function(){
             Route::get('/', MembershipAdmin::class)->name('membership.admin');
-            Route::get('apply', MembershipApply::class)->name('membership.apply');
         });
 
         Route::prefix('maintenance')->group(function(){

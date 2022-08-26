@@ -19,4 +19,14 @@ class ApplyMembership extends Model implements Auditable
     {
         return $this->morphMany(FileMaster::class,'fileable');
     }
+
+    public function introducers()
+    {
+        return $this->morphMany(introducer::class,'introduce');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'cust_id','id');
+    }
 }
