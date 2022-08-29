@@ -59,9 +59,9 @@ use App\Http\Livewire\Page\Application\ApplicationList\Share;
 use App\Http\Livewire\Page\Application\ApplicationList\SpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\Withdrawal_Contribution;
 use App\Http\Livewire\Page\Application\ApplySpecialAid\Apply_SpecialAid;
-use App\Http\Livewire\Page\Product\ProductList;
-use App\Http\Livewire\Page\Product\ProductCreate;
-use App\Http\Livewire\Page\Product\ProductEdit;
+use App\Http\Livewire\Page\Admin\Product\ProductList;
+use App\Http\Livewire\Page\Admin\Product\ProductCreate;
+use App\Http\Livewire\Page\Admin\Product\ProductEdit;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
@@ -93,7 +93,8 @@ use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalCon
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionCommittee;
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionMaker;
 use App\Http\Livewire\Page\Notification\notification;
-use App\Http\Livewire\Page\Financing\Apply_Financing;
+use App\Http\Livewire\Page\Application\ApplyFinancing\Apply_Financing;
+use App\Http\Livewire\Page\Application\ApplyFinancing\Financing_List;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,8 +155,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
 
         //Financing > Apply
-        //Route::get('/Financing', FinancingList::class)->name('financing.list');
+        Route::get('/Financing/List', Financing_List::class)->name('financing.list');
         Route::get('/Financing/{product_id}', Apply_Financing::class)->name('financing.apply');
+        // Route::get('/Financing}', Apply_Financing::class)->name('financing.apply');
 
         //membership > apply
         Route::get('membership', MembershipApply::class)->name('membership.apply');
@@ -189,6 +191,13 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('CustCoop')->group(function(){
                 Route::get('/', CustomerCoop::class)->name('coop.cust');
+            });
+
+            //Product > Create/Edit
+            Route::prefix('product')->group(function(){
+                Route::get('/', ProductList::class)->name('product.list');
+                Route::get('create', ProductCreate::class)->name('product.create');
+                Route::get('edit/{id}', ProductEdit::class)->name('product.edit');
             });
 
             //Admin > Maintenance > sample
@@ -270,13 +279,7 @@ Route::middleware('auth')->group(function () {
     });
     //----------------------- end Admin -------------------------------------//
 
-    //Product > Create
-
-    Route::prefix('product')->group(function(){
-        Route::get('/', ProductList::class)->name('product.list');
-        Route::get('create', ProductCreate::class)->name('product.create');
-        Route::get('edit/{id}', ProductEdit::class)->name('product.edit');
-    });
+    
 
     //----------------------- Executive -------------------------------------//
     Route::prefix('exec')->group(function(){
@@ -345,10 +348,6 @@ Route::middleware('auth')->group(function () {
 
     });
     //----------------------- End Executive --------------------------------//
-
-    //Financing > Apply
-
-    Route::get('/applyFinancing', Apply_Financing::class)->name('financing.apply');
 
     //----------------------- Reporting ------------------------------------//
     //Report > Sample

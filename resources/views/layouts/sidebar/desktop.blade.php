@@ -57,6 +57,11 @@
                                     <x-heroicon-o-document-remove class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Financing" href="{{ route('financing.list') }}" uri="financingList">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-scale class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item> 
                     <x-sidebar.nav-item title="List of Application" route="{{route('application.list')}}" uri="applicationList">

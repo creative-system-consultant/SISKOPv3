@@ -37,6 +37,12 @@
                 </x-tab.title>
                 <x-tab.title name="5" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
+                        <x-heroicon-o-credit-card class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/> 
+                            Financing
+                        </div>
+                </x-tab.title>
+                <x-tab.title name="6" livewire="">
+                    <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/> 
                             Membership
                         </div>
@@ -59,6 +65,9 @@
                     <livewire:page.application.application-list.withdrawal_-contribution>
                 </x-tab.content>
                 <x-tab.content name="5">
+                    <livewire:page.application.application-list.financing>
+                </x-tab.content>
+                <x-tab.content name="6">
                     <livewire:page.application.application-list.membership>
                 </x-tab.content>
             </div>
