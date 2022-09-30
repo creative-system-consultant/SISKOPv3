@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Page\Admin\Role;
 
-use App\Models\UserRoleGroup;
+use App\Models\CoopRoleGroup;
 use Livewire\Component;
 
 class RoleGroupManagement extends Component
@@ -14,7 +14,7 @@ class RoleGroupManagement extends Component
     protected $validationAttributes = [];
 
     public function mount(){
-        $this->rolegroup = UserRoleGroup::all();
+        $this->rolegroup = CoopRoleGroup::all();
     }
 
     public function submit(){

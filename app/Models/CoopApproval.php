@@ -6,14 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class UserRoleGroup extends Model implements Auditable
+class CoopApproval extends Model implements Auditable
 {
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table = 'SISKOP.COOP_ROLE_GROUP';
+    protected $table   = 'siskop.coop_approval';
     protected $guarded = [];
-    protected $appends = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
     public function coop()
@@ -21,18 +20,13 @@ class UserRoleGroup extends Model implements Auditable
         return $this->belongsTo(Coop::class,'coop_id');
     }
 
-    public function users()
+    public function approvals()
     {
-        return $this->morphMany(UserGroup::class,'grouping');
+        return $this->hasMany(CoopApprovalRole::class,'approval_id');
     }
 
     public function getids()
     {
-        return explode(',',$this->users()->select('user_id')->get()->implode('user_id',','));
-    }
-
-    public function status()
-    {
-        if ($this->status == 1){ return 'ACTIVE'; } else { return 'INACTIVE'; };
+        return explode(',',$this->approvals()->select('role_id')->get()->implode('role_id',','));
     }
 }

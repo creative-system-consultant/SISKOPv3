@@ -175,6 +175,10 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('membership')->group(function(){
             Route::get('/', MembershipAdmin::class)->name('membership.admin');
+
+        Route::prefix('Approval')->group(function(){
+            //Route::get('admin', ApprovalAdmin::class)->name('admin.approval.admin');
+            Route::get('/{approval}', ApprovalAdmin::class);
         });
 
         Route::prefix('maintenance')->group(function(){

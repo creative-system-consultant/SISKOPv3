@@ -34,4 +34,9 @@ class Share extends Model implements Auditable
     {
         return $this->belongsTo(Customer::class, 'exc_cust_id', 'id');
     }
+
+    public function approver()
+    {
+        return $this->hasMany(ShareApprovalRole::class,'share_id');
+    }
 }

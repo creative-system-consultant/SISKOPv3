@@ -87,6 +87,21 @@
                                 <x-heroicon-o-library class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL ADD SHARE" href="{{ url('Admin/Approval/Share') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL SELL SHARE" href="{{ url('Admin/Approval/SellShare') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL ADD CONTRIBUTION" href="{{ url('Admin/Approval/Contribution') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="USER ROLE" href="{{ route('user.rolegroup') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-user-group class="w-7 h-7" />

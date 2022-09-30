@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Page\Admin\Role;
 
 use App\Models\User;
 use App\Models\UserRole;
-use App\Models\UserRoleGroup;
+use App\Models\CoopRoleGroup;
 use Livewire\Component;
 
 class RoleGroupCreate extends Component
@@ -18,7 +18,7 @@ class RoleGroupCreate extends Component
     public $search;
     public $searchResult = [];
     public $selected;
-    public UserRoleGroup $group;
+    public CoopRoleGroup $group;
 
     protected $rules    = [
         'group.name'            => 'required|min:5|max:50',
@@ -36,11 +36,11 @@ class RoleGroupCreate extends Component
         $this->user = Auth()->user();
         if ($uuid != NULL){
             $this->page  = 'EDIT';
-            $this->group = UserRoleGroup::where('uuid', $uuid)->firstOrFail();
+            $this->group = CoopRoleGroup::where('uuid', $uuid)->firstOrFail();
             $this->ids   = $this->group->getids();
             $this->users = User::whereIn('id', $this->ids)->get();
         } else {
-            $this->group          = new UserRoleGroup;
+            $this->group          = new CoopRoleGroup;
             $this->group->coop_id = $this->user->coop_id;
         }
         $this->roles = UserRole::all();
