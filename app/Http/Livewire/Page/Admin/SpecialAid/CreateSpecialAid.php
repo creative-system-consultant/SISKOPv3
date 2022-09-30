@@ -74,12 +74,17 @@ class CreateSpecialAid extends Component
 
     public function remField($uuid, $index)
     {
-        $specialAid = SpecialAid::where('uuid', $uuid)->first();
+        if($uuid != NULL){
+            $specialAid = SpecialAid::where('uuid', $uuid)->first();
 
-        $Fdelete = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
-        $Fdelete->delete();
-
-        return redirect()->route('special_aid.edit', $uuid);
+            $Fdelete = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
+            $Fdelete->delete();
+        }
+        unset($this->Fuuid[$index]);
+        unset($this->Fname[$index]);
+        unset($this->Flabel[$index]);
+        unset($this->Fstatus[$index]);
+        unset($this->Frequired[$index]);
     }
 
     public function fieldStatus($uuid, $index)

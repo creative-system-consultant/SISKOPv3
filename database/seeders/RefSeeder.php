@@ -65,7 +65,6 @@ class RefSeeder extends Seeder
         $gender = [
             ['description' => 'MALE',   'code' => 'M', 'coop_id' => '1'],
             ['description' => 'FEMALE', 'code' => 'F', 'coop_id' => '1'],
-            ['description' => 'OTHERS', 'code' => 'L', 'coop_id' => '1'],
         ];
         DB::table('ref.gender')->insert($gender);
 

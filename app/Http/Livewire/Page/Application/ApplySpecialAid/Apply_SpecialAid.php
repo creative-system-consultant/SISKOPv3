@@ -26,7 +26,7 @@ class Apply_SpecialAid extends Component
             session()->flash('nameError', 'Name is required'); 
             return back();
         }
-        
+
         if(($this->apply_amt[$index] ?? NULL) == NULL) {
             session()->flash('errors', 'Apply Amount is required');
             return back();
@@ -46,16 +46,16 @@ class Apply_SpecialAid extends Component
                 'apply_amt'         => $this->apply_amt[$index],  
                 'approved_amt'      => NULL,
                 'created_by'        => strtoupper($customer->name)
-            ]);                                        
+            ]);
         }
 
         foreach ($specialAids->field  as $key => $value) {
             if ($value->required == '1') {         
-                if (($this->FspecialAid[$key] ?? NULL) == NULL) {                    
+                if (($this->FspecialAid[$key] ?? NULL) == NULL) {
                     session()->flash('warning', 'This field is required');
                     return back();
                 }
-                else {                               
+                else {
                     session()->forget('warning');
 
                     $vals = $this->FspecialAid[$key];
@@ -70,19 +70,19 @@ class Apply_SpecialAid extends Component
                         'type'       => $value->type,
                         'value'      => $vals,
                         'created_by' => strtoupper($customer->name)
-                    ]);                                                                   
-                }                            
-            }      
-            elseif($value->required == '0') {                
+                    ]);
+                }
+            }
+            elseif($value->required == '0') {
                 $applySpecialAid->field()->create([
                     'name'       => $value->name ?? NULL,
                     'label'      => $value->label ?? NULL,
                     'type'       => $value->type ?? NULL,
                     'value'      => $this->FspecialAid[$key] ??= NULL,
                     'created_by' => strtoupper($customer->name) ?? NULL
-                ]);                                
+                ]);
             }
-        }    
+        }
 
         $applySpecialAid->notification()->create([
             'title'       => 'Special Aid is being processed',
@@ -96,12 +96,12 @@ class Apply_SpecialAid extends Component
         session()->flash('title');
 
         return redirect()->route('special-aid.apply');
-        
+
     }
 
     public function mount()
     {
-        $user = auth()->user();    
+        $user = auth()->user();
         $this->specialAids = SpecialAid::where([['coop_id', $user->coop_id], ['status', 1]])->get();
         
         foreach ($this->specialAids as $index => $specialAid) {

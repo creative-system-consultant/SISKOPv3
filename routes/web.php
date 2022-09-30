@@ -41,6 +41,7 @@ use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\ComponentDoc;
+use App\Http\Livewire\Page\Admin\Approval\ApprovalAdmin;
 use App\Http\Livewire\Page\Admin\coop\coopAdmin;
 use App\Http\Livewire\Page\Admin\Coop\CoopCreate;
 use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
@@ -173,8 +174,10 @@ Route::middleware('auth')->group(function () {
             Route::get('CreateGroup', RoleGroupCreate::class)->name('user.creategroup');
             Route::get('EditGroup/{uuid}', RoleGroupCreate::class)->name('user.editgroup');
         });
-        Route::prefix('membership')->group(function(){
+        Route::prefix('Membership')->group(function(){
             Route::get('/', MembershipAdmin::class)->name('membership.admin');
+            Route::get('Apply', MembershipApply::class)->name('membership.apply');
+        });
 
         Route::prefix('Approval')->group(function(){
             //Route::get('admin', ApprovalAdmin::class)->name('admin.approval.admin');

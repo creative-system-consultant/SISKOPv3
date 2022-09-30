@@ -46,19 +46,7 @@ class EditCustomer extends Component
 
     public function submit()
     {
-        $this->Cust->update([
-            'name'                => $this->Cust['name'],
-            'icno'                => $this->Cust['icno'],
-            'birthdate'           => $this->Cust['birthdate'],
-            'birthplace'          => $this->Cust['birthplace'],
-            'title_id'            => $this->Cust['title_id'],
-            'education_id'        => $this->Cust['education_id'],
-            'gender_id'           => $this->Cust['gender_id'],
-            'marital_id'          => $this->Cust['marital_id'],
-            'race_id'             => $this->Cust['race_id'],
-            'language_id'         => $this->Cust['language_id'],
-            'country_id'          => $this->Cust['country_id'],
-        ]);
+        $this->Cust->save();
 
         foreach ($this->Fname as $key => $value) {
             $field = CustCustomField::updateOrCreate([
