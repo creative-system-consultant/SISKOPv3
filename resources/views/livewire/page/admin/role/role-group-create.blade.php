@@ -1,7 +1,7 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">ADMIN > USER > ROLE GROUP > {{ $page }}</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <x-general.header-title title="Create New Role Group" route="{{ route('user.rolegroup') }}"/>
+        <x-general.header-title title="{{ $page }} Role Group" route="{{ route('user.rolegroup') }}"/>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
             <h2 class="mt-4 mb-6 text-base font-semibold border-b-2 border-gray-300">Group Details</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
@@ -73,15 +73,16 @@
                     </x-form.dropdown>
                 </div>
                 <div class="col-span-1 sm:col-span-1 md:col-span-4 lg:col-span-4 xl:col-span-8">
-                    <x-heroicon-s-question-mark-circle 
-                        class="w-6 h-6 mt-6 text-primary-800 tooltipbtn dark:text-white" 
-                        data-title="Your-Title" 
+                    <x-heroicon-o-question-mark-circle 
+                        class="w-6 h-6 mt-6 text-gray-700 tooltipbtn dark:text-white" 
+                        data-title="MAKER <br> CHECKER <br> COMMITTEE <br> APPROVER" 
                         data-placement="right"
                     />
                 </div>
             </div>
+            <br>
 
-            <h2 class="mt-6 mb-6 text-base font-semibold border-b-2 border-gray-300">Users</h2>
+            <h2 class="mb-6 mt-6 text-base font-semibold border-b-2 border-gray-300">Group Members</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
                     <x-form.input 
@@ -92,12 +93,12 @@
                         disable=""
                         type="text"
                         wire:keyup="searchUser"
-                        wire:model.debounce.1000ms="search"
+                        wire:model.debounce.1500ms="search"
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
                     <x-form.dropdown 
-                        label="USERS (displays only 5)"
+                        label="USERS (displaying 5, refine search)"
                         value=""
                         name="selected" 
                         id=""
@@ -115,9 +116,11 @@
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
                     <div class="p-6">
+                        @if($selected != '')
                         <button type="button" wire:click="add" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                             ADD
                         </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -162,6 +165,13 @@
                     </button>
                 </div>
             </div>
+            @forelse ($this->getErrorBag() as $key => $error)
+            <div x-show="error">
+                <x-toaster.error title="{{ $key }}" message="{{ $error}}" />
+            </div>
+            @empty
+                
+            @endforelse
         </x-form.basic-form>
     </x-general.card>
 </div>

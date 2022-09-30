@@ -50,6 +50,13 @@ class RoleGroupCreate extends Component
     {
         if(strlen($this->search) > 2 ){
             $this->searchResult = User::where('name', 'like', '%'.$this->search.'%')->select('id','name')->orderBy('name')->take(5)->get();
+            if($this->searchResult->count() == 1 ){
+                $this->selected = $this->searchResult->first()->id;
+            } else {
+                $this->selected = '';
+            }
+        } else {
+            $this->searchResult = [];
             $this->selected = '';
         }
     }
@@ -58,13 +65,19 @@ class RoleGroupCreate extends Component
     {
         $this->ids   = [...$this->ids, $this->selected ];
         $this->users = User::whereIn('id', $this->ids)->get();
+        $this->idrem = array_diff($this->idrem, [$this->selected]);
     }
 
     public function deb()
     {
-        dump($this->ids, $this->users);
-        dump($this->idrem);
-        dump($this->group->users);
+        dump([
+            'id'    => $this->ids, 
+            'user'  => $this->users, 
+            'selected' => $this->selected,
+            'idrem' => $this->idrem,
+            'users' => $this->group->users,
+            'errorbag' => $this->getErrorBag()
+        ]);
     }
 
     public function rem($id)
@@ -78,6 +91,14 @@ class RoleGroupCreate extends Component
     {
         $this->group->name = strtoupper($this->group->name);
         $this->validate();
+        $this->ids = array_filter($this->ids);
+
+        if($this->ids == []){
+            if ($this->group->status == 1){
+                $this->addError('group.status', 'Can\'t set active without any members');
+                return back();
+            }
+        }
 
         $this->group->save();
         foreach ($this->ids as $key => $value) {
@@ -86,7 +107,7 @@ class RoleGroupCreate extends Component
             ]);
         }
 
-        $this->group->users()->whereIn('user_id', $this->idrem)->delete();
+        $this->group->users()->whereIn('user_id', $this->idrem)->delete(); //forceDelete()
 
         session()->flash('message', 'Success');
         session()->flash('success');

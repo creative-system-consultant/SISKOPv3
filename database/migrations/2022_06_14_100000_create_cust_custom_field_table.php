@@ -13,16 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('siskop.coop_approval_role', function (Blueprint $table) {
+        Schema::create('SISKOP.CUST_CUSTOM_FIELD', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('coop_id');
-            $table->bigInteger('role_id');
-            $table->bigInteger('approval_id');
+            $table->morphs('fieldable');
 
-            $table->string('name',50)->nullable();
-            $table->integer('order')->default('1');
+            $table->string('name')->nullable();
+            $table->string('label')->nullable();
             $table->string('status',1)->default('1');
+            $table->string('type')->default('string');
+
+            $table->string('string')->nullable();
+            $table->unsignedDecimal('decimal',10,2)->nullable();
+            $table->unsignedDecimal('decimal4',10,4)->nullable();
+            $table->bigInteger('bigint')->nullable();
+            $table->date('date')->nullable();
+            $table->dateTime('datetime')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -40,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('siskop.coop_approval_role');
+        Schema::dropIfExists('SISKOP.CUST_CUSTOM_FIELD');
     }
 };

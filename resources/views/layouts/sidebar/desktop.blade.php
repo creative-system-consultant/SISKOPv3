@@ -32,6 +32,11 @@
                             <x-heroicon-o-document-search class="w-7 h-7" />
                         </x-slot>
                         <div class="leading-5">
+                            <x-sidebar.dropdown-item title="Apply Membership" href="{{route('membership.apply')}}" uri="">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-document-add class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
                                 <x-slot name="icon">
                                     <x-heroicon-o-archive class="w-7 h-7" />
@@ -67,13 +72,6 @@
                     <x-sidebar.nav-item title="List of Application" route="{{route('application.list')}}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
-                    <x-sidebar.nav-item title="Apply Membership" route="{{route('membership.apply')}}" uri="">
-                        <x-heroicon-o-document-text class="w-7 h-7" />
-                    </x-sidebar.nav-item>
-                    <x-sidebar.nav-item title="Admin Membership" route="{{route('membership.admin')}}" uri="">
-                        <x-heroicon-o-document-text class="w-7 h-7" />
-                    </x-sidebar.nav-item>
-
                     <x-sidebar.nav-item title="Customer Search" route="{{route('customer.search')}}" uri="searchcustomer">
                         <x-heroicon-o-search-circle class="w-7 h-7" />
                     </x-sidebar.nav-item>
@@ -91,6 +89,11 @@
                         <x-sidebar.dropdown-item title="COOP" href="{{ route('coop.list') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-library class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL FINANCING" href="{{ url('Admin/Approval/Financing') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="APPROVAL ADD SHARE" href="{{ url('Admin/Approval/Share') }}" uri="">
@@ -113,9 +116,14 @@
                                 <x-heroicon-o-user-group class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item  title="Register / Update Product" route="{{route('product.list')}}" uri="">
+                        <x-sidebar.dropdown-item  title="Register / Update Product" href="{{route('product.list')}}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-briefcase class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Admin Membership" href="{{route('membership.admin')}}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-text class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                     </x-sidebar.dropdown-nav-item>

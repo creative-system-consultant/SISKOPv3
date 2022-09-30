@@ -17,7 +17,15 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
+            $table->string('mbr_no')->nullable();
+            $table->bigInteger('agent_id')->nullable();
+            $table->bigInteger('cust_id');
             $table->bigInteger('coop_id');
+            $table->bigInteger('flag')->default(0);
+            $table->bigInteger('step')->default(1);
+
+            $table->bigInteger('introducer_id')->nullable();
+            $table->string('introducer_mbr_no')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
