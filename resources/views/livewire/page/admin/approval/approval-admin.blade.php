@@ -7,7 +7,6 @@
                     <x-table.table>
                         <x-slot name="thead">
                             <x-table.table-header class="text-left" value="Order" sort="" />
-                            <x-table.table-header class="text-left" value="Custom Name" sort="" />
                             <x-table.table-header class="text-left" value="Group" sort="" />
                             <x-table.table-header class="text-left" value="Action" sort="" />
                         </x-slot>
@@ -18,19 +17,10 @@
                                     {{ $loop->iteration }}
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
-                                    <x-form.input 
-                                        label="" 
-                                        name="lists.{{ $key }}.name" 
-                                        value="" 
-                                        mandatory=""
-                                        disable=""
-                                        type="text"
-                                        wire:model.defer="lists.{{ $key }}.name"
-                                        wire:change="save"
-                                    />
+                                    {{ $list->role->name }}
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
-                                    {{ $list->role->name }}
+                                    {{ $list->role->role->name }}
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
                                     <div class="flex items-center">
@@ -65,10 +55,10 @@
                                 <x-table.table-body colspan="" class="bg-gray-50 text-left">
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="bg-gray-50 text-left">
-                                    <x-form.input 
-                                        label="" 
-                                        name="custom" 
-                                        value="" 
+                                    <x-form.input
+                                        label=""
+                                        name="custom"
+                                        value=""
                                         mandatory=""
                                         disable=""
                                         type="text"
@@ -76,20 +66,20 @@
                                     />
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="bg-gray-50 text-left">
-                                    <x-form.dropdown 
+                                    <x-form.dropdown
                                         label=""
                                         value=""
-                                        name="selected" 
+                                        name="selected"
                                         id=""
                                         mandatory=""
                                         disable=""
-                                        default="yes" 
-                                        wire:model.defer="selected" 
+                                        default="yes"
+                                        wire:model.defer="selected"
                                     >
                                     @forelse ($coopGroup as $list)
                                         <option value="{{ $list->id }}">{{ $list->name }}</option>
                                     @empty
-                                        
+                                    {{-- if empty --}}
                                     @endforelse
                                     </x-form.dropdown>
                                 </x-table.table-body>
@@ -108,12 +98,12 @@
                     <p>All changes are saved automatically</p>
                 </div>
                 <div class="flex items-center justify-center space-x-2">
-                    <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 border-2 rounded-md focus:outline-non">
+                    <a href="{{ url()->previous() }}" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 border-2 rounded-md focus:outline-non">
                         Back
                     </a>
-                    <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    {{-- <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         debug
-                    </button>
+                    </button> --}}
                 </div>
             </div>
             <div wire:loading>

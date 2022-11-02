@@ -15,7 +15,7 @@ class SpecialAidApproval extends Component
     {
         session()->flash('message', 'Special Aid application has been successfully approved');
         session()->flash('success');
-        session()->flash('title');  
+        session()->flash('title');
 
         return redirect()->route('application.list');
     }
@@ -25,10 +25,10 @@ class SpecialAidApproval extends Component
         return redirect()->route('specialAid.committee', $this->checker->uuid);
     }
 
-    public function mount($uuid)    
-    { 
+    public function mount($uuid)
+    {
         $this->approve = ApplySpecialAid::where('uuid', $uuid)->with('customer')->first();
-              
+
         $this->type = SpecialAidType::where('id', $this->approve->special_aid_id)->first();
     }
 

@@ -21,7 +21,7 @@ class SearchCustomer extends Component
     {
         $this->validate([
             'searchby'   => ['required'],
-            'search'     => ['required', 'string'], 
+            'search'     => ['required', 'string'],
         ]);
 
         if ($this->searchby == 'name'){

@@ -6,8 +6,7 @@ use Livewire\Component;
 use App\Models\AccountProduct;
 
 class Financing_List extends Component
-{   
-    
+{
     public $Product;
 
     public function mount()

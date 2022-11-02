@@ -5,14 +5,14 @@
             hover:text-primary-800
             @if(Route::current()->uri == $uri)
             text-primary-800 rounded-lg dark:text-primary-600
-            @else 
+            @else
             text-gray-600 dark:text-white dark:hover:text-primary-600
             @endif"
-            href="{{$route}}">
+            href="{{ $route }}">
             <div class="px-2 py-2 bg-white rounded-md shadow-md dark:bg-gray-900">
-                {{$slot}}
+                {{ $slot }}
             </div>
-            <span class="ml-4 uppercase">{{$title}}</span>
+            <span class="ml-4 uppercase">{{ $title }}</span>
         </a>
     </div>
 </li>

@@ -59,7 +59,7 @@ class MembershipApply extends Component
     public $birthdate;
 
     //Need protected $listerners to run the Livewire.emit event
-    protected $listeners = ['submit']; 
+    protected $listeners = ['submit'];
 
     protected $rules = [
         'Cust.name'                          => 'required',
@@ -112,7 +112,7 @@ class MembershipApply extends Component
         'applymember.total_fee'              => 'required|numeric',
 
     ];
-        
+
     public function next()
     {
         //dd($this->Cust->marital_id);
@@ -132,9 +132,9 @@ class MembershipApply extends Component
         if ($this->numpage < 5){
             $this->numpage++;
         }
-       
+
     }
-        
+
     public function back()
     {
         if ($this->numpage > 0){
@@ -174,7 +174,7 @@ class MembershipApply extends Component
     {
         $tempGender  = substr($this->Cust->icno, 0, 12);
         $this->Cust->gender_id;
-     
+
         if ($tempGender % 2 == 0) {
             $this->Cust->gender_id == '2';
         } else {
@@ -188,11 +188,11 @@ class MembershipApply extends Component
     //     $this->Cust->marital_id;
     //     $this->Cust->relationship_id;
     //     $this->Cust->gender_id;
-   
+
     //     if ($this->Cust->marital_id == 2 && $this->Cust->gender_id == 1)    //married and male
     //     {
     //            $this->Cust->relationship_id = 2;
-    //     } 
+    //     }
     //     elseif($this->Cust->marital_id == 2 && $this->Cust->gender_id == 2) //married and female
     //     {
     //         $this->Cust->relationship_id = 1;
@@ -212,7 +212,7 @@ class MembershipApply extends Component
         $this->CustAddress       = $this->Cust->Address()->firstOrCreate();
         $this->Family            = CustFamily::firstOrCreate(['cust_id' => $this->Cust->id, 'relationship_id' => 5]);
         $this->FamilyAddress     = $this->Family->Address()->firstOrCreate();
-        
+
         if ($this->Family->family_id != NULL){
             $this->CustFamily = Customer::find($this->Family->family_id);
         } else {
@@ -228,10 +228,10 @@ class MembershipApply extends Component
             $this->search        = $this->introducer->icno;
         }
         $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'coop_id' => $user->coop_id],);
-        
+
         $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id],);
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate();
-        
+
         $this->title_id          = RefCustTitle::all();
         $this->education_id      = RefEducation::all();
         $this->gender_id         = RefGender::where('id', $this->Cust->gender_id)->get();
@@ -261,7 +261,7 @@ class MembershipApply extends Component
         $customers = Customer::where('icno', $user->icno)->first();
 
         if($this->online_file){
-            $filepath = 'Files/'.$customers->id.'/membership/IC_Photo'.'.'.$this->online_file->extension(); 
+            $filepath = 'Files/'.$customers->id.'/membership/IC_Photo'.'.'.$this->online_file->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership/IC//',$this->online_file, 'IC_Photo'.'.'.$this->online_file->extension());
 
@@ -272,9 +272,9 @@ class MembershipApply extends Component
                 'filepath' => $filepath,
             ]);
         };
-        
+
         if($this->online_file2){
-            $filepath = 'Files/'.$customers->id.'/membership/WorkerCard'.'.'.$this->online_file2->extension(); 
+            $filepath = 'Files/'.$customers->id.'/membership/WorkerCard'.'.'.$this->online_file2->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership/WorkerCard//',$this->online_file2, 'WorkerCard'.'.'.$this->online_file2->extension());
 
@@ -287,7 +287,7 @@ class MembershipApply extends Component
         };
 
         if($this->online_file3){
-            $filepath = 'Files/'.$customers->id.'/membership/Paycheck'.'.'.$this->online_file3->extension(); 
+            $filepath = 'Files/'.$customers->id.'/membership/Paycheck'.'.'.$this->online_file3->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership/Paycheck//',$this->online_file3, 'Paycheck'.'.'.$this->online_file3->extension());
 
@@ -300,7 +300,7 @@ class MembershipApply extends Component
         };
 
         if($this->online_file4){
-            $filepath = 'Files/'.$customers->id.'/membership/LastMonthPaycheck'.'.'.$this->online_file4->extension(); 
+            $filepath = 'Files/'.$customers->id.'/membership/LastMonthPaycheck'.'.'.$this->online_file4->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership/LastMonthPaycheck//',$this->online_file4, 'LastMonthPaycheck'.'.'.$this->online_file4->extension());
 
@@ -328,8 +328,8 @@ class MembershipApply extends Component
         $this->validate();
         $this->fileupload();
 
-        
- 
+
+
         $this->Cust->save();
         $this->Employer->save();
         if ($this->CustFamily->id != NULL){
@@ -356,12 +356,12 @@ class MembershipApply extends Component
                 $this->Family->family_id = $Familymember->id;
                 $this->Family->save();
                 $this->Family->address()->save($this->FamilyAddress);
-                
-               
 
-            }         
+
+
+            }
         }
-        
+
         $this->Cust->address()->save($this->CustAddress);
         $this->Employer->address()->save($this->EmployAddress);
         $this->applymember->introducers()->firstOrCreate([
@@ -395,7 +395,7 @@ class MembershipApply extends Component
         return redirect()->route('home');
     }
 
-    
+
     public function alertConfirm()
     {
         $this->validate();
@@ -407,16 +407,16 @@ class MembershipApply extends Component
         $message .= '<b>Total Fee</b> : RM'.$this->applymember->total_fee."<br>";
 
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'          => 'warning',  
+            'type'          => 'warning',
             'title'         => 'Are you sure you want to apply for membership?',
             'html'          => $message,
             'note'          => 'Please recheck all your details before click "Submit" button.',
-        ]);   
+        ]);
     }
-    
+
     public function render()
     {
         return view('livewire.page.admin.membership.membership-apply')->extends('layouts.head');
     }
-    
+
 }

@@ -1,50 +1,50 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                <x-form.input 
-                    label="Name" 
-                    name="custname" 
-                    value="{{ $custApply->customer->name ?? '' }}" 
+                <x-form.input
+                    label="Name"
+                    name="custname"
+                    value="{{ $custApply->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
-                />  
-                <x-form.input 
-                    label="Identity Number" 
-                    name="custic" 
-                    value="{{ $custApply->customer->icno ?? '' }}"                     
+                />
+                <x-form.input
+                    label="Identity Number"
+                    name="custic"
+                    value="{{ $custApply->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
-                />               
-                
-                <x-form.input 
-                    label="Email" 
-                    name="custic" 
-                    value="{{ $custApply->customer->email ?? '' }}"                     
-                    mandatory=""
-                    disable="true"
-                    type="text"
-                />     
+                />
 
-                <x-form.input 
-                    label="Birthdate" 
-                    name="custic" 
-                    value="{{ $custApply->customer->birthdate ?? '' }}"                     
+                <x-form.input
+                    label="Email"
+                    name="custic"
+                    value="{{ $custApply->customer->email ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
-                />      
-                <x-form.input 
-                label="Register Fee" 
-                name="custic" 
-                value="{{ $custApply->register_fee ?? '' }}"                     
+                />
+
+                <x-form.input
+                    label="Birthdate"
+                    name="custic"
+                    value="{{ $custApply->customer->birthdate ?? '' }}"
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                />
+                <x-form.input
+                label="Register Fee"
+                name="custic"
+                value="{{ $custApply->register_fee ?? '' }}"
                 mandatory=""
                 disable="true"
                 type="text"
-            />                                 
+            />
             </div>
             </div>
 

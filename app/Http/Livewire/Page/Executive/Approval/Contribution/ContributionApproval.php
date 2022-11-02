@@ -13,7 +13,7 @@ class ContributionApproval extends Component
     {
         session()->flash('message', 'Add contribution application has been successfully approved');
         session()->flash('success');
-        session()->flash('title');  
+        session()->flash('title');
 
         return redirect()->route('application.list');
     }

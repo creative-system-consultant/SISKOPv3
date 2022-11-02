@@ -73,7 +73,7 @@
                                     href="#">
                                     <span>No Notification</span>
                                 </a>
-                            </li> 
+                            </li>
                         @endif
                         <li class="flex">
                             <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white"
@@ -91,8 +91,8 @@
                     class="p-2 text-white align-middle rounded-md focus:outline-none "
                     @click="profile=!profile" @keydown.escape="profile=false" aria-haspopup="true">
                     <div class="flex items-center w-24 space-x-2 lg:w-full">
-                        <img class="w-10 h-10 border-2 rounded-full border-primary-600" src="{{asset('img/defaultUser.png')}}" alt="Rounded avatar">
-                        <p class="text-sm uppercase truncate">{{auth()->user()->name}}</p>
+                        <img class="w-10 h-10 border-2 rounded-full border-primary-600" src="{{ asset('img/defaultUser.png') }}" alt="Rounded avatar">
+                        <p class="text-sm uppercase truncate">{{ auth()->user()->name }}</p>
                     </div>
                 </button>
                 <div x-show="profile" x-cloak>
@@ -115,7 +115,7 @@
                         </li>
                         <li class="flex">
                             <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-                                href="{{route('profile')}}">
+                                href="{{ route('profile') }}">
                                 <x-heroicon-o-user-circle class="w-5 h-5 mr-2" />
                                 <span>Profile</span>
                             </a>

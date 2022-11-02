@@ -12,7 +12,7 @@ class ReligionEdit extends Component
         public $code;
         public $status;
         public $RefReligion;
-    
+
         public function submit($id)
         {
         $this->validate([
@@ -21,7 +21,7 @@ class ReligionEdit extends Component
         ]);
 
         $RefReligion = RefReligion::where('id', $id)->first();
-        
+
         $RefReligion->update([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
@@ -39,13 +39,13 @@ class ReligionEdit extends Component
 
     public function  loadUser($id)
     {
-        $RefReligion = RefReligion::where('id', $id)->first();          
+        $RefReligion = RefReligion::where('id', $id)->first();
 
         $this->description  = $RefReligion->description;
         $this->code         = $RefReligion->code;
         $this->status       = $RefReligion->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->RefReligion = RefReligion::where('id', $id)->first();

@@ -6,9 +6,9 @@
             <div class="flex items-center w-full">
                 <label for="4" class="flex items-center cursor-pointer">
                     <div class="relative">
-                        <input 
-                            type="checkbox" 
-                            id="4" 
+                        <input
+                            type="checkbox"
+                            id="4"
                             class="sr-only"
                             @if($membership->field_status(4) == '1') checked @endif
                             wire:click="enableFn(4)"
@@ -29,9 +29,9 @@
             <div class="flex items-center w-full">
                 <label for="5" class="flex items-center cursor-pointer">
                     <div class="relative">
-                        <input 
-                            type="checkbox" 
-                            id="5" 
+                        <input
+                            type="checkbox"
+                            id="5"
                             class="sr-only"
                             @if($membership->field_status(5) == '1') checked @endif
                             wire:click="enableFn(5)"
@@ -52,9 +52,9 @@
             <div class="flex items-center w-full">
                 <label for="6" class="flex items-center cursor-pointer">
                     <div class="relative">
-                        <input 
-                            type="checkbox" 
-                            id="6" 
+                        <input
+                            type="checkbox"
+                            id="6"
                             class="sr-only"
                             @if($membership->field_status(6) == '1') checked @endif
                             wire:click="enableFn(6)"

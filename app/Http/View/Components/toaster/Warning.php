@@ -14,7 +14,7 @@ class Warning extends Component
         $this->title = $title;
         $this->message = $message;
     }
-    
+
     public function render()
     {
         return view('components.toaster.warning');

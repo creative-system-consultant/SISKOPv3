@@ -33,16 +33,16 @@
                     <form wire:submit.prevent="sendResetPasswordLink">
                         <div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <input 
-                                    wire:model.lazy="email" 
-                                    id="email" 
-                                    name="email" 
-                                    type="email" 
+                                <input
+                                    wire:model.lazy="email"
+                                    id="email"
+                                    name="email"
+                                    type="email"
                                     placeholder="Email Address"
-                                    required 
-                                    autofocus 
-                                    class="form-input w-full content-center text-sm px-4 py-2 
-                                    @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                    required
+                                    autofocus
+                                    class="form-input w-full content-center text-sm px-4 py-2
+                                    @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror"
                                 />
                             </div>
 

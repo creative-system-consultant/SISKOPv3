@@ -16,10 +16,10 @@ class SpecialAidCommittee extends Component
         return redirect()->route('specialAid.approval', $this->committee->uuid);
     }
 
-    public function mount($uuid)    
-    { 
+    public function mount($uuid)
+    {
         $this->committee = ApplySpecialAid::where('uuid', $uuid)->with('customer')->first();
-              
+
         $this->type = SpecialAidType::where('id', $this->committee->special_aid_id)->first();
     }
 

@@ -71,7 +71,7 @@
                     <livewire:page.application.application-list.membership>
                 </x-tab.content>
             </div>
-        </div>                        
+        </div>
     </x-general.card >
 </div>
 @endsection

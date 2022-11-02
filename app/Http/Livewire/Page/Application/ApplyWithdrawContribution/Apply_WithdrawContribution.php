@@ -21,14 +21,14 @@ class Apply_WithdrawContribution extends Component
     public $banks;
 
     //Need protected $listerners to run the Livewire.emit event
-    protected $listeners = ['submit'];        
+    protected $listeners = ['submit'];
 
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
         'cust.contribution'         => 'required',
         'cust.contribution_monthly' => 'required',
-        'cont_apply'                => 'required|numeric|lte:cust.contribution|gt:0',  
+        'cont_apply'                => 'required|numeric|lte:cust.contribution|gt:0',
         'support_file'              => 'required',
         'bank_code'                 => 'required',
         'bank_account'              => 'required',
@@ -56,9 +56,9 @@ class Apply_WithdrawContribution extends Component
         $this->validate();
 
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
+            'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for withdrawal contribution?',
-        ]);   
+        ]);
     }
 
     public function submit()
@@ -66,7 +66,7 @@ class Apply_WithdrawContribution extends Component
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
-        
+
 
         $contribution->update([
             'direction'      => 'withdraw',
@@ -77,11 +77,11 @@ class Apply_WithdrawContribution extends Component
             'bank_account'   => $this->bank_account,
             'flag'           => 1,
             'step'           => 1,
-            'created_by'     => strtoupper($customer->name),  
+            'created_by'     => strtoupper($customer->name),
         ]);
 
-        $filepath = 'Files/'.$customer->id.'/'.'support_doc'.'.'.$this->support_file->extension(); 
-        
+        $filepath = 'Files/'.$customer->id.'/'.'support_doc'.'.'.$this->support_file->extension();
+
         Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->support_file, 'support_doc'.'.'.$this->support_file->extension());
 
         $contribution->files()->create([
@@ -95,10 +95,10 @@ class Apply_WithdrawContribution extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('home'); 
+        return redirect()->route('home');
     }
 
-    public function restrictApply($id)   
+    public function restrictApply($id)
     {
         $contribution = Contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'withdraw']])->first();
 
@@ -106,36 +106,36 @@ class Apply_WithdrawContribution extends Component
             session()->flash('message', 'Withdrawal contribution application is been processed. If you want to make another application, please wait until the application is processed');
             session()->flash('info');
             session()->flash('title');
-    
-            return redirect()->route('home');                                
+
+            return redirect()->route('home');
         }
     }
 
     public function applyCont($cust_id)
     {
         $contribution = Contribution::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id, 
-            'cust_id'     => $this->cust->id, 
+            'coop_id'     => $this->cust->coop_id,
+            'cust_id'     => $this->cust->id,
             'direction'   => 'withdraw',
         ], [
             'amt_before'  => $this->cust->contribution,
-            'flag'        => 0, 
+            'flag'        => 0,
             'step'        => 0,
-            'apply_amt'   => '0.00',   
+            'apply_amt'   => '0.00',
         ]);
 
         $this->cont_apply   = $contribution?->apply_amt;
         $this->bank_account = $contribution?->bank_account;
-        $this->bank_code    = $contribution?->bank_code; 
+        $this->bank_code    = $contribution?->bank_code;
     }
 
     public function mount()
     {
         $user = auth()->user();
         $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where('coop_id', $user->coop_id)->get(); 
+        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
 
-        $this->restrictApply($this->cust->id);        
+        $this->restrictApply($this->cust->id);
         $this->applyCont($this->cust->id);
     }
 

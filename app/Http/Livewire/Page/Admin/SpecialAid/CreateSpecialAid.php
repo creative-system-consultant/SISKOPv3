@@ -48,8 +48,8 @@ class CreateSpecialAid extends Component
     ];
 
     protected $validationAttributes = [
-        'specialAid_name'      => 'Name', 
-        'Fname.*'              => 'Field Name', 
+        'specialAid_name'      => 'Name',
+        'Fname.*'              => 'Field Name',
         'Flabel.*'             => 'Field Label',
     ];
 
@@ -132,7 +132,7 @@ class CreateSpecialAid extends Component
         }
         else {
             $specialAid = SpecialAid::create([
-                'coop_id'            => $user->coop_id,  
+                'coop_id'            => $user->coop_id,
                 'name'               => ucwords($this->specialAid_name),
                 'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
                 'default_apply_amt'  => $this->default_apply_amount ?? NULL,
@@ -143,7 +143,7 @@ class CreateSpecialAid extends Component
             ]);
         }
 
-        foreach ($this->Fname as $index => $input) {  
+        foreach ($this->Fname as $index => $input) {
             if (($this->Fuuid[$index] ?? NULL) == NULL){
                 $specialAid->field()->create([
                         'name'      => $this->Fname[$index],

@@ -12,7 +12,7 @@ class BankEdit extends Component
         public $code;
         public $status;
         public $RefBank;
-    
+
         public function submit($id)
         {
         $this->validate([
@@ -21,7 +21,7 @@ class BankEdit extends Component
         ]);
 
         $RefBank = RefBank::where('id', $id)->first();
-        
+
         $RefBank->update([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
@@ -39,13 +39,13 @@ class BankEdit extends Component
 
     public function  loadUser($id)
     {
-        $RefBank = RefBank::where('id', $id)->first();          
+        $RefBank = RefBank::where('id', $id)->first();
 
         $this->description  = $RefBank->description;
         $this->code         = $RefBank->code;
         $this->status       = $RefBank->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->RefBank = RefBank::where('id', $id)->first();

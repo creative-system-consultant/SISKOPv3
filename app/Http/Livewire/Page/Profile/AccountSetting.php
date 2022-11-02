@@ -10,13 +10,13 @@ use Livewire\Component;
 class AccountSetting extends Component
 {
     /** @var string */
-    public $old_pass = '';  
+    public $old_pass = '';
 
     /** @var string */
-    public $password = '';  
+    public $password = '';
 
     /** @var string */
-    public $confirm_password = '';  
+    public $confirm_password = '';
 
     public function changePassword()
     {
@@ -26,7 +26,7 @@ class AccountSetting extends Component
         ]);
 
         $user = User::where('id', auth()->user()->id)->first();
-        
+
         if ($this->password == Hash::check($this->old_pass, $user->password)) {
             $user->update([
                 'password' => Hash::make($this->password),

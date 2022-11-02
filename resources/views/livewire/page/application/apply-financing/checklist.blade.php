@@ -25,7 +25,7 @@
                             </x-table.table-body>
                         </tr>
                     </x-slot>
-                </x-table.table>  
+                </x-table.table>
             </div>
         </div>
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">

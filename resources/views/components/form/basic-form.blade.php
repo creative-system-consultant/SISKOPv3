@@ -1,6 +1,6 @@
-<form {{ $attributes->merge(['class' => ''])}} {{$attributes}}>
+<form {{ $attributes->merge(['class' => '']) }} {{ $attributes }}>
     @csrf
     <div>
-        {{$slot}}
+        {{ $slot }}
     </div>
 </form>

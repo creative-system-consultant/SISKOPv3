@@ -19,7 +19,7 @@ class RaceEdit extends Component
             'race_code'        => ['required', 'string'],
         ]);
 
-        $race = RefRace::where('id', $id)->first(); 
+        $race = RefRace::where('id', $id)->first();
 
         $race->update([
             'description' => trim(strtoupper($this->race_description)),
@@ -33,18 +33,18 @@ class RaceEdit extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('race.list'); 
+        return redirect()->route('race.list');
     }
 
     public function load($id)
     {
-        $race = RefRace::where('id', $id)->first();          
+        $race = RefRace::where('id', $id)->first();
 
-        $this->race_description    = $race->description; 
+        $this->race_description    = $race->description;
         $this->race_code           = $race->code;
         $this->race_status         = $race->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->race = RefRace::where('id', $id)->first();

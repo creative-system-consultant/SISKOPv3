@@ -11,9 +11,7 @@
         @endif
 
         <!-- Favicon -->
-		<link rel="icon"sizes="16x16"  type="image/png" href="{{ asset('img/logo.png')}}">
-        
-        
+        <link rel="icon"sizes="16x16"  type="image/png" href="{{ asset('img/logo.png') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,8 +26,8 @@
         <script src="{{ url(mix('js/app.js')) }}?v=@php echo date('ymdgis') @endphp" defer></script>
 
         <!-- tippy js -->
-        <script src="{{ asset('js/popper.min.js')}}"></script>
-        <script src="{{ asset('js/tippy.min.js')}}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/tippy.min.js') }}"></script>
 
     </head>
 

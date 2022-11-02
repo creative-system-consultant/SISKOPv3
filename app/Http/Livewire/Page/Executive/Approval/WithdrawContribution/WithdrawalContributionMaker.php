@@ -19,7 +19,7 @@ class WithdrawalContributionMaker extends Component
     public function mount($uuid)
     {
        $this->maker = Contribution::where('uuid', $uuid)->with('customer')->first();
-       $this->banks = RefBank::where('coop_id', $this->maker->coop_id)->get(); 
+       $this->banks = RefBank::where('coop_id', $this->maker->coop_id)->get();
     }
 
     public function render()

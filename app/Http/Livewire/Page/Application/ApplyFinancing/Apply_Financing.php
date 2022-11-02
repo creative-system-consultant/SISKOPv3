@@ -275,7 +275,7 @@ class Apply_Financing extends Component
                 $this->Family->save();
                 $this->Family->address()->save($this->FamilyAddress);
             
-            }         
+            }
         }
         $this->Employer->save();
         $this->Customer->Address()->save($this->CustAddress);

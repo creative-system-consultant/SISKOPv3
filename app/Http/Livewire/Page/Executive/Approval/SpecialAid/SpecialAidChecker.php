@@ -16,10 +16,10 @@ class SpecialAidChecker extends Component
         return redirect()->route('specialAid.committee', $this->checker->uuid);
     }
 
-    public function mount($uuid)    
-    { 
+    public function mount($uuid)
+    {
         $this->checker = ApplySpecialAid::where('uuid', $uuid)->with('customer')->first();
-              
+
         $this->type = SpecialAidType::where('id', $this->checker->special_aid_id)->first();
     }
 

@@ -11,7 +11,7 @@
                     <h2 class="mt-2 text-2xl font-extrabold text-center text-gray-900 leading-9">
                         Register a New Account
                     </h2>
-            
+
                     <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
                         or
                         <a href="{{ route('login') }}" class="font-medium text-primary focus:outline-none focus:underline transition ease-in-out duration-150 text-primary-900">
@@ -19,19 +19,19 @@
                         </a>
                     </p>
                 </div>
-            
+
                 <form wire:submit.prevent="register">
                     <div>
                         <div class="mt-1 rounded-md shadow-sm">
-                            <input 
-                                wire:model.lazy="name" 
-                                id="name" 
-                                type="text" 
-                                placeholder="Full Name" 
-                                required 
-                                autofocus 
+                            <input
+                                wire:model.lazy="name"
+                                id="name"
+                                type="text"
+                                placeholder="Full Name"
+                                required
+                                autofocus
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror"
                             />
                         </div>
 
@@ -42,15 +42,15 @@
 
                     <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
-                            <input 
-                                wire:model.lazy="icno" 
-                                id="icno" 
-                                type="text" 
-                                placeholder="IC No." 
-                                required 
-                                autofocus 
+                            <input
+                                wire:model.lazy="icno"
+                                id="icno"
+                                type="text"
+                                placeholder="IC No."
+                                required
+                                autofocus
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('icno') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('icno') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror"
                             />
                         </div>
 
@@ -61,15 +61,15 @@
 
                     <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
-                            <input 
-                                wire:model.lazy="phone_no" 
-                                id="phone_no" 
-                                type="text" 
-                                placeholder="Phone No." 
-                                required 
-                                autofocus 
+                            <input
+                                wire:model.lazy="phone_no"
+                                id="phone_no"
+                                type="text"
+                                placeholder="Phone No."
+                                required
+                                autofocus
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('phone_no') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('phone_no') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror"
                             />
                         </div>
 
@@ -80,14 +80,14 @@
 
                     <div class="mt-6">
                         <div class="mt-1 rounded-md shadow-sm">
-                            <input 
-                                wire:model.lazy="email" 
-                                id="email" 
+                            <input
+                                wire:model.lazy="email"
+                                id="email"
                                 type="email"
-                                placeholder="Email Address"  
-                                required 
+                                placeholder="Email Address"
+                                required
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror"
                             />
                         </div>
 
@@ -98,14 +98,14 @@
 
                     <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
-                            <input 
-                                wire:model.lazy="password" 
-                                id="password" 
+                            <input
+                                wire:model.lazy="password"
+                                id="password"
                                 type="password"
-                                placeholder="Password"  
-                                required 
+                                placeholder="Password"
+                                required
                                 class="form-input w-full content-center text-sm px-4 py-2
-                                @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" 
+                                @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror"
                             />
                         </div>
 
@@ -116,12 +116,12 @@
 
                     <div class="mt-3">
                         <div class="mt-1 rounded-md shadow-sm">
-                            <input 
-                                wire:model.lazy="passwordConfirmation" 
-                                id="password_confirmation" 
+                            <input
+                                wire:model.lazy="passwordConfirmation"
+                                id="password_confirmation"
                                 type="password"
-                                placeholder="Confrim Password"   
-                                required 
+                                placeholder="Confrim Password"
+                                required
                                 class="form-input w-full content-center text-sm px-4 py-2"
                             />
                         </div>
@@ -137,7 +137,7 @@
                 </form>
             </div>
         </div>
-        
+
     </div>
 </div>
 

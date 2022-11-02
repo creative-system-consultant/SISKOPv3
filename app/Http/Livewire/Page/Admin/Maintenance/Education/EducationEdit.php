@@ -33,18 +33,18 @@ class EducationEdit extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('education.list'); 
+        return redirect()->route('education.list');
     }
 
     public function load($id)
     {
-        $education = RefEducation::where('id', $id)->first();          
+        $education = RefEducation::where('id', $id)->first();
 
-        $this->edu_description    = $education->description; 
+        $this->edu_description    = $education->description;
         $this->edu_code           = $education->code;
         $this->edu_status         = $education->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->education = RefEducation::where('id', $id)->first();

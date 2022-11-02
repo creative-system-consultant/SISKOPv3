@@ -6,13 +6,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(14px); 
+    backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     display: flex;
     justify-content: center;
     align-items: center;
     }
-    
+
     .load.hidden {
         animation: fadeOut 1s;
         animation-fill-mode: forwards;

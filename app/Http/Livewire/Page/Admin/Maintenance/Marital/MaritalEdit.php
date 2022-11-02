@@ -19,7 +19,7 @@ class MaritalEdit extends Component
             'marital_code'        => ['required', 'string'],
         ]);
 
-        $marital = RefMarital::where('id', $id)->first(); 
+        $marital = RefMarital::where('id', $id)->first();
 
         $marital->update([
             'description'     => trim(strtoupper($this->description)),
@@ -33,18 +33,18 @@ class MaritalEdit extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('marital.list'); 
+        return redirect()->route('marital.list');
     }
 
     public function load($id)
     {
-        $marital = RefMarital::where('id', $id)->first();          
+        $marital = RefMarital::where('id', $id)->first();
 
-        $this->marital_description    = $marital->description; 
+        $this->marital_description    = $marital->description;
         $this->marital_code           = $marital->code;
         $this->marital_status         = $marital->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->marital = RefMarital::where('id', $id)->first();

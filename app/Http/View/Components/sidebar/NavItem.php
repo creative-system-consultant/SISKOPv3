@@ -17,7 +17,7 @@ class NavItem extends Component
         $this->uri = $uri;
     }
 
-    
+
     public function render()
     {
         return view('components.sidebar.nav-item');

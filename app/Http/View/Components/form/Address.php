@@ -19,14 +19,14 @@ class Address extends Component
     public $disable;
 
     public function __construct(
-        $label, 
+        $label,
         $name1,
         $name2,
         $name3,
         $name4,
         $name5,
         $name6,
-        $condition, 
+        $condition,
         $mandatory="false",
         $disable="false"
     )

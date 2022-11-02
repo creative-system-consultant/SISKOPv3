@@ -11,12 +11,12 @@ class Contribution extends Component
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyContribution::where('uuid', $uuid)->with('customer')->first();         
+        $this->custApply = ApplyContribution::where('uuid', $uuid)->with('customer')->first();
     }
 
-    public function mount()    
-    { 
-        $this->contribution = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();    
+    public function mount()
+    {
+        $this->contribution = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()

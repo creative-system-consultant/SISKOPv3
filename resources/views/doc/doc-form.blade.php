@@ -17,7 +17,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-form.basic-form wire:submit.prevent="">
     //content
 &lt;/x-form.basic-form>
@@ -39,10 +39,10 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.input 
-                        label="Input Label" 
-                        name="" 
-                        value="" 
+                    <x-form.input
+                        label="Input Label"
+                        name=""
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -50,11 +50,11 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.input 
-    label="Input Label" 
-    name="" 
-    value="" 
+                    <code class="language-html">
+&lt;x-form.input
+    label="Input Label"
+    name=""
+    value=""
     mandatory=""
     disable=""
     type="text"
@@ -76,10 +76,10 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.input-tag 
+                    <x-form.input-tag
                         label="Tag Input Label"
-                        type="text" 
-                        name="" 
+                        type="text"
+                        name=""
                         value=""
                         leftTag="RM"
                         rightTag="%"
@@ -89,11 +89,11 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.input-tag 
-    label="Tag Input Label" 
+                    <code class="language-html">
+&lt;x-form.input-tag
+    label="Tag Input Label"
     type="text"
-    name="" 
+    name=""
     value=""
     leftTag="RM"
     rightTag="%"
@@ -117,14 +117,14 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.dropdown 
+                    <x-form.dropdown
                         label="Dropdown Label"
                         value=""
-                        name="" 
+                        name=""
                         id=""
                         mandatory=""
                         disable=""
-                        default="yes"  
+                        default="yes"
                     >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -133,15 +133,15 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.dropdown 
+                    <code class="language-html">
+&lt;x-form.dropdown
     label="Dropdown Label"
     value=""
-    name="" 
+    name=""
     id=""
     mandatory=""
     disable=""
-    default="yes"  
+    default="yes"
 >
     &lt;option value="1">1&lt;/option>
     &lt;option value="2">2&lt;/option>
@@ -164,27 +164,27 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.text-area 
-                        label="Text Area Label" 
-                        value="" 
-                        name="" 
+                    <x-form.text-area
+                        label="Text Area Label"
+                        value=""
+                        name=""
                         rows=""
-                        placeholder="Place Holder" 
+                        placeholder="Place Holder"
                         disable=""
                         mandatory=""
                     />
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.text-area 
-    label="Text Area Label" 
-    value="" 
-    name="" 
+                    <code class="language-html">
+&lt;x-form.text-area
+    label="Text Area Label"
+    value=""
+    name=""
     rows=""
     disable=""
     mandatory=""
-    placeholder="Place Holder" 
+    placeholder="Place Holder"
 />
                     </code>
                 </pre>
@@ -219,7 +219,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-form.address class="mt-6"
     label="Address"
     mandatory=""
@@ -252,8 +252,8 @@
                         <div class="flex items-center w-full">
                             <label for="your-id" class="flex items-center cursor-pointer">
                                 <div class="relative">
-                                    <input 
-                                        type="checkbox" 
+                                    <input
+                                        type="checkbox"
                                         id="your-id"
                                         class="sr-only"
                                         {{-- wire:click="statusBtn(your-id)" --}}
@@ -266,13 +266,13 @@
                     </div>
                     <p class="font-semibold">Code</p>
                     <pre class="-mt-4 language-html" wire:ignore>
-                        <code class="language-html"> 
+                        <code class="language-html">
     &lt;div class="flex items-center w-full">
         &lt;label for="your-id" class="flex items-center cursor-pointer">
             &lt;div class="relative">
-                &lt;input 
-                    type="checkbox" 
-                    id="your-id" 
+                &lt;input
+                    type="checkbox"
+                    id="your-id"
                     class="sr-only"
                     &#x7b;&#x7b;-- wire:click="funtionInLivewire(your-id)" --&#x7d;&#x7d;
                 >
@@ -297,13 +297,13 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                   This component must be inside<br> 
-                   &lt;x-form.basic-form wire:submit.prevent=""><br> 
-                   // content<br> 
+                   This component must be inside<br>
+                   &lt;x-form.basic-form wire:submit.prevent=""><br>
+                   // content<br>
                    &lt;/x-form.basic-form>
                 <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">
-                        <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
+                        <a href="{{ url()->previous() }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
                             Cancel
                         </a>
                         <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
@@ -314,7 +314,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
     &lt;div class="flex items-center justify-center space-x-2">
         &lt;a href="&#x7b;&#x7b;url()->previous()&#x7d;&#x7d;" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">

@@ -16,7 +16,7 @@
                             <x-form.input label="Field Name" name="Fname.{{ $index }}" value="" mandatory="" disable="" type="text" wire:model="Fname.{{ $index }}"/>
                         </div>
                         <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-2 xl:col-span-2">
-                            <x-form.dropdown label="Field Type" value="" name="Ftype.{{ $index }}" mandatory="" disable="" default="yes" wire:model="Ftype.{{ $index}}">
+                            <x-form.dropdown label="Field Type" value="" name="Ftype.{{ $index }}" mandatory="" disable="" default="yes" wire:model="Ftype.{{ $index }}">
                                 @foreach ($field->types() as $type)
                                     <option value="{{ $type }}">{{ $type }}</option>
                                 @endforeach

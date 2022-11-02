@@ -61,7 +61,7 @@ class ProductEdit extends Component
     {
         $this->User = auth()->user();
         $this->Product            = AccountProduct::where('id', $id)->first();
-        $this->producttype_id     = RefProductType::all();  
+        $this->producttype_id     = RefProductType::all();
         $this->refdocument        = RefProductDocuments::where('coop_id', $this->User->coop_id)->get();
         $this->brochure_file      = $this->Product->files()->where('filename', 'brochure')->first();
         $this->payment_table_file = $this->Product->files()->where('filename', 'payment_table')->first();
@@ -90,9 +90,9 @@ class ProductEdit extends Component
         $this->Product->save();
 
         $coop = Auth()->user()->coop_id;
-        
+
         if($this->brochure){
-            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension(); 
+            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $coop. '/financing/product//'.$this->Product->id, $this->brochure, 'brochure'.'.'.$this->brochure->extension());
 
@@ -105,10 +105,10 @@ class ProductEdit extends Component
         };
 
         if($this->payment_table){
-            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'payment_table.'.$this->payment_table->extension(); 
+            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'payment_table.'.$this->payment_table->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $coop. '/financing/product//'.$this->Product->id, $this->payment_table, 'payment_table'.'.'.$this->payment_table->extension());
-    
+
             $this->Product->files()->updateOrCreate([
                 'filename' => 'payment_table',
                 'filedesc' => 'Payment Table',

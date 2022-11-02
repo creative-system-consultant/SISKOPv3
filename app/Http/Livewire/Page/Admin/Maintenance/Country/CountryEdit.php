@@ -12,7 +12,7 @@ class CountryEdit extends Component
         public $code;
         public $status;
         public $RefCountry;
-    
+
         public function submit($id)
         {
         $this->validate([
@@ -21,7 +21,7 @@ class CountryEdit extends Component
         ]);
 
         $RefCountry = RefCountry::where('id', $id)->first();
-        
+
         $RefCountry->update([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
@@ -39,13 +39,13 @@ class CountryEdit extends Component
 
     public function  loadUser($id)
     {
-        $RefCountry = RefCountry::where('id', $id)->first();          
+        $RefCountry = RefCountry::where('id', $id)->first();
 
         $this->description  = $RefCountry->description;
         $this->code         = $RefCountry->code;
         $this->status       = $RefCountry->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->RefCountry = RefCountry::where('id', $id)->first();

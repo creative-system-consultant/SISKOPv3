@@ -10,7 +10,7 @@ class TextArea extends Component
     public $label;
     public $disable;
     public $mandatory;
-    
+
     public function __construct($name,$label,$disable="false",$mandatory="false")
     {
         $this->name    = $name;
@@ -19,7 +19,7 @@ class TextArea extends Component
         $this->mandatory = $mandatory;
     }
 
-    
+
     public function render()
     {
         return view('components.form.text-area');

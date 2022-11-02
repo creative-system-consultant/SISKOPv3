@@ -27,7 +27,7 @@ class Apply_Contribution extends Component
     public $banks;
 
     //Need protected $listerners to run the Livewire.emit event
-    protected $listeners = ['submit'];        
+    protected $listeners = ['submit'];
 
     protected $rules = [
         'cust.name'                 => 'required',
@@ -37,7 +37,7 @@ class Apply_Contribution extends Component
         'cont_apply'                => 'required|numeric|not_in:0',
         'cont_type'                 => 'required',
         'start_contDate'            => 'exclude_if:cont_type,==,pay_once,&&,cont_type,null|required_if:cont_type,==,cont_date'.
-                                       '|before:first day of january next year|after_or_equal:today',     
+                                       '|before:first day of january next year|after_or_equal:today',
         'payment_method'            => 'required_if:cont_type,==,pay_once',
         'online_date'               => 'exclude_if:payment_method,==,cash,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
                                        'required_if:payment_method,==,online|before:first day of january next year|after_or_equal:today',
@@ -94,14 +94,14 @@ class Apply_Contribution extends Component
         $this->validate();
 
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
+            'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for add contribution?',
-        ]);   
+        ]);
     }
 
     public function submit()
     {
-    
+
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
@@ -120,12 +120,12 @@ class Apply_Contribution extends Component
             'cheque_no'      => $this->cheque_no ??= NULL,
             'flag'           => 1,
             'step'           => 1,
-            'created_by'     => strtoupper($customer->name),  
+            'created_by'     => strtoupper($customer->name),
         ]);
-    
+
         if ($this->payment_method == 'online') {
             // dd('Online Banking');
-            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'online_receipt'.'.'.$this->online_file->extension();     
+            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'online_receipt'.'.'.$this->online_file->extension();
 
             Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/contribution//'.$contribution->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
 
@@ -144,8 +144,8 @@ class Apply_Contribution extends Component
         }
         elseif ($this->payment_method == 'cash') {
             // dd('CDM');
-            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension(); 
-            
+            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension();
+
             Storage::disk('local')->putFileAs('public/Files/'.$customer->id.'/contribution//'.$contribution->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
 
             $contribution->files()->create([
@@ -159,18 +159,18 @@ class Apply_Contribution extends Component
             session()->flash('success');
             session()->flash('title');
 
-            return redirect()->route('home');            
+            return redirect()->route('home');
         }
         else {
             // dd('Cheque');
             session()->flash('message', 'Add Contribution Application Successfully Send');
             session()->flash('success');
             session()->flash('title');
-    
-            return redirect()->route('home');              
-        }    
+
+            return redirect()->route('home');
+        }
     }
-        
+
     public function restrictApply($id)
     {
         $contribution = Contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
@@ -179,11 +179,11 @@ class Apply_Contribution extends Component
             session()->flash('message', 'Add contribution application is been processed. If you want to make another application, please wait until the application is processed');
             session()->flash('info');
             session()->flash('title');
-    
-            return redirect()->route('home');                                
+
+            return redirect()->route('home');
         }
     }
-    
+
     public function mount()
     {
         $user = auth()->user();
@@ -191,14 +191,14 @@ class Apply_Contribution extends Component
         $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
 
         $contribution = Contribution::where('cust_id', $this->cust->id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id, 
-            'cust_id'     => $this->cust->id, 
+            'coop_id'     => $this->cust->coop_id,
+            'cust_id'     => $this->cust->id,
             'direction'   => 'buy',
         ], [
             'amt_before'  => $this->cust->contribution,
-            'flag'        => 0, 
+            'flag'        => 0,
             'step'        => 0,
-            'apply_amt'   => '0.00',        
+            'apply_amt'   => '0.00',
         ]);
 
         $this->cont_apply       = $contribution->apply_amt;
@@ -207,7 +207,7 @@ class Apply_Contribution extends Component
         $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
         $this->cheque_no        = $contribution?->cheque_no;
         $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
-        $this->start_contDate   = $contribution?->start_apply?->format('Y-m-d');    
+        $this->start_contDate   = $contribution?->start_apply?->format('Y-m-d');
 
         $this->restrictApply($this->cust->id);
     }

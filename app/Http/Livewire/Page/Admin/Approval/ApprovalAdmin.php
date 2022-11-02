@@ -50,7 +50,7 @@ class ApprovalAdmin extends Component
         $last++;
         $this->approval->approvals()->withTrashed()->updateOrCreate(
             [
-                'order'   => $last, 
+                'order'   => $last,
                 'coop_id' => $this->User->coop_id
             ],
             [

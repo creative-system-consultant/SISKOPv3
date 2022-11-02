@@ -286,7 +286,7 @@ Route::middleware('auth')->group(function () {
     });
     //----------------------- end Admin -------------------------------------//
 
-    
+
 
     //----------------------- Executive -------------------------------------//
     Route::prefix('exec')->group(function(){
@@ -295,7 +295,7 @@ Route::middleware('auth')->group(function () {
             Route::get('search', SearchCustomer::class)->name('customer.search');
             Route::get('edit/{uuid}', EditCustomer::class)->name('customer.edit');
         });
-    
+
         //Exec > Application List
         Route::prefix('applicationList')->group(function(){
             Route::get('/', function(){
@@ -311,7 +311,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
 
             Route::get('/withdrawContribution/{uuid}', [Withdrawal_Contribution::class, 'showApplication'])->name('application.withdrawal');
-        }); 
+        });
 
         Route::prefix('approval')->group(function(){
             //Exec > approval > specialAid

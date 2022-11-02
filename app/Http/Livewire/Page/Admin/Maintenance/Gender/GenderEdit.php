@@ -12,7 +12,7 @@ class GenderEdit extends Component
         public $code;
         public $status;
         public $RefGender;
-    
+
         public function submit($id)
         {
         $this->validate([
@@ -21,7 +21,7 @@ class GenderEdit extends Component
         ]);
 
         $RefGender = RefGender::where('id', $id)->first();
-        
+
         $RefGender->update([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
@@ -39,13 +39,13 @@ class GenderEdit extends Component
 
     public function  loadUser($id)
     {
-        $RefGender = RefGender::where('id', $id)->first();          
+        $RefGender = RefGender::where('id', $id)->first();
 
         $this->description  = $RefGender->description;
         $this->code         = $RefGender->code;
         $this->status       = $RefGender->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->RefGender = RefGender::where('id', $id)->first();

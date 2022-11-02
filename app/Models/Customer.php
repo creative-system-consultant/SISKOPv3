@@ -29,7 +29,7 @@ class Customer extends Model implements Auditable
     {
         return $this->hasMany(CustFamily::class,'cust_id');
     }
-    
+
     public function specialAid()
     {
         return $this->hasOne(ApplySpecialAid::class,'cust_id','id');

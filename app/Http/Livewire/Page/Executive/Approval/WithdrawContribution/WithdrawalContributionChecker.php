@@ -19,8 +19,8 @@ class WithdrawalContributionChecker extends Component
     public function mount($uuid)
     {
        $this->checker = Contribution::where('uuid', $uuid)->with('customer')->first();
-       $this->banks = RefBank::where('coop_id', $this->checker->coop_id)->get(); 
-    }    
+       $this->banks = RefBank::where('coop_id', $this->checker->coop_id)->get();
+    }
 
     public function render()
     {

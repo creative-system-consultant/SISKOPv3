@@ -1,56 +1,56 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                <x-form.input 
-                    label="Name" 
-                    name="custname" 
-                    value="{{ $custApply->customer->name ?? '' }}" 
+                <x-form.input
+                    label="Name"
+                    name="custname"
+                    value="{{ $custApply->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
-                />  
+                />
 
-                <x-form.input 
-                    label="Identity Number" 
-                    name="custic" 
-                    value="{{ $custApply->customer->icno ?? '' }}"                     
+                <x-form.input
+                    label="Identity Number"
+                    name="custic"
+                    value="{{ $custApply->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
-                />               
-                
-                <x-form.input-tag 
-                    label="Current Contribution Amount" 
+                />
+
+                <x-form.input-tag
+                    label="Current Contribution Amount"
                     type="text"
-                    name="current_cont" 
+                    name="current_cont"
                     value="{{  $custApply->amt_before ?? '' }}"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
                     disable="true"
-                />       
-                
-                <x-form.input-tag 
-                    label="Monthly Contribution" 
+                />
+
+                <x-form.input-tag
+                    label="Monthly Contribution"
                     type="text"
-                    name="monthly_cont" 
+                    name="monthly_cont"
                     value="{{  $custApply->customer->contribution_monthly ?? ''  }}"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
                     disable="true"
-                />  
+                />
             </div>
 
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
-                    <x-form.input-tag 
-                        label="Add Contribution applied" 
+                    <x-form.input-tag
+                        label="Add Contribution applied"
                         type="text"
-                        name="cont_apply" 
+                        name="cont_apply"
                         value="{{ $custApply->apply_amt ?? '0.00' }}"
                         placeholder="0.00"
                         leftTag="RM"
@@ -58,13 +58,13 @@
                         mandatory=""
                         disable="true"
                     />
-                </div>        
-                
+                </div>
+
                 <div>
-                    <x-form.input-tag 
-                        label="Add Contribution approved" 
+                    <x-form.input-tag
+                        label="Add Contribution approved"
                         type="text"
-                        name="cont_approved" 
+                        name="cont_approved"
                         value="{{ $custApply->approved_amt ?? '' }}"
                         placeholder="0.00"
                         leftTag="RM"
@@ -72,38 +72,38 @@
                         mandatory=""
                         disable="true"
                     />
-                </div>   
-                
+                </div>
+
                 <div>
-                    <x-form.dropdown 
+                    <x-form.dropdown
                         label="Bank"
                         value=""
-                        name="bank_code" 
+                        name="bank_code"
                         id="bank_code"
                         mandatory=""
                         disable="true"
-                        default="yes"  
+                        default="yes"
                         >
                         @foreach ($bankName ?? [] as $bank)
-                            <option @if ($bank->code == $custApply->bank_code) selected @endif>{{ $bank->description }}</option>                            
+                            <option @if ($bank->code == $custApply->bank_code) selected @endif>{{ $bank->description }}</option>
                         @endforeach
-                    </x-form.dropdown>                            
+                    </x-form.dropdown>
                 </div>
 
                 <div>
-                    <x-form.input 
-                        label="Account Bank No." 
-                        name="bank_account" 
+                    <x-form.input
+                        label="Account Bank No."
+                        name="bank_account"
                         id="bank_account"
-                        value="{{ $custApply->bank_account ?? '' }}" 
+                        value="{{ $custApply->bank_account ?? '' }}"
                         mandatory=""
                         disable="true"
                         type="text"
-                    />                                     
+                    />
                 </div>
             </div>
 
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Upload Document</h2>  
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Upload Document</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <div>
                     @if (isset($custApply->files) != NULL)
@@ -113,7 +113,7 @@
                                 Show
                             </a>
                         @empty
-                            <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2> 
+                            <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2>
                         @endforelse
                     @endif
                 </div>

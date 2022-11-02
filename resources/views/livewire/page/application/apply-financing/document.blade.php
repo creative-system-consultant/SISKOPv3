@@ -3,17 +3,17 @@
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Application Documents </h2>
         <div class="mt-4 bg-white rounded-md">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-                <x-form.input 
-                    label="File" 
-                    name="" 
+                <x-form.input
+                    label="File"
+                    name=""
                     id=""
-                    value="" 
+                    value=""
                     mandatory=""
                     disable=""
                     type="file"
                     accept=""
                     wire:model=""
-                />  
+                />
             </div>
         </div>
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">

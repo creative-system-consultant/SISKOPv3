@@ -19,7 +19,7 @@ class RelationshipEdit extends Component
             'relationship_code'        => ['required', 'string'],
         ]);
 
-        $race = RefRelationship::where('id', $id)->first(); 
+        $race = RefRelationship::where('id', $id)->first();
 
         $race->update([
             'description' => trim(strtoupper($this->relationship_description)),
@@ -33,18 +33,18 @@ class RelationshipEdit extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('relationship.list'); 
+        return redirect()->route('relationship.list');
     }
 
     public function load($id)
     {
-        $relationship = RefRelationship::where('id', $id)->first();          
+        $relationship = RefRelationship::where('id', $id)->first();
 
-        $this->relationship_description    = $relationship->description; 
+        $this->relationship_description    = $relationship->description;
         $this->relationship_code           = $relationship->code;
         $this->relationship_status         = $relationship->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->relationship = RefRelationship::where('id', $id)->first();

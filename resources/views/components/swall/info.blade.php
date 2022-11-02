@@ -3,7 +3,7 @@
     $( document ).ready(function() {
         Swal.fire({
             icon: 'info',
-            title: `{{$message}}`,
+            title: `{{ $message }}`,
             showConfirmButton: false,
             timer: 2500
         })

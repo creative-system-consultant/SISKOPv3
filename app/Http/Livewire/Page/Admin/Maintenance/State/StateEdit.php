@@ -12,7 +12,7 @@ class StateEdit extends Component
         public $code;
         public $status;
         public $RefState;
-    
+
         public function submit($id)
         {
         $this->validate([
@@ -21,7 +21,7 @@ class StateEdit extends Component
         ]);
 
         $RefState = RefState::where('id', $id)->first();
-        
+
         $RefState->update([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
@@ -39,13 +39,13 @@ class StateEdit extends Component
 
     public function  loadUser($id)
     {
-        $RefState = RefState::where('id', $id)->first();          
+        $RefState = RefState::where('id', $id)->first();
 
         $this->description  = $RefState->description;
         $this->code         = $RefState->code;
         $this->status       = $RefState->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->RefState = RefState::where('id', $id)->first();

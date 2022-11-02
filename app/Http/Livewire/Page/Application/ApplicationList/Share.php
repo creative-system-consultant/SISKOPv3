@@ -11,11 +11,11 @@ class Share extends Component
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();     
+        $this->custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();
     }
-    
-    public function mount()    
-    { 
+
+    public function mount()
+    {
         $this->shares = ApplyShare::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
     }
 

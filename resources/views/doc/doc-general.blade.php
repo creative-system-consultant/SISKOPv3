@@ -34,7 +34,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-table.table>
     &lt;x-slot name="thead">
         &lt;x-table.table-header class="text-left " value="Name" sort="" />
@@ -97,7 +97,7 @@
                     </div>
                     <p class="font-semibold">Code</p>
                     <pre class="-mt-4 language-html" wire:ignore>
-                        <code class="language-html"> 
+                        <code class="language-html">
 &lt;div x-data="{open : 0}">
     &lt;x-general.accordion active="open" tab="1" bg="white">
         &lt;x-slot name="title">
@@ -141,19 +141,19 @@
                         <div class="flex bg-white rounded-md">
                             <x-tab.title name="0" livewire="">
                                 <div class="flex items-center">
-                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                                     <p>Tab 1</p>
                                 </div>
                             </x-tab.title>
                             <x-tab.title name="1" livewire="">
                                 <div class="flex items-center">
-                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                                     <p>Tab 2</p>
                                 </div>
                             </x-tab.title>
                             <x-tab.title name="2" livewire="">
                             <div class="flex items-center">
-                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                                    <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                                     <p>Tab 3</p>
                                 </div>
                             </x-tab.title>
@@ -173,24 +173,24 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div x-data="{active : 0}">
     &lt;div class="flex bg-white rounded-md">
         &lt;x-tab.title name="0" livewire="">
             &lt;div class="flex items-center">
-                &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                 &lt;p>Tab 1&lt;/p>
             &lt;/div>
         &lt;/x-tab.title>
         &lt;x-tab.title name="1" livewire="">
             &lt;div class="flex items-center">
-                &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                 &lt;p>Tab 2</p>
             &lt;/div>
         &lt;/x-tab.title>
         &lt;x-tab.title name="2" livewire="">
         &lt;div class="flex items-center">
-            &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+            &lt;x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                 &lt;p>Tab 3&lt;/p>
             &lt;/div>
         &lt;/x-tab.title>
@@ -226,59 +226,59 @@
                 <div class="p-4 my-4 bg-white shadow-lg">
                     <div x-data="{openModal:false , deleteModal:false}">
                         <div class="flex space-x-4">
-                            <button 
-                                @click="openModal = true" 
-                                type="button" 
+                            <button
+                                @click="openModal = true"
+                                type="button"
                                 class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
                                 open modal
                             </button>
-                            <button 
-                                @click="deleteModal = true" 
-                                type="button" 
+                            <button
+                                @click="deleteModal = true"
+                                type="button"
                                 class="flex items-center p-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
                                 delete modal
                             </button>
                         </div>
-                        <x-modal.modal 
-                            modalActive="openModal" 
-                            title="Title" 
-                            modalSize="xl" 
+                        <x-modal.modal
+                            modalActive="openModal"
+                            title="Title"
+                            modalSize="xl"
                             closeBtn="yes"
                         >
                             <div class="p-4">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                when an unknown printer took a galley of type and scrambled it to make a 
-                                type specimen book. It has survived not only five centuries, but also 
-                                the leap into electronic typesetting, remaining essentially unchanged. 
-                                It was popularised in the 1960s with the release of Letraset sheets 
-                                containing Lorem Ipsum passages, and more recently with desktop 
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a
+                                type specimen book. It has survived not only five centuries, but also
+                                the leap into electronic typesetting, remaining essentially unchanged.
+                                It was popularised in the 1960s with the release of Letraset sheets
+                                containing Lorem Ipsum passages, and more recently with desktop
                                 publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                             </div>
                         </x-modal.modal>
 
-                        <x-modal.delete-modal 
-                            modalActive="deleteModal" 
+                        <x-modal.delete-modal
+                            modalActive="deleteModal"
                             {{-- deleteFunction="" --}}
                         />
                     </div>
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 
 // general modal
 &lt;div x-data="{openModal:false}">
-    &lt;button 
-        @click="openModal = true" 
-        type="button" 
+    &lt;button
+        @click="openModal = true"
+        type="button"
         class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
         open modal
     &lt;/button>
-    &lt;x-modal.modal 
-        modalActive="openModal" 
-        title="Title" 
-        modalSize="xl" 
+    &lt;x-modal.modal
+        modalActive="openModal"
+        title="Title"
+        modalSize="xl"
         closeBtn="yes"
     >
         &lt;div class="p-4">
@@ -289,14 +289,14 @@
 
 // delete modal
 &lt;div x-data="{deleteModal:false}">
-    &lt;button 
-        @click="deleteModal = true" 
-        type="button" 
+    &lt;button
+        @click="deleteModal = true"
+        type="button"
         class="flex items-center p-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
         delete modal
     &lt;/button>
-    &lt;x-modal.delete-modal 
-        modalActive="deleteModal" 
+    &lt;x-modal.delete-modal
+        modalActive="deleteModal"
         &#x7b;&#x7b;-- deleteFunction="YourFunction-to-delete" --&#x7d;&#x7d;
     />
 &lt;/div>
@@ -352,7 +352,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div x-data="{success:false , error:false , warning:false , info:false}">
     &lt;p class="mb-2 font-semibold">Toast&lt;/p>
     &lt;div class="grid grid-cols-1 gap-2 md:grid-cols-4">
@@ -407,7 +407,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div wire:loading wire:target="">
     &lt;x-main-loading />
 &lt;/div>
@@ -437,7 +437,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div class="p-4">
     &lt;h1 class="text-base font-semibold md:text-2xl">Title&lt;/h1>
     &lt;x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
@@ -467,7 +467,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-general.header-title title="Your Title" route="your route"/>
                     </code>
                 </pre>
@@ -492,7 +492,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"&gt;Your Title&lt;/h2>
                     </code>
                 </pre>
@@ -512,20 +512,20 @@
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
                     <div>
-                        <x-heroicon-s-question-mark-circle 
-                            class="w-8 h-8 text-primary-800 tooltipbtn" 
-                            data-title="Your-Title" 
+                        <x-heroicon-s-question-mark-circle
+                            class="w-8 h-8 text-primary-800 tooltipbtn"
+                            data-title="Your-Title"
                             data-placement="top"
                         />
                     </div>
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div>
-    &lt;x-heroicon-s-question-mark-circle 
-        class="w-8 h-8 text-primary-800 tooltipbtn" 
-        data-title="Your-Title" 
+    &lt;x-heroicon-s-question-mark-circle
+        class="w-8 h-8 text-primary-800 tooltipbtn"
+        data-title="Your-Title"
         data-placement="top"
     />
 &lt;/div>

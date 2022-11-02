@@ -16,8 +16,8 @@ class Profile extends Component
     public $name;
     public $icno;
     public $phone_no;
-    public $email; 
-    public $User; 
+    public $email;
+    public $User;
 
     public function submit($id)
 {
@@ -29,7 +29,7 @@ class Profile extends Component
     ]);
 
     $User = User::where('id', $id)->first();
-    
+
     $User->update([
         'name'                => $this->name,
         'icno'                => $this->icno,
@@ -46,13 +46,13 @@ class Profile extends Component
 
 public function  loadUser($id)
 {
-    $User = User::where('id', $id)->first();          
+    $User = User::where('id', $id)->first();
 
     $this->name             = $User->name;
     $this->icno             = $User->icno;
     $this->phone_no         = $User->phone_no;
     $this->email            = $User->email;
-} 
+}
 
 public function mount()
 {

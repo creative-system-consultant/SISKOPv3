@@ -12,7 +12,7 @@
             <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>
             <p class="text-base font-semibold"> Product Name: {{ $Product->name }}</p>
             <p class="text-base font-semibold"> Profit Rate:  {{ $Product->profit_rate }}%</p>
-            <p class="text-base font-semibold"> Minimum Financing Amount: RM {{ $Product->amt_min}}</p>
+            <p class="text-base font-semibold"> Minimum Financing Amount: RM {{ $Product->amt_min }}</p>
             <p class="text-base font-semibold"> Maximum Financing Amount: RM {{ $Product->amt_max }}</p>
             <p class="text-base font-semibold"> Minimum Financing Term:  {{ $Product->term_min }} Year</p>
             <p class="text-base font-semibold"> Maximum Financing Term:  {{ $Product->term_max }} Year</p>
@@ -35,7 +35,7 @@
 
 @push('js')
 <script>
-    window.addEventListener('swal:confirm', event => { 
+    window.addEventListener('swal:confirm', event => {
         swal.fire({
             icon: event.detail.type,
             title: event.detail.title,
@@ -49,6 +49,6 @@
                 window.Livewire.emit('submit');
             }
         });
-    });    
+    });
 </script>
 @endpush

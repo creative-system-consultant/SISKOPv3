@@ -2,10 +2,10 @@
 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Introducer Details</h2>
 <div class="grid grid-cols-12 gap-6 mt-4">
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
-        <x-form.input 
-            label="SEARCH INTRODUCER (by IC Number)" 
-            name="search" 
-            value="" 
+        <x-form.input
+            label="SEARCH INTRODUCER (by IC Number)"
+            name="search"
+            value=""
             mandatory=""
             disable=""
             type="text"
@@ -16,23 +16,23 @@
 </div>
 <div class="grid grid-cols-12 gap-6 mt-4">
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-        <x-form.input 
-            label="INTRODUCER NAME" 
-            name="introducer.name" 
-            value="" 
+        <x-form.input
+            label="INTRODUCER NAME"
+            name="introducer.name"
+            value=""
             mandatory=""
             disable=""
             type="text"
             wire:model="introducer.name"
             readonly
-            
+
         />
     </div>
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-        <x-form.input 
-            label="INTRODUCER IC NUMBER" 
-            name="introducer.icno" 
-            value="" 
+        <x-form.input
+            label="INTRODUCER IC NUMBER"
+            name="introducer.icno"
+            value=""
             mandatory=""
             disable=""
             type="text"
@@ -43,10 +43,10 @@
 </div>
 <div class="grid grid-cols-12 gap-6 mt-4">
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-        <x-form.input 
-            label="INTRODUCER EMAIL" 
-            name="introducer.email" 
-            value="" 
+        <x-form.input
+            label="INTRODUCER EMAIL"
+            name="introducer.email"
+            value=""
             mandatory=""
             disable=""
             type="text"
@@ -55,10 +55,10 @@
         />
     </div>
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-        <x-form.input 
-            label="INTRODUCER MEMBERSHIP NUMBER" 
-            name="introducer.mbr_no" 
-            value="" 
+        <x-form.input
+            label="INTRODUCER MEMBERSHIP NUMBER"
+            name="introducer.mbr_no"
+            value=""
             mandatory=""
             disable=""
             type="text"
@@ -78,6 +78,6 @@
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>
-        
+
     </div>
 </div>

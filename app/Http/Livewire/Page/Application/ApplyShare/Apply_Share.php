@@ -25,7 +25,7 @@ class Apply_Share extends Component
     public $banks;
 
     //Need protected $listerners to run the Livewire.emit event
-    protected $listeners = ['submit'];    
+    protected $listeners = ['submit'];
 
     protected $rules = [
         'cust.name'       => 'required',
@@ -44,7 +44,7 @@ class Apply_Share extends Component
                              'required_if:pay_method,==,cheque|before:first day of january next year|after_or_equal:today',
         'banks'           => 'required',
     ];
-    
+
     protected $messages = [
         'share_apply.required'        => ':attribute field is required',
         'share_apply.not_in'          => 'Application must be more than RM0',
@@ -79,11 +79,11 @@ class Apply_Share extends Component
     public function alertConfirm()
     {
         $this->validate();
-        
+
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
+            'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for add share?',
-        ]);   
+        ]);
     }
 
     public function submit()
@@ -99,7 +99,7 @@ class Apply_Share extends Component
 
             return redirect()->route('share.apply');
         }
-        
+
         $share->update([
             'method'       => $this->pay_method,
             'online_date'  => $this->online_date ??= NULL,
@@ -111,12 +111,12 @@ class Apply_Share extends Component
             'approved_amt' => NULL,
             'flag'         => 1,
             'step'         => 1,
-            'created_by'   => strtoupper($customer->name),  
+            'created_by'   => strtoupper($customer->name),
         ]);
 
         if ($this->pay_method == 'online') {
             // dd('Online Banking');
-            $filepath = 'Files/'.$customer->id.'/share//'.$share->id.'/'.'online_receipt'.'.'.$this->online_file->extension();                    
+            $filepath = 'Files/'.$customer->id.'/share//'.$share->id.'/'.'online_receipt'.'.'.$this->online_file->extension();
 
             Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/share//'.$share->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
 
@@ -135,8 +135,8 @@ class Apply_Share extends Component
         }
         elseif ($this->pay_method == 'cash') {
             // dd('CDM');
-            $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension(); 
-            
+            $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension();
+
             Storage::disk('local')->putFileAs('public/Files/'.$customer->id. '/share//'.$share->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
 
             $share->files()->create([
@@ -150,16 +150,16 @@ class Apply_Share extends Component
             session()->flash('success');
             session()->flash('title');
 
-            return redirect()->route('home');            
+            return redirect()->route('home');
         }
         else {
             // dd('Cheque);
             session()->flash('message', 'Share Application Successfully Send');
             session()->flash('success');
             session()->flash('title');
-    
-            return redirect()->route('home');              
-        }   
+
+            return redirect()->route('home');
+        }
     }
 
     public function restricApply($id)
@@ -170,21 +170,21 @@ class Apply_Share extends Component
             session()->flash('message', 'Add share application is been processed. If you want to make another application, please wait until the application is processed');
             session()->flash('info');
             session()->flash('title');
-    
-            return redirect()->route('home');                                
+
+            return redirect()->route('home');
         }
     }
 
     public function contApply($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id, 
-            'cust_id'     => $this->cust->id, 
+            'coop_id'     => $this->cust->coop_id,
+            'cust_id'     => $this->cust->id,
         ], [
             'amt_before'  => $this->cust->share,
-            'flag'        => 0, 
+            'flag'        => 0,
             'step'        => 0,
-            'apply_amt'   => '0.00',        
+            'apply_amt'   => '0.00',
         ]);
 
         $this->share_apply = $share->apply_amt;

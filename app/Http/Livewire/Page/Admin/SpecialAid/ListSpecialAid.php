@@ -15,7 +15,7 @@ class ListSpecialAid extends Component
     {
         // dd($this->statusTabung[$index]);
         $specialAid = SpecialAid::where('uuid', $uuid)->first();
-        
+
         $specialAid->update([
             'status' => $this->statusTabung[$index] == true ? 1 : 0,
         ]);

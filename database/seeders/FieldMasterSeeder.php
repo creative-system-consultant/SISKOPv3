@@ -31,7 +31,7 @@ class FieldMasterSeeder extends Seeder
         $field = [
             //CUSTOMER
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'TITLE',
                 'name2'     => 'cust_title',
                 'value'     => '$customer->title_id',
@@ -44,7 +44,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'FULL NAME',
                 'name2'     => 'custname',
                 'value'     => '$customer->name',
@@ -57,7 +57,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'IDENTITY NUMBER',
                 'name2'     => 'icno',
                 'value'     => '$customer->icno',
@@ -70,7 +70,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'TRUE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'OTHER ID',
                 'name2'     => 'otheric',
                 'value'     => '$customer->otheric',
@@ -83,7 +83,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'TRUE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'BIRTHDATE',
                 'name2'     => 'birthdate',
                 'value'     => '$customer->birthdate',
@@ -96,7 +96,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'BIRTHPLACE',
                 'name2'     => 'birthplace',
                 'value'     => '$customer->birthplace',
@@ -109,7 +109,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'MOBILE NUM',
                 'name2'     => 'mobile_num',
                 'value'     => '$customer->birthdate',
@@ -122,7 +122,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'EMAIL',
                 'name2'     => 'email',
                 'value'     => '$customer->email',
@@ -135,7 +135,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'GENDER',
                 'name2'     => 'gender',
                 'value'     => '$customer->gender_id',
@@ -148,7 +148,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'MARITAL',
                 'name2'     => 'marital',
                 'value'     => '$customer->marital_id',
@@ -161,7 +161,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'RACE',
                 'name2'     => 'race',
                 'value'     => '$customer->race_id',
@@ -174,7 +174,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'EDUCATION',
                 'name2'     => 'education',
                 'value'     => '$customer->education_id',
@@ -187,7 +187,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '01', 
+                'group_id'  => '01',
                 'name'      => 'HOME ADDRESS',
                 'name2'     => 'address_home',
                 'value'     => '$customer->address',
@@ -202,7 +202,7 @@ class FieldMasterSeeder extends Seeder
 
             //PARENT
             [
-                'group_id'  => '03', 
+                'group_id'  => '03',
                 'name'      => 'FULL NAME',
                 'name2'     => 'family_name',
                 'value'     => '$customer->family_name',
@@ -215,7 +215,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '03', 
+                'group_id'  => '03',
                 'name'      => 'IDENTITY NUMBER',
                 'name2'     => 'family_icno',
                 'value'     => '$customer->family_icno',
@@ -228,7 +228,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '03', 
+                'group_id'  => '03',
                 'name'      => 'HOME ADDRESS',
                 'name2'     => 'family_address',
                 'value'     => '$customer->family_address',
@@ -241,7 +241,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '03', 
+                'group_id'  => '03',
                 'name'      => 'MOBILE NUM',
                 'name2'     => 'family_number',
                 'value'     => '$customer->family_number',
@@ -254,7 +254,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '03', 
+                'group_id'  => '03',
                 'name'      => 'EMAIL',
                 'name2'     => 'family_email',
                 'value'     => '$customer->family_email',
@@ -269,7 +269,7 @@ class FieldMasterSeeder extends Seeder
 
             //WORK
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'COMPANY NAME',
                 'name2'     => 'company',
                 'value'     => '$customer->company',
@@ -282,7 +282,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'NAME OF DEPARTMENT',
                 'name2'     => 'department',
                 'value'     => '$customer->department',
@@ -295,7 +295,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'OFFICE ADDRESS',
                 'name2'     => 'office_address',
                 'value'     => '$customer->office_address',
@@ -308,7 +308,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'POSITION',
                 'name2'     => 'position',
                 'value'     => '$customer->position',
@@ -321,7 +321,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'OFFICE TEL NUM',
                 'name2'     => 'office_number',
                 'value'     => '$customer->office_number',
@@ -334,7 +334,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'SALARY',
                 'name2'     => 'salary',
                 'value'     => '$customer->salary',
@@ -347,7 +347,7 @@ class FieldMasterSeeder extends Seeder
                 'readonly'  => 'FALSE',
             ],
             [
-                'group_id'  => '04', 
+                'group_id'  => '04',
                 'name'      => 'WORKER NUMBER',
                 'name2'     => 'worker_number',
                 'value'     => '$customer->worker_number',

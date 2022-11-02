@@ -1,14 +1,14 @@
 <div class="p-4 @if ($numpage != 2) hidden @endif ">
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
 
-            <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Introducer </h2> 
+            <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Introducer </h2>
 
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
-                    <x-form.input 
-                        label="SEARCH Introducer (by IC Number)" 
-                        name="search_introducer" 
-                        value="" 
+                    <x-form.input
+                        label="SEARCH Introducer (by IC Number)"
+                        name="search_introducer"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -19,23 +19,23 @@
             </div>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Introducer NAME" 
-                        name="Introducer.name" 
-                        value="" 
+                    <x-form.input
+                        label="Introducer NAME"
+                        name="Introducer.name"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
                         wire:model="Introducer.name"
                         readonly
-                        
+
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Introducer IC NUMBER" 
-                        name="Introducer.icno" 
-                        value="" 
+                    <x-form.input
+                        label="Introducer IC NUMBER"
+                        name="Introducer.icno"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -46,10 +46,10 @@
             </div>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Introducer EMAIL" 
-                        name="Introducer.email" 
-                        value="" 
+                    <x-form.input
+                        label="Introducer EMAIL"
+                        name="Introducer.email"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -58,10 +58,10 @@
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Introducer MEMBERSHIP NUMBER" 
-                        name="Introducer.mbr_no" 
-                        value="" 
+                    <x-form.input
+                        label="Introducer MEMBERSHIP NUMBER"
+                        name="Introducer.mbr_no"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -71,14 +71,14 @@
                 </div>
             </div>
 
-            <h2 class="mt-4 mb-4 text-base font-semibold border-b-2 border-gray-300"> Guarantor </h2> 
+            <h2 class="mt-4 mb-4 text-base font-semibold border-b-2 border-gray-300"> Guarantor </h2>
 
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
-                    <x-form.input 
-                        label="SEARCH Guarantor (by IC Number)" 
-                        name="" 
-                        value="" 
+                    <x-form.input
+                        label="SEARCH Guarantor (by IC Number)"
+                        name=""
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -89,23 +89,23 @@
             </div>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Guarantor Name" 
-                        name="Guarantor.name" 
-                        value="" 
+                    <x-form.input
+                        label="Guarantor Name"
+                        name="Guarantor.name"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
                         wire:model="Guarantor.name"
                         readonly
-                        
+
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Guarantor IC Number" 
-                        name="Guarantor.icno" 
-                        value="" 
+                    <x-form.input
+                        label="Guarantor IC Number"
+                        name="Guarantor.icno"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -116,10 +116,10 @@
             </div>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Guarantor Email" 
-                        name="Guarantor.email" 
-                        value="" 
+                    <x-form.input
+                        label="Guarantor Email"
+                        name="Guarantor.email"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -128,10 +128,10 @@
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.input 
-                        label="Guarantor Membership Number" 
-                        name="Guarantor.mbr_no" 
-                        value="" 
+                    <x-form.input
+                        label="Guarantor Membership Number"
+                        name="Guarantor.mbr_no"
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"

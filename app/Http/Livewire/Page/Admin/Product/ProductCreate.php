@@ -73,7 +73,7 @@ class ProductCreate extends Component
     }
 
     public function enableDoc($num,$code,$name)
-    {   
+    {
         // dd($num);
 
         // $document = AccountProductDocument::Create([
@@ -86,7 +86,7 @@ class ProductCreate extends Component
         // $document->update([
         //     'status'    => !$document->status,
         // ]);
-        
+
         $this->document[$num-1] = New AccountProductDocument;
         $this->document[$num-1]->coop_id = $this->User->coop_id;
         $this->document[$num-1]->type = $code;
@@ -107,8 +107,8 @@ class ProductCreate extends Component
 
         //brochure file
         if($this->brochure){
-            
-            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension(); 
+
+            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $coop. '/financing/product//'.$this->Product->id, $this->brochure, 'brochure'.'.'.$this->brochure->extension());
 
@@ -119,12 +119,12 @@ class ProductCreate extends Component
                 'filepath' => $filepath,
             ]);
         };
-        
+
 
          //payment file
          if($this->payment_table){
-            
-            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'payment_table.'.$this->payment_table->extension();  
+
+            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'payment_table.'.$this->payment_table->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $coop. '/financing/product//'.$this->Product->id, $this->payment_table, 'payment_table'.'.'.$this->payment_table->extension());
 
@@ -151,6 +151,6 @@ class ProductCreate extends Component
 
     public function render()
     {
-        return view('livewire.page.admin.product.productcreate')->extends('layouts.head');
+        return view('livewire.page.admin.product.create')->extends('layouts.head');
     }
 }

@@ -16,7 +16,7 @@ class ShareCommittee extends Component
 
     public function mount($uuid)
     {
-       $this->committee = Share::where('uuid', $uuid)->with('customer')->first(); 
+       $this->committee = Share::where('uuid', $uuid)->with('customer')->first();
     }
 
     public function render()

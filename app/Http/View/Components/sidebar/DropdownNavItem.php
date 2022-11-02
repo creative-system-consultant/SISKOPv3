@@ -10,7 +10,7 @@ class DropdownNavItem extends Component
     public $title;
     public $uri;
     public $type;
-    
+
     public function __construct($title,$active,$uri,$type)
     {
         $this->title = $title;
@@ -19,7 +19,7 @@ class DropdownNavItem extends Component
         $this->type = $type;
     }
 
-    
+
     public function render()
     {
         return view('components.sidebar.dropdown-nav-item');

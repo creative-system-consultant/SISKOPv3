@@ -16,16 +16,16 @@
                             <div class="flex items-center justify-center space-x-2"> Maximum Financing </div>
                             <div class="mt-4 flex items-center justify-center space-x-2">
                                 <div x-data="{open:false}">
-                                    <button 
-                                        @click="open = true" 
-                                        type="button" 
+                                    <button
+                                        @click="open = true"
+                                        type="button"
                                         class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
                                         Product Info
                                     </button>
-                                    <x-modal.modal 
-                                        modalActive="open" 
-                                        title="Product Info" 
-                                        modalSize="xl" 
+                                    <x-modal.modal
+                                        modalActive="open"
+                                        title="Product Info"
+                                        modalSize="xl"
                                         closeBtn="yes"
                                     >
                                         <div class="p-4">
@@ -57,12 +57,12 @@
                                                     <div>
                                                         <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-dots-circle-horizontal -alt class="w-5 h-5 mr-2"/> Other Info </div>
                                                     </div>
-                                                </div>  
+                                                </div>
                                             </div>
                                         </div>
                                     </x-modal.modal>
                                 </div>
-                                <p> <a href="{{route('financing.apply', $list->id)}}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
+                                <p> <a href="{{ route('financing.apply', $list->uuid) }}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
                                     <x-heroicon-s-pencil-alt class="w-4 h-4 mr-2"/>
                                     Apply
                                 </a> </p>

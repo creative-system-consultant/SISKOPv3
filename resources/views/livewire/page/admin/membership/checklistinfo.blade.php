@@ -8,8 +8,8 @@
                 <x-table.table-header class="text-left" value="" sort="" />
             </x-slot>
 
-            <x-slot name="tbody">        
-                <tr @if ($member->document_status('IC') == '0') style="display: none" @endif>    
+            <x-slot name="tbody">
+                <tr @if ($member->document_status('IC') == '0') style="display: none" @endif>
                     <x-table.table-body colspan="" class="text-left">
                         IC Photo (Front & Back)
                     </x-table.table-body>
@@ -18,7 +18,7 @@
                             <x-heroicon-o-eye class="w-4 h-4 mr-2"/>
                             Show
                         </a>
-                    </x-table.table-body>        
+                    </x-table.table-body>
                 </tr>
                 <tr @if ($member->document_status('WC') == '0') style="display: none" @endif>
                     <x-table.table-body colspan="" class="text-left">
@@ -55,8 +55,8 @@
                 </tr>
             </x-slot>
         </x-table.table>
-        
-        
+
+
             <div class="flex items-center justify-center space-x-2">
                 <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     previous
@@ -64,5 +64,5 @@
                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                     Submit
                 </button>
-            </div>       
+            </div>
         </div>

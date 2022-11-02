@@ -14,10 +14,10 @@ class notification extends Component
     {
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
-        
-        $this->specialAid = ApplySpecialAid::where('cust_id', $customer->id)->first();   
+
+        $this->specialAid = ApplySpecialAid::where('cust_id', $customer->id)->first();
     }
-    
+
     public function render()
     {
         return view('livewire.page.notification.notification')->extends('layouts.head');

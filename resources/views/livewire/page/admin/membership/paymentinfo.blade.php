@@ -2,10 +2,10 @@
     <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Payment Details</h2>
     <div @if ($member->field_status(4) == '0') style="display: none" @endif >
     <div class="p-4 text-green-900 bg-green-200">
-        <p><x-form.input-tag 
-            label="Registration Fee" 
-            name="applymember.register_fee" 
-            value="" 
+        <p><x-form.input-tag
+            label="Registration Fee"
+            name="applymember.register_fee"
+            value=""
             mandatory=""
             disable=""
             leftTag="RM"
@@ -18,10 +18,10 @@
 
     <div @if ($member->field_status(5) == '0') style="display: none" @endif >
     <div class="p-4 text-green-900 bg-green-200">
-        <p><x-form.input-tag 
-            label="Share Fee" 
-            name="applymember.share_fee" 
-            value="" 
+        <p><x-form.input-tag
+            label="Share Fee"
+            name="applymember.share_fee"
+            value=""
             mandatory=""
             disable=""
             leftTag="RM"
@@ -34,10 +34,10 @@
 
     <div @if ($member->field_status(6) == '0') style="display: none" @endif >
         <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input-tag 
-                label="Contribution Fee" 
-                name="applymember.contribution_fee" 
-                value="" 
+            <p><x-form.input-tag
+                label="Contribution Fee"
+                name="applymember.contribution_fee"
+                value=""
                 mandatory=""
                 disable=""
                 leftTag="RM"

@@ -7,7 +7,7 @@
     </div>
     <p class="font-semibold">Code</p>
     <pre class="-mt-4 language-html" wire:ignore>
-        <code class="language-html"> 
+        <code class="language-html">
 @{{ cameltoString('ThisIsATestString'); }}
         </code>
     </pre>

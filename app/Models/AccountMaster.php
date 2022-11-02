@@ -54,5 +54,5 @@ class AccountMaster extends Model implements Auditable
     {
         return $this->morphMany(Guarantor::class, 'guarantee');
     }
-    
+
 }

@@ -5,19 +5,19 @@
             <div class="flex bg-white rounded-md">
                 <x-tab.title name="0" livewire="">
                     <div class="flex items-center">
-                        <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                         <p>Basic Info</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="1" livewire="">
                     <div class="flex items-center">
-                        <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                         <p>Document Info</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="2" livewire="">
                     <div class="flex items-center">
-                        <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-credit-card class="w-6 h-6 mr-2"/>
                         <p>Payment Info</p>
                     </div>
                 </x-tab.title>
@@ -36,4 +36,4 @@
         </div>
     </div>
 </div>
-       
+

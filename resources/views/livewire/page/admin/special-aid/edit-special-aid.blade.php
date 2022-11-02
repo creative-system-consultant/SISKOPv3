@@ -1,35 +1,35 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Special Aid List > Edit</h1>
         <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
-            <x-general.header-title title="Edit Special Aid" route="{{route('special_aid.list')}}"/>
-            <div class="pt-4">    
+            <x-general.header-title title="Edit Special Aid" route="{{ route('special_aid.list') }}"/>
+            <div class="pt-4">
                 <div class="pb-4 pl-4 pr-4">
                     <x-form.basic-form wire:submit.prevent="submit('{{ $specialAid->uuid }}')">
                         <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Information</h2>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
-                                <x-form.input 
-                                    label="Name" 
-                                    name="specialAid_name" 
-                                    value="" 
+                                <x-form.input
+                                    label="Name"
+                                    name="specialAid_name"
+                                    value=""
                                     mandatory=""
                                     disable=""
-                                    type="text"          
-                                    wire:model.defer="specialAid_name"              
+                                    type="text"
+                                    wire:model.defer="specialAid_name"
                                 />
                             </div>
                         </div>
-    
+
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                             <div class="flex items-center w-full mt-3">
                                 <label for="enable_applyAmt" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
-                                    Enabled Apply Amount 
+                                    Enabled Apply Amount
                                 </label>
-                                <label for="enabled_apply_amt" class="flex items-center cursor-pointer">                                
+                                <label for="enabled_apply_amt" class="flex items-center cursor-pointer">
                                     <div class="relative">
-                                        <input 
-                                            type="checkbox" 
-                                            id="enabled_apply_amt" 
+                                        <input
+                                            type="checkbox"
+                                            id="enabled_apply_amt"
                                             class="sr-only"
                                             name="enabled_apply_amt"
                                             wire:model="enabled_apply_amt"
@@ -39,26 +39,26 @@
                                     </div>
                                 </label>
                             </div>
-    
+
                             <div>
-                                <x-form.input-tag 
-                                    label="Default Apply Amount" 
+                                <x-form.input-tag
+                                    label="Default Apply Amount"
                                     type="text"
-                                    name="default_apply_amount" 
+                                    name="default_apply_amount"
                                     value=""
                                     leftTag="RM"
                                     rightTag=""
                                     mandatory=""
                                     disable=""
                                     wire:model="default_apply_amount"
-                                />                                                        
+                                />
                             </div>
 
                             <div>
-                                <x-form.input-tag 
-                                    label="Default Minimum Amount" 
+                                <x-form.input-tag
+                                    label="Default Minimum Amount"
                                     type="text"
-                                    name="default_min_amount" 
+                                    name="default_min_amount"
                                     value=""
                                     leftTag="RM"
                                     rightTag=""
@@ -69,10 +69,10 @@
                             </div>
 
                             <div>
-                                <x-form.input-tag 
-                                    label="Default Maximum Amount" 
+                                <x-form.input-tag
+                                    label="Default Maximum Amount"
                                     type="text"
-                                    name="default_max_amount" 
+                                    name="default_max_amount"
                                     value=""
                                     leftTag="RM"
                                     rightTag=""
@@ -85,27 +85,27 @@
 
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             <div>
-                                <x-form.input 
-                                    label="Start Date" 
-                                    name="start_date"                                 
-                                    value="" 
+                                <x-form.input
+                                    label="Start Date"
+                                    name="start_date"
+                                    value=""
                                     mandatory=""
                                     disable=""
                                     type="date"
                                     wire:model.defer='start_date'
-                                />                      
+                                />
                             </div>
-                            
+
                             <div>
-                                <x-form.input 
-                                    label="End Date" 
-                                    value="" 
-                                    name="end_date" 
+                                <x-form.input
+                                    label="End Date"
+                                    value=""
+                                    name="end_date"
                                     mandatory=""
                                     disable=""
                                     type="date"
                                     wire:model.defer='end_date'
-                                />                                                                     
+                                />
                             </div>
                         </div>
 
@@ -137,9 +137,9 @@
                                     <div class="flex items-center w-full mt-2">
                                         <label for="Fstatus.{{ $index }}" class="flex items-center cursor-pointer">
                                             <div class="relative">
-                                                <input 
-                                                    type="checkbox" 
-                                                    id="Fstatus.{{ $index }}" 
+                                                <input
+                                                    type="checkbox"
+                                                    id="Fstatus.{{ $index }}"
                                                     class="sr-only"
                                                     wire:model='Fstatus.{{ $index }}'
                                                     wire:click="fieldStatus('{{ $specialAid->uuid }}', '{{ $index }}')"
@@ -149,7 +149,7 @@
                                             </div>
                                         </label>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                                     <label for="field_status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
                                         Required
@@ -157,9 +157,9 @@
                                     <div class="flex items-center w-full mt-2">
                                         <label for="Frequired.{{ $index }}" class="flex items-center cursor-pointer">
                                             <div class="relative">
-                                                <input 
-                                                    type="checkbox" 
-                                                    id="Frequired.{{ $index }}" 
+                                                <input
+                                                    type="checkbox"
+                                                    id="Frequired.{{ $index }}"
                                                     class="sr-only"
                                                     wire:model='Frequired.{{ $index }}'
                                                     wire:click="fieldRequired('{{ $specialAid->uuid }}', '{{ $index }}')"
@@ -169,7 +169,7 @@
                                             </div>
                                         </label>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-1 xl:col-span-1">
                                     <div class="justify-end pt-4 mt-3 rounded-md">
                                         <button wire:click.prevent="alertDelete('{{ $specialAid->uuid }}', '{{ $index }}')" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
@@ -186,7 +186,7 @@
 
                         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                             <div class="flex items-center justify-center space-x-2">
-                                <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
+                                <a href="{{ url()->previous() }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
                                     Cancel
                                 </a>
                                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
@@ -203,7 +203,7 @@
 
 @push('js')
 <script>
-    window.addEventListener('swal:confirm', event => { 
+    window.addEventListener('swal:confirm', event => {
         swal.fire({
             icon: event.detail.type,
             title: event.detail.text,
@@ -214,6 +214,6 @@
                 window.Livewire.emit('remField', event.detail.uuid, event.detail.index);
             }
         });
-    });    
+    });
 </script>
 @endpush

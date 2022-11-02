@@ -16,10 +16,10 @@ class SpecialAidMaker extends Component
         return redirect()->route('specialAid.checker', $this->maker->uuid);
     }
 
-    public function mount($uuid)    
-    { 
+    public function mount($uuid)
+    {
         $this->maker = ApplySpecialAid::where('uuid', $uuid)->with('customer')->first();
-              
+
         $this->type = SpecialAidType::where('id', $this->maker->special_aid_id)->first();
     }
 

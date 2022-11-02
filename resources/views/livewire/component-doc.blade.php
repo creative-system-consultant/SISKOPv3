@@ -4,43 +4,43 @@
             <div class="flex w-full mb-2 overflow-x-auto bg-white rounded-md flex-nowrap">
                 <x-tab.title name="6" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-code class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-code class="w-6 h-6 mr-2"/>
                         <p>Create Livewire</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="7" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-presentation-chart-bar class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-presentation-chart-bar class="w-6 h-6 mr-2"/>
                         <p>Chart</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="0" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-collection class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-collection class="w-6 h-6 mr-2"/>
                         <p>Component List</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="1" livewire="">
                     <div class="flex items-center w-24 md:w-full">
-                        <x-heroicon-o-duplicate class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-duplicate class="w-6 h-6 mr-2"/>
                         <p>Call Swall</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="2" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-color-swatch class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-color-swatch class="w-6 h-6 mr-2"/>
                         <p>Customize color</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="3" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-annotation class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-annotation class="w-6 h-6 mr-2"/>
                         <p>Custom Helper</p>
                     </div>
                 </x-tab.title>
             </div>
             <div class="pt-4 bg-white border-t-2">
-                
+
                 <x-tab.content name="6">
                     <div class="p-4" x-data="{selected : 0}" >
                         <h1 class="mb-6 text-base font-semibold md:text-2xl"></h1>
@@ -49,20 +49,20 @@
                                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">To Create livewire page, must run this command for folder strucure</h2>
                                 <p class="font-semibold">Code</p>
                                 <pre class="-mt-4 language-html" wire:ignore>
-                                    <code class="language-html"> 
+                                    <code class="language-html">
 php artisan make:livewire Page/YourPageName
                                     </code>
-                                </pre>        
+                                </pre>
                             </div>
                             <div class="p-6 bg-white rounded-md shadow-md ">
                                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">To rename livewire page (to refactor or typo), use this command</h2>
                                 <p class="font-semibold">Code</p>
                                 <pre class="-mt-4 language-html" wire:ignore>
-                                    <code class="language-html"> 
+                                    <code class="language-html">
 php artisan livewire:move yourpageName Page/YourPageName
                                     </code>
-                                </pre>        
-                            </div> 
+                                </pre>
+                            </div>
                         </div>
                     </div>
                 </x-tab.content>
@@ -76,7 +76,7 @@ php artisan livewire:move yourpageName Page/YourPageName
                         </div>
                     </div>
                 </x-tab.content>
-                
+
                 <x-tab.content name="0">
                     <div class="p-4" x-data="{selected : 0}">
                         <h1 class="mb-6 text-base font-semibold md:text-2xl">Component List</h1>
@@ -96,7 +96,7 @@ php artisan livewire:move yourpageName Page/YourPageName
                                     <x-slot name="content">
                                         <div class="px-6 border-t-2">
                                             <div class="p-4 my-4 bg-white shadow-lg">
-                                                For Icon u can using this link  <a href="https://heroicons.com/" target="_blank" class="text-blue-500 hover:text-blue-400">https://heroicons.com/</a> 
+                                                For Icon u can using this link  <a href="https://heroicons.com/" target="_blank" class="text-blue-500 hover:text-blue-400">https://heroicons.com/</a>
                                                 <div class="flex mt-4 space-x-3 ">
                                                     <x-heroicon-o-home class="w-7 h-7 text-primary-800" />
                                                     <x-heroicon-s-home class="w-7 h-7 text-primary-800" />
@@ -104,7 +104,7 @@ php artisan livewire:move yourpageName Page/YourPageName
                                             </div>
                                             <p class="font-semibold">Code</p>
                                             <pre class="-mt-4 language-html" wire:ignore>
-                                                <code class="language-html"> 
+                                                <code class="language-html">
 //outline icon
 &lt;x-heroicon-o-home class="w-7 h-7 text-primary-800" />
 //solid icon
@@ -152,7 +152,7 @@ php artisan livewire:move yourpageName Page/YourPageName
                                     <p class="font-semibold">tailwind.config.js</p>
                                     <div class="overflow-y-auto h-96">
                                     <pre class="-mt-4 language-html" wire:ignore>
-                                        <code class="language-html"> 
+                                        <code class="language-html">
     Slate: {
         50 : '#f8fafc',
         100: '#f1f5f9',
@@ -422,7 +422,7 @@ php artisan livewire:move yourpageName Page/YourPageName
                                     </pre>
                                 </div>
                                 </div>
-                            
+
                             </div>
                         </div>
                     </div>

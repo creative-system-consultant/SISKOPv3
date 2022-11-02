@@ -42,5 +42,5 @@ class ApplySpecialAidField extends Model
         if ($this->type == 'bigint'){   $this->bigint   = $value; }
     }
 
-    
+
 }

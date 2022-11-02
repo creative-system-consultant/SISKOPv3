@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
         <!-- Favicon -->
-        <link rel="icon" href="{{ asset('img/logo.png')}}">
+        <link rel="icon" href="{{ asset('img/logo.png') }}">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}?v=@php echo date('ymdgis') @endphp">
@@ -21,25 +21,25 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
         <!-- apexChart css -->
-        <link rel="stylesheet" href="{{ asset('dist/apexcharts.css')}}" />
+        <link rel="stylesheet" href="{{ asset('dist/apexcharts.css') }}" />
 
-        <script src="{{ asset('js/init-alpine.js')}}"></script>
+        <script src="{{ asset('js/init-alpine.js') }}"></script>
         <!-- apexChart js -->
-        <script src="{{ asset('dist/apexcharts.min.js')}}"></script>
+        <script src="{{ asset('dist/apexcharts.min.js') }}"></script>
 
         <!-- jquery js -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}" defer></script>
-        <script src="{{ asset('js/popper.min.js')}}"></script>
-        <script src="{{ asset('js/tippy.min.js')}}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/tippy.min.js') }}"></script>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/highlightjs-blade/dist/blade.min.js"></script>
         <script>hljs.highlightAll();</script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/monokai-sublime.min.css">
-        
+
         @livewireStyles
     </head>
 

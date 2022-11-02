@@ -20,14 +20,14 @@
         </div>
         <ul class="flex items-center flex-shrink-0 space-x-4">
             <div class="py-6"></div>
-        
+
             <!-- Profile menu -->
             <li class="relative" x-data="{open:false}">
                 <button
                     class="p-2 text-white align-middle rounded-md focus:outline-none "
                     @click="open=!open" @keydown.escape="open=false" aria-haspopup="true">
                     <div class="flex items-center space-x-2">
-                        <img class="w-10 h-10 rounded-full" src="{{asset('img/defaultUser.png')}}" alt="Rounded avatar">
+                        <img class="w-10 h-10 rounded-full" src="{{ asset('img/defaultUser.png') }}" alt="Rounded avatar">
                         <p>USER</p>
                     </div>
                 </button>
@@ -43,7 +43,7 @@
                                 <span>Profile</span>
                             </a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </li>

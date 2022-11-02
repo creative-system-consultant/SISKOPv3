@@ -4,14 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        
+
         <title>{{ config('app.name') }}</title>
 
         <!-- Font -->
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
         <!-- Favicon -->
-        <link rel="icon" href="{{ asset('img/logo.png')}}">
+        <link rel="icon" href="{{ asset('img/logo.png') }}">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}?v=@php echo date('ymdgis') @endphp">
@@ -23,25 +23,25 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
         <!-- apexChart css -->
-        <link rel="stylesheet" href="{{ asset('dist/apexcharts.css')}}" />
+        <link rel="stylesheet" href="{{ asset('dist/apexcharts.css') }}" />
 
-        <script src="{{ asset('js/init-alpine.js')}}"></script>
+        <script src="{{ asset('js/init-alpine.js') }}"></script>
         <!-- apexChart js -->
-        <script src="{{ asset('dist/apexcharts.min.js')}}"></script>
+        <script src="{{ asset('dist/apexcharts.min.js') }}"></script>
 
         <!-- alpine js -->
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         <!-- jquery js -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        
 
         <!-- tippy js -->
-        <script src="{{ asset('js/popper.min.js')}}"></script>
-        <script src="{{ asset('js/tippy.min.js')}}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/tippy.min.js') }}"></script>
 
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}" defer></script>
+
         @livewireStyles
     </head>
 

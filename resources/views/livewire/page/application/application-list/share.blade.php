@@ -15,7 +15,7 @@
             @forelse ($shares as $share)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $loop->iteration }}        
+                        {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $share->customer->name }}
@@ -40,28 +40,28 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($share->flag == '0') Still being applied
                         @elseif ($share->flag == '1') Being Processed
-                        @elseif ($share->flag == '3') Failed / Decline      
-                        @elseif ($share->flag == '6') Approved                 
-                        @endif             
+                        @elseif ($share->flag == '3') Failed / Decline
+                        @elseif ($share->flag == '6') Approved
+                        @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
-                            <button  
-                                wire:click="showApplication('{{$share->uuid}}')"
+                            <button
+                                wire:click="showApplication('{{ $share->uuid }}')"
                                 @click="openModal = true"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
-                            </button>  
-                            
-                            <a href="{{route('share.maker', $share->uuid)}}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>                    
+                            </button>
+
+                            <a href="{{ route('share.maker', $share->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
                             </a>
-                        </div>                        
+                        </div>
                     </x-table.table-body>
-                </tr>  
+                </tr>
             @empty
             <x-table.table-body colspan="4" class="text-left">
-                No Data                    
+                No Data
             </x-table.table-body>
             @endforelse
         </x-slot>

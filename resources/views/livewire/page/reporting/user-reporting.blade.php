@@ -1,7 +1,7 @@
 <div class="p-4">
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div class="pb-4">
-            <x-general.header-title title="List Of User" route="{{route('list-reporting')}}"/>
+            <x-general.header-title title="List Of User" route="{{ route('list-reporting') }}"/>
         </div>
         <div wire:loading wire:target="generateExcel">
             <x-main-loading />
@@ -48,13 +48,13 @@
                                 {{ $key + 1 }}
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-left">
-                                {{$item->name}}
+                                {{ $item->name }}
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-left">
-                                {{$item->ICNO}}
+                                {{ $item->ICNO }}
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-left">
-                                {{$item->MARRIED}}
+                                {{ $item->MARRIED }}
                             </x-table.table-body>
                         </tr>
                         @empty

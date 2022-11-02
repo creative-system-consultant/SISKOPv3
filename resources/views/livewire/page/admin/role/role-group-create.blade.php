@@ -6,33 +6,33 @@
             <h2 class="mt-4 mb-6 text-base font-semibold border-b-2 border-gray-300">Group Details</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-8">
-                    <x-form.input 
-                        label="GROUP NAME" 
-                        type="text" 
-                        name="group.name" 
-                        value="" 
-                        mandatory="" 
-                        disable="" 
+                    <x-form.input
+                        label="GROUP NAME"
+                        type="text"
+                        name="group.name"
+                        value=""
+                        mandatory=""
+                        disable=""
                         wire:model="group.name"
                     />
-                    <x-form.input 
-                        label="" 
-                        type="hidden" 
-                        name="group.coop_id" 
-                        value="" 
-                        mandatory="" 
-                        disable="" 
+                    <x-form.input
+                        label=""
+                        type="hidden"
+                        name="group.coop_id"
+                        value=""
+                        mandatory=""
+                        disable=""
                         wire:model="group.name"
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-4">
-                    <x-form.dropdown 
+                    <x-form.dropdown
                         label="ACTIVE STATUS"
                         value=""
-                        name="group.status" 
+                        name="group.status"
                         mandatory=""
                         disable=""
-                        default="" 
+                        default=""
                         wire:model="group.status"
                     >
                         <option value="0">INACTIVE</option>
@@ -42,24 +42,24 @@
             </div>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-8">
-                    <x-form.text-area 
-                        label="DESCRIPTION" 
-                        value="group.description" 
-                        name="group.description" 
+                    <x-form.text-area
+                        label="DESCRIPTION"
+                        value="group.description"
+                        name="group.description"
                         rows=""
                         disable=""
                         mandatory=""
-                        placeholder="Description" 
+                        placeholder="Description"
                         wire:model="group.description"
                     />
                 </div>
             </div>
             <div class="grid items-center grid-cols-12 gap-2 mt-4">
                 <div class="col-span-11 sm:col-span-11 md:col-span-8 lg:col-span-8 xl:col-span-4">
-                    <x-form.dropdown 
+                    <x-form.dropdown
                         label="ROLE"
                         value="group.role_id"
-                        name="group.role_id" 
+                        name="group.role_id"
                         id=""
                         mandatory=""
                         disable=""
@@ -73,9 +73,9 @@
                     </x-form.dropdown>
                 </div>
                 <div class="col-span-1 sm:col-span-1 md:col-span-4 lg:col-span-4 xl:col-span-8">
-                    <x-heroicon-o-question-mark-circle 
-                        class="w-6 h-6 mt-6 text-gray-700 tooltipbtn dark:text-white" 
-                        data-title="MAKER <br> CHECKER <br> COMMITTEE <br> APPROVER" 
+                    <x-heroicon-o-question-mark-circle
+                        class="w-6 h-6 mt-6 text-gray-700 tooltipbtn dark:text-white"
+                        data-title="MAKER <br> CHECKER <br> COMMITTEE <br> APPROVER"
                         data-placement="right"
                     />
                 </div>
@@ -85,10 +85,10 @@
             <h2 class="mb-6 mt-6 text-base font-semibold border-b-2 border-gray-300">Group Members</h2>
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-2">
-                    <x-form.input 
-                        label="SEARCH USER" 
-                        name="" 
-                        value="" 
+                    <x-form.input
+                        label="SEARCH USER"
+                        name=""
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -97,10 +97,10 @@
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
-                    <x-form.dropdown 
+                    <x-form.dropdown
                         label="USERS (displaying 5, refine search)"
                         value=""
-                        name="selected" 
+                        name="selected"
                         id=""
                         mandatory=""
                         disable=""
@@ -138,7 +138,7 @@
                                     {{ $user->name }}
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
-                                    <button type="button" wire:click="rem({{$user->id}})" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
+                                    <button type="button" wire:click="rem({{ $user->id }})" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                                         REMOVE
                                     </button>
                                 </x-table.table-body>
@@ -167,10 +167,10 @@
             </div>
             @forelse ($this->getErrorBag() as $key => $error)
             <div x-show="error">
-                <x-toaster.error title="{{ $key }}" message="{{ $error}}" />
+                <x-toaster.error title="{{ $key }}" message="{{ $error }}" />
             </div>
             @empty
-                
+
             @endforelse
         </x-form.basic-form>
     </x-general.card>

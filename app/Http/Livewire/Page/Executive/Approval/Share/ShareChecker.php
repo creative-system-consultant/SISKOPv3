@@ -7,7 +7,7 @@ use App\Models\Share;
 use Livewire\Component;
 
 class ShareChecker extends Component
-{   
+{
     public $checker;
 
     public function next()
@@ -17,7 +17,7 @@ class ShareChecker extends Component
 
     public function mount($uuid)
     {
-       $this->checker = Share::where('uuid', $uuid)->with('customer')->first(); 
+       $this->checker = Share::where('uuid', $uuid)->with('customer')->first();
     }
 
     public function render()

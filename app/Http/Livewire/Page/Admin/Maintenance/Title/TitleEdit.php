@@ -33,18 +33,18 @@ class TitleEdit extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('title.list'); 
+        return redirect()->route('title.list');
     }
 
     public function load($id)
     {
-        $title = RefCustTitle::where('id', $id)->first();          
+        $title = RefCustTitle::where('id', $id)->first();
 
-        $this->title_description    = $title->description; 
+        $this->title_description    = $title->description;
         $this->title_code           = $title->code;
         $this->title_status         = $title->status == true ? 'checked' : '';
     }
-    
+
     public function mount($id)
     {
         $this->title = RefCustTitle::where('id', $id)->first();

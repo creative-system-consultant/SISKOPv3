@@ -224,7 +224,6 @@ class RefSeeder extends Seeder
         ];
         DB::table('ref.steps')->insert($steps);
 
-
         $relationship = [
             ['description' => 'HUSBAND',          'code' => 'H',  'coop_id' => '1', 'status' => '1'],
             ['description' => 'WIFE',             'code' => 'W',  'coop_id' => '1', 'status' => '1'],

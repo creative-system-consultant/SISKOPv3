@@ -13,7 +13,7 @@ class Register extends Component
 {
     /** @var string */
     public $name = '';
-    
+
     /** @var string */
     public $icno = '';
 
@@ -24,7 +24,7 @@ class Register extends Component
     public $phone_no = '';
 
     /** @var string */
-    public $password = '';    
+    public $password = '';
 
     /** @var string */
     public $passwordConfirmation = '';

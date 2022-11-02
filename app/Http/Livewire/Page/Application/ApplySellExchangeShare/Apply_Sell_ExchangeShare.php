@@ -18,9 +18,9 @@ class Apply_Sell_ExchangeShare extends Component
     public $bank_account;
     public $bank_code;
     public $banks;
-    
+
     //Need protected $listerners to run the Livewire.emit event
-    protected $listeners = ['submit'];      
+    protected $listeners = ['submit'];
 
     protected $rules = [
         'cust.name'       => 'required',
@@ -62,7 +62,7 @@ class Apply_Sell_ExchangeShare extends Component
     public function submit()
     {
         $user = auth()->user();
-        $customer = new Customer;        
+        $customer = new Customer;
 
         if ($this->share_type == 'coop') {
             $cust = $customer->where('icno', $user->icno)->first();
@@ -83,7 +83,7 @@ class Apply_Sell_ExchangeShare extends Component
             session()->flash('success');
             session()->flash('title');
     
-            return redirect('home');  
+            return redirect('home');
         }
         elseif ($this->share_type == 'mbr') {
             $cust = $customer->where('icno', $user->icno)->first();
@@ -106,7 +106,7 @@ class Apply_Sell_ExchangeShare extends Component
             session()->flash('success');
             session()->flash('title');
     
-            return redirect('home');  
+            return redirect('home');
         }
         else{
             //
@@ -121,7 +121,7 @@ class Apply_Sell_ExchangeShare extends Component
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',  
             'text'      => 'Are you sure you want to apply for share reimbursement?',
-        ]);   
+        ]);
         
     }
 
@@ -134,7 +134,7 @@ class Apply_Sell_ExchangeShare extends Component
             session()->flash('info');
             session()->flash('title');
     
-            return redirect()->route('home');                                
+            return redirect()->route('home');
         }    
     }
 
@@ -147,7 +147,7 @@ class Apply_Sell_ExchangeShare extends Component
             session()->flash('info');
             session()->flash('title');
     
-            return redirect()->route('home');                                
+            return redirect()->route('home');
         }    
     }
 
@@ -163,14 +163,14 @@ class Apply_Sell_ExchangeShare extends Component
             'flag'        => 0, 
             'step'        => 0,
             'apply_amt'   => '0.00',  
-        ]);     
+        ]);
         
         $customer = Customer::where('id', $share->exc_cust_id)->first();
 
         $this->mbr_icno     = $customer?->icno;
         $this->share_apply  = $share?->apply_amt;
         $this->bank_acct    = $share?->bank_account;
-        $this->bank_code    = $share?->bank_code;  
+        $this->bank_code    = $share?->bank_code;
     }
 
     public function contApplyCoop($cust_id)
@@ -193,16 +193,16 @@ class Apply_Sell_ExchangeShare extends Component
 
     public function updated()
     {
-        $user = auth()->user();       
+        $user = auth()->user();
         $customer = Customer::where('icno', $this->mbr_icno)->first();
 
         if (strlen($this->mbr_icno) < 12) {
-            $this->mbr_name = ''; 
+            $this->mbr_name = '';
             return;
         }
 
         if (strlen($this->mbr_icno) > 12) {
-            $this->mbr_name = ''; 
+            $this->mbr_name = '';
             return;
         }
 
@@ -214,7 +214,7 @@ class Apply_Sell_ExchangeShare extends Component
                 'showConfirmButton' => false,
                 'timer' => 1500,
             ]);
-            $this->mbr_name = '';    
+            $this->mbr_name = '';
         }
         elseif ($this->mbr_icno == $user->icno) {
             $this->dispatchBrowserEvent('swal',[
@@ -224,10 +224,10 @@ class Apply_Sell_ExchangeShare extends Component
                 'showConfirmButton' => false,
                 'timer' => 1500,
             ]);
-            $this->mbr_name = ''; 
+            $this->mbr_name = '';
         }
         else{
-            $this->mbr_name = $customer->name;        
+            $this->mbr_name = $customer->name;
         }
     }
 

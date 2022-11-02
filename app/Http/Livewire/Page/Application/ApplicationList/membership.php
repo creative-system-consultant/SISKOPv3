@@ -11,12 +11,12 @@ class membership extends Component
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyMember::where('uuid', $uuid)->with('customer')->first();         
+        $this->custApply = ApplyMember::where('uuid', $uuid)->with('customer')->first();
     }
 
 
-    public function mount()    
-    { 
+    public function mount()
+    {
         $user = auth()->user();
         $this->membership        = ApplyMember::where('coop_id',  $user->coop_id)->orderBy('created_at','desc')->with('customer')->get();
     }

@@ -40,15 +40,15 @@ class EditSpecialAid extends Component
 
     protected $messages = [
         'specialAid_name.required'  => ':attribute field is required',
-        'Fname.*.required'          => ':attribute field is required', 
+        'Fname.*.required'          => ':attribute field is required',
         'Fname.*.min'               => ':attribute must be at least 4 characters',
         'Flabel.*.required'         => ':attribute is required',
         'Flabel.*.min'              => ':attribute must be at least 4 characters',
     ];
 
     protected $validationAttributes = [
-        'specialAid_name'      => 'Name', 
-        'Fname.*'              => 'Field Name', 
+        'specialAid_name'      => 'Name',
+        'Fname.*'              => 'Field Name',
         'Flabel.*'             => 'Field Label',
     ];
 
@@ -62,8 +62,8 @@ class EditSpecialAid extends Component
     public function alertDelete($uuid, $index)
     {
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
-            'text'      => 'Are you sure?', 
+            'type'      => 'warning',
+            'text'      => 'Are you sure?',
             'uuid'      => $uuid,
             'index'     => $index,
         ]);
@@ -72,7 +72,7 @@ class EditSpecialAid extends Component
     public function remField($uuid, $index)
     {
         $specialAid = SpecialAid::where('uuid', $uuid)->first();
- 
+
         $Fdelete = $specialAid->field()->where('uuid', $this->Fuuid[$index])->first();
         $Fdelete->delete();
 
@@ -102,11 +102,11 @@ class EditSpecialAid extends Component
 
     public function submit($uuid)
     {
-        // dd($this->start_date);  
+        // dd($this->start_date);
         $specialAid = SpecialAid::where('uuid', $uuid)->first();
 
         $this->validate();
-        
+
         $specialAid->update([
             'name'               => $this->specialAid_name,
             'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
@@ -116,14 +116,14 @@ class EditSpecialAid extends Component
             'start_date'         => $this->start_date  ? $specialAid->start_date->format('Y-m-d') : NULL,
             'end_date'           => $this->end_date ? $specialAid->end_date->format('Y-m-d') : NULL,
         ]);
-                
-        foreach ($this->Fname as $index => $input) {  
+
+        foreach ($this->Fname as $index => $input) {
             if (($this->Fuuid[$index] ?? NULL) == NULL){
                 $specialAid->field()->create([
                         'name'      => $this->Fname[$index],
                         'label'     => $this->Flabel[$index],
                         'type'      => $this->Ftype[$index] == '' ? 'string' : $this->Ftype[$index],
-                ]);                         
+                ]);
             } else {
                 $specialAid->field()->updateOrCreate([
                         'uuid'      =>  $this->Fuuid[$index],
@@ -144,7 +144,7 @@ class EditSpecialAid extends Component
 
     public function  loadUser($uuid)
     {
-        $specialAid = SpecialAid::where('uuid', $uuid)->first();          
+        $specialAid = SpecialAid::where('uuid', $uuid)->first();
 
         $this->specialAid_name      = $specialAid->name;
         $this->default_apply_amount = $specialAid->default_apply_amt;
@@ -153,15 +153,15 @@ class EditSpecialAid extends Component
         $this->enabled_apply_amt    = $specialAid->apply_amt_enable == true ? 'checked' : '';
         $this->start_date           = $specialAid?->start_date ? $specialAid->start_date->format('Y-m-d') : '';
         $this->end_date             = $specialAid?->end_date ? $specialAid->end_date->format('Y-m-d') : '';
-        
-        foreach ($specialAid->field as $index => $input) {                      
+
+        foreach ($specialAid->field as $index => $input) {
             $this->Flabel[$index]      = $input->label;
             $this->Fname[$index]       = $input->name;
             $this->Ftype[$index]       = $input->type;
             $this->Fuuid[$index]       = $input->uuid;
             $this->Fstatus[$index]     = $input->status   == '1' ? true : false;
             $this->Frequired[$index]   = $input->required == '1' ? true : false;
-        }   
+        }
     }
 
         public function mount($uuid)

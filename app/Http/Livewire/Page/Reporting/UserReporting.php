@@ -13,7 +13,7 @@ use Livewire\WithPagination;
 class UserReporting extends Component
 {
     use WithPagination;
-    
+
     public $startDate;
     public $endDate;
     public $spData;
@@ -62,7 +62,7 @@ class UserReporting extends Component
 
     public function render()
     {
-        
+
         $data  = DB::select($this->getSp());
         $dataCollection = collect($data);
 

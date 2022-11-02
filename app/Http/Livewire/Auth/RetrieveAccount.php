@@ -15,10 +15,10 @@ class RetrieveAccount extends Component
     {
         $this->validate([
             'icno' => ['required', 'numeric']
-        ]);  
-        
+        ]);
+
         $user = User::where('icno', $this->icno)->first();
-        
+
         $mail = Mail::to($user->email)->send(new RetrieveAccountEmail($user));
 
         if ($mail) {

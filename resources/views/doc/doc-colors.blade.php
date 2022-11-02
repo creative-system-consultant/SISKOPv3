@@ -3,14 +3,14 @@
     <div class="border-t-2 px-6">
         <div class="bg-white shadow-lg p-4 my-4">
             <x-form.basic-form wire:submit.prevent="">
-                to change color just change in colors:{'primary': { //choose color plate  }} object
+                to change color just change in colors:{'primary': { //choose color plate }} object
                 then run -: npm run dev
             </x-form.basic-form>
         </div>
         <p class="font-semibold">tailwind.config.js</p>
         <div class="h-96 overflow-y-auto">
         <pre class="language-html -mt-4" wire:ignore>
-            <code class="language-html"> 
+            <code class="language-html">
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
@@ -65,7 +65,7 @@ module.exports = {
         require('@tailwindcss/typography'),
     ],
 };
-                
+
             </code>
         </pre>
         </div>

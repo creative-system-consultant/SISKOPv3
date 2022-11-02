@@ -26,7 +26,7 @@
                             <div class="h-full leading-6" aria-hidden="true">
                                 <ul id="myUL">
                                     <li>
-                                        <a href="{{route('user-reporting')}}" class="inline-flex items-center w-full px-4 py-2 text-sm font-semibold text-gray-500 hover:text-primary-800 dark:text-gray-50 dark:hover:text-primary-600">
+                                        <a href="{{ route('user-reporting') }}" class="inline-flex items-center w-full px-4 py-2 text-sm font-semibold text-gray-500 hover:text-primary-800 dark:text-gray-50 dark:hover:text-primary-600">
                                             <x-heroicon-o-document-text  class="w-4 h-4 mr-2"/>
                                             <span>List Of User</span>
                                         </a>

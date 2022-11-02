@@ -20,7 +20,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
     &lt;div class="h-24 p-4 bg-yellow-500">&lt;/div>
     &lt;div class="h-24 p-4 bg-indigo-500">&lt;/div>
@@ -55,7 +55,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;div class="grid grid-cols-12 gap-6">
     &lt;div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
         &lt;div class="h-24 p-4 bg-yellow-500">&lt;/div>

@@ -3,14 +3,13 @@
     <div class="grid grid-cols-1 gap-10">
         <div class="mt-4">
             <div class="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
                         <p>content 1</p>
                         <div id="pieChart"  wire:ignore></div>
                     </div>
                 </x-general.card>
-                
+
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
                         <p>content 2</p>
@@ -42,7 +41,7 @@
                     </div>
                 </x-general.card>
             </div>
-            
+
             <div class="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 mt-10 h-[82vh]">
                 <x-general.card class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
                     <div>
@@ -54,7 +53,7 @@
                         <p>content 8</p>
                     </div>
                 </x-general.card>
-                
+
                 <x-general.card class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12 ">
                     <div>
                         <p>content 9</p>
@@ -167,7 +166,7 @@
                 },
             },
             };
-    
+
             var chart = new ApexCharts(document.getElementById('barChart'), options);
             chart.render();
         </script>

@@ -17,13 +17,13 @@ class Apply_SpecialAid extends Component
     public $FspecialAid = [''];
 
     public function submit($uuid, $index)
-    {   
+    {
         $user = auth()->user();
         $specialAids = SpecialAid::where([['uuid', $uuid], ['status', 1]])->first();
-        $customer = Customer::where('icno', $user->icno)->first();         
+        $customer = Customer::where('icno', $user->icno)->first();
 
         if ($this->customer_name == '') {
-            session()->flash('nameError', 'Name is required'); 
+            session()->flash('nameError', 'Name is required');
             return back();
         }
 
@@ -32,7 +32,7 @@ class Apply_SpecialAid extends Component
             return back();
         }
         elseif ($specialAids->min_apply_amt-1 >= $this->apply_amt[$index] || $specialAids->max_apply_amt+1 <= $this->apply_amt[$index]) {
-            session()->flash('errors','Apply amount must be in between RM '.$specialAids->min_apply_amt.' and RM '.$specialAids->max_apply_amt);   
+            session()->flash('errors','Apply amount must be in between RM '.$specialAids->min_apply_amt.' and RM '.$specialAids->max_apply_amt);
             return back();
         }
         else{
@@ -43,14 +43,14 @@ class Apply_SpecialAid extends Component
                 'special_aid_id'    => $this->type_specialAid,
                 'step'              => 1,
                 'flag'              => 1,
-                'apply_amt'         => $this->apply_amt[$index],  
+                'apply_amt'         => $this->apply_amt[$index],
                 'approved_amt'      => NULL,
                 'created_by'        => strtoupper($customer->name)
             ]);
         }
 
         foreach ($specialAids->field  as $key => $value) {
-            if ($value->required == '1') {         
+            if ($value->required == '1') {
                 if (($this->FspecialAid[$key] ?? NULL) == NULL) {
                     session()->flash('warning', 'This field is required');
                     return back();
@@ -103,7 +103,7 @@ class Apply_SpecialAid extends Component
     {
         $user = auth()->user();
         $this->specialAids = SpecialAid::where([['coop_id', $user->coop_id], ['status', 1]])->get();
-        
+
         foreach ($this->specialAids as $index => $specialAid) {
             $this->apply_amt[$index] = $specialAid->default_apply_amt;
         }

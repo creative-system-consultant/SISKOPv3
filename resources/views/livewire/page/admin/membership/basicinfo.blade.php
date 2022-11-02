@@ -1,13 +1,13 @@
 <div class="@if ($numpage != 1) hidden @endif">
 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
 
-<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1"> 
+<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1">
       <div @if ($member->field_status(2) == '0') style="display: none" @endif >
         <div class="p-4 mt-8 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Full Name" 
-                name="Cust.name" 
-                value="" 
+            <p><x-form.input
+                label="Full Name"
+                name="Cust.name"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -17,13 +17,13 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3"> 
+    <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
         <div @if ($member->field_status(3) == '0') style="display: none" @endif >
              <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="IC Number" 
-                name="Cust.icno" 
-                value="" 
+            <p><x-form.input
+                label="IC Number"
+                name="Cust.icno"
+                value=""
                 mandatory=""
                 disable="true"
                 type="text"
@@ -33,10 +33,10 @@
         </div>
         <div @if ($member->field_status(5) == '0') style="display: none" @endif >
             <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Birthdate" 
-                name="Cust.birthdate" 
-                value="" 
+            <p><x-form.input
+                label="Birthdate"
+                name="Cust.birthdate"
+                value=""
                 mandatory=""
                 disable="true"
                 type="text"
@@ -47,10 +47,10 @@
 
        <div @if ($member->field_status(7) == '0') style="display: none" @endif >
         <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Mobile Number" 
-                name="Cust.mobile_num" 
-                value="" 
+            <p><x-form.input
+                label="Mobile Number"
+                name="Cust.mobile_num"
+                value=""
                 mandatory=""
                 disable="true"
                 type="text"
@@ -74,18 +74,18 @@
                 name6="CustAddress.def_state_id"
                 :state="$state_id"
                 condition="state"
-            />  
+            />
         </p>
         </div>
     </div>
 
-<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3"> 
+<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
     <div @if ($member->field_status(8) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Email" 
-                name="Cust.email" 
-                value="" 
+            <p><x-form.input
+                label="Email"
+                name="Cust.email"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -93,17 +93,17 @@
             />  </p>
         </div>
     </div>
- 
+
         <div @if ($member->field_status(11) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.dropdown 
+            <p><x-form.dropdown
                 label="Race"
                 value=""
-                name="Cust.race_id" 
+                name="Cust.race_id"
                 id=""
                 mandatory=""
                 disable=""
-                default="yes"  
+                default="yes"
                 wire:model="Cust.race_id"
             >
             @foreach ($race_id as $list)
@@ -115,14 +115,14 @@
 
     <div @if ($member->field_status(9) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-           <p><x-form.dropdown 
+           <p><x-form.dropdown
                label="Gender"
                value=""
-               name="Cust.gender_id" 
+               name="Cust.gender_id"
                id=""
                mandatory=""
                disable="true"
-               default="yes"  
+               default="yes"
                wire:model="Cust.gender_id"
            >
            @foreach ($gender_id as $list)
@@ -131,10 +131,10 @@
            </x-form.dropdown></p>
            {{-- <p>
             @foreach ($gender_id as $list)
-            <x-form.input 
-            label="Gender" 
-            name="Cust.gender_id" 
-            value="" 
+            <x-form.input
+            label="Gender"
+            name="Cust.gender_id"
+            value=""
             mandatory=""
             disable="true"
             type="text"
@@ -151,14 +151,14 @@
 
        <div @if ($member->field_status(12) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-           <p><x-form.dropdown 
+           <p><x-form.dropdown
                label="Education"
                value=""
-               name="Cust.education_id" 
+               name="Cust.education_id"
                id=""
                mandatory=""
                disable=""
-               default="yes"  
+               default="yes"
                wire:model="Cust.education_id"
            >
            @foreach ($education_id as $list)
@@ -170,14 +170,14 @@
 
        <div @if ($member->field_status(10) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-           <p><x-form.dropdown 
+           <p><x-form.dropdown
                label="Marital"
                value=""
-               name="Cust.marital_id" 
+               name="Cust.marital_id"
                id=""
                mandatory=""
                disable=""
-               default="yes"  
+               default="yes"
                wire:model="Cust.marital_id"
            >
            @foreach ($marital_id as $list)
@@ -189,14 +189,14 @@
 
        <div @if ($member->field_status(1) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-           <p><x-form.dropdown 
+           <p><x-form.dropdown
                label="Title"
                value=""
-               name="Cust.title_id" 
+               name="Cust.title_id"
                id=""
                mandatory=""
                disable=""
-               default="yes"  
+               default="yes"
                wire:model="Cust.title_id"
            >
                @foreach ($title_id as $list)
@@ -212,14 +212,14 @@
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
     <div @if ($member->field_status(10) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-           <p><x-form.dropdown 
+           <p><x-form.dropdown
                label="Relationship"
                value=""
-               name="Family.relationship_id" 
+               name="Family.relationship_id"
                id=""
                mandatory=""
                disable=""
-               default="yes"  
+               default="yes"
                wire:model="Family.relationship_id"
            >
            @foreach ($relationship as $list)
@@ -230,10 +230,10 @@
        </div>
     <div @if ($member->field_status(14) == '0') style="display: none" @endif >
       <div class="p-4 mt-2 text-green-900 bg-green-200">
-          <p><x-form.input 
-              label="Full Name" 
-              name="CustFamily.name" 
-              value="" 
+          <p><x-form.input
+              label="Full Name"
+              name="CustFamily.name"
+              value=""
               mandatory=""
               disable=""
               type="text"
@@ -245,10 +245,10 @@
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
     <div @if ($member->field_status(15) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="IC Number" 
-                name="CustFamily.icno" 
-                value="" 
+            <p><x-form.input
+                label="IC Number"
+                name="CustFamily.icno"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -258,10 +258,10 @@
       </div>
       <div @if ($member->field_status(16) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Email" 
-                name="CustFamily.email" 
-                value="" 
+            <p><x-form.input
+                label="Email"
+                name="CustFamily.email"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -271,10 +271,10 @@
       </div>
       <div @if ($member->field_status(17) == '0') style="display: none" @endif >
         <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Mobile Number" 
-                name="CustFamily.mobile_num" 
-                value="" 
+            <p><x-form.input
+                label="Mobile Number"
+                name="CustFamily.mobile_num"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -282,7 +282,7 @@
             />  </p>
         </div>
       </div>
-    
+
 </div>
     <div @if ($member->field_status(18) == '0') style="display: none" @endif >
         <div class="p-4 text-green-900 bg-green-200">
@@ -302,13 +302,13 @@
         </div>
     </div>
 <br><h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Work Details</h2>
-<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1"> 
+<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1">
     <div @if ($member->field_status(19) == '0') style="display: none" @endif >
       <div class="p-4 mt-2 text-green-900 bg-green-200">
-          <p><x-form.input 
-              label="Company Name" 
-              name="Employer.name" 
-              value="" 
+          <p><x-form.input
+              label="Company Name"
+              name="Employer.name"
+              value=""
               mandatory=""
               disable=""
               type="text"
@@ -320,10 +320,10 @@
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
     <div @if ($member->field_status(20) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Name Of Department" 
-                name="Employer.department" 
-                value="" 
+            <p><x-form.input
+                label="Name Of Department"
+                name="Employer.department"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -333,10 +333,10 @@
       </div>
       <div @if ($member->field_status(21) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input 
-                label="Position" 
-                name="Employer.position" 
-                value="" 
+            <p><x-form.input
+                label="Position"
+                name="Employer.position"
+                value=""
                 mandatory=""
                 disable=""
                 type="text"
@@ -348,10 +348,10 @@
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         <div @if ($member->field_status(22) == '0') style="display: none" @endif >
             <div class="p-4 mt-2 text-green-900 bg-green-200">
-                <p><x-form.input 
-                    label="Office Telephone Number" 
-                    name="Employer.office_num" 
-                    value="" 
+                <p><x-form.input
+                    label="Office Telephone Number"
+                    name="Employer.office_num"
+                    value=""
                     mandatory=""
                     disable=""
                     type="text"
@@ -361,10 +361,10 @@
         </div>
         <div @if ($member->field_status(23) == '0') style="display: none" @endif >
             <div class="p-4 mt-2 text-green-900 bg-green-200">
-                <p><x-form.input-tag 
-                    label="Salary" 
-                    name="Employer.salary" 
-                    value="" 
+                <p><x-form.input-tag
+                    label="Salary"
+                    name="Employer.salary"
+                    value=""
                     mandatory=""
                     leftTag="RM"
                     rightTag=""
@@ -376,10 +376,10 @@
         </div>
         <div @if ($member->field_status(24) == '0') style="display: none" @endif >
             <div class="p-4 mt-2 text-green-900 bg-green-200">
-                <p><x-form.input 
-                    label="Worker Number" 
-                    name="Employer.worker_num" 
-                    value="" 
+                <p><x-form.input
+                    label="Worker Number"
+                    name="Employer.worker_num"
+                    value=""
                     mandatory=""
                     disable=""
                     type="text"
@@ -409,13 +409,13 @@
 
   <div class="p-4 mt-6 rounded-md bg-gray-50">
     <div class="flex items-center justify-center space-x-2">
-       
+
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>
 
-        
-        
+
+
     </div>
 </div>
 

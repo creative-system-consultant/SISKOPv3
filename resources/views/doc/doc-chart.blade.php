@@ -14,7 +14,7 @@
                 </div>
                 <p class="font-semibold">script</p>
                 <pre class="-mt-4 language-js" wire:ignore>
-                    <code class="language-js"> 
+                    <code class="language-js">
 &#x40;push('js')
     &lt;script>
         var options = {
@@ -57,7 +57,7 @@
                 </pre>
                 <p class="font-semibold">blade</p>
                 <pre class="-mt-4 language-php" wire:ignore >
-                    <code class="language-php"> 
+                    <code class="language-php">
 &lt;div id="pieChart" wire:ignore>&lt;/div>
                     </code>
                 </pre>
@@ -78,7 +78,7 @@
                 </div>
                 <p class="font-semibold">script</p>
                 <pre class="-mt-4 language-js" wire:ignore>
-                    <code class="language-js"> 
+                    <code class="language-js">
 &#x40;push('js')
     &lt;script>
         var options = {
@@ -121,7 +121,7 @@
                 </pre>
                 <p class="font-semibold">blade</p>
                 <pre class="-mt-4 language-php" wire:ignore >
-                    <code class="language-php"> 
+                    <code class="language-php">
 &lt;div id="donutChart" wire:ignore>&lt;/div>
                     </code>
                 </pre>
@@ -148,7 +148,7 @@
                 </div>
                 <p class="font-semibold">script</p>
                 <pre class="-mt-4 language-js" wire:ignore>
-                    <code class="language-js"> 
+                    <code class="language-js">
 &#x40;push('js')
     &lt;script>
         var options = {
@@ -192,7 +192,7 @@
                 </pre>
                 <p class="font-semibold">blade</p>
                 <pre class="-mt-4 language-php" wire:ignore >
-                    <code class="language-php"> 
+                    <code class="language-php">
 &lt;div id="lineChart" wire:ignore>&lt;/div>
                     </code>
                 </pre>
@@ -213,7 +213,7 @@
                 </div>
                 <p class="font-semibold">script</p>
                 <pre class="-mt-4 language-js" wire:ignore>
-                    <code class="language-js"> 
+                    <code class="language-js">
 &#x40;push('js')
     &lt;script>
     var options = {
@@ -274,7 +274,7 @@
                 </pre>
                 <p class="font-semibold">blade</p>
                 <pre class="-mt-4 language-php" wire:ignore >
-                    <code class="language-php"> 
+                    <code class="language-php">
 &lt;div id="barChart" wire:ignore>&lt;/div>
                     </code>
                 </pre>

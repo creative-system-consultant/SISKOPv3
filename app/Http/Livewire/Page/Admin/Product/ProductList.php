@@ -9,7 +9,7 @@ class ProductList extends Component
 {
 
     public $Product;
-    
+
     public function mount()
     {
         $this->Product = AccountProduct::all();

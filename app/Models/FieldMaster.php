@@ -13,5 +13,5 @@ class FieldMaster extends Model
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
-    
+
 }

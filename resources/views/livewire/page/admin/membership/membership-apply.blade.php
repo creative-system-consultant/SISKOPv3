@@ -22,7 +22,7 @@
 
 @push('js')
 <script>
-    window.addEventListener('swal:confirm', event => { 
+    window.addEventListener('swal:confirm', event => {
         swal.fire({
             icon: event.detail.type,
             title: event.detail.title,
@@ -36,7 +36,7 @@
                 window.Livewire.emit('submit');
             }
         });
-    });    
+    });
 </script>
 @endpush
 

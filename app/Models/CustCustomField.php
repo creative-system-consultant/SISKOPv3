@@ -45,5 +45,5 @@ class CustCustomField extends Model implements Auditable
         if ($this->type == 'bigint'){   $this->bigint   = $value; }
     }
 
-    
+
 }

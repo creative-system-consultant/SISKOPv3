@@ -17,11 +17,11 @@
                 <dt class="text-sm font-medium text-gray-800 dark:text-white">Old Password</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <div class="grid grid-cols-1 md:grid-cols-3">
-                        <x-form.input 
-                            label="" 
-                            name="old_pass" 
-                            wire:model.lazy="old_pass" 
-                            value="" 
+                        <x-form.input
+                            label=""
+                            name="old_pass"
+                            wire:model.lazy="old_pass"
+                            value=""
                             mandatory=""
                             disable=""
                             type="password"
@@ -29,18 +29,18 @@
                     </div>
                 </dd>
                 </div>
-                
+
             </dl>
             <dl>
                 <div class="px-4 py-5 bg-white border-b-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 dark:bg-gray-700">
                 <dt class="text-sm font-medium text-gray-800 dark:text-white">New Password</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <div class="grid grid-cols-1 md:grid-cols-3">
-                        <x-form.input 
-                            label="" 
-                            name="password" 
-                            wire:model.lazy="password" 
-                            value="" 
+                        <x-form.input
+                            label=""
+                            name="password"
+                            wire:model.lazy="password"
+                            value=""
                             mandatory=""
                             disable=""
                             type="password"
@@ -54,11 +54,11 @@
                 <dt class="text-sm font-medium text-gray-800 dark:text-white">Confirm Password</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <div class="grid grid-cols-1 md:grid-cols-3">
-                        <x-form.input 
-                            label="" 
-                            name="confirm_pass" 
-                            wire:model.lazy="confirm_password" 
-                            value="" 
+                        <x-form.input
+                            label=""
+                            name="confirm_pass"
+                            wire:model.lazy="confirm_password"
+                            value=""
                             mandatory=""
                             disable=""
                             type="password"
@@ -73,7 +73,7 @@
 
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
             <div class="flex items-center justify-center space-x-2">
-                <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
+                <a href="{{ url()->previous() }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
                     Cancel
                 </a>
                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
@@ -81,5 +81,5 @@
                 </button>
             </div>
         </div>
-    </x-form.basic-form>    
+    </x-form.basic-form>
 </div>

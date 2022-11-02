@@ -7,9 +7,9 @@
             <div class="flex items-center w-full">
                 <label for="{{ $list->code }}" class="flex items-center cursor-pointer">
                     <div class="relative">
-                        <input 
-                            type="checkbox" 
-                            id="{{ $list->code }}" 
+                        <input
+                            type="checkbox"
+                            id="{{ $list->code }}"
                             class="sr-only"
                             @php
                                 $item = $this->membership->documents()->where('type',$list->code)->first();
@@ -32,8 +32,8 @@
         <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
             {{ $list->description }}
         </div>
-    </div> 
+    </div>
     @endforeach
-    
+
 
 </x-form.basic-form>

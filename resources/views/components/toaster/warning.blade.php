@@ -1,13 +1,13 @@
 <div
     class="fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end" style="top:auto !important">
     <div class="max-w-sm w-full bg-yellow-400 shadow-lg rounded-lg pointer-events-auto border-l-4 border-yellow-300"
-        x-transition:leave-end="opacity-0" 
+        x-transition:leave-end="opacity-0"
         x-transition:leave-start="opacity-100"
         x-transition:leave="transition ease-in duration-100"
         x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
         x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
         x-transition:enter="transform ease-out duration-300 transition"
-        x-description="Notification panel, show/hide based on alert state." 
+        x-description="Notification panel, show/hide based on alert state."
         x-show="show"
         x-init="setTimeout(() => { show = true }, 500)" x-data="{ show: false }">
         <div class="relative rounded-lg shadow-xs overflow-hidden">
@@ -23,10 +23,10 @@
                     </div>
                     <div class="ml-4 w-0 flex-1">
                         <p class="text-base leading-5 font-medium capitalize text-white">
-                            {{$title}}
+                            {{ $title }}
                         </p>
                         <p class="mt-1 text-sm leading-5 text-white">
-                            {{$message}}
+                            {{ $message }}
                         </p>
                     </div>
                     <div class="ml-4 flex-shrink-0 flex">

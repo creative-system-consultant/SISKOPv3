@@ -15,7 +15,7 @@ class SellShareApproval extends Component
     {
         session()->flash('message', 'Share reimbursement application has been successfully approved');
         session()->flash('success');
-        session()->flash('title');  
+        session()->flash('title');
 
         return redirect()->route('application.list');
     }
@@ -23,7 +23,7 @@ class SellShareApproval extends Component
     public function mount($uuid)
     {
        $this->approve = Share::where('uuid', $uuid)->with('customer')->first();
-       $this->banks = RefBank::where('coop_id', $this->approve->coop_id)->get(); 
+       $this->banks = RefBank::where('coop_id', $this->approve->coop_id)->get();
     }
 
     public function render()
