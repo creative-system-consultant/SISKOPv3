@@ -331,5 +331,108 @@
         </x-slot>
     </x-general.accordion>
     <!-- end Submit button -->
+
+
+        <!-- start radio btn form component -->
+        <x-general.accordion active="selected" tab="6433234" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                    <p class="text-sm">Radio</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="px-6 border-t-2">
+                    <div class="p-4 my-4 bg-white shadow-lg">
+                        <x-form.radio
+                            label="Radio Label 1"
+                            id="id1"
+                            name="name"
+                            value=""
+                            disable=""
+                        />
+                        <x-form.radio
+                            label="Radio Label 2"
+                            id="id2"
+                            name="name"
+                            value=""
+                            disable=""
+                            checked
+                        />
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="-mt-4 language-html" wire:ignore>
+                        <code class="language-html">
+&lt;x-form.radio
+    label="Radio Label 1"
+    id="id1"
+    name="name"
+    value=""
+    disable=""
+/>
+&lt;x-form.radio
+    label="Radio Label 2"
+    id="id2"
+    name="name"
+    value=""
+    disable=""
+    checked
+/>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+        <!-- end radio btn form component -->
+
+         <!-- start checkBox  form component -->
+         <x-general.accordion active="selected" tab="12984384234" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                    <p class="text-sm">Check Box</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="px-6 border-t-2">
+                    <div class="p-4 my-4 bg-white shadow-lg">
+                        <x-form.checkbox
+                            label="CheckBox Label 1"
+                            id="id"
+                            name="name"
+                            value=""
+                            disable=""
+                        />
+                        <x-form.checkbox
+                            label="CheckBox Label 2"
+                            id="id2"
+                            name="name2"
+                            value=""
+                            disable=""
+                            checked
+                        />
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="-mt-4 language-html" wire:ignore>
+                        <code class="language-html">
+&lt;x-form.checkbox
+    label="CheckBox Label 1"
+    id="id"
+    name="name"
+    value=""
+    disable=""
+/>
+&lt;x-form.checkbox
+    label="CheckBox Label 2"
+    id="id2"
+    name="name2"
+    value=""
+    disable=""
+    checked
+/>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+        <!-- end checkBox form component -->
 </div>
 
