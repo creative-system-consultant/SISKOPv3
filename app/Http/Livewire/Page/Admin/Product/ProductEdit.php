@@ -126,6 +126,6 @@ class ProductEdit extends Component
 
     public function render()
     {
-        return view('livewire.page.admin.product.productedit')->extends('layouts.head');
+        return view('livewire.page.admin.product.edit')->extends('layouts.head');
     }
 }
