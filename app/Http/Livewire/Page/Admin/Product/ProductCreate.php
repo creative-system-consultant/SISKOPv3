@@ -27,16 +27,16 @@ class ProductCreate extends Component
     protected $rules = [
         'Product.name'               => ['required', 'string'],
         'Product.product_type'       => ['required', 'integer'],
-        'Product.profit_rate'        => ['required', 'numeric'],
-        'Product.amt_min'            => ['required','gt:0', 'numeric'],
-        'Product.amt_max'            => ['required', 'numeric'],
-        'Product.term_min'           => ['required', 'integer'],
-        'Product.term_max'           => ['required', 'integer'],
-    ]; 
-    
-    protected $messages = [ 
+        'Product.profit_rate'        => ['required', 'numeric', 'lte:100'],
+        'Product.amt_min'            => ['required', 'numeric', 'lte:Product.amt_max', 'gt:0'],
+        'Product.amt_max'            => ['required', 'numeric', 'gte:Product.amt_min'],
+        'Product.term_min'           => ['required', 'integer', 'lte:Product.term_max'],
+        'Product.term_max'           => ['required', 'integer', 'gte:Product.term_min'],
+    ];
+
+    protected $messages = [
         'Product.name.required'           => ':attribute is required',
-        'Product.product_type.required'   => ':attribute is required', 
+        'Product.product_type.required'   => ':attribute is required',
         'Product.profit_rate.required'    => ':attribute is required',
         'Product.amt_min.required'        => ':attribute is required',
         'Product.amt_min.gt'              => 'Application must be more than RM0',
@@ -46,8 +46,8 @@ class ProductCreate extends Component
     ];
 
     protected $validationAttributes = [
-        'Product.name'          => 'Name', 
-        'Product.product_type'  => 'Product Type', 
+        'Product.name'          => 'Name',
+        'Product.product_type'  => 'Product Type',
         'Product.profit_rate'   => 'Profit Rate',
         'Product.amt_min'       => 'Minimum Financing',
         'Product.amt_max'       => 'Maximum Financing',

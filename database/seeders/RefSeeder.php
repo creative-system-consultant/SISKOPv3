@@ -248,5 +248,19 @@ class RefSeeder extends Seeder
      
         ];
         DB::table('ref.relationships')->insert($relationship);
+
+        $product_documents = [
+            ['description' => 'Latest Pay Slip',                 'coop_id' => '1', 'code' => 'pay_slip'],
+            ['description' => 'Last Month Pay Slip',             'coop_id' => '1', 'code' => 'pay_slip2'],
+            ['description' => 'Last 2 Month Pay Slip',           'coop_id' => '1', 'code' => 'pay_slip3'],
+            ['description' => 'Guatantor Latest Pay Slip',       'coop_id' => '1', 'code' => 'g_pay_slip'],
+            ['description' => 'Guarantor Last Month Pay Slip',   'coop_id' => '1', 'code' => 'g_pay_slip2'],
+            ['description' => 'Guarantor Last 2 Month Pay Slip', 'coop_id' => '1', 'code' => 'g_pay_slip3'],
+            ['description' => 'MYKAD (Front & Back)',            'coop_id' => '1', 'code' => 'ic'],
+            ['description' => 'MYKAD (Spouse)',                  'coop_id' => '1', 'code' => 'ic_spouse'],
+            ['description' => 'MYKAD (Child)',                   'coop_id' => '1', 'code' => 'ic_child'],
+            ['description' => 'Work Confirmation',               'coop_id' => '1', 'code' => 'work_confirm'],
+        ];
+        DB::table('ref.product_documents')->insert($product_documents);
     }
 }

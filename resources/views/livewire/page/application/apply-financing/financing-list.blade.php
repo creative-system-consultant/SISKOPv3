@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 gap-10 p-4 mt-4 bg-white rounded-md shadow-md">
         <div>
             <div class="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                @foreach ( $Product as $list )
+                @forelse ( $Product as $list )
                     <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                         <div>
                             <div class="flex justify-center pt-4">
@@ -69,7 +69,33 @@
                             </div>
                         </div>
                     </x-general.card>
-                @endforeach
+                @empty
+                <x-general.card class="p-4 bg-white rounded-lg shadow-md">
+                    <div>
+                        <div class="flex justify-center pt-4">
+                            <x-logo class="w-auto h-8" />
+                        </div>
+                        <div class="text-sm font-bold mt-2 flex items-center justify-center space-x-2"> TIADA PRODUK DIDAFTARKAN</div>
+                        <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-presentation-chart-line -alt class="w-4 h-4 mr-2"/> % p.a. </div>
+                        <div class="flex items-center justify-center space-x-2"> Profit Rate </div>
+                        <div class="font-bold text-red mt-2 flex items-center justify-center space-x-2"> <x-heroicon-o-currency-dollar -alt class="w-4 h-4 mr-2"/>  </div>
+                        <div class="flex items-center justify-center space-x-2"> Maximum Financing </div>
+                        <div class="mt-4 flex items-center justify-center space-x-2">
+                            <div x-data="{open:false}">
+                                <button
+                                    type="button"
+                                    class="flex items-center p-2 text-sm text-white rounded-md bg-primary-800 hover:bg-primary-900 focus:outline-none">
+                                    Product Info
+                                </button>
+                            </div>
+                            <p> <button class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
+                                <x-heroicon-s-pencil-alt class="w-4 h-4 mr-2"/>
+                                Apply
+                            </button> </p>
+                        </div>
+                    </div>
+                </x-general.card>
+                @endforelse
             </div>
         </div>
     </div>
