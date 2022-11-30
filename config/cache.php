@@ -44,7 +44,7 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'cache',
+            'table' => 'SISKOP.cache',
             'connection' => null,
             'lock_connection' => null,
         ],
