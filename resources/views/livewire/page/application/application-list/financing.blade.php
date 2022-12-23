@@ -17,10 +17,10 @@
                         {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->customers->name }}
+                        {{ $item->customer->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->customers->icno }}
+                        {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->product->name }}
@@ -32,11 +32,7 @@
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($item->apply_step == '0') Still being applied
-                            @elseif ($item->apply_step == '1') Being Processed
-                            @elseif ($item->apply_step == '3') Failed / Decline
-                            @elseif ($item->apply_step == '6') Approved
-                            @endif
+                        {{ $item->status->description }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
@@ -47,9 +43,29 @@
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
 
-                            {{-- <a href="{{ route('contribution.maker', $cont->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
-                            </a> --}}
+                            @if ($item->account_status > 15 && in_array($item->current_approval()->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 1)
+                                <a href="{{ route('financing.maker', $item->uuid) }}"
+                                   class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                                   title="Approval Process">
+                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                </a>
+                            @endif
+
+                            @if ($item->account_status > 15 && in_array($item->current_approval()->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 2)
+                                <a href="{{ route('financing.checker', $item->uuid) }}"
+                                   class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                                   title="Approval Process">
+                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                </a>
+                            @endif
+
+                            @if ($item->account_status > 15 && in_array($item->current_approval()->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 4)
+                                <a href="{{ route('financing.approver', $item->uuid) }}"
+                                   class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                                   title="Approval Process">
+                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                </a>
+                            @endif
                         </div>
                     </x-table.table-body>
             </tr>

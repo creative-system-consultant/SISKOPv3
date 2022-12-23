@@ -13,12 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.USER_GROUP', function (Blueprint $table) {
+        Schema::create('FMS.Account_Positions', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->morphs('grouping');
-            $table->bigInteger('coop_id')->nullable();
-            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('account_id');
+            $table->string('account_no');
+            $table->timestamp('report_date')->nullable();
+
+            $table->decimal('disbursed_amount',16,2);
+            $table->decimal('bal_outstanding',16,2);
+            $table->decimal('cost_outstanding',16,2);
+            $table->decimal('prin_outstanding',16,2);
+            $table->decimal('uei_outstanding',16,2);
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -36,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.USER_GROUP');
+        Schema::dropIfExists('FMS.Account_Positions');
     }
 };

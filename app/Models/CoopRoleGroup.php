@@ -31,6 +31,11 @@ class CoopRoleGroup extends Model implements Auditable
         return explode(',',$this->users()->select('user_id')->get()->implode('user_id',','));
     }
 
+    public function role()
+    {
+        return $this->belongsTo(UserRole::class,'role_id');
+    }
+
     public function status()
     {
         if ($this->status == 1){ return 'ACTIVE'; } else { return 'INACTIVE'; };

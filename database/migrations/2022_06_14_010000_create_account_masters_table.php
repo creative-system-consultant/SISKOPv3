@@ -29,16 +29,16 @@ return new class extends Migration
 
             $table->decimal('apply_step',2,0)->default('0');
 
-            $table->decimal('purchase_price',16,2);
+            $table->decimal('purchase_price',16,2)->default(0);
             $table->decimal('selling_price',16,2)->nullable();
             $table->decimal('approved_limit',16,2)->nullable();
 
-            $table->decimal('profit_rate',8,4);
+            $table->decimal('profit_rate',8,4)->default(0);
             $table->decimal('instal_amount',18,4)->nullable();
             $table->decimal('instal_SI',18,4)->nullable();
             $table->decimal('instal_Autopay',18,4)->nullable();
             $table->decimal('total_instal_amount',18,4)->nullable();
-            $table->decimal('duration',2,0)->default('1');
+            $table->decimal('duration',3,0)->default('12');
             $table->decimal('approved_duration',2,0)->default('1');
 
             $table->string('cancel_tag')->nullable();

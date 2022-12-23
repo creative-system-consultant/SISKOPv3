@@ -57,4 +57,14 @@ class User extends Authenticatable implements Auditable
     {
         return $this->morphMany(FileMaster::class,'fileable');
     }
+
+    public function roles()
+    {
+        return $this->hasMany(UserGroup::class,'user_id')->where('coop_id', $this->coop_id);
+    }
+
+    public function role_ids()
+    {
+        return explode(',',$this->roles()->select('grouping_id')->get()->implode('grouping_id',','));
+    }
 }

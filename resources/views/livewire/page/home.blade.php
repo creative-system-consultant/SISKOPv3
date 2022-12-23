@@ -45,7 +45,8 @@
             <div class="grid grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 mt-10 h-[82vh]">
                 <x-general.card class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-8">
                     <div>
-                        <p>content 7</p>
+                        <p>Work Queue</p>
+                        <div><livewire:page.dashboard.executive.dash-exec-work-queue /></div>
                     </div>
                 </x-general.card>
                 <x-general.card class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">

@@ -3163,9 +3163,6 @@ input:checked ~ .body {
 }
 @media (min-width: 768px) {
 
-  .md\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
 
   .md\:col-span-8 {
     grid-column: span 8 / span 8;
@@ -3175,12 +3172,24 @@ input:checked ~ .body {
     grid-column: span 12 / span 12;
   }
 
+  .md\:col-span-8 {
+    grid-column: span 8 / span 8;
+  }
+
   .md\:col-span-6 {
     grid-column: span 6 / span 6;
   }
 
+  .md\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+
   .md\:col-span-3 {
     grid-column: span 3 / span 3;
+  }
+
+  .md\:col-span-2 {
+    grid-column: span 2 / span 2;
   }
 
   .md\:-ml-\[0\.5em\] {
@@ -3215,8 +3224,8 @@ input:checked ~ .body {
     width: 26rem;
   }
 
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .md\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .md\:grid-cols-4 {
@@ -3225,6 +3234,10 @@ input:checked ~ .body {
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:grid-cols-1 {
@@ -3258,16 +3271,28 @@ input:checked ~ .body {
 }
 @media (min-width: 1024px) {
 
-  .lg\:col-span-4 {
-    grid-column: span 4 / span 4;
+  .lg\:col-span-12 {
+    grid-column: span 12 / span 12;
   }
 
   .lg\:col-span-8 {
     grid-column: span 8 / span 8;
   }
 
-  .lg\:col-span-12 {
-    grid-column: span 12 / span 12;
+  .lg\:col-span-7 {
+    grid-column: span 7 / span 7;
+  }
+
+  .lg\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+
+  .lg\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+
+  .lg\:col-span-3 {
+    grid-column: span 3 / span 3;
   }
 
   .lg\:col-span-2 {
@@ -3276,14 +3301,6 @@ input:checked ~ .body {
 
   .lg\:col-span-1 {
     grid-column: span 1 / span 1;
-  }
-
-  .lg\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
-  .lg\:col-span-7 {
-    grid-column: span 7 / span 7;
   }
 
   .lg\:mr-2 {
@@ -3300,6 +3317,10 @@ input:checked ~ .body {
 
   .lg\:w-full {
     width: 100%;
+  }
+
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-4 {
@@ -3344,16 +3365,24 @@ input:checked ~ .body {
 }
 @media (min-width: 1280px) {
 
-  .xl\:col-span-4 {
-    grid-column: span 4 / span 4;
+  .xl\:col-span-12 {
+    grid-column: span 12 / span 12;
+  }
+
+  .xl\:col-span-10 {
+    grid-column: span 10 / span 10;
   }
 
   .xl\:col-span-8 {
     grid-column: span 8 / span 8;
   }
 
-  .xl\:col-span-12 {
-    grid-column: span 12 / span 12;
+  .xl\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+
+  .xl\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .xl\:col-span-3 {
@@ -3370,6 +3399,22 @@ input:checked ~ .body {
 
   .xl\:max-w-2xl {
     max-width: 42rem;
+  }
+
+  .xl\:grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .xl\:grid-cols-4 {

@@ -8,8 +8,9 @@
         <x-table.table>
             <x-slot name="thead">
                 <x-table.table-header class="text-left" value="NO." sort="" />
-                <x-table.table-header class="text-left" value="ROLE GROUP" sort="" />
+                <x-table.table-header class="text-left" value="GROUP" sort="" />
                 <x-table.table-header class="text-left" value="description" sort="" />
+                <x-table.table-header class="text-left" value="ROLE" sort="" />
                 <x-table.table-header class="text-left" value="STATUS" sort="" />
                 <x-table.table-header class="text-left" value="ACTION" sort="" />
             </x-slot>
@@ -24,6 +25,9 @@
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
                             {{ mb_strimwidth($role->description,0,97,'...') }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $role->role->name }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
                             {{ $role->status() }}

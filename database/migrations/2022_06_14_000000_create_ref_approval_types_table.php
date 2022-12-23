@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.USER_GROUP', function (Blueprint $table) {
+        Schema::create('ref.approval_types', function (Blueprint $table) {
             $table->id();
-
-            $table->morphs('grouping');
-            $table->bigInteger('coop_id')->nullable();
-            $table->bigInteger('user_id')->nullable();
+            $table->string('description');
+            $table->string('description_bm',150)->nullable();
+            $table->string('status',1)->default('0');
+            $table->bigInteger('coop_id');
+            $table->string('code',4);
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.USER_GROUP');
+        Schema::dropIfExists('ref.approval_types');
     }
 };
