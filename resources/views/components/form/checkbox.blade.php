@@ -15,13 +15,13 @@
             readonly
         @endif
         {{ $attributes }}
-        id="{{$id}}"
-        name="{{$name}}"
-        value="{{$value}}"
+        id="{{ $id }}"
+        name="{{ $name }}"
+        value="{{ $value }}"
         type="checkbox" 
         class="transition duration-150 ease-in-out form-checkbox text-primary-800">
-        <label for="{{$id}}" class="ml-2 block text-sm font-semibold leading-5 text-gray-700 {{ ($errors->has($name)) ? 'text-red-700' : '' }}"">
-            {{$label}} babi
+        <label for="{{ $id }}" class="ml-2 block text-sm font-semibold leading-5 text-gray-700 {{ ($errors->has($name)) ? 'text-red-700' : '' }}">
+            {{ $label }}
         </label>
     </div>
     @if($errors->has($name)) <p class="text-sm text-red-600">{{ $errors->first($name) }}</p> @endif

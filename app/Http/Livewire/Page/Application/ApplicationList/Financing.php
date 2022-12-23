@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Page\Application\ApplicationList;
 
+use App\Models\User;
 use App\Models\AccountMaster as ApplyFinancing;
 use App\Models\Ref\RefGender;
 use Livewire\Component;
 
 class Financing extends Component
 {
-    public $financing, $custApply;
-    public $gender, $genderName;
+    public User $User;
+    public $financing;
+    public $custApply;
+    public $gender;
+    public $genderName;
 
     public function showApplication($uuid)
     {
@@ -19,9 +23,9 @@ class Financing extends Component
 
     public function mount()
     {
-        $user = Auth()->user();
+        $this->User = Auth()->user();
 
-        $this->financing = ApplyFinancing::where('coop_id', $user->coop_id)->orderBy('created_at','desc')->with('customer')->get();
+        $this->financing = ApplyFinancing::where('coop_id', $this->User->coop_id)->orderBy('created_at','desc')->with('customer')->get();
 
         foreach ($this->financing as $gender_name) {
             $this->gender = RefGender::where('coop_id', $gender_name->coop_id)->get();

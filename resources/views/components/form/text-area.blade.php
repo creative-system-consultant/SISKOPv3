@@ -17,6 +17,6 @@
     class="appearance-none block w-full h-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 form-textarea
     focus:outline-none focus:shadow-outline-blue  transition duration-150 ease-in-out sm:text-sm sm:leading-5
     {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}
-    {{ ($errors->has($name)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}"></textarea>
+    {{ ($errors->has($name)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}">{{ $value }}</textarea>
     @if($errors->has($name)) <p class="text-sm text-red-600">{{ $errors->first($name) }}</p> @endif
 </div>
