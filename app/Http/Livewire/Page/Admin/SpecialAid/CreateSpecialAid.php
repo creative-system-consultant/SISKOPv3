@@ -41,7 +41,7 @@ class CreateSpecialAid extends Component
 
     protected $messages = [
         'specialAid_name.required'  => ':attribute field is required',
-        'Fname.*.required'          => ':attribute field is required', 
+        'Fname.*.required'          => ':attribute field is required',
         'Fname.*.min'               => ':attribute must be at least 4 characters',
         'Flabel.*.required'         => ':attribute is required',
         'Flabel.*.min'              => ':attribute must be at least 4 characters',

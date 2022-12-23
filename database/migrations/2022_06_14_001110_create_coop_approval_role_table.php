@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('coop_id');
             $table->bigInteger('role_id');
             $table->bigInteger('approval_id');
+            $table->bigInteger('product_id')->nullable();
 
             $table->string('name',50)->nullable();
             $table->integer('order')->default('1');

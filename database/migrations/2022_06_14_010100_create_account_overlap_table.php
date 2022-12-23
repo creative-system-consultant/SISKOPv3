@@ -13,18 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('FMS.Account_Positions', function (Blueprint $table) {
+        Schema::create('FMS.Account_Disbursement_Deductions', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(DB::raw('newid()'));
 
+            $table->string('mbr_no')->nullable();
+            $table->bigInteger('account_id');
             $table->string('account_no');
-            $table->timestamp('report_date')->nullable();
+            $table->tinyInteger('overlap_id')->default('1');
+            $table->string('overlap_type',1)->default('I');
 
-            $table->decimal('disbursed_amount',16,2);
-            $table->decimal('bal_outstanding',16,2);
-            $table->decimal('cost_outstanding',16,2);
-            $table->decimal('prin_outstanding',16,2);
-            $table->decimal('uei_outstanding',16,2);
+            $table->string('institute_name')->default('Internal');
+            $table->string('institute_num');
+            $table->date('expiry_date')->nullable();
+            $table->decimal('monthly_pymt',16,2)->default(0);
+            $table->decimal('settlement_amt',16,2)->default(0);
+            $table->decimal('principal_amt',16,2)->default(0);
+            $table->decimal('profit_amt',16,2)->default(0);
+            $table->decimal('rebate_amt',16,2)->default(0);
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

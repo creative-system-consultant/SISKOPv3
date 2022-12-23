@@ -176,10 +176,10 @@ class RefSeeder extends Seeder
             ['description' => 'reserved',       'code' => '13'],
             ['description' => 'reserved',       'code' => '14'],
             ['description' => 'APPLYING',       'code' => '15'],
-            ['description' => 'MAKER',          'code' => '16'],
-            ['description' => 'CHECKER',        'code' => '17'],
-            ['description' => 'APPROVAL',       'code' => '18'],
-            ['description' => 'COMITTEE',       'code' => '19'],
+            ['description' => 'APPROVAL',       'code' => '16'],
+            ['description' => 'reserved',       'code' => '17'],
+            ['description' => 'reserved',       'code' => '18'],
+            ['description' => 'reserved',       'code' => '19'],
             ['description' => 'ACCEPTANCE',     'code' => '20'],
             ['description' => 'REJECT',         'code' => '21'],
         ];
@@ -245,9 +245,20 @@ class RefSeeder extends Seeder
             ['description' => 'OTHERS',           'code' => 'O',  'coop_id' => '1', 'status' => '1'],
             ['description' => 'FRIEND',           'code' => 'FR', 'coop_id' => '1', 'status' => '1'],
             ['description' => 'FIANCE',           'code' => 'FI', 'coop_id' => '1', 'status' => '1'],
-     
-        ];
+         ];
         DB::table('ref.relationships')->insert($relationship);
+
+        $approval_type = [
+            ['description' => 'SPECIAL AID',           'coop_id' => '1', 'code' => 'special_aid'],
+            ['description' => 'FINANCING',             'coop_id' => '1', 'code' => 'fin_apply'],
+            ['description' => 'MEMBERSHIP',            'coop_id' => '1', 'code' => 'member_apply'],
+            ['description' => 'STOP MEMBERSHIP',       'coop_id' => '1', 'code' => 'member_stop'],
+            ['description' => 'ADD SHARE',             'coop_id' => '1', 'code' => 'share_add'],
+            ['description' => 'SELL SHARE',            'coop_id' => '1', 'code' => 'share_sell'],
+            ['description' => 'ADD CONTIBUTION',       'coop_id' => '1', 'code' => 'contri_add'],
+            ['description' => 'WITHDRAW CONTRIBUTION', 'coop_id' => '1', 'code' => 'contri_wd'],
+        ];
+        DB::table('ref.approval_types')->insert($approval_type);
 
         $product_documents = [
             ['description' => 'Latest Pay Slip',                 'coop_id' => '1', 'code' => 'pay_slip'],

@@ -20,9 +20,11 @@ class CoopApproval extends Model implements Auditable
         return $this->belongsTo(Coop::class,'coop_id');
     }
 
-    public function approvals()
+    public function approvals($product = NULL)
     {
-        return $this->hasMany(CoopApprovalRole::class,'approval_id');
+        if ($product != NULL){
+            return $this->hasMany(CoopApprovalRole::class,'approval_id')->where('product_id', $product);
+        } else return $this->hasMany(CoopApprovalRole::class,'approval_id');
     }
 
     public function getids()

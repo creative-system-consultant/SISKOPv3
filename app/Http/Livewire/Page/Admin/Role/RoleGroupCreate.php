@@ -21,7 +21,7 @@ class RoleGroupCreate extends Component
     public CoopRoleGroup $group;
 
     protected $rules    = [
-        'group.name'            => 'required|min:5|max:50',
+        'group.name'            => 'required|min:3|max:50',
         'group.description'     => 'max:255',
         'group.role_id'         => 'required',
         'group.status'          => '',
@@ -42,6 +42,7 @@ class RoleGroupCreate extends Component
         } else {
             $this->group          = new CoopRoleGroup;
             $this->group->coop_id = $this->user->coop_id;
+            $this->group->created_by = $this->user->name;
         }
         $this->roles = UserRole::all();
     }
@@ -90,6 +91,7 @@ class RoleGroupCreate extends Component
     public function submit()
     {
         $this->group->name = strtoupper($this->group->name);
+        $this->group->updated_by = $this->user->name;
         $this->validate();
         $this->ids = array_filter($this->ids);
 
@@ -104,6 +106,7 @@ class RoleGroupCreate extends Component
         foreach ($this->ids as $key => $value) {
             $this->group->users()->updateOrCreate([
                 'user_id'   => $value,
+                'updated_by'=> $this->user->name,
             ]);
         }
 

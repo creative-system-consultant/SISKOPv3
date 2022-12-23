@@ -34,9 +34,9 @@ class Apply_Sell_ExchangeShare extends Component
         'bank_code'       => 'required_if:share_type,==,mbr',
         'bank_acct'       => 'required_if:share_type,==,mbr',
     ];
-    
+
     protected $messages = [
-        'mbr_icno.required_if'       => ':attribute field is required',   
+        'mbr_icno.required_if'       => ':attribute field is required',
         'share_apply.required'       => ':attribute field is required',
         'share_apply.numeric'        => ':attribute field must be a number',
         'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
@@ -57,7 +57,7 @@ class Apply_Sell_ExchangeShare extends Component
         'bank_account'    => 'Account Bank No.',
         'bank_acct'       => 'Account Bank No.'
     ];
-    
+
 
     public function submit()
     {
@@ -78,11 +78,11 @@ class Apply_Sell_ExchangeShare extends Component
                 'step'         => '1',
                 'created_by'   => strtoupper($cust->name),
             ]);
-    
+
             session()->flash('message', 'Share Reimbursement Application Successfully Send');
             session()->flash('success');
             session()->flash('title');
-    
+
             return redirect('home');
         }
         elseif ($this->share_type == 'mbr') {
@@ -99,19 +99,19 @@ class Apply_Sell_ExchangeShare extends Component
                 'exc_cust_id'  => $cust_member->id,
                 'flag'         => '1',
                 'step'         => '1',
-                'created_by'   => strtoupper($cust->name),                
+                'created_by'   => strtoupper($cust->name),
             ]);
 
             session()->flash('message', 'Share Reimbursement Application Successfully Send');
             session()->flash('success');
             session()->flash('title');
-    
+
             return redirect('home');
         }
         else{
             //
         }
-        
+
     }
 
     public function alertConfirm()
@@ -119,10 +119,10 @@ class Apply_Sell_ExchangeShare extends Component
         $this->validate();
 
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',  
+            'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for share reimbursement?',
         ]);
-        
+
     }
 
     public function restricApplySell($id)
@@ -133,9 +133,9 @@ class Apply_Sell_ExchangeShare extends Component
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
             session()->flash('info');
             session()->flash('title');
-    
+
             return redirect()->route('home');
-        }    
+        }
     }
 
     public function restricApplyExc($id)
@@ -146,25 +146,25 @@ class Apply_Sell_ExchangeShare extends Component
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
             session()->flash('info');
             session()->flash('title');
-    
+
             return redirect()->route('home');
-        }    
+        }
     }
 
 
     public function contApplyMember($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id, 
-            'cust_id'     => $this->cust->id, 
+            'coop_id'     => $this->cust->coop_id,
+            'cust_id'     => $this->cust->id,
             'direction'   => 'exchange',
         ], [
             'amt_before'  => $this->cust->share,
-            'flag'        => 0, 
+            'flag'        => 0,
             'step'        => 0,
-            'apply_amt'   => '0.00',  
+            'apply_amt'   => '0.00',
         ]);
-        
+
         $customer = Customer::where('id', $share->exc_cust_id)->first();
 
         $this->mbr_icno     = $customer?->icno;
@@ -176,14 +176,14 @@ class Apply_Sell_ExchangeShare extends Component
     public function contApplyCoop($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id, 
-            'cust_id'     => $this->cust->id, 
+            'coop_id'     => $this->cust->coop_id,
+            'cust_id'     => $this->cust->id,
             'direction'   => 'sell',
         ], [
             'amt_before'  => $this->cust->share,
-            'flag'        => 0, 
+            'flag'        => 0,
             'step'        => 0,
-            'apply_amt'   => '0.00',  
+            'apply_amt'   => '0.00',
         ]);
 
         $this->share_apply  = $share?->apply_amt;

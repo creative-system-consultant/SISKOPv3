@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('note')->nullable();
             $table->string('vote')->nullable();
+            $table->string('rules')->default('[]')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

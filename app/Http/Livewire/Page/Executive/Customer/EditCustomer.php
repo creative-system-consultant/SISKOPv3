@@ -34,7 +34,7 @@ class EditCustomer extends Component
         'Cust.icno'         =>'required',
         'Cust.birthdate'    =>'required',
         'Cust.birthplace'   =>'required',
-        'Cust.birthdate'    =>'required',
+        'Cust.mobile_num'   =>'required',
         'Cust.title_id'     =>'required',
         'Cust.education_id' =>'required',
         'Cust.gender_id'    =>'required',

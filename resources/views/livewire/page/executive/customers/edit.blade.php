@@ -8,7 +8,7 @@
                 <x-form.input
                     label="Name"
                     type="text"
-                    name="name" 
+                    name="Cust.name"
                     value=""
                     mandatory=""
                     disable=""
@@ -29,7 +29,7 @@
                 <x-form.input
                     label="Birth Date"
                     type="date"
-                    name="birthdate"
+                    name="Cust.birthdate"
                     value=""
                     mandatory=""
                     disable=""
@@ -46,12 +46,24 @@
                 />
             </div>
 
+            <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                <x-form.input
+                    label="Mobile Number"
+                    type="text"
+                    name="Cust.mobile_num"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    wire:model="Cust.mobile_num"
+                />
+                        </div>
+
             <div class="mt-4 grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.dropdown
                     label="Customer Title"
                     value="{{ $Cust->title_id }}"
-                    name="title_id"
-                    id="title_id"
+                    name="Cust.title_id"
+                    id="Cust.title_id"
                     mandatory=""
                     disable=""
                     default="yes"
@@ -65,8 +77,8 @@
                 <x-form.dropdown
                     label="Customer Education"
                     value=""
-                    name="education_id" 
-                    id="education_id"
+                    name="Cust.education_id"
+                    id="Cust.education_id"
                     mandatory=""
                     disable=""
                     default="yes"
@@ -77,11 +89,11 @@
                     @endforeach
                 </x-form.dropdown>
 
-                <x-form.dropdown 
+                <x-form.dropdown
                     label="Customer Gender"
                     value=""
-                    name="gender_id" 
-                    id="gender_id"
+                    name="Cust.gender_id"
+                    id="Cust.gender_id"
                     mandatory=""
                     disable=""
                     default="yes"
@@ -95,8 +107,8 @@
                 <x-form.dropdown
                     label="Customer Marital"
                     value=""
-                    name="marital_id" 
-                    id="marital_id"
+                    name="Cust.marital_id"
+                    id="Cust.marital_id"
                     mandatory=""
                     disable=""
                     default="yes"
@@ -111,8 +123,8 @@
                 <x-form.dropdown
                     label="Customer Race"
                     value=""
-                    name="race_id"  
-                    id="race_id"
+                    name="Cust.race_id"
+                    id="Cust.race_id"
                     mandatory=""
                     disable=""
                     default="yes"
@@ -123,11 +135,11 @@
                     @endforeach
                 </x-form.dropdown>
 
-                <x-form.dropdown 
+                <x-form.dropdown
                     label="Customer Country"
                     value=""
-                    name="country_id" 
-                    id="country_id"
+                    name="Cust.country_id"
+                    id="Cust.country_id"
                     mandatory=""
                     disable=""
                     default="yes"

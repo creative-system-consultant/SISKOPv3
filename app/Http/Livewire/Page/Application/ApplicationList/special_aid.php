@@ -6,7 +6,7 @@ use App\Models\ApplySpecialAid;
 use App\Models\SpecialAid as SpecialAidType;
 use Livewire\Component;
 
-class SpecialAid extends Component
+class special_aid extends Component
 {
     public $specialAid;
     public $specialAid_type;

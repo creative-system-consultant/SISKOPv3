@@ -25,12 +25,12 @@ class CoopSeeder extends Seeder
             [
                 'addressable_type' =>  'App\Models\Coop',
                 'addressable_id'   =>  '1',
-                'address1' => 'NO 11, JALAN 9/6', 
-                'address2' => 'TAMAN IKS', 
-                'address3' => 'SEKSYEN 9', 
-                'postcode' => '43500', 
-                'town'     => 'BANDAR BARU BANGI', 
-                'def_state_id' => $allstate->where('description','SELANGOR')->first()->id, 
+                'address1' => 'NO 11, JALAN 9/6',
+                'address2' => 'TAMAN IKS',
+                'address3' => 'SEKSYEN 9',
+                'postcode' => '43500',
+                'town'     => 'BANDAR BARU BANGI',
+                'def_state_id' => $allstate->where('description','SELANGOR')->first()->id,
             ],
         ];
         DB::table('cif.address')->insert($coop_add);
@@ -46,15 +46,58 @@ class CoopSeeder extends Seeder
                 'description'   => 'Default COOP FOR SISKOPv3',
             ],
         ];
+        DB::table('SISKOP.coop')->insert($coop);
 
         $membership = [
             [
-                'coop_id'   => 1,
+                'coop_id' => '1',
+                'cust_id' => '1'
             ],
         ];
         DB::table('SISKOP.membership')->insert($membership);
 
-        DB::table('SISKOP.coop')->insert($coop);
+        $role_group = [
+            [
+                'coop_id'     => '1',
+                'role_id'     => '1',
+                'description' => 'PEGAWAI',
+                'name'        => 'PEGAWAI',
+                'status'      => '1'
+            ],
+            [
+                'coop_id'     => '1',
+                'role_id'     => '2',
+                'description' => 'PENGURUS',
+                'name'        => 'PENGURUS',
+                'status'      => '1'
+            ],
+            [
+                'coop_id'     => '1',
+                'role_id'     => '2',
+                'description' => 'KPOP',
+                'name'        => 'KPOP',
+                'status'      => '1'
+            ],
+            [
+                'coop_id'     => '1',
+                'role_id'     => '4',
+                'description' => 'ALK',
+                'name'        => 'ALK',
+                'status'      => '1'
+            ],
+        ];
+        DB::table('SISKOP.COOP_ROLE_GROUP')->insert($role_group);
+
+        $role_users = [
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '1', 'user_id' => '15' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '2', 'user_id' => '16' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '3', 'user_id' => '17' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '4', 'user_id' => '15' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '4', 'user_id' => '16' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '4', 'user_id' => '1' ],
+        ];
+        DB::table('SISKOP.USER_GROUP')->insert($role_users);
+
 
         DB::statement("DBCC CHECKIDENT ('SISKOP.coop',RESEED,100)");
         DB::statement("DBCC CHECKIDENT ('cif.address',RESEED,100)");

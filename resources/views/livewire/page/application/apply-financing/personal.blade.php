@@ -45,16 +45,9 @@
             default="yes"
             wire:model="Account.duration"
             >
-                <option value="1">  1 </option>
-                <option value="2">  2 </option>
-                <option value="3">  3 </option>
-                <option value="4">  4 </option>
-                <option value="5">  5 </option>
-                <option value="6">  6 </option>
-                <option value="7">  7 </option>
-                <option value="8">  8 </option>
-                <option value="9">  9 </option>
-                <option value="10"> 10 </option>
+            @for ($i = $Product->term_min; $i <= $Product->term_max; $i++)
+                <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
         </x-form.dropdown>
     </div>
     <x-general.card class="p-4 mt-2 bg-white rounded-md shadow-md">
@@ -148,7 +141,7 @@
                     default="yes"
                     wire:model="Customer.gender_id"
                 >
-                    @foreach ($gender_id as $list)
+                    @foreach ($gender as $list)
                         <option value="{{ $list->id }}"> {{ $list->description }}</option>
                     @endforeach
                 </x-form.dropdown>

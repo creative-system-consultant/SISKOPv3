@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
             $table->bigInteger('coop_id')->nullable();
+            $table->string('ref_no')->nullable();
 
             $table->string('name');
             $table->string('icno');

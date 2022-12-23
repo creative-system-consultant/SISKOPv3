@@ -16,7 +16,7 @@
             @forelse ($withdrawal as $withdraw)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $loop->iteration }}        
+                        {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $withdraw->customer->name }}
@@ -25,7 +25,7 @@
                         {{ $withdraw->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $withdraw->apply_amt == '0.00' ? '0.00' : $withdraw->apply_amt}}
+                        RM {{ $withdraw->apply_amt == '0.00' ? '0.00' : $withdraw->apply_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         RM {{ $withdraw->amt_before == '0.00' ? '0.00' : $withdraw->amt_before }}
@@ -35,7 +35,8 @@
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @foreach ($banks as $bank)
-                            @if ($bank->code == $withdraw->bank_code) {{ $bank->description }} @endif                            
+                            @if ($bank->code == $withdraw->bank_code) {{ $bank->description }}
+                        @endif
                         @endforeach
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
@@ -44,28 +45,29 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($withdraw->flag == '0') Still being applied
                         @elseif ($withdraw->flag == '1') Being Processed
-                        @elseif ($withdraw->flag == '3') Failed / Decline 
-                        @elseif ($withdraw->flag == '6') Approved                      
-                        @endif             
+                        @elseif ($withdraw->flag == '3') Failed / Decline
+                        @elseif ($withdraw->flag == '6') Approved
+                        @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
-                            <button  
-                                wire:click="showApplication('{{$withdraw->uuid}}')"
+                            <button
+                                wire:click="showApplication('{{ $withdraw->uuid }}')"
                                 @click="openModal = true"
-                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
+                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400"
+                                title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
 
-                            <a href="{{route('withdrawal.maker', $withdraw->uuid)}}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>                    
+                            <a href="{{ route('withdrawal.maker', $withdraw->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
                             </a>
                         </div>
                     </x-table.table-body>
-                </tr>  
+                </tr>
             @empty
             <x-table.table-body colspan="4" class="text-left">
-                No Data                    
+                No Data
             </x-table.table-body>
             @endforelse
         </x-slot>

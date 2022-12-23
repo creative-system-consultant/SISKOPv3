@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ref\RefAccountStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -16,11 +17,6 @@ class AccountMaster extends Model implements Auditable
     protected $dates   = ['created_at','deleted_at','updated_at'];
 
     public function customer()
-    {
-        return $this->hasMany(Customer::class,'id','cust_id');
-    }
-
-    public function customers()
     {
         return $this->belongsTo(Customer::class,'cust_id','id');
     }
@@ -53,6 +49,46 @@ class AccountMaster extends Model implements Auditable
     public function guarantors()
     {
         return $this->morphMany(Guarantor::class, 'guarantee');
+    }
+
+    public function approvals()
+    {
+        return $this->morphMany(Approval::class,'approval');
+    }
+
+    public function current_approval()
+    {
+        return $this->approvals()->where('order', $this->apply_step)->first();
+    }
+
+    public function current_approval_role()
+    {
+        return CoopRoleGroup::find($this->current_approval()->group_id);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(RefAccountStatus::class,'account_status');
+    }
+
+    public function make_approvals()
+    {
+        $CoopApprovalRoles = CoopApprovalRole::where([['coop_id', $this->coop_id],['product_id', $this->product_id],['approval_id', 1]])->orderBy('order')->get();
+
+        $count = 1;
+        foreach ($CoopApprovalRoles as $key => $value) {
+            $approval = $this->approvals()->firstOrCreate(['order' => $count]);
+            $approval->group_id = $value->role_id;
+            $approval->rules    = $value->rules;
+            $approval->user_id  = NULL;
+            $approval->type     = NULL;
+            $approval->note     = NULL;
+            $approval->vote     = NULL;
+            $approval->save();
+            $count++;
+        }
+
+        return $CoopApprovalRoles;
     }
 
 }

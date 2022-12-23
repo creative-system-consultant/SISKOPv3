@@ -96,6 +96,9 @@ use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalCon
 use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\Apply_Financing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\Financing_List;
+use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
+use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
+use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
 
 /*
 |--------------------------------------------------------------------------
@@ -181,7 +184,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('Approval')->group(function(){
             //Route::get('admin', ApprovalAdmin::class)->name('admin.approval.admin');
-            Route::get('/{approval}', ApprovalAdmin::class);
+            Route::get('/{type}', ApprovalAdmin::class);
+            Route::get('/{type}/{product}', ApprovalAdmin::class);
         });
 
         Route::prefix('maintenance')->group(function(){
@@ -338,6 +342,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('approval/{uuid}', SellShareApproval::class)->name('sellShare.approval');
             });
 
+            //Exec > approval > add contribution
             Route::prefix('contribution')->group(function(){
                 Route::get('maker/{uuid}', ContributionMaker::class)->name('contribution.maker');
                 Route::get('checker/{uuid}', ContributionChecker::class)->name('contribution.checker');
@@ -345,11 +350,19 @@ Route::middleware('auth')->group(function () {
                 Route::get('approval/{uuid}', ContributionApproval::class)->name('contribution.approval');
             });
 
+            //Exec > approval > w/d contribution
             Route::prefix('withdrawContribution')->group(function(){
                 Route::get('maker/{uuid}', WithdrawalContributionMaker::class)->name('withdrawal.maker');
                 Route::get('checker/{uuid}', WithdrawalContributionChecker::class)->name('withdrawal.checker');
                 Route::get('committee/{uuid}', WithdrawalContributionCommittee::class)->name('withdrawal.committee');
                 Route::get('approval/{uuid}', WithdrawalContributionApproval::class)->name('withdrawal.approval');
+            });
+
+            //Exec > approval > Financing
+            Route::prefix('financing')->group(function(){
+                Route::get('maker/{uuid}', FinancingMaker::class)->name('financing.maker');
+                Route::get('checker/{uuid}', FinancingChecker::class)->name('financing.checker');
+                Route::get('approver/{uuid}', FinancingApprover::class)->name('financing.approver');
             });
         });
 

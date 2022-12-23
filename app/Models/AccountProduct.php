@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ref\RefProductType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -29,5 +30,9 @@ class AccountProduct extends Model implements Auditable
     {
         return $this->documents->where('type',$code)->first()?->status;
     }
-    
+
+    public function type()
+    {
+        return $this->belongsTo(RefProductType::class, 'product_type');
+    }
 }

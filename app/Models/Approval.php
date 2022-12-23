@@ -3,28 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class CoopApprovalRole extends Model implements Auditable
+class Approval extends Model implements Auditable
 {
-    use SoftDeletes;
+    // no need softdelete
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = 'siskop.coop_approval_role';
+    protected $table   = "SISKOP.approvals";
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
     protected $appends = ['rule_min','rule_max','rule_employee'];
 
-    public function coop()
+    public function approval()
     {
-        return $this->belongsTo(Coop::class,'coop_id');
+        return $this->morphTo();
     }
 
     public function rolegroup()
     {
-        return $this->belongsTo(CoopRoleGroup::class,'role_id');
+        return $this->belongsTo(CoopRoleGroup::class,'group_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function getRule($type, $def = 0)
