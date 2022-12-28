@@ -142,7 +142,7 @@ class UserSeeder extends Seeder
 
         DB::table('SISKOP.users')->insert($users);
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.users',RESEED,100)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.users',RESEED,101)");
 
         $customers = [
             [
@@ -233,6 +233,6 @@ class UserSeeder extends Seeder
 
         DB::statement("DBCC CHECKIDENT ('CIF.customers',RESEED,1)");
         DB::table('CIF.customers')->insert($customers);
-        DB::statement("DBCC CHECKIDENT ('CIF.customers',RESEED,100)");
+        DB::statement("DBCC CHECKIDENT ('CIF.customers',RESEED,101)");
     }
 }

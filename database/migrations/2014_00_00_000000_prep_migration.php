@@ -25,6 +25,9 @@ class PrepMigration extends Migration
      */
     public function down()
     {
-        //
+        DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'SISKOP' ) DROP SCHEMA SISKOP");
+        DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'FMS' ) DROP SCHEMA FMS");
+        DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'CIF' ) DROP SCHEMA CIF");
+        DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'REF' ) DROP SCHEMA REF");
     }
 };

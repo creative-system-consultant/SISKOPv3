@@ -36,6 +36,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        DB::statement("DBCC CHECKIDENT ('FMS.Account_Disbursement_Deductions',RESEED,101)");
     }
 
     /**
@@ -45,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Positions');
+        Schema::dropIfExists('FMS.Account_Disbursement_Deductions');
     }
 };

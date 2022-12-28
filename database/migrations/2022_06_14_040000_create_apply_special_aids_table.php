@@ -35,6 +35,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        DB::statement("DBCC CHECKIDENT ('SISKOP.apply_special_aid',RESEED,101)");
     }
 
     /**

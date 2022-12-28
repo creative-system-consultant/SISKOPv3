@@ -59,28 +59,28 @@ class CoopSeeder extends Seeder
         $role_group = [
             [
                 'coop_id'     => '1',
-                'role_id'     => '1',
+                'role_id'     => '1',       //maker
                 'description' => 'PEGAWAI',
                 'name'        => 'PEGAWAI',
                 'status'      => '1'
             ],
             [
                 'coop_id'     => '1',
-                'role_id'     => '2',
+                'role_id'     => '2',       //checker
                 'description' => 'PENGURUS',
                 'name'        => 'PENGURUS',
                 'status'      => '1'
             ],
             [
                 'coop_id'     => '1',
-                'role_id'     => '2',
+                'role_id'     => '2',       //checker
                 'description' => 'KPOP',
                 'name'        => 'KPOP',
                 'status'      => '1'
             ],
             [
                 'coop_id'     => '1',
-                'role_id'     => '4',
+                'role_id'     => '4',       //approver
                 'description' => 'ALK',
                 'name'        => 'ALK',
                 'status'      => '1'
@@ -89,18 +89,24 @@ class CoopSeeder extends Seeder
         DB::table('SISKOP.COOP_ROLE_GROUP')->insert($role_group);
 
         $role_users = [
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '1', 'user_id' => '15' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '2', 'user_id' => '16' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '3', 'user_id' => '17' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '4', 'user_id' => '15' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '4', 'user_id' => '16' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '4', 'user_id' => '1' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '101', 'user_id' => '15', 'coop_id' => '1' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '102', 'user_id' => '16', 'coop_id' => '1' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '103', 'user_id' => '17', 'coop_id' => '1' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '104', 'user_id' => '15', 'coop_id' => '1' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '104', 'user_id' => '16', 'coop_id' => '1' ],
+            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '104', 'user_id' => '1' , 'coop_id' => '1' ],
         ];
         DB::table('SISKOP.USER_GROUP')->insert($role_users);
 
+        $products = [
+            [ 'name' => 'Financing iPhone', 'coop_id' => '1', 'product_type' => '5', 'profit_rate' => '5', 'amt_min' => '2000', 'amt_max' => '10000', 'term_min' => '1', 'term_max' => '3'],
+            [ 'name' => 'Financing KERETA', 'coop_id' => '1', 'product_type' => '6', 'profit_rate' => '5', 'amt_min' => '2000', 'amt_max' => '10000', 'term_min' => '1', 'term_max' => '3'],
+        ];
+        DB::table('SISKOP.Account_products')->insert($products);
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.coop',RESEED,100)");
-        DB::statement("DBCC CHECKIDENT ('cif.address',RESEED,100)");
-        DB::statement("DBCC CHECKIDENT ('SISKOP.membership',RESEED,100)");
+
+        DB::statement("DBCC CHECKIDENT ('SISKOP.coop',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('cif.address',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.membership',RESEED,101)");
     }
 }

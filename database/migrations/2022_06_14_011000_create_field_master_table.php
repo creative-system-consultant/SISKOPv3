@@ -38,6 +38,9 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        //no need start from 100
+        //DB::statement("DBCC CHECKIDENT ('SISKOP.SYS_FIELD_MASTER',RESEED,101)");
     }
 
     /**

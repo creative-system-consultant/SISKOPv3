@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('CIF.Address',RESEED,100)");
+        DB::statement("DBCC CHECKIDENT ('CIF.Address',RESEED,101)");
     }
 
     /**

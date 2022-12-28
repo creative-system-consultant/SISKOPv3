@@ -39,6 +39,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        DB::statement("DBCC CHECKIDENT ('SISKOP.Account_Products',RESEED,101)");
     }
 
     /**
@@ -48,6 +50,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Masters');
+        Schema::dropIfExists('SISKOP.Account_Products');
     }
 };

@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.Coop',RESEED,100)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.Coop',RESEED,101)");
 
     }
 

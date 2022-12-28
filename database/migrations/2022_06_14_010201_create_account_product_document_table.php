@@ -29,6 +29,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        DB::statement("DBCC CHECKIDENT ('SISKOP.Account_Product_document',RESEED,101)");
     }
 
     /**
@@ -38,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Product_document');
+        Schema::dropIfExists('SISKOP.Account_Product_document');
     }
 };
