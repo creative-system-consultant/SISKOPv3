@@ -3,9 +3,9 @@
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
             <div class="bg-white rounded-md">
-                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>
+                <h2 class="text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
                 <x-form.input
                     label="Product Name"
                     type="text"
@@ -17,7 +17,7 @@
                 />
 
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
                 <x-form.dropdown
                     label="Financing Type"
                     value=""
@@ -45,7 +45,7 @@
                     wire:model="Product.profit_rate"
                 />
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
                 <x-form.input-tag
                     label="Minimum Financing"
                     type="text"
@@ -71,7 +71,7 @@
                 />
 
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
                 <x-form.dropdown
                     label="Minimum Financing Term"
                     value=""
@@ -121,8 +121,43 @@
                 </x-form.dropdown>
 
             </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
+                <x-form.dropdown
+                    label="Concurrent Product Apply"
+                    value=""
+                    name="Product.apply_limit"
+                    id=""
+                    leftTag=""
+                    rightTag="Year"
+                    mandatory=""
+                    disable=""
+                    default="yes"
+                    wire:model="Product.apply_limit"
+                >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </x-form.dropdown>
+
+                <x-form.input
+                    label="Lifetime Product Apply (Put 0 for unlimited)"
+                    type="text"
+                    name="Product.apply_lifetime"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    wire:model="Product.apply_lifetime"
+                />
+            </div>
             <div class="bg-white rounded-md">
-                <h2 class="mt-4 mb-4 text-base font-semibold border-b-2 border-gray-300"> Form Information </h2>
+                <h2 class="mt-6 mb-6 text-base font-semibold border-b-2 border-gray-300"> Form Information </h2>
             </div>
             @foreach ($refdocument as $key => $list)
                 <div class="mt-4 grid grid-cols-12 gap-6">

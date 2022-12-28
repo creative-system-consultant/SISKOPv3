@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('coop_id');
             $table->bigInteger('product_type');
+            $table->smallInteger('apply_limit')->default('1');
+            $table->smallInteger('apply_lifetime')->nullable();
             $table->decimal('profit_rate',8,4);
             $table->decimal('amt_default',10,2)->nullable();
             $table->decimal('amt_min',10,2)->nullable();

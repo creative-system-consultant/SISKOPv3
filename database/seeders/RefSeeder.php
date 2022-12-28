@@ -139,7 +139,9 @@ class RefSeeder extends Seeder
             ['description' => 'INVESTMENT FINANCING','code' => 'IF', 'coop_id' => '1'],
             ['description' => 'EDUCATION FINANCING', 'code' => 'EF', 'coop_id' => '1'],
             ['description' => 'PRODUCT FINANCING',   'code' => 'HP', 'coop_id' => '1'],
+            ['description' => 'CAR FINANCING',       'code' => 'CF', 'coop_id' => '1'],
             ['description' => 'TAKAFUL',             'code' => 'TK', 'coop_id' => '1'],
+            ['description' => 'MEDICAL CARD',        'code' => 'MC', 'coop_id' => '1'],
         ];
         DB::table('ref.product_types')->insert($product);
 

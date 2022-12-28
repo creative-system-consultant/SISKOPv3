@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\AccountMaster;
 use App\Models\AccountProduct;
 use App\Models\Address;
+use App\Models\CoopRules;
 use App\Models\Customer;
 use App\Models\CustFamily;
 use App\Models\CustEmployer;
@@ -51,6 +52,7 @@ class Apply_Financing extends Component
     public $search_introducer;
     public $search_guarantor;
     public $mbr_no = [];
+    public $max_active;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -294,6 +296,7 @@ class Apply_Financing extends Component
     public function mount($product_id)
     {
         $this->User = User::find(Auth()->user()->id);
+        $coop_id = $this->User->coop_id;
 
         $this->Customer             = Customer::where('icno', $this->User->icno)->first();
         $this->Customer->birthdate  = $this->birthdate();
@@ -301,19 +304,44 @@ class Apply_Financing extends Component
         $this->Customer->email      = $this->Customer->email ?? $this->User->email;
 
         $this->Product    = AccountProduct::where('uuid',$product_id)->first();
+        $max_active = CoopRules::where([['ruleable_id', $coop_id],['name', 'max_active']])->first();
+        $this->max_active = $max_active ? $max_active->value : '0';
+
         $Account          = AccountMaster::where([
             ['cust_id'       , $this->Customer->id],
             ['coop_id'       , $this->User->coop_id],
             ['product_id'    , $this->Product->id],
             ['account_status', '>', 14]
-        ])->first();
+        ])->get();
+
+        $AllAccount          = AccountMaster::where([
+            ['cust_id'       , $this->Customer->id],
+            ['coop_id'       , $this->User->coop_id],
+            ['account_status', '>', 14]
+        ])->get();
+
+        if ($Account->count() >= $this->Product->apply_limit){
+            session()->flash('message', 'There can be only '.$this->Product->apply_limit.' Pending Application of product '.$this->Product->name.' exists');
+            session()->flash('warning');
+            session()->flash('title','Warning');
+
+            return redirect()->route('financing.list');
+        }
+        if ($AllAccount->count() >= $this->max_active && $this->max_active != 0 ){
+            session()->flash('message', 'There can be only '.$this->max_active.' Pending Application for all product');
+            session()->flash('warning');
+            session()->flash('title','Warning');
+
+            return redirect()->route('financing.list');
+        }
+        /*
         if ($Account != NULL && $Account->account_status != 15){
             session()->flash('message', 'There must be only 1 Financing Application active. Financing Application being processed');
             session()->flash('warning');
             session()->flash('title');
 
             return redirect()->route('home');
-        }
+        }*/
         $this->Account          = AccountMaster::firstOrCreate([
             'cust_id'           => $this->Customer->id,
             'coop_id'           => $this->User->coop_id,

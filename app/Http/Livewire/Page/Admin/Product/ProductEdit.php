@@ -34,6 +34,8 @@ class ProductEdit extends Component
         'Product.amt_max'            => ['required', 'numeric', 'gte:Product.amt_min'],
         'Product.term_min'           => ['required', 'integer', 'lte:Product.term_max'],
         'Product.term_max'           => ['required', 'integer', 'gte:Product.term_min'],
+        'Product.apply_limit'        => ['required', 'integer'],
+        'Product.apply_lifetime'     => ['integer'],
     ];
 
     protected $messages = [

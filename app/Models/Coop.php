@@ -62,4 +62,9 @@ class Coop extends Model implements Auditable
     {
         return $this->morphMany(CustomField::class,'fieldable');
     }
+
+    public function rules()
+    {
+        return $this->morphMany(CoopRules::class, 'ruleable');
+    }
 }

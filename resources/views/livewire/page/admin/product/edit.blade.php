@@ -119,7 +119,41 @@
                     <option value="9">9</option>
                     <option value="10">10</option>
                 </x-form.dropdown>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
+                <x-form.dropdown
+                    label="Concurrent Product Apply"
+                    value=""
+                    name="Product.apply_limit"
+                    id=""
+                    leftTag=""
+                    rightTag="Year"
+                    mandatory=""
+                    disable=""
+                    default="yes"
+                    wire:model="Product.apply_limit"
+                >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </x-form.dropdown>
 
+                <x-form.input
+                    label="Lifetime Product Apply (Put 0 for unlimited)"
+                    type="text"
+                    name="Product.apply_lifetime"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    wire:model="Product.apply_lifetime"
+                />
             </div>
             @foreach ($refdocument as $key => $list)
                 <div class="mt-4 grid grid-cols-12 gap-6">

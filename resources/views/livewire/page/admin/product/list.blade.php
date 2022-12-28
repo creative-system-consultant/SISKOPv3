@@ -1,7 +1,29 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl"> </h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <p>Product Dashboard</p>
+        <x-form.basic-form wire:submit.prevent="submit" class="p-4">
+            <div class="bg-white rounded-md">
+                <h2 class="text-base font-semibold border-b-2 border-gray-300"> Product Dashboard</h2>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 mt-4">
+                <x-form.input
+                    label="Maximum Active Application (Put 0 for unlimited)"
+                    type="text"
+                    name="max_active.value"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    wire:model="max_active.value"
+                />
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 mt-4">
+                <div class="mt-4 space-x-2">
+                    <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </x-form.basic-form>
     </x-general.card>
     <x-general.card class="grid grid-cols-1 gap-10 p-4 mt-5 bg-white rounded-md shadow-md ">
         <div>
