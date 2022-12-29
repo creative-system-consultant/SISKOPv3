@@ -77,7 +77,9 @@ class RoleGroupCreate extends Component
             'selected' => $this->selected,
             'idrem' => $this->idrem,
             'users' => $this->group->users,
-            'errorbag' => $this->getErrorBag()
+            'errorbag' => $this->getErrorBag(),
+            'count' => $this->users->count(),
+            'rolename' => $this->group->role->name,
         ]);
     }
 
@@ -98,6 +100,20 @@ class RoleGroupCreate extends Component
         if($this->ids == []){
             if ($this->group->status == 1){
                 $this->addError('group.status', 'Can\'t set active without any members');
+                return back();
+            }
+        }
+
+        if( $this->group->role->name == 'COMMITTEE'){
+            if($this->group->status == 1 && ($this->users->count() < 3 || $this->users->count() % 2 == 0)){
+                $this->addError('group.status', 'Can\'t set active. Committee must have at least 3 members and must be in odd numbers (3,5,7 ...)');
+                return back();
+            }
+        }
+
+        if( $this->group->role->name == 'APPROVER'){
+            if($this->group->status == 1 && $this->users->count() % 2 == 0){
+                $this->addError('group.status', 'Can\'t set active. Approver must have at least 1 member and must be in odd numbers (1,3,5,7 ...)');
                 return back();
             }
         }

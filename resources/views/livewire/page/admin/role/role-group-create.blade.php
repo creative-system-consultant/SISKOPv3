@@ -163,6 +163,9 @@
                     <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         {{ $page }}
                     </button>
+                    <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                        DEBUG
+                    </button>
                 </div>
             </div>
             @forelse ($this->getErrorBag() as $key => $error)

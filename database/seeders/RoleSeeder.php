@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
         $roles = [
             [ 'name'      => 'MAKER',    'coop_id'   => '1', ],
             [ 'name'      => 'CHECKER',  'coop_id'   => '1', ],
-            [ 'name'      => 'COMITTEE', 'coop_id'   => '1', ],
+            [ 'name'      => 'COMMITTEE','coop_id'   => '1', ],
             [ 'name'      => 'APPROVER', 'coop_id'   => '1', ],
         ];
 
