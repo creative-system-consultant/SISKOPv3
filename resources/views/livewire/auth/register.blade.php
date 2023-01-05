@@ -2,19 +2,24 @@
 
 <div>
     @include('include.auth-bg')
-    <div class="relative justify-center  min-h-screen mx-0 sm:flex sm:flex-row items-center">
+    <div class="relative items-center justify-center min-h-screen mx-0 sm:flex sm:flex-row">
+        <!-- for align right login -->
         @include('include.auth-title')
-        <div class="flex self-center justify-center">
-            <div class="p-12 mx-auto bg-white rounded-xl w-96  md:w-100 shadow-lg  h-screen md:h-full flex justify-center flex-col">
-                <div class="sm:mx-auto sm:w-full sm:max-w-md mb-6 border-b-2 pb-4">
+
+        <div class="flex flex-col items-center self-center justify-center">
+            <!-- for align center login -->
+            {{-- @include('include.auth-title-center') --}}
+
+            <div class="flex flex-col justify-center h-screen p-12 mx-auto bg-white shadow-lg rounded-xl w-96 md:w-100 md:h-full">
+                <div class="pb-4 mb-6 border-b-2 sm:mx-auto sm:w-full sm:max-w-md">
                     <x-logo class="w-auto h-20 mx-auto text-primary" />
-                    <h2 class="mt-2 text-2xl font-extrabold text-center text-gray-900 leading-9">
+                    <h2 class="mt-2 text-2xl font-extrabold leading-9 text-center text-gray-900">
                         Register a New Account
                     </h2>
 
-                    <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
+                    <p class="mt-2 text-sm leading-5 text-center text-gray-600 max-w">
                         or
-                        <a href="{{ route('login') }}" class="font-medium text-primary focus:outline-none focus:underline transition ease-in-out duration-150 text-primary-900">
+                        <a href="{{ route('login') }}" class="font-medium transition duration-150 ease-in-out text-primary focus:outline-none focus:underline text-primary-900">
                             Login to Your Account
                         </a>
                     </p>
@@ -122,21 +127,25 @@
                                 type="password"
                                 placeholder="Confrim Password"
                                 required
-                                class="form-input w-full content-center text-sm px-4 py-2"
+                                class="content-center w-full px-4 py-2 text-sm form-input"
                             />
                         </div>
                     </div>
 
                     <div class="mt-6">
                         <span class="block w-full rounded-md shadow-sm">
-                            <button type="submit" class="text-sm flex justify-center w-full p-2 font-semibold text-gray-100 border-2 border-primary-900 rounded-md  bg-primary-900 hover:bg-primary-800 focus:outline-none">
+                            <button type="submit" class="flex justify-center w-full p-2 text-sm font-semibold text-gray-100 border-2 rounded-md border-primary-900 bg-primary-900 hover:bg-primary-800 focus:outline-none">
                                 Register
                             </button>
                         </span>
                     </div>
                 </form>
             </div>
+
         </div>
+
+        <!-- for align left login -->
+        {{-- @include('include.auth-title') --}}
 
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="flex flex-col self-center p-10 sm:max-w-5xl xl:max-w-2xl hidden md:block">
+<div class="flex flex-col self-center hidden p-10 sm:max-w-5xl xl:max-w-2xl md:block">
     <div class="flex-col self-center text-white lg:flex">
         <h1 class="mb-3 text-3xl font-extrabold lg:text-6xl">Welcome to</h1>
         <h1 class="mb-3 text-3xl font-extrabold lg:text-6xl">Siskop Portal</h1>
