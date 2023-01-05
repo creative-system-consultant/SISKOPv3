@@ -2,15 +2,22 @@
 <div>
     @include('include.auth-bg')
     <div class="relative justify-center min-h-screen mx-0 sm:flex sm:flex-row">
+
+        <!-- for align right login -->
         @include('include.auth-title')
-        <div class="flex self-center justify-center items-center">
+
+        <div class="flex flex-col items-center self-center justify-center">
+
+            <!-- for align center login -->
+            {{-- @include('include.auth-title-center') --}}
+
             <form wire:submit.prevent="authenticate">
-                <div class="p-12 mx-auto bg-white rounded-xl w-96  md:w-100 shadow-lg h-screen md:h-full flex justify-center flex-col">
+                <div class="flex flex-col justify-center h-screen p-12 mx-auto bg-white shadow-lg rounded-xl w-96 md:w-100 md:h-full">
                     <div class="mb-4">
-                        <div class="sm:mx-auto sm:w-full sm:max-w-md mb-6 border-b-2 pb-4">
-                            <x-logo class="w-auto h-20 mx-auto text-primary mb-4" />
-                            <h3 class="text-2xl font-extrabold text-gray-900 leading-9 text-center">Log In </h3>
-                            <p class="text-gray-500 text-center">Please enter your credential.</p>
+                        <div class="pb-4 mb-6 border-b-2 sm:mx-auto sm:w-full sm:max-w-md">
+                            <x-logo class="w-auto h-20 mx-auto mb-4 text-primary" />
+                            <h3 class="text-2xl font-extrabold leading-9 text-center text-gray-900">Log In </h3>
+                            <p class="text-center text-gray-500">Please enter your credential.</p>
                         </div>
                     </div>
                     <div class="space-y-5">
@@ -44,7 +51,7 @@
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="flex flex-col items-start justify-between w-full sm:items-center sm:flex-row">
                             <div class="flex items-center">
                                 <input
                                     wire:model.lazy="remember"
@@ -56,25 +63,25 @@
                                     Remember Me
                                 </label>
                             </div>
-                            <div class="text-sm ml-4">
-                                <a href="{{ route('retrieve-account') }}" class="text-primary-900 hover:text-primary-800 ml-5">
+                            <div class="mt-4 text-sm sm:mt-0">
+                                <a href="{{ route('retrieve-account') }}" class=" text-primary-900 hover:text-primary-800">
                                     Forget your account?
                                 </a>
-                                <div class="ml-3">
+                                <div class="">
                                     <a href="{{ route('password.request') }}" class="text-primary-900 hover:text-primary-800">
                                         Forget your password?
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-1 pt-2">
+                        <div class="flex items-center pt-2 space-x-1">
                             <button type="submit"
-                                class="text-sm flex justify-center w-full p-2 font-semibold text-gray-100 border-2 border-primary-900 rounded-md  bg-primary-900 hover:bg-primary-800 focus:outline-none">
+                                class="flex justify-center w-full p-2 text-sm font-semibold text-gray-100 border-2 rounded-md border-primary-900 bg-primary-900 hover:bg-primary-800 focus:outline-none">
                                 Log In
                             </button>
 
                             <a href="{{ route('register') }}"
-                                class="text-sm flex justify-center w-full p-2 font-semibold text-primary-900 rounded-md  border-2 border-primary-900 hover:bg-primary-800 hover:text-white focus:outline-none">
+                                class="flex justify-center w-full p-2 text-sm font-semibold border-2 rounded-md text-primary-900 border-primary-900 hover:bg-primary-800 hover:text-white focus:outline-none">
                                 Register
                             </a>
                         </div>
@@ -89,7 +96,12 @@
                     </div>
                 </div>
             </form>
+
         </div>
+
+        <!-- for align left login -->
+        {{-- @include('include.auth-title') --}}
+
     </div>
     <div wire:loading wire:target="authenticate">
         <x-main-loading />
