@@ -99,6 +99,7 @@ use App\Http\Livewire\Page\Application\ApplyFinancing\Financing_List;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
+use App\Http\Livewire\Page\User\Application\Lists;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,6 +136,11 @@ Route::middleware('auth')->group(function () {
     //profile
     Route::get('profile', Index::class)->name('profile');
     Route::get('Index', Index::class)->name('Index');
+
+    //User
+    Route::prefix('User')->group(function(){
+        Route::get('Application/List', Lists::class)->name('user_application.list');
+    });
 
     //--------------------------------- Notification ---------------------------------//
     Route::get('/notification', notification::class)->name('notification');
