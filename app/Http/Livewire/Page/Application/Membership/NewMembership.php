@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Page\Admin\Membership;
+namespace App\Http\Livewire\Page\Application\Membership;
 
 use App\Models\User;
 use App\Models\Address;
@@ -23,7 +23,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
 
-class MembershipApply extends Component
+class NewMembership extends Component
 {
     use WithFileUploads;
 
@@ -178,6 +178,7 @@ class MembershipApply extends Component
     {
         if ($this->numpage == 1){
             $this->validate($this->rule1);
+            $this->birthdate();
 
             $this->Cust->save();
             $this->CustAddress->save();
@@ -194,9 +195,9 @@ class MembershipApply extends Component
         }
 
         if ($this->numpage == 3){
+            $this->totalfee();
             $this->validate($this->rule3);
             $this->applymember->save();
-            $this->totalfee();
             $this->render();
         }
 
@@ -238,7 +239,8 @@ class MembershipApply extends Component
         } else {
             $tempyear = '20'.$tempyear;
         }
-        $this->birthdate  = $tempday.'-'.$tempmonth.'-'.$tempyear;
+        //$this->birthdate  = $tempday.'-'.$tempmonth.'-'.$tempyear;
+        $this->birthdate  = $tempyear.'-'.$tempmonth.'-'.$tempday;
         return $this->birthdate;
 
     }

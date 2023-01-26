@@ -9,50 +9,63 @@
             </x-slot>
 
             <x-slot name="tbody">
-                <tr @if ($member->document_status('IC') == '0') style="display: none" @endif>
+                @foreach($applymember->files as $file)
+                <tr>
+                    <x-table.table-body colspan="" class="text-left">
+                        {{ $file->filedesc }}
+                    </x-table.table-body>
+                    <x-table.table-body colspan="" class="text-left">
+                        <a href="{{ asset($file->filepath) }} " target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
+                            <x-heroicon-o-eye class="w-4 h-4 mr-2"/>
+                            Show
+                        </a>
+                    </x-table.table-body>
+                </tr>
+                @endforeach
+                {{--<tr @if ($Member->document_status('IC') == '0') style="display: none" @endif>
                     <x-table.table-body colspan="" class="text-left">
                         IC Photo (Front & Back)
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        <a href="{{ asset('storage\Files\8\membership\IC\IC_Photo.jpg') }} " target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
+                        <a href="{{ asset("storage/Files/".$Cust->id."/membership/IC/IC_Photo.jpg") }} " target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
                             <x-heroicon-o-eye class="w-4 h-4 mr-2"/>
                             Show
                         </a>
                     </x-table.table-body>
                 </tr>
-                <tr @if ($member->document_status('WC') == '0') style="display: none" @endif>
+                <tr @if ($Member->document_status('WC') == '0') style="display: none" @endif>
                     <x-table.table-body colspan="" class="text-left">
                         Worker Card (Front)
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        <a href="{{ asset("storage\Files\8\membership\WorkerCard\WorkerCard.jpg") }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
+                        <a href="{{ asset("storage/Files/".$Cust->id."/membership/WorkerCard/WorkerCard.jpg") }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
                             <x-heroicon-o-eye class="w-4 h-4 mr-2"/>
                             Show
                         </a>
                     </x-table.table-body>
                 </tr>
-                <tr @if ($member->document_status('P1') == '0') style="display: none" @endif>
+                <tr @if ($Member->document_status('P1') == '0') style="display: none" @endif>
                     <x-table.table-body colspan="" class="text-left">
                         Latest Paycheck
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        <a href="{{ asset("storage\Files\8\membership\Paycheck\Paycheck.jpg") }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
+                        <a href="{{ asset("storage/Files/".$Cust->id."/membership/Paycheck/Paycheck.jpg") }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
                             <x-heroicon-o-eye class="w-4 h-4 mr-2"/>
                             Show
                         </a>
                     </x-table.table-body>
                 </tr>
-                <tr @if ($member->document_status('P2') == '0') style="display: none" @endif>
+                <tr @if ($Member->document_status('P2') == '0') style="display: none" @endif>
                     <x-table.table-body colspan="" class="text-left">
                         Last Month Paycheck
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        <a href="{{ asset("storage\Files\8\membership\LastMonthPaycheck\LastMonthPaycheck.jpg") }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
+                        <a href="{{ asset("storage/Files/".$Cust->id."/membership/LastMonthPaycheck/LastMonthPaycheck.jpg") }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-orange-400">
                             <x-heroicon-o-eye class="w-4 h-4 mr-2"/>
                             Show
                         </a>
                     </x-table.table-body>
-                </tr>
+                </tr>--}}
             </x-slot>
         </x-table.table>
 

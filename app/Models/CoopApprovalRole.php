@@ -32,6 +32,11 @@ class CoopApprovalRole extends Model implements Auditable
         return Arr::get(json_decode($this->rules,true),$type,$def) ?? '0';
     }
 
+    public function sys_role()
+    {
+        return $this->hasOneThrough(UserRole::class,CoopRoleGroup::class,'id','id','role_id','role_id');
+    }
+
     public function setRule($type,$value)
     {
         $arr1 = json_decode($this->rules,true);
