@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Add Share Application</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Add Share Application (MAKER)</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div class="pb-4 pl-4 pr-4">
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
@@ -187,29 +187,70 @@
                     </x-form.dropdown>
                 </div>
             </div>
-
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Information</h2>
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
             <div class="grid grid-cols-12 gap-6 mt-8">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Check By"
-                        name="precheck_by"
-                        value="{{ auth()->user()->name }}"
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
+                @foreach ($maker->approvals as $item)
+                    @if($item->order == $maker->step) @break @endif
+                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                        <x-form.text-area
+                            label="Note / Comment"
+                            value="{{ $item->note }}"
+                            name=""
+                            rows=""
+                            disable="readonly"
+                            mandatory=""
+                            placeholder=""
+                        />
+                        <x-form.input
+                            label="Check By"
+                            name="precheck_by"
+                            value="{{ $item->user?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                        <x-form.input
+                            label=""
+                            name="Role"
+                            value="{{ $item->rolegroup?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                    </div>
+                @endforeach
+            </div>
+            @if($Approval->order == 1) No Approvals Yet @endif
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval</h2>
+            <div class="grid grid-cols-12 gap-6 mt-8">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.text-area
                         label="Note / Comment"
                         value=""
-                        name="precheck_note"
+                        name="Approval.note"
                         rows=""
                         disable=""
                         mandatory=""
                         placeholder=""
+                        wire:model="Approval.note"
+                    />
+                    <x-form.input
+                        label="Check By"
+                        name="precheck_by"
+                        value="{{ $User->name }}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                    <x-form.input
+                        label=""
+                        name="Role"
+                        value="{{ $maker->current_approval_role()->name }}"
+                        mandatory=""
+                        disable="readonly"
+                        type="text"
                     />
                 </div>
             </div>
@@ -219,10 +260,10 @@
                     <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                         Cancel Application
                     </button>
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Previous
                      </button>
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Next
                     </button>
                 </div>

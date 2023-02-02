@@ -3,11 +3,14 @@
 namespace App\Http\Livewire\Page\Application\ApplicationList;
 
 use App\Models\Share as ApplyShare;
+use App\Models\User;
 use Livewire\Component;
 
 class Share extends Component
 {
-    public $shares, $custApply;
+    public User $User;
+    public $shares;
+    public $custApply;
 
     public function showApplication($uuid)
     {
@@ -16,6 +19,7 @@ class Share extends Component
 
     public function mount()
     {
+        $this->User   = User::find(auth()->user()->id);
         $this->shares = ApplyShare::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
     }
 
