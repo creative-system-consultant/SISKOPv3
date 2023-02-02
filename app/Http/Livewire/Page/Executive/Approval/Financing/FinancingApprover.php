@@ -25,8 +25,12 @@ class FinancingApprover extends Component
 
     public function next()
     {
-        $this->Account->account_status = 1;
+        if ($this->Account->approvals()->where('type','like','vote%')->whereNull('vote')->count() <= 1){
+            $this->Account->account_status = 1;
+        }
         $this->Account->save();
+        $this->Approval->vote = 'lulus';
+        $this->Approval->save();
 
         session()->flash('message', 'Application Approved');
         session()->flash('success');
@@ -62,8 +66,21 @@ class FinancingApprover extends Component
     {
         $this->User     = User::find(auth()->user()->id);
         $this->Account  = AccountMaster::where('uuid', $uuid)->firstOrFail();
-        $this->Approval = Approval::where([['approval_id', $this->Account->id],['order', $this->Account->apply_step]])->firstOrFail();
+        $this->Approval = Approval::where([
+                                ['approval_id', $this->Account->id],
+                                ['order',       $this->Account->apply_step],
+                                ['user_id',     $this->User->id],
+                                ['approval_type','App\Models\AccountMaster'],
+                          ])->firstOrFail();
         $this->Customer = Customer::find($this->Account->cust_id);
+
+        if ($this->Approval->vote != NULL){
+            session()->flash('message', 'You already voted');
+            session()->flash('success');
+            session()->flash('title', 'Success!');
+
+            return redirect()->route('application.list');
+        }
     }
 
     public function render()

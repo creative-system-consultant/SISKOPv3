@@ -340,5 +340,6 @@
                     </div>
                 </div>
             </div>
+        </div>
     </x-general.card>
 </div>

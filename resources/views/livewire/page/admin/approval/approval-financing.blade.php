@@ -1,5 +1,24 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Approvals > {{ cameltoString($page) }}</h1>
+    @if($page == 'Financing')
+    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Select Product</h2>
+        <div class="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
+            @forelse ($products as $item)
+                <x-form.radio
+                    label="{{ $item->name }}"
+                    value="{{ $item->id }}"
+                    disable=""
+                    wire:model.defer="product.id"
+                    wire:click="setproduct"
+                />
+            @empty
+                no products
+            @endforelse
+        </div>
+    </x-general.card>
+    @endif
+    @if(($page == 'Financing' && $product != NULL) || $page != 'Financing')
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
             <div class="grid grid-cols-12 gap-6 mt-6">
@@ -170,4 +189,5 @@
             </div>
         </x-form.basic-form>
     </x-general.card>
+    @endif
 </div>
