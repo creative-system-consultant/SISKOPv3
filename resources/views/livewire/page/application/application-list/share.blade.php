@@ -12,56 +12,69 @@
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
         <x-slot name="tbody">
-            @forelse ($shares as $share)
+            @forelse ($shares as $item)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $share->customer->name }}
+                        {{ $item->customer->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $share->customer->icno }}
+                        {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($share->step == 1 && $share->flag == 1)
-                            {{ $share->method }}
+                        @if ($item->step == 1 && $item->flag == 1)
+                            {{ $item->method }}
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $share->apply_amt == '0.00' ? '0.00' : $share->apply_amt }}
+                        RM {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $share->approved_amt }}
+                        RM {{ $item->approved_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $share->created_at->format("Y-m-d") }}
+                        {{ $item->created_at->format("Y-m-d") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($share->flag == '0') Still being applied
-                        @elseif ($share->flag == '1') Being Processed
-                        @elseif ($share->flag == '3') Failed / Decline
-                        @elseif ($share->flag == '6') Approved
+                        @if ($item->flag == '0') Still being applied
+                        @elseif ($item->flag == '1') Being Processed
+                        @elseif ($item->flag == '3') Failed / Decline
+                        @elseif ($item->flag == '6') Approved
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
                             <button
-                                wire:click="showApplication('{{ $share->uuid }}')"
+                                wire:click="showApplication('{{ $item->uuid }}')"
                                 @click="openModal = true"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
 
-                            <a href="{{ route('share.maker', $share->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
+                        @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 1)
+                            <a href="{{ route('share.maker', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
                                 <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
                             </a>
+                        @endif
+
+                        @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 2)
+                            <a href="{{ route('share.checker', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                            </a>
+                        @endif
+
                         </div>
                     </x-table.table-body>
                 </tr>
             @empty
             <x-table.table-body colspan="4" class="text-left">
-                No Data
+                No Share Data
             </x-table.table-body>
             @endforelse
         </x-slot>

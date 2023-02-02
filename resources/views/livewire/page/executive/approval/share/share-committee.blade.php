@@ -1,6 +1,6 @@
 
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Add Share Application</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Add Share Application (COMMITTEE)</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div class="pb-4 pl-4 pr-4">
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
