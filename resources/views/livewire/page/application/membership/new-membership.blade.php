@@ -11,11 +11,11 @@
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
         {{-- <x-form.basic-form wire:submit.prevent="submit" class="p-4"> --}}
         <x-form.basic-form wire:submit.prevent="alertConfirm">
-            @include('livewire.page.admin.membership.basicinfo')
-            @include('livewire.page.admin.membership.extendedinfo')
-            @include('livewire.page.admin.membership.paymentinfo')
-            @include('livewire.page.admin.membership.documentinfo')
-            @include('livewire.page.admin.membership.checklistinfo')
+            @include('livewire.page.application.membership.basicinfo')
+            @include('livewire.page.application.membership.extendedinfo')
+            @include('livewire.page.application.membership.paymentinfo')
+            @include('livewire.page.application.membership.documentinfo')
+            @include('livewire.page.application.membership.checklistinfo')
         </x-form.basic-form>
     </div>
 </div>

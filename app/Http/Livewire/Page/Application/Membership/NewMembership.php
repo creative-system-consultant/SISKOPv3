@@ -292,6 +292,7 @@ class NewMembership extends Component
         $this->User = auth()->user();
         $this->Coop = Coop::find($this->User->coop_id);
         $this->Cust = Customer::where([['icno', $this->User->icno],['coop_id', $this->Coop->id]])->first();
+        $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL){
             session()->flash('message', 'You are already a member of '.$this->Coop->name);
             session()->flash('warning');
