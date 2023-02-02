@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasFiles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Customer extends Model implements Auditable
 {
+    use HasFiles;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
@@ -18,11 +20,6 @@ class Customer extends Model implements Auditable
     public function getCoopIdAttribute()
     {
         return '1';
-    }
-
-    public function files()
-    {
-        return $this->morphMany(FileMaster::class,'fileable');
     }
 
     public function family()
@@ -75,9 +72,9 @@ class Customer extends Model implements Auditable
         return $this->hasOne(ApplyMembership::class,'cust_id');
     }
 
-    // public function Introducer()
-    // {
-    //     return $this->morphMany(UserGroup::class,'grouping');
-    // }
+    public function Introducer()
+    {
+        return $this->morphMany(introducer::class,'introduce');
+    }
 
 }

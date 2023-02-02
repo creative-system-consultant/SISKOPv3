@@ -43,7 +43,7 @@
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
 
-                            @if ($item->account_status > 15 && in_array($item->current_approval()->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 1)
+                            @if ($item->account_status > 15 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 1)
                                 <a href="{{ route('financing.maker', $item->uuid) }}"
                                    class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                    title="Approval Process">
@@ -51,7 +51,7 @@
                                 </a>
                             @endif
 
-                            @if ($item->account_status > 15 && in_array($item->current_approval()->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 2)
+                            @if ($item->account_status > 15 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 2)
                                 <a href="{{ route('financing.checker', $item->uuid) }}"
                                    class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                    title="Approval Process">
@@ -59,7 +59,15 @@
                                 </a>
                             @endif
 
-                            @if ($item->account_status > 15 && in_array($item->current_approval()->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 4)
+                            @if ($item->account_status > 15 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 3)
+                                <a href="{{ route('financing.committee', $item->uuid) }}"
+                                   class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                                   title="Approval Process">
+                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                </a>
+                            @endif
+
+                            @if ($item->account_status > 15 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 4)
                                 <a href="{{ route('financing.approver', $item->uuid) }}"
                                    class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                    title="Approval Process">
@@ -68,10 +76,10 @@
                             @endif
                         </div>
                     </x-table.table-body>
-            </tr>
+                </tr>
             @empty
                 <x-table.table-body colspan="4" class="text-left">
-                    No Data
+                    No Financing Data
                 </x-table.table-body>
             @endforelse
         </x-slot>

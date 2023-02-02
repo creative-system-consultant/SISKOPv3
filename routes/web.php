@@ -104,6 +104,7 @@ use App\Http\Livewire\Page\Application\ApplyFinancing\Financing_List;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
+use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingCommittee;
 use App\Http\Livewire\Page\User\Application\Lists;
 
 /*
@@ -194,8 +195,9 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('Approval')->group(function(){
             //Route::get('admin', ApprovalAdmin::class)->name('admin.approval.admin');
+            Route::get('/Financing', ApprovalFinancing::class);
+            Route::get('/Financing/{product}', ApprovalFinancing::class);
             Route::get('/{type}', ApprovalAdmin::class);
-            Route::get('/{type}/{product}', ApprovalAdmin::class);
         });
 
         Route::prefix('maintenance')->group(function(){
@@ -372,6 +374,7 @@ Route::middleware('auth')->group(function () {
             Route::prefix('financing')->group(function(){
                 Route::get('maker/{uuid}', FinancingMaker::class)->name('financing.maker');
                 Route::get('checker/{uuid}', FinancingChecker::class)->name('financing.checker');
+                Route::get('committee/{uuid}', FinancingCommittee::class)->name('financing.committee');
                 Route::get('approver/{uuid}', FinancingApprover::class)->name('financing.approver');
             });
 

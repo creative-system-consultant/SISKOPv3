@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCustomer;
+use App\Http\Traits\HasFiles;
 use App\Models\Ref\RefAccountStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,17 +11,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class AccountMaster extends Model implements Auditable
 {
+    use HasCustomer;
+    use HasFiles;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table   = "FMS.Account_Masters";
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class,'cust_id','id');
-    }
 
     public function coop()
     {
@@ -34,11 +33,6 @@ class AccountMaster extends Model implements Auditable
     public function position()
     {
         return $this->hasMany(AccountPosition::class,'account_no','account_no');
-    }
-
-    public function files()
-    {
-        return $this->morphMany(FileMaster::class,'fileable');
     }
 
     public function introducers()
@@ -71,24 +65,73 @@ class AccountMaster extends Model implements Auditable
         return $this->belongsTo(RefAccountStatus::class,'account_status');
     }
 
+    public function remove_approvals()
+    {
+        $approval = $this->approvals;
+        foreach ($approval as $key => $value) {
+            $value->delete();
+        }
+    }
+
+    public function clear_approvals($order = NULL)
+    {
+        if ($order != NULL){
+            $approval = $this->approvals()->where('order', $order)->get();
+        } else {
+            $approval = $this->approvals;
+        }
+
+        foreach ($approval as $key => $value) {
+            if ($value->role_id == 1 || $value->role_id == 2){ 
+                $value->user_id = NULL; 
+                $value->type    = NULL;
+            }
+            $value->note = NULL;
+            $value->vote = NULL;
+        }
+    }
+
     public function make_approvals()
     {
-        $CoopApprovalRoles = CoopApprovalRole::where([['coop_id', $this->coop_id],['product_id', $this->product_id],['approval_id', 1]])->orderBy('order')->get();
+        $CoopApproval = CoopApproval::where([['approval_type', 'financing'],['coop_id',$this->coop_id]])->first();
+        if ($CoopApproval != NULL){
+            $CoopApprovalRoles = CoopApprovalRole::where([['coop_id', $this->coop_id],['product_id', $this->product_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
+        } else {
+            return NULL;
+        }
 
         $count = 1;
         foreach ($CoopApprovalRoles as $key => $value) {
-            $approval = $this->approvals()->firstOrCreate(['order' => $count]);
-            $approval->group_id = $value->role_id;
-            $approval->rules    = $value->rules;
-            $approval->user_id  = NULL;
-            $approval->type     = NULL;
-            $approval->note     = NULL;
-            $approval->vote     = NULL;
-            $approval->save();
-            $count++;
+
+            if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
+                foreach ($value->rolegroup->users as $key1 => $value1){
+                    $approval = $this->approvals()->firstOrCreate(['order' => $count,'type' => 'vote'.$key1+1]);
+                    $approval->group_id = $value->role_id;
+                    $approval->rules    = $value->rules;
+                    $approval->user_id  = $value1->user_id;
+                    $approval->role_id  = $value->sys_role->id;
+                    $approval->type     = 'vote'.$key1+1;
+                    $approval->note     = NULL;
+                    $approval->vote     = NULL;
+                    $approval->save();
+                }
+            } else {
+
+                $approval = $this->approvals()->firstOrCreate(['order' => $count]);
+                $approval->group_id = $value->role_id;
+                $approval->rules    = $value->rules;
+                $approval->user_id  = NULL;
+                $approval->role_id  = $value->sys_role->id;
+                $approval->type     = NULL;
+                $approval->note     = NULL;
+                $approval->vote     = NULL;
+                $approval->save();
+
+                $count++;
+            }
         }
 
-        return $CoopApprovalRoles;
+        return '';
     }
 
 }

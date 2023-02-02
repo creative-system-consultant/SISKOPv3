@@ -25,10 +25,12 @@ class FinancingCommittee extends Component
 
     public function next()
     {
-        $this->Account->apply_step++;
+        if ($this->Account->approvals()->where('type','like','vote%')->whereNull('vote')->count() <= 1){
+            $this->Account->apply_step++;
+            
+        }
         $this->Account->save();
-        $this->Approval->user_id = $this->User->id;
-        $this->Approval->type = 'lulus';
+        $this->Approval->vote = 'lulus';
         $this->Approval->save();
 
         session()->flash('message', 'Application Pre-Approved');
@@ -78,8 +80,21 @@ class FinancingCommittee extends Component
     {
         $this->User     = User::find(auth()->user()->id);
         $this->Account  = AccountMaster::where('uuid', $uuid)->firstOrFail();
-        $this->Approval = Approval::where([['approval_id', $this->Account->id],['order', $this->Account->apply_step]])->firstOrFail();
+        $this->Approval = Approval::where([
+                                ['approval_id', $this->Account->id],
+                                ['order',       $this->Account->apply_step],
+                                ['user_id',     $this->User->id],
+                                ['approval_type','App\Models\AccountMaster']
+                          ])->firstOrFail();
         $this->Customer = Customer::find($this->Account->cust_id);
+
+        if ($this->Approval->vote != NULL){
+            session()->flash('message', 'You already voted');
+            session()->flash('success');
+            session()->flash('title', 'Success!');
+
+            return redirect()->route('application.list');
+        }
     }
 
     public function render()

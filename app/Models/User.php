@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasFiles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,7 @@ class User extends Authenticatable implements Auditable
 {
     use HasApiTokens;
     use HasFactory;
+    use HasFiles;
     use HasProfilePhoto;
     use Notifiable;
     use SoftDeletes;
@@ -51,11 +53,6 @@ class User extends Authenticatable implements Auditable
     public function coop_cust($id)
     {
         return $this->customer()->where('coop_id', $id)->first();
-    }
-
-    public function files()
-    {
-        return $this->morphMany(FileMaster::class,'fileable');
     }
 
     public function roles()
