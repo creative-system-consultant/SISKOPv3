@@ -86,7 +86,7 @@ use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareApproval;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareChecker;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareCommittee;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareMaker;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareApproval;
+use App\Http\Livewire\Page\Executive\Approval\Share\Approver as ShareApproval;
 use App\Http\Livewire\Page\Executive\Approval\Share\ShareChecker;
 use App\Http\Livewire\Page\Executive\Approval\Share\ShareCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Share\ShareMaker;

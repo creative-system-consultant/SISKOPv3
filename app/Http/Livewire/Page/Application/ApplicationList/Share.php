@@ -9,12 +9,12 @@ use Livewire\Component;
 class Share extends Component
 {
     public User $User;
+    public ApplyShare $share;
     public $shares;
-    public $custApply;
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyShare::where('uuid', $uuid)->with('customer')->first();
+        $this->share = ApplyShare::where('uuid', $uuid)->with('customer')->first();
     }
 
     public function mount()

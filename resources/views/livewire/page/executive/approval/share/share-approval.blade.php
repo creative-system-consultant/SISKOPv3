@@ -7,7 +7,7 @@
                 <x-form.input
                     label="Name"
                     name="custname"
-                    value="{{ $approve->customer->name ?? '' }}"
+                    value="{{ $approver->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -16,7 +16,7 @@
                 <x-form.input
                     label="Identity Number"
                     name="custic"
-                    value="{{ $approve->customer->icno ?? '' }}"
+                    value="{{ $approver->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -26,7 +26,7 @@
                     label="Current Share Capital Amount"
                     type="text"
                     name="current_share"
-                    value="{{ $approve->amt_before ?? '' }}"
+                    value="{{ $approver->amt_before ?? '' }}"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
@@ -41,7 +41,7 @@
                         label="Add Share Capital applied"
                         type="text"
                         name="share_apply"
-                        value="{{ $approve->apply_amt ?? '0.00' }}"
+                        value="{{ $approver->apply_amt ?? '0.00' }}"
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
@@ -54,7 +54,7 @@
                         label="Add Share Capital approved"
                         type="text"
                         name="share_approved"
-                        value="{{ $approve->apply_amt ?? '0.00' }}"
+                        value="{{ $approver->apply_amt ?? '0.00' }}"
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
@@ -65,7 +65,7 @@
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
                         label="Payment Method"
-                        value="{{ $approve->method == NULL ? '' : ucwords($approve->method) }}"
+                        value="{{ $approver->method == NULL ? '' : ucwords($approver->method) }}"
                         name="pay_method"
                         id="pay_method"
                         mandatory=""
@@ -75,13 +75,13 @@
                 </div>
             </div>
 
-            @if ( $approve->method == 'online' )
+            @if ( $approver->method == 'online' )
                 <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >
                     <div>
                         <x-form.input
                             label="Online Payment Date"
                             name="online_date"
-                            value="{{ $approve->online_date == NULL ? '' : $approve->online_date->format('Y-m-d') }}"
+                            value="{{ $approver->online_date == NULL ? '' : $approver->online_date->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
@@ -92,7 +92,7 @@
                         <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
                             Show Upload Online Payment Receipt
                         </label>
-                        @forelse ($approve->files as $doc)
+                        @forelse ($approver->files as $doc)
                             <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
                                 <x-heroicon-o-document class="w-5 h-5 mr-2"/>
                                 Show
@@ -104,13 +104,13 @@
                 </div>
             @endif
 
-            @if ( $approve->method == 'cash' )
+            @if ( $approver->method == 'cash' )
                 <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <div>
                         <x-form.input
                             label="CDM Payment Date"
                             name="cdm_date"
-                            value="{{ $approve->cdm_date == NULL ? '' : $approve->cdm_date->format('Y-m-d') }}"
+                            value="{{ $approver->cdm_date == NULL ? '' : $approver->cdm_date->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
@@ -121,7 +121,7 @@
                         <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
                             Show Upload CDM Payment Receipt
                         </label>
-                        @forelse ($approve->files as $doc)
+                        @forelse ($approver->files as $doc)
                             <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
                                 <x-heroicon-o-document class="w-5 h-5 mr-2"/>
                                 Show
@@ -133,13 +133,13 @@
                 </div>
             @endif
 
-            @if ( $approve->method == 'cheque' )
+            @if ( $approver->method == 'cheque' )
                 <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <div>
                         <x-form.input
                             label="Cheque No."
                             name="cheque_no"
-                            value="{{ $approve->cheque_no ?? '' }}"
+                            value="{{ $approver->cheque_no ?? '' }}"
                             mandatory=""
                             disable="true"
                             type="text"
@@ -150,7 +150,7 @@
                         <x-form.input
                             label="Cheque Date"
                             name="cheque_date"
-                            value="{{ $approve->cheque_date == NULL ? '' : $approve->cheque_date->format('Y-m-d') }}"
+                            value="{{ $approver->cheque_date == NULL ? '' : $approver->cheque_date->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
@@ -170,129 +170,119 @@
                 </div>
             @endif
 
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Information</h2>
-            <div class="grid grid-cols-12 gap-6 mt-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Check By"
-                        name="precheck_by"
-                        value=""
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Maker"
-                        value="precheck_note"
-                        name=""
-                        rows=""
-                        disable="true"
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
+            <div class="grid grid-cols-12 gap-6 mt-8">
+                @foreach ($approver->approvals as $item)
+                    @if($item->order == $approver->step)
+                        @if($item->vote == NULL) @break 
+                        @elseif($item->type == 'vote1')
+                        </div>
+                        <div class="grid grid-cols-12 gap-6 mt-8">
+                        @endif
+                    @endif
+                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                        <x-form.text-area
+                            label="Note / Comment"
+                            value="{{ $item->note }}"
+                            name=""
+                            rows=""
+                            disable="readonly"
+                            mandatory=""
+                            placeholder=""
+                        />
+                        @if($item->vote != NULL)
+                        <x-form.input
+                            label="Vote"
+                            name="vote"
+                            value="{{ $item->vote }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                        <x-form.input
+                            label="Vote By"
+                            name="vote_by"
+                            value="{{ $item->user?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                        @else
+                        <x-form.input
+                            label="Approval"
+                            name="approval"
+                            value="{{ $item->type }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                        <x-form.input
+                            label="Approval By"
+                            name="approval_by"
+                            value="{{ $item->user?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                        @endif
+                        <x-form.input
+                            label=""
+                            name="Role"
+                            value="{{ $item->rolegroup?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                    </div>
+                @endforeach
             </div>
-
+            @if($Approval->order == 1) No Approvals Yet @endif
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Vote</h2>
             <div class="grid grid-cols-12 gap-6 mt-8">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Approved By"
-                        name="approved_by"
-                        value=""
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.text-area
-                        label="Note / Comment By Checker"
-                        value="approval_note"
-                        name=""
-                        rows=""
-                        disable="true"
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-6 mt-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Committee"
-                        name="committee_by"
+                        label="Note / Comment"
                         value=""
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Committee"
-                        value="committee_note"
-                        name=""
-                        rows=""
-                        disable="true"
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Vote"
-                        name="committee_vote"
-                        value=""
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-            </div>
-
-
-            <div class="grid grid-cols-12 gap-6 mt-8">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Approval"
-                        name="approval_by"
-                        value="{{ auth()->user()->name }}"
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Approval"
-                        value="approval_note"
-                        name=""
+                        name="Approval.note"
                         rows=""
                         disable=""
                         mandatory=""
                         placeholder=""
+                        wire:model="Approval.note"
+                    />
+                    <x-form.input
+                        label="Check By"
+                        name="precheck_by"
+                        value="{{ $User->name }}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                    <x-form.input
+                        label=""
+                        name="Role"
+                        value="{{ $approver->current_approval_role()->name }}"
+                        mandatory=""
+                        disable="readonly"
+                        type="text"
                     />
                 </div>
             </div>
 
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                        Cancel Application
+                    <button type="button" wire:click="refuse" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
+                        VOTE REFUSE
                     </button>
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    @if($approver->step > 1)
+                    <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Previous
                      </button>
-                    <button type="button" wire:click="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        Approved
+                     @endif
+                    <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                        VOTE APPROVE
                     </button>
                 </div>
             </div>
