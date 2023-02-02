@@ -63,7 +63,7 @@ use App\Http\Livewire\Page\Application\ApplicationList\Share;
 use App\Http\Livewire\Page\Application\ApplicationList\SpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\Withdrawal_Contribution;
 use App\Http\Livewire\Page\Application\ApplySpecialAid\Apply_SpecialAid;
-use App\Http\Livewire\Page\Application\Membership\NewMembership as MembershipApply;
+use App\Http\Livewire\Page\Application\Membership\NewMembership;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
 use App\Http\Livewire\Page\Reporting\ListReport;
@@ -175,7 +175,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/Financing}', Apply_Financing::class)->name('financing.apply');
 
         //membership > apply
-        Route::get('membership', MembershipApply::class)->name('membership.apply');
+        Route::get('membership', NewMembership::class)->name('membership.apply');
     });
     //------------------------------- End Applications ---------------------------//
 
@@ -190,7 +190,6 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('Membership')->group(function(){
             Route::get('/', MembershipAdmin::class)->name('membership.admin');
-            Route::get('Apply', MembershipApply::class)->name('membership.apply');
         });
 
         Route::prefix('Approval')->group(function(){
