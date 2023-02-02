@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCustomer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ApplySpecialAid extends Model
 {
+    use HasCustomer;
     use SoftDeletes;
 
     protected $table = 'SISKOP.apply_special_aid';
@@ -16,11 +18,6 @@ class ApplySpecialAid extends Model
     public function field()
     {
         return $this->morphMany(ApplySpecialAidField::class,'fieldable');
-    }
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class,'cust_id','id');
     }
 
     public function coop()

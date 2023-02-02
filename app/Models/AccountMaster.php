@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCustomer;
+use App\Http\Traits\HasFiles;
 use App\Models\Ref\RefAccountStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,17 +11,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class AccountMaster extends Model implements Auditable
 {
+    use HasCustomer;
+    use HasFiles;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table   = "FMS.Account_Masters";
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class,'cust_id','id');
-    }
 
     public function coop()
     {
@@ -34,11 +33,6 @@ class AccountMaster extends Model implements Auditable
     public function position()
     {
         return $this->hasMany(AccountPosition::class,'account_no','account_no');
-    }
-
-    public function files()
-    {
-        return $this->morphMany(FileMaster::class,'fileable');
     }
 
     public function introducers()

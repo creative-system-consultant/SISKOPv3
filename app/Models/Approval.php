@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Approval extends Model implements Auditable
 {
-    // no need softdelete
+    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $table   = "SISKOP.approvals";
