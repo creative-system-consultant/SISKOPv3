@@ -122,6 +122,7 @@ class RoleGroupCreate extends Component
         foreach ($this->ids as $key => $value) {
             $this->group->users()->updateOrCreate([
                 'user_id'   => $value,
+                'coop_id'   => $this->user->coop_id,
                 'updated_by'=> $this->user->name,
             ]);
         }

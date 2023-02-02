@@ -96,6 +96,11 @@
                                 <x-heroicon-o-chart-pie class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL MEMBERSHIP" href="{{ url('Admin/Approval/Membership') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="APPROVAL ADD SHARE" href="{{ url('Admin/Approval/Share') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-chart-pie class="w-7 h-7" />

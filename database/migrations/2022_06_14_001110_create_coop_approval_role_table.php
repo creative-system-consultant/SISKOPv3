@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('name',50)->nullable();
             $table->integer('order')->default('1');
             $table->string('status',1)->default('1');
+            $table->string('rules')->default('[]');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

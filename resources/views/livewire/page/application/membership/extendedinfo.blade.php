@@ -18,12 +18,12 @@
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
         <x-form.input
             label="INTRODUCER NAME"
-            name="introducer.name"
+            name="CustIntroducer.name"
             value=""
             mandatory=""
             disable=""
             type="text"
-            wire:model="introducer.name"
+            wire:model="CustIntroducer.name"
             readonly
 
         />
@@ -31,12 +31,12 @@
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
         <x-form.input
             label="INTRODUCER IC NUMBER"
-            name="introducer.icno"
+            name="CustIntroducer.icno"
             value=""
             mandatory=""
             disable=""
             type="text"
-            wire:model="introducer.icno"
+            wire:model="CustIntroducer.icno"
             readonly
         />
     </div>
@@ -45,24 +45,24 @@
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
         <x-form.input
             label="INTRODUCER EMAIL"
-            name="introducer.email"
+            name="CustIntroducer.email"
             value=""
             mandatory=""
             disable=""
             type="text"
-            wire:model="introducer.email"
+            wire:model="CustIntroducer.email"
             readonly
         />
     </div>
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
         <x-form.input
             label="INTRODUCER MEMBERSHIP NUMBER"
-            name="introducer.mbr_no"
+            name="CustIntroducer.mbr_no"
             value=""
             mandatory=""
             disable=""
             type="text"
-            wire:model="introducer.mbr_no"
+            wire:model="CustIntroducer.mbr_no"
             readonly
         />
     </div>
@@ -71,6 +71,9 @@
 
 
     <div class="flex items-center justify-center space-x-2">
+        <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+            deb
+        </button>
         <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             previous
         </button>

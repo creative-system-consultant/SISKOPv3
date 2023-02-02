@@ -2,8 +2,8 @@
 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
 
 <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1">
-      <div @if ($member->field_status(2) == '0') style="display: none" @endif >
-        <div class="p-4 mt-8 text-green-900 bg-green-200">
+      <div @if ($Member->field_status(2) == '0') style="display: none" @endif >
+        <div class="p-4 mt-8 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="Full Name"
                 name="Cust.name"
@@ -18,21 +18,21 @@
     </div>
 
     <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-        <div @if ($member->field_status(3) == '0') style="display: none" @endif >
-             <div class="p-4 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(3) == '0') style="display: none" @endif >
+             <div class="p-4 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="IC Number"
                 name="Cust.icno"
                 value=""
                 mandatory=""
-                disable="true"
+                disable=""
                 type="text"
                 wire:model="Cust.icno"
             />  </p>
         </div>
         </div>
-        <div @if ($member->field_status(5) == '0') style="display: none" @endif >
-            <div class="p-4 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(5) == '0') style="display: none" @endif >
+            <div class="p-4 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="Birthdate"
                 name="Cust.birthdate"
@@ -45,14 +45,14 @@
             </div>
         </div>
 
-       <div @if ($member->field_status(7) == '0') style="display: none" @endif >
-        <div class="p-4 text-green-900 bg-green-200">
+       <div @if ($Member->field_status(7) == '0') style="display: none" @endif >
+        <div class="p-4 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="Mobile Number"
                 name="Cust.mobile_num"
                 value=""
                 mandatory=""
-                disable="true"
+                disable=""
                 type="text"
                 wire:model="Cust.mobile_num"
             />  </p>
@@ -60,8 +60,8 @@
    </div>
 </div>
 
-    <div @if ($member->field_status(13) == '0') style="display: none" @endif >
-        <div class="p-4 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(13) == '0') style="display: none" @endif >
+        <div class="p-4 text-grey-900 bg-grey-200">
             <p><x-form.address class="mt-2"
                 label="Home Address"
                 mandatory=""
@@ -80,8 +80,8 @@
     </div>
 
 <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-    <div @if ($member->field_status(8) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(8) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="Email"
                 name="Cust.email"
@@ -94,8 +94,8 @@
         </div>
     </div>
 
-        <div @if ($member->field_status(11) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(11) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
             <p><x-form.dropdown
                 label="Race"
                 value=""
@@ -113,8 +113,8 @@
         </div>
         </div>
 
-    <div @if ($member->field_status(9) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(9) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
            <p><x-form.dropdown
                label="Gender"
                value=""
@@ -149,8 +149,8 @@
         </div>
        </div>
 
-       <div @if ($member->field_status(12) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+       <div @if ($Member->field_status(12) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
            <p><x-form.dropdown
                label="Education"
                value=""
@@ -168,8 +168,8 @@
         </div>
        </div>
 
-       <div @if ($member->field_status(10) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+       <div @if ($Member->field_status(10) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
            <p><x-form.dropdown
                label="Marital"
                value=""
@@ -187,8 +187,8 @@
         </div>
        </div>
 
-       <div @if ($member->field_status(1) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+       <div @if ($Member->field_status(1) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
            <p><x-form.dropdown
                label="Title"
                value=""
@@ -210,8 +210,8 @@
 
 <br><h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Family Details</h2>
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
-    <div @if ($member->field_status(10) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(10) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
            <p><x-form.dropdown
                label="Relationship"
                value=""
@@ -221,6 +221,7 @@
                disable=""
                default="yes"
                wire:model="Family.relationship_id"
+               wire:change="load_family"
            >
            @foreach ($relationship as $list)
            <option value="{{ $list->id }}"> {{ $list->description }}</option>
@@ -228,8 +229,8 @@
            </x-form.dropdown></p>
         </div>
        </div>
-    <div @if ($member->field_status(14) == '0') style="display: none" @endif >
-      <div class="p-4 mt-2 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(14) == '0') style="display: none" @endif >
+      <div class="p-4 mt-2 text-grey-900 bg-grey-200">
           <p><x-form.input
               label="Full Name"
               name="CustFamily.name"
@@ -243,9 +244,9 @@
     </div>
   </div>
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
-    <div @if ($member->field_status(15) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input
+    <div @if ($Member->field_status(15) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
+            <x-form.input
                 label="IC Number"
                 name="CustFamily.icno"
                 value=""
@@ -253,12 +254,13 @@
                 disable=""
                 type="text"
                 wire:model="CustFamily.icno"
-            />  </p>
+                wire:keyup="load_family"
+            />
         </div>
       </div>
-      <div @if ($member->field_status(16) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
-            <p><x-form.input
+      {{--<div @if ($Member->field_status(16) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
+            <x-form.input
                 label="Email"
                 name="CustFamily.email"
                 value=""
@@ -266,12 +268,12 @@
                 disable=""
                 type="text"
                 wire:model="CustFamily.email"
-            />  </p>
+            />
         </div>
-      </div>
-      <div @if ($member->field_status(17) == '0') style="display: none" @endif >
-        <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input
+      </div>--}}
+      <div @if ($Member->field_status(17) == '0') style="display: none" @endif >
+        <div class="p-4 text-grey-900 bg-grey-200">
+            <x-form.input
                 label="Mobile Number"
                 name="CustFamily.mobile_num"
                 value=""
@@ -279,14 +281,14 @@
                 disable=""
                 type="text"
                 wire:model="CustFamily.mobile_num"
-            />  </p>
+            />
         </div>
       </div>
 
 </div>
-    <div @if ($member->field_status(18) == '0') style="display: none" @endif >
-        <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.address class="mt-2"
+    <div @if ($Member->field_status(18) == '0') style="display: none" @endif >
+        <div class="p-4 text-grey-900 bg-grey-200">
+            <x-form.address class="mt-2"
                 label="Home Address"
                 mandatory=""
                 disable=""
@@ -298,13 +300,13 @@
                 name6="FamilyAddress.def_state_id"
                 :state="$state_id"
                 condition="state"
-            />  </p>
+            />
         </div>
     </div>
 <br><h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Work Details</h2>
 <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1">
-    <div @if ($member->field_status(19) == '0') style="display: none" @endif >
-      <div class="p-4 mt-2 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(19) == '0') style="display: none" @endif >
+      <div class="p-4 mt-2 text-grey-900 bg-grey-200">
           <p><x-form.input
               label="Company Name"
               name="Employer.name"
@@ -318,8 +320,8 @@
     </div>
   </div>
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
-    <div @if ($member->field_status(20) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+    <div @if ($Member->field_status(20) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="Name Of Department"
                 name="Employer.department"
@@ -331,8 +333,8 @@
             />  </p>
         </div>
       </div>
-      <div @if ($member->field_status(21) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-green-900 bg-green-200">
+      <div @if ($Member->field_status(21) == '0') style="display: none" @endif >
+        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
             <p><x-form.input
                 label="Position"
                 name="Employer.position"
@@ -346,8 +348,8 @@
       </div>
     </div>
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-        <div @if ($member->field_status(22) == '0') style="display: none" @endif >
-            <div class="p-4 mt-2 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(22) == '0') style="display: none" @endif >
+            <div class="p-4 mt-2 text-grey-900 bg-grey-200">
                 <p><x-form.input
                     label="Office Telephone Number"
                     name="Employer.office_num"
@@ -359,8 +361,8 @@
                 />  </p>
             </div>
         </div>
-        <div @if ($member->field_status(23) == '0') style="display: none" @endif >
-            <div class="p-4 mt-2 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(23) == '0') style="display: none" @endif >
+            <div class="p-4 mt-2 text-grey-900 bg-grey-200">
                 <p><x-form.input-tag
                     label="Salary"
                     name="Employer.salary"
@@ -374,8 +376,8 @@
                 />  </p>
             </div>
         </div>
-        <div @if ($member->field_status(24) == '0') style="display: none" @endif >
-            <div class="p-4 mt-2 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(24) == '0') style="display: none" @endif >
+            <div class="p-4 mt-2 text-grey-900 bg-grey-200">
                 <p><x-form.input
                     label="Worker Number"
                     name="Employer.worker_num"
@@ -389,8 +391,8 @@
         </div>
     </div>
 
-        <div @if ($member->field_status(25) == '0') style="display: none" @endif >
-            <div class="p-4 text-green-900 bg-green-200">
+        <div @if ($Member->field_status(25) == '0') style="display: none" @endif >
+            <div class="p-4 text-grey-900 bg-grey-200">
                 <p><x-form.address class="mt-2"
                     label="Office Address"
                     mandatory=""
@@ -410,12 +412,12 @@
   <div class="p-4 mt-6 rounded-md bg-gray-50">
     <div class="flex items-center justify-center space-x-2">
 
+        <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+            deb
+        </button>
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>
-
-
-
     </div>
 </div>
 

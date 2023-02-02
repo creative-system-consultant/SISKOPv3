@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('approval_type');
             $table->integer('order')->default('1');
             $table->bigInteger('group_id')->nullable();
+            $table->bigInteger('role_id')->nullable();
 
             $table->bigInteger('user_id')->nullable();
             $table->string('type')->nullable();

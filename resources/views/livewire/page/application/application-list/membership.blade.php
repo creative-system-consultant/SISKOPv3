@@ -1,9 +1,9 @@
-<div class="p-4">
+<div x-data="{ openModal : false }">
         <x-table.table>
             <x-slot name="thead">
-                <x-table.table-header class="text-left " value="No." sort="" />
-                <x-table.table-header class="text-left " value="Applicant Name" sort="" />
-                <x-table.table-header class="text-left " value="IC NO." sort="" />
+                <x-table.table-header class="text-left" value="No." sort="" />
+                <x-table.table-header class="text-left" value="Applicant Name" sort="" />
+                <x-table.table-header class="text-left" value="IC NO." sort="" />
                 <x-table.table-header class="text-left" value="Register Fee" sort="" />
                 <x-table.table-header class="text-left" value="Share Fee" sort="" />
                 <x-table.table-header class="text-left" value="Contribution Fee" sort="" />
@@ -12,53 +12,84 @@
                 <x-table.table-header class="text-left" value="Action" sort="" />
             </x-slot>
             <x-slot name="tbody">
-                @forelse ($membership as $key => $applymember)
+                @forelse ($membership as $key => $item)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $applymember->customer->name }}
+                        {{ $item->customer->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $applymember->customer->icno }}
+                        {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        RM {{ $applymember->register_fee == NULL ? '0.00' : $applymember->register_fee }}
+                        RM {{ $item->register_fee == NULL ? '0.00' : $item->register_fee }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        RM {{ $applymember->share_fee == NULL ? '0.00' : $applymember->share_fee }}
+                        RM {{ $item->share_fee == NULL ? '0.00' : $item->share_fee }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        RM {{ $applymember->contribution_fee == NULL ? '0.00' : $applymember->contribution_fee }}
+                        RM {{ $item->contribution_fee == NULL ? '0.00' : $item->contribution_fee }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $applymember->created_at->format("d-m-Y")  }}
+                        {{ $item->created_at->format("d-m-Y")  }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($applymember->flag == '0') Still being applied
-                        @elseif ($applymember->flag == '1') Being Processed
-                        @elseif ($applymember->flag == '3') Failed / Decline
-                        @elseif ($applymember->flag == '6') Approved
+                        @if ($item->flag == '0') Still being applied
+                        @elseif ($item->flag == '1') Being Processed
+                        @elseif ($item->flag == '3') Failed / Decline
+                        @elseif ($item->flag == '20') Approved
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
                             <button
-                            wire:click="showApplication('{{ $applymember->uuid }}')"
-                            @click="openModal = true"
-                            class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
-                            <x-heroicon-o-eye class="w-5 h-5"/>
-                        </button>
-                            {{-- <a href="{{ route('membership.apply', $applymember->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
+                                wire:click="showApplication('{{ $item->uuid }}')"
+                                @click="openModal = true"
+                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" 
+                                title="Show Application">
+                                <x-heroicon-o-eye class="w-5 h-5"/>
+                            </button>
+
+                        @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 1)
+                            <a href="{{ route('membership.maker', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
                                 <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
-                            </a> --}}
+                            </a>
+                        @endif
+
+                        @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 2)
+                        <a href="{{ route('membership.checker', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($item->flag > 0 && in_array($User->id,$item->approval_unvoted_id(3)))
+                        <a href="{{ route('membership.committee', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($item->flag > 0 && in_array($User->id,$item->approval_unvoted_id(4)))
+                        <a href="{{ route('membership.approver', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                            </a>
+                        @endif
+
                         </div>
                     </x-table.table-body>
                 </tr>
                 @empty
                 <x-table.table-body colspan="4" class="text-left">
-                    No Data
+                    No Data member
                 </x-table.table-body>
                 @endforelse
             </x-slot>
@@ -67,4 +98,3 @@
             @include('livewire.page.application.application-list.apply_membership')
         </x-modal.modal>
 </div>
-          

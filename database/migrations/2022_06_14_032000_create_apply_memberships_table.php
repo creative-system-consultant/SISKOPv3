@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('cust_id');
             $table->bigInteger('coop_id');
             $table->bigInteger('flag')->default(0);
-            $table->bigInteger('step')->default(1);
+            $table->bigInteger('step')->default(0);
 
             $table->decimal('total_fee',12,2)->nullable();
             $table->decimal('register_fee',12,2)->nullable();

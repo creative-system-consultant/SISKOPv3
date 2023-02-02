@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Page\Admin\Approval;
 
-use App\Models\AccountProduct;
 use App\Models\CoopApproval;
 use App\Models\CoopApprovalRole;
 use App\Models\User;
@@ -30,28 +29,22 @@ class ApprovalAdmin extends Component
         'lists.*.rule_max' => "numeric",
         'lists.*.rule_employee' => "nullable",
         'custom'        => "nullable|max:50",
-        'product.id'    => "nullable",
     ];
 
     protected $validationAttributes = [
         'lists.*.name'  => 'Custom Name',
         'custom'        => 'Custom Name',
-        'product'       => 'Product',
     ];
 
-    public function mount($type = 'Share', $product = NULL)
+    public function mount($type = 'Share')
     {
-        if ( !in_array($type,['Share','SellShare','Contribution', 'Financing'])){
+        if ( !in_array($type,['Share','SellShare','Contribution','Membership'])){
             return redirect()->route('home');
         }
-
-        $this->product = AccountProduct::find($product);
-        $this->product_id = $product;
 
         $this->page      = $type;
         $this->User      = User::find(Auth()->user()->id);
 
-        $this->products  = AccountProduct::where([['coop_id', $this->User->coop_id]])->select('id','name', 'product_type')->get();
         $this->approval  = CoopApproval::firstOrCreate(['coop_id' => $this->User->coop_id, 'approval_type' => $type]);
 
         $this->loadList();
@@ -61,9 +54,7 @@ class ApprovalAdmin extends Component
 
     public function loadList()
     {
-        if ($this->product != NULL){
-            $this->lists     = $this->approval->approvals($this->product_id)->orderBy('order')->get();
-        }
+        $this->lists     = $this->approval->approvals()->orderBy('order')->get();
 
     }
 
@@ -74,78 +65,69 @@ class ApprovalAdmin extends Component
         }
         $last = $this->lists != [] ? $this->lists->count() : 1;
         $last++;
-        $this->approval->approvals($this->product_id)->withTrashed()->updateOrCreate(
+        $this->approval->approvals()->withTrashed()->updateOrCreate(
             [
                 'order'   => $last,
                 'coop_id' => $this->User->coop_id
             ],
             [
-                'product_id'=> $this->product_id,
                 'role_id'   => $this->selected,
                 'deleted_at'=> NULL,
             ]
         );
         $this->custom   = '';
-        $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
+        $this->lists    = $this->approval->approvals()->orderBy('order')->get();
         //$adds->save();
     }
 
     public function up($order)
     {
         if ($order > 1){
-            $sort = $this->approval->approvals($this->product_id)->whereIn('order', [$order, $order-1])->orderBy('order')->get();
+            $sort = $this->approval->approvals()->whereIn('order', [$order, $order-1])->orderBy('order')->get();
             $sort[0]->order = $order;
             $sort[1]->order = $order-1;
             $sort[0]->save();
             $sort[1]->save();
         }
-        $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
+        $this->lists    = $this->approval->approvals()->orderBy('order')->get();
     }
 
     public function down($order)
     {
         if ($order > 0){
-            $sort = $this->approval->approvals($this->product_id)->whereIn('order', [$order, $order+1])->orderBy('order')->get();
+            $sort = $this->approval->approvals()->whereIn('order', [$order, $order+1])->orderBy('order')->get();
             $sort[0]->order = $order+1;
             $sort[1]->order = $order;
             $sort[0]->save();
             $sort[1]->save();
         }
-        $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
+        $this->lists    = $this->approval->approvals()->orderBy('order')->get();
     }
 
     public function rem($id)
     {
         $rem   = CoopApprovalRole::where([['id', $id],['coop_id', $this->User->coop_id]])->firstOrFail();
         $rem->delete();
-        $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
+        $this->lists    = $this->approval->approvals()->orderBy('order')->get();
         foreach($this->lists as $key=>$list){
             if ($list->order != $key+1){
                 $list->order = $key+1;
                 $list->save();
             }
         }
-        $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
+        $this->lists    = $this->approval->approvals()->orderBy('order')->get();
     }
 
     public function deb()
     {
         $this->validate();
         dump([
-            'product'   => $this->product,
             'share'     => $this->approval,
             'User'      => $this->User,
             'coopGroup' => $this->coopGroup,
             'lists'     => $this->lists,
             'selected'  => $this->selected,
         ]);
-    }
-
-    public function setproduct()
-    {
-        $this->product = AccountProduct::find($this->product['id']);
-        $this->product_id = $this->product->id;
-        $this->loadList();
     }
 
     public function change_rule($id)
