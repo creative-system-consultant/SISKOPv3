@@ -113,6 +113,8 @@ class Apply_Share extends Component
             'step'         => 1,
             'created_by'   => strtoupper($customer->name),
         ]);
+        $share->remove_approvals();
+        $share->make_approvals();
 
         if ($this->pay_method == 'online') {
             // dd('Online Banking');

@@ -29,11 +29,6 @@ class Share extends Model implements Auditable
         return $this->belongsTo(Customer::class, 'exc_cust_id', 'id');
     }
 
-    public function approver()
-    {
-        return $this->hasMany(ShareApprovalRole::class,'share_id');
-    }
-
     public function approvals()
     {
         return $this->morphMany(Approval::class,'approval');
@@ -77,7 +72,7 @@ class Share extends Model implements Auditable
 
     public function make_approvals()
     {
-        $CoopApproval = CoopApproval::where([['approval_type', 'Membership'],['coop_id',$this->coop_id]])->first();
+        $CoopApproval = CoopApproval::where([['approval_type', 'Share'],['coop_id',$this->coop_id]])->first();
         if ($CoopApproval != NULL){
             $CoopApprovalRoles = CoopApprovalRole::where([['coop_id', $this->coop_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
         } else {

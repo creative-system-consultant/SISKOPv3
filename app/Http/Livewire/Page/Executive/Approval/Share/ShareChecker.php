@@ -14,6 +14,10 @@ class ShareChecker extends Component
     public Approval $Approval;
     public $checker;
 
+    protected $rules = [
+        'Approval.note' => 'required',
+    ];
+
     public function next()
     {
         $this->validate();

@@ -40,8 +40,7 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '0') Still being applied
                         @elseif ($item->flag == '1') Being Processed
-                        @elseif ($item->flag == '3') Failed / Decline
-                        @elseif ($item->flag == '6') Approved
+                        @elseif ($item->flag == '20') Approved
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
@@ -69,6 +68,22 @@
                             </a>
                         @endif
 
+                        @if ($item->flag > 0 && in_array($User->id,$item->approval_unvoted_id(3)))
+                            <a href="{{ route('share.committee', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($item->flag > 0 && in_array($User->id,$item->approval_unvoted_id(4)))
+                            <a href="{{ route('share.approval', $item->uuid) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                            </a>
+                        @endif
+
                         </div>
                     </x-table.table-body>
                 </tr>
@@ -81,6 +96,6 @@
     </x-table.table>
 
     <x-modal.modal modalActive="openModal" title="Add Share Application" modalSize="7xl" closeBtn="yes">
-        @include('livewire.page.application.application-list.apply_share')
+        @include('livewire.page.application.application-list.details.share')
     </x-modal.modal>
 </div>
