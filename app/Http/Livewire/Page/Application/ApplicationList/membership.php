@@ -9,7 +9,7 @@ use Livewire\Component;
 class Membership extends Component
 {
     public User $User;
-    public $membership;
+    public $memberships;
     public $custApply;
 
     public function showApplication($uuid)
@@ -20,7 +20,7 @@ class Membership extends Component
     public function mount()
     {
         $this->User = auth()->user();
-        $this->membership  = ApplyMember::where('coop_id', $this->User->coop_id)->orderBy('created_at','desc')->with('customer')->get();
+        $this->memberships = ApplyMember::where('coop_id', $this->User->coop_id)->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()

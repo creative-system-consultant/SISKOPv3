@@ -38,22 +38,21 @@
                     type="text"
                 />
                 <x-form.input
-                label="Register Fee"
-                name="custic"
-                value="{{ $custApply->register_fee ?? '' }}"
-                mandatory=""
-                disable="true"
-                type="text"
-            />
+                    label="Register Fee"
+                    name="custic"
+                    value="{{ $custApply->register_fee ?? '' }}"
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                />
             </div>
-            </div>
+        </div>
 
-            <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
-                <div class="flex items-center justify-center space-x-2">
-                    <button @click="openModal = false" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
-                        Close
-                    </button>
-                </div>
+        <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
+            <div class="flex items-center justify-center space-x-2">
+                <button @click="openModal = false" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
+                    Close
+                </button>
             </div>
         </div>
     </x-general.card>
