@@ -25,16 +25,21 @@ class DashExecWorkQueue extends Component
         foreach ($this->group as $key => $value) {
             $this->approval_role[$key+1] = CoopApprovalRole::where([['coop_id', $this->User->coop_id],['role_id', $value->grouping_id]])->get();
             foreach ($this->approval_role[$key+1] as $key1 => $value1) {
-                $this->financing[$value1->order] = AccountMaster::where([
-                                            ['coop_id', $this->User->coop_id],
-                                            ['apply_step', $value1->order]
-                                            ])->select('id')->get();
+                $accounts = AccountMaster::where([
+                                    ['coop_id', $this->User->coop_id],
+                                    ['apply_step', $value1->order],
+                                    //['product_id', ]
+                            ])->get();
+                $this->financing[$value1->role_id] = $accounts ?? NULL;
             }
-        } /*
-        dump([
+        }
+        /*
+        dd([
+            'user'  => $this->User,
             'group' => $this->group,
+            //'type' => $this->approval_type,
             'role' => $this->approval_role,
-            'financing' => $this->financing
+            //'financing' => $this->financing
         ]);
         */
     }
