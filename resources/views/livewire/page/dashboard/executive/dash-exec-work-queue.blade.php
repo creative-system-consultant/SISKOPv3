@@ -29,7 +29,7 @@
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-center">
                                 @if($item->description == 'FINANCING')
-                                {{ $financing[$group[$i-1]->grouping_id]->count() }}
+                                {{ array_key_exists($group[$i-1]->grouping_id, $financing) ? $financing[$group[$i-1]->grouping_id]->count() : 0 }}
                                 @else
                                 0
                                 @endif

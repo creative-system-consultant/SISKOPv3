@@ -11,7 +11,7 @@
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
         <x-slot name="tbody">
-            @forelse ($financing as $key => $item)
+            @forelse ($financings as $key => $item)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
@@ -85,6 +85,6 @@
         </x-slot>
     </x-table.table>
     <x-modal.modal modalActive="openModal" title="Apply Financing Application" modalSize="7xl" closeBtn="yes">
-        @include('livewire.page.application.application-list.apply_financing')
+        @include('livewire.page.application.application-list.details.financing')
     </x-modal.modal>
 </div>
