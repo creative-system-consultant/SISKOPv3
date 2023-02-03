@@ -20,7 +20,6 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input-tag
                     label="Add Contribution applied"
                     type="text"
@@ -32,7 +31,6 @@
                     mandatory=""
                     disable="true"
                 />
-
                 <x-form.input-tag
                     label="Add Contribution approved"
                     type="text"
@@ -45,7 +43,6 @@
                     disable="true"
                 />
             </div>
-
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>
             <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -59,7 +56,6 @@
                         default="yes"
                     />
                 </div>
-
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
                         <x-form.input
@@ -72,7 +68,6 @@
                         />
                     @endif
                 </div>
-
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
                         <x-form.input
@@ -151,10 +146,9 @@
                     </div>
                 @endforeach
             </div>
-
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
-                    <button @click="openModal = false" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
+                    <button @click="openModal = false" wire:click="clearApplication" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
                         Close
                     </button>
                 </div>

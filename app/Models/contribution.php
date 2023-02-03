@@ -31,7 +31,7 @@ class Contribution extends Model implements Auditable
 
     public function current_approval()
     {
-        return $this->approvals()->where('order', $this->apply_step)->first();
+        return $this->approvals()->where('order', $this->step)->first();
     }
 
     public function current_approval_role()
@@ -106,5 +106,15 @@ class Contribution extends Model implements Auditable
         }
 
         return '';
+    }
+
+    public function approval_vote_id($type = 3)
+    {
+        return explode(',',$this->approvals()->where([['order', $this->step],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+    }
+
+    public function approval_unvoted_id($type = 3)
+    {
+        return explode(',',$this->approvals()->where([['order', $this->step],['vote', NULL],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
     }
 }

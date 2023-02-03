@@ -87,64 +87,69 @@
                 </div>
             </div>
 
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Infromation</h2>
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
+            <div class="grid grid-cols-12 gap-6 mt-8">
+                @foreach ($committee->approvals as $item)
+                    @if($item->order == $committee->step) @break @endif
+                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                        <x-form.text-area
+                            label="Note / Comment"
+                            value="{{ $item->note }}"
+                            name=""
+                            rows=""
+                            disable="readonly"
+                            mandatory=""
+                            placeholder=""
+                        />
+                        <x-form.input
+                            label="Check By"
+                            name="precheck_by"
+                            value="{{ $item->user?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                        <x-form.input
+                            label=""
+                            name="Role"
+                            value="{{ $item->rolegroup?->name }}"
+                            mandatory=""
+                            disable="readonly"
+                            type="text"
+                        />
+                    </div>
+                @endforeach
+            </div>
+            @if($Approval->order == 1) No Approvals Yet @endif
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval</h2>
             <div class="grid grid-cols-12 gap-6 mt-8">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.text-area
-                        label="Note / Comment By Maker"
+                        label="Note / Comment"
                         value=""
-                        name="precheck_note"
+                        name="Approval.note"
                         rows=""
-                        disable="true"
+                        disable=""
                         mandatory=""
                         placeholder=""
+                        wire:model="Approval.note"
                     />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Checker"
-                        value=""
-                        name="precheck_note"
-                        rows=""
-                        disable="true"
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-6 mt-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
-                        label="Committee"
-                        name="committee_by"
-                        value="{{ auth()->user()->name }}"
+                        label="Check By"
+                        name="precheck_by"
+                        value="{{ $User->name }}"
                         mandatory=""
                         disable="true"
                         type="text"
                     />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Committee"
-                        value="committee_note"
-                        name=""
-                        rows=""
-                        disable=""
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
-                        label="Vote"
-                        name="committee_vote"
-                        value=""
+                        label=""
+                        name="Role"
+                        value="{{ $committee->current_approval_role()->name }}"
                         mandatory=""
-                        disable=""
+                        disable="readonly"
                         type="text"
                     />
                 </div>
@@ -155,10 +160,10 @@
                     <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                         Cancel Application
                     </button>
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Previous
                      </button>
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Next
                     </button>
                 </div>
