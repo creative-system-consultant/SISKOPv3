@@ -122,6 +122,7 @@ class Apply_Contribution extends Component
             'step'           => 1,
             'created_by'     => strtoupper($customer->name),
         ]);
+        $contribution->make_approvals();
 
         if ($this->payment_method == 'online') {
             // dd('Online Banking');

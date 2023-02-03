@@ -7,16 +7,17 @@ use Livewire\Component;
 
 class Contribution extends Component
 {
-    public $contribution, $custApply;
+    public $contributions;
+    public $Contribution;
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyContribution::where('uuid', $uuid)->with('customer')->first();
+        $this->Contribution = ApplyContribution::where('uuid', $uuid)->with('customer')->first();
     }
 
     public function mount()
     {
-        $this->contribution = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
+        $this->contributions = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
