@@ -244,6 +244,7 @@
                             title="Title"
                             modalSize="xl"
                             closeBtn="yes"
+                            closeFn=""
                         >
                             <div class="p-4">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -280,6 +281,7 @@
         title="Title"
         modalSize="xl"
         closeBtn="yes"
+        &#x7b;&#x7b;-- closeFn="function-name-when-close-modal" --&#x7d;&#x7d;
     >
         &lt;div class="p-4">
             //content
