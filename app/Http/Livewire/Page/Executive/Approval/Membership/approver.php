@@ -37,7 +37,7 @@ class Approver extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('application.list');
+        return redirect()->route('application.list',['page' => '1']);
     }
 
     public function back()
@@ -50,7 +50,7 @@ class Approver extends Component
             session()->flash('success');
             session()->flash('title', 'Success!');
 
-            return redirect()->route('application.list');
+            return redirect()->route('application.list',['page' => '1']);
         } else {
             $this->dispatchBrowserEvent('swal',[
                 'title' => 'Error!',

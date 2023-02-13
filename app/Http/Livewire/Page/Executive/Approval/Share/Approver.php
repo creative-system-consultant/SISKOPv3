@@ -35,7 +35,7 @@ class Approver extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('application.list');
+        return redirect()->route('application.list',['page' => '2']);
     }
 
     public function refuse()
@@ -56,7 +56,7 @@ class Approver extends Component
         session()->flash('success');
         session()->flash('title', 'Success!');
 
-        return redirect()->route('application.list');
+        return redirect()->route('application.list',['page' => '2']);
     }
 
     public function back()
