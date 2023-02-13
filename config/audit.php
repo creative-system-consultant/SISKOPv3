@@ -151,7 +151,7 @@ return [
 
     'drivers' => [
         'database' => [
-            'table'      => 'SISKOP.audits',
+            'table'      => env('AUDIT_TABLE','audits'),
             'connection' => null,
         ],
     ],

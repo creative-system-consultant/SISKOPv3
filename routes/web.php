@@ -120,6 +120,10 @@ use App\Http\Livewire\Page\User\Application\Lists;
 
 Route::get('/', [RedirectController::class,'index']);
 
+Route::get('php-info', function(){
+    phpinfo();
+});
+
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)->name('login');
     Route::get('register', Register::class)->name('register');
