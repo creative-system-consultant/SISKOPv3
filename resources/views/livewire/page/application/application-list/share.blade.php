@@ -1,4 +1,4 @@
-<div x-data="{ openModal: false }">
+<div x-data="{ openModal: false }" wire:poll.30000ms>
     <x-table.table>
         <x-slot name="thead">
             <x-table.table-header class="text-left " value="No" sort="" />
@@ -95,7 +95,7 @@
         </x-slot>
     </x-table.table>
 
-    <x-modal.modal modalActive="openModal" title="Add Share Application" modalSize="7xl" closeBtn="yes">
+    <x-modal.modal modalActive="openModal" title="Add Share Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.share')
     </x-modal.modal>
 </div>

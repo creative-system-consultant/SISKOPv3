@@ -58,7 +58,7 @@
                 </tr>
             @empty
             <x-table.table-body colspan="4" class="text-left">
-                No Share Data
+                No Exchange Share Data
             </x-table.table-body>
             @endforelse
         </x-slot>

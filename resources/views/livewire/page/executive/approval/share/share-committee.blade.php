@@ -171,88 +171,65 @@
                 </div>
             @endif
 
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Information</h2>
-            <div class="grid grid-cols-12 gap-6 mt-6">
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
+            <x-table.table>
+                <x-slot name="thead">
+                    <x-table.table-header class="text-left" value="Approval By / Role" sort="" />
+                    <x-table.table-header class="text-left" value="Approval" sort="" />
+                    <x-table.table-header class="text-left" value="Note" sort="" />
+                    <x-table.table-header class="text-left" value="Date" sort="" />
+                </x-slot>
+                <x-slot name="tbody">
+                @foreach ($committee->approvals as $item)
+                @if((str_contains($item->type,'vote') && $item->vote == NULL) || $item->type == NULL) @continue @endif
+                    <tr>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $item->user?->name ?? "-" }} <br>
+                            {{ $item->rolegroup?->name }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            @if(str_contains($item->type,'vote')) {{ $item->vote ?? "-" }} @else {{ $item->type ?? "-" }} @endif
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $item->note ?? "-" }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            @if($item->type == NULL || (str_contains($item->type,'vote') && $item->vote == NULL)) - @else {{ $item->updated_at }} @endif
+                        </x-table.table-body>
+                    </tr>
+                @endforeach
+                </x-slot>
+            </x-table.table>
+            @if($Approval->order == 1) No Approvals Yet @endif
+            <br>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval</h2>
+            <div class="grid grid-cols-12 gap-6 mt-8">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.text-area
+                        label="Note / Comment"
+                        value=""
+                        name="Approval.note"
+                        rows=""
+                        disable=""
+                        mandatory=""
+                        placeholder=""
+                        wire:model="Approval.note"
+                    />
                     <x-form.input
                         label="Check By"
                         name="precheck_by"
-                        value=""
+                        value="{{ $User->name }}"
                         mandatory=""
                         disable="true"
                         type="text"
                     />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Maker"
-                        value="precheck_note"
-                        name=""
-                        rows=""
-                        disable="true"
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-6 mt-8">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
-                        label="Approved By"
-                        name="approved_by"
-                        value=""
+                        label=""
+                        name="Role"
+                        value="{{ $checker->current_approval_role()->name }}"
                         mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Checker"
-                        value="approval_note"
-                        name=""
-                        rows=""
-                        disable="true"
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-6 mt-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Committee"
-                        name="committee_by"
-                        value="{{ auth()->user()->name }}"
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.text-area
-                        label="Note / Comment By Committee"
-                        value="committee_note"
-                        name=""
-                        rows=""
-                        disable=""
-                        mandatory=""
-                        placeholder=""
-                    />
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Vote"
-                        name="committee_vote"
-                        value=""
-                        mandatory=""
-                        disable=""
+                        disable="readonly"
                         type="text"
                     />
                 </div>

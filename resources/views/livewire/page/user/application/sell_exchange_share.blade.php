@@ -11,7 +11,7 @@
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
         <x-slot name="tbody">
-            @forelse ($sellShare as $sell)
+            @forelse ($sellShares as $sell)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
