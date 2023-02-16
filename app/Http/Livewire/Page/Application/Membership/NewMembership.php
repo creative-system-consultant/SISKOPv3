@@ -198,17 +198,17 @@ class NewMembership extends Component
             $this->totalfee();
             $this->validate($this->rule3);
             $this->applymember->save();
-            $this->render();
         }
 
         if ($this->numpage == 4){
             $this->fileupload();
-            $this->render();
         }
 
         if ($this->numpage < 5){
             $this->numpage++;
         }
+
+        $this->render();
 
     }
 
@@ -405,6 +405,8 @@ class NewMembership extends Component
                 'filepath' => $filepath,
             ]);
         };
+
+        $this->render();
     }
 
     public function totalfee()
@@ -536,7 +538,7 @@ class NewMembership extends Component
 
     public function render()
     {
-        return view('livewire.page.admin.membership.membership-apply')->extends('layouts.head');
+        return view('livewire.page.application.membership.new-membership')->extends('layouts.head');
     }
 
 }
