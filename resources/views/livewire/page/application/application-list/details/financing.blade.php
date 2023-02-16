@@ -70,7 +70,7 @@
                 />
             </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                Address.....
+                {{-- Address..... --}}
                 <x-form.input
                     label="Email"
                     type="text"
@@ -80,6 +80,7 @@
                     disable="true"
                     type="text"
                 />
+                {{--
                 <x-form.input
                     label="Membership Number"
                     type="text"
@@ -140,7 +141,9 @@
                     disable="true"
                     type="text"
                 />
+                --}}
             </div>
+            {{--
             <h1 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Family Information</h1>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
@@ -183,7 +186,8 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 Address.....
             </div>
-
+            --}}
+            {{--
             <h1 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Company Information</h1>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
@@ -245,7 +249,8 @@
 
                 Address.....
             </div>
-
+            --}}
+            {{--
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Introducer Information</h2>
             <div>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -318,7 +323,8 @@
                         type="text"
                     />
                 </div>
-
+                --}}
+                {{--
                 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Upload Document</h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     @forelse ($financing->files as $supportDoc)
@@ -330,76 +336,38 @@
                         <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2>
                     @endforelse
                 </div>
-
+                --}}
                 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
-            <div class="grid grid-cols-12 gap-6 mt-8">
-                @foreach ($financing->approvals as $item)
-                    @if($item->order == $financing->step)
-                        @if($item->type == 'vote1')
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-8">
-                        @endif
-                    @endif
-                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                        <x-form.text-area
-                            label="Note / Comment"
-                            value="{{ $item->note }}"
-                            name=""
-                            rows=""
-                            disable="readonly"
-                            mandatory=""
-                            placeholder=""
-                        />
-                        @if( str_contains($item->type,'vote'))
-                        <x-form.input
-                            label="Vote"
-                            name="vote"
-                            value="{{ $item->vote }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        <x-form.input
-                            label="Vote By"
-                            name="vote_by"
-                            value="{{ $item->user?->name }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        @else
-                        <x-form.input
-                            label="Approval"
-                            name="approval"
-                            value="{{ $item->type }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        <x-form.input
-                            label="Approval By"
-                            name="approval_by"
-                            value="{{ $item->user?->name }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        @endif
-                        <x-form.input
-                            label=""
-                            name="Role"
-                            value="{{ $item->rolegroup?->name }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                    </div>
-                @endforeach
-            </div>
-
+                <x-table.table>
+                    <x-slot name="thead">
+                        <x-table.table-header class="text-left" value="Approval By / Role" sort="" />
+                        <x-table.table-header class="text-left" value="Approval" sort="" />
+                        <x-table.table-header class="text-left" value="Note" sort="" />
+                        <x-table.table-header class="text-left" value="Date" sort="" />
+                    </x-slot>
+                    <x-slot name="tbody">
+                    @foreach ($financing->approvals as $item)
+                        <tr>
+                            <x-table.table-body colspan="" class="text-left">
+                                {{ $item->user?->name ?? "-" }} <br>
+                                {{ $item->rolegroup?->name }}
+                            </x-table.table-body>
+                            <x-table.table-body colspan="" class="text-left">
+                                @if(str_contains($item->type,'vote')) {{ $item->vote ?? "-" }} @else {{ $item->type ?? "-" }} @endif
+                            </x-table.table-body>
+                            <x-table.table-body colspan="" class="text-left">
+                                {{ $item->note ?? "-" }}
+                            </x-table.table-body>
+                            <x-table.table-body colspan="" class="text-left">
+                                @if($item->type == NULL || (str_contains($item->type,'vote') && $item->vote == NULL)) - @else {{ $item->updated_at }} @endif
+                            </x-table.table-body>
+                        </tr>
+                    @endforeach
+                    </x-slot>
+                </x-table.table>
                 <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">
-                        <button @click="openModal = false" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
+                        <button @click="openModal = false" wire:click="closeApplication" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
                             Close
                         </button>
                     </div>

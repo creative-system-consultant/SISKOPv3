@@ -32,7 +32,7 @@ class Lists extends Component
         $this->Customer  = Customer::where([['coop_id', $this->User->coop_id],['icno',$this->User->icno]])->firstOrFail();
         $this->banks     = RefBank::where('coop_id', $this->User->coop_id)->get();
 
-        $this->financing    = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
+        $this->financings   = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->membership   = ApplyMembership::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->shares       = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
         $this->sellShare    = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])
