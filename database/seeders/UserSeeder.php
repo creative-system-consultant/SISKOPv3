@@ -135,7 +135,7 @@ class UserSeeder extends Seeder
                 'name'      => 'Ketua Operasi Aki',
                 'email'     => 'kpop@koperasi.com',
                 'phone_no ' => '0183546802',
-                'icno'      => '850409035101',
+                'icno'      => '850409035148',
                 'password'  => $pass,
             ],
         ];
@@ -169,7 +169,7 @@ class UserSeeder extends Seeder
             [
                 'coop_id'   => '1',
                 'name'      => 'Abu',
-                'icno'      => '020923100279',
+                'icno'      => '010403141131',
                 'share'     => '900.00',
                 'contribution'=> '200.00',
             ],
@@ -225,7 +225,7 @@ class UserSeeder extends Seeder
             [
                 'coop_id'   => '1',
                 'name'      => 'Ketua Operasi Aki',
-                'icno'      => '850409035147',
+                'icno'      => '850409035148',
                 'share'     => '0.00',
                 'contribution'=> '200.00',
             ],

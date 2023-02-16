@@ -1,7 +1,7 @@
 @extends('layouts.head')
 @section('content')
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">List of Application</h1>
+    <h1 class="text-base font-semibold md:text-2xl">List of Approvals</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div x-data="{active : @if(isset(request()->page)){{ request()->page }} @else 0 @endif}">
             <x-general.card class="flex items-center w-full mb-2 overflow-x-auto bg-white rounded-md ">

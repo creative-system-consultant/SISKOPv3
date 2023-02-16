@@ -142,6 +142,7 @@ Route::middleware('auth')->group(function () {
     Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
     Route::get('password/confirm', Confirm::class)->name('password.confirm');
     Route::post('logout', LogoutController::class)->name('logout');
+    Route::get('logout', LogoutController::class)->name('logouts');
 
     //profile
     Route::get('profile', Index::class)->name('profile');

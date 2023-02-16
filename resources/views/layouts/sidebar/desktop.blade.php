@@ -69,7 +69,10 @@
                             </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item>
-                    <x-sidebar.nav-item title="List of Application" route="{{ route('application.list') }}" uri="applicationList">
+                    <x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
+                        <x-heroicon-o-document-text class="w-7 h-7" />
+                    </x-sidebar.nav-item>
+                    <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
                     <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">

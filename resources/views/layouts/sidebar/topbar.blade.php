@@ -35,8 +35,8 @@
             <li class="relative" x-data="{open:false}">
                 @php
                     $user = Auth::user();
-                    $customer = \App\Models\Customer::where('icno', $user->icno)->first();
-                    $specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();
+                    //$customer = \App\Models\Customer::where('icno', $user->icno)->first();
+                    //$specialAid = \App\Models\ApplySpecialAid::where('cust_id', $customer->id)->first();
                 @endphp
                 <button class="p-2 text-white align-middle bg-gray-800 rounded-md shadow-xl focus:outline-none "
                     @click="open=!open" @keydown.escape="open=false" aria-haspopup="true">
@@ -46,11 +46,7 @@
                     <!-- Notification badge -->
                     <span aria-hidden="true"
                         class="absolute top-0 inline-block px-1 text-xs transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full -right-2 dark:border-gray-800">
-                        @if ($specialAid != NULL)
-                            {{ count($specialAid->notification) }}
-                        @else
                             0
-                        @endif
                     </span>
                 </button>
                 <div x-show="open" x-cloak>
@@ -58,7 +54,7 @@
                         x-transition:leave-end="opacity-0" @keydown.escape="open=false"
                         @click.away="open = !open"
                         class="absolute right-0 z-50 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white rounded-md shadow-md dark:bg-gray-800">
-                        @if ($specialAid != NULL)
+                        @if (isset($specialAid) && $specialAid != NULL)
                             @foreach ($specialAid->notification as $notifyAid)
                                 <li class="flex">
                                     <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-white"
