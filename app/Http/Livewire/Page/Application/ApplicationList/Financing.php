@@ -15,6 +15,11 @@ class Financing extends Component
     public $gender;
     public $genderName;
 
+    public function closeApplication()
+    {
+        $this->financing = new AccountMaster;
+    }
+
     public function showApplication($uuid)
     {
         $this->financing = AccountMaster::where('uuid', $uuid)->with('customer')->first();
