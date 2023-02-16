@@ -20,7 +20,7 @@ class Lists extends Component
     public $contribution;
     public $financing;
     public $membership;
-    public $sellShare;
+    public $sellShares;
     public $sell_share;
     public $shares;
     public $specialAid;
@@ -35,7 +35,7 @@ class Lists extends Component
         $this->financing    = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->membership   = ApplyMembership::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->shares       = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
-        $this->sellShare    = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])
+        $this->sellShares   = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])
                                    ->where(function($query) {
                                       $query->where('direction', 'sell');
                                       $query->orWhere('direction', 'exchange');

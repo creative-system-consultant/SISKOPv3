@@ -68,6 +68,6 @@
     </x-table.table>
 
     <x-modal.modal modalActive="openModal" title="Add Share Application" modalSize="7xl" closeBtn="yes">
-        @include('livewire.page.application.application-list.apply_share')
+        @include('livewire.page.application.application-list.details.share')
     </x-modal.modal>
 </div>

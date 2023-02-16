@@ -12,6 +12,11 @@ class Share extends Component
     public ApplyShare $share;
     public $shares;
 
+    public function clearApplication()
+    {
+        $this->share = new ApplyShare;
+    }
+
     public function showApplication($uuid)
     {
         $this->share = ApplyShare::where('uuid', $uuid)->with('customer')->first();
@@ -20,7 +25,7 @@ class Share extends Component
     public function mount()
     {
         $this->User   = User::find(auth()->user()->id);
-        $this->shares = ApplyShare::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
+        $this->shares = ApplyShare::where([['direction', 'buy'],['coop_id', $this->User->coop_id]])->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
