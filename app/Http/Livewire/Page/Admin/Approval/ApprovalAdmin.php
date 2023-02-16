@@ -38,7 +38,7 @@ class ApprovalAdmin extends Component
 
     public function mount($type = 'Share')
     {
-        if ( !in_array($type,['Share','SellShare','Contribution','Membership'])){
+        if ( !in_array($type,['Share','SellShare','Contribution','SellContribution','Membership'])){
             return redirect()->route('home');
         }
 
