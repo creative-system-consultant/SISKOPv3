@@ -4,27 +4,34 @@ namespace App\Http\Livewire\Page\Application\ApplicationList;
 
 use App\Models\Contribution as ApplyContribution;
 use App\Models\Ref\RefBank;
+use App\Models\User;
 use Livewire\Component;
 
 class withdrawal_contribution extends Component
 {
+    public User $User;
     public $withdrawal;
-    public $custApply, $bankName;
+    public $withdraw;
+    public $bankName;
     public $banks;
+
+    public function clearApplication()
+    {
+        $this->withdraw = NULL;
+    }
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyContribution::where('uuid', $uuid)->with('customer')->first();
-        $this->bankName = RefBank::where('coop_id', $this->custApply->coop_id)->get();
+        $this->withdraw = ApplyContribution::where('uuid', $uuid)->with('customer')->first();
+        $this->bankName = RefBank::where('coop_id', $this->User->coop_id)->get();
     }
 
     public function mount()
     {
-        $this->withdrawal = ApplyContribution::where('direction', 'withdraw')->orderBy('created_at','desc')->with('customer')->get();
+        $this->User = User::find(auth()->user()->id);
+        $this->withdrawal = ApplyContribution::where([['direction', 'withdraw'],['coop_id', $this->User->coop_id]])->orderBy('created_at','desc')->with('customer')->get();
 
-        foreach ($this->withdrawal as $bank_name) {
-            $this->banks = RefBank::where('coop_id', $bank_name->coop_id)->get();
-        }
+        $this->banks = RefBank::where('coop_id', $this->User->coop_id)->get();
     }
 
     public function render()

@@ -13,7 +13,7 @@
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
         <x-slot name="tbody">
-            @forelse ($withdrawal as $withdraw)
+            @forelse ($withdrawals as $withdraw)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}

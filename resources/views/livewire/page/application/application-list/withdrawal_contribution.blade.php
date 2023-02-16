@@ -72,7 +72,7 @@
             @endforelse
         </x-slot>
     </x-table.table>
-    <x-modal.modal modalActive="openModal" title="Withdrawal Contribution Application" modalSize="7xl" closeBtn="yes">
+    <x-modal.modal modalActive="openModal" title="Withdrawal Contribution Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.apply_withdraw_contribution')
     </x-modal.modal>
 </div>

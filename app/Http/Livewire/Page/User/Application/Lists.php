@@ -24,7 +24,7 @@ class Lists extends Component
     public $sell_share;
     public $shares;
     public $specialAid;
-    public $withdrawal;
+    public $withdrawals;
 
     public function mount()
     {
@@ -40,8 +40,8 @@ class Lists extends Component
                                       $query->where('direction', 'sell');
                                       $query->orWhere('direction', 'exchange');
                                    })->get();
-        $this->contribution = Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','buy']])->get();
-        $this->withdrawal   = Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','withdraw']])->get();
+        $this->contributions= Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','buy']])->get();
+        $this->withdrawals  = Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','withdraw']])->get();
         $this->specialAid   = ApplySpecialAid::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
     }
 
