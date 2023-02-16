@@ -19,8 +19,8 @@ class Lists extends Component
     public $banks;
     public $contribution;
     public $financing;
-    public $membership;
-    public $sellShares;
+    public $memberships;
+    public $sellShare;
     public $sell_share;
     public $shares;
     public $specialAid;
@@ -32,8 +32,8 @@ class Lists extends Component
         $this->Customer  = Customer::where([['coop_id', $this->User->coop_id],['icno',$this->User->icno]])->firstOrFail();
         $this->banks     = RefBank::where('coop_id', $this->User->coop_id)->get();
 
-        $this->financings   = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
-        $this->membership   = ApplyMembership::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
+        $this->financing    = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
+        $this->memberships  = ApplyMembership::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->shares       = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
         $this->sellShares   = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])
                                    ->where(function($query) {

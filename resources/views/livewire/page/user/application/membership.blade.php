@@ -12,7 +12,7 @@
                 <x-table.table-header class="text-left" value="Action" sort="" />
             </x-slot>
             <x-slot name="tbody">
-                @forelse ($membership as $key => $item)
+                @forelse ($memberships as $key => $item)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
@@ -95,6 +95,6 @@
             </x-slot>
         </x-table.table>
         <x-modal.modal modalActive="openModal" title="Add Contribution Application" modalSize="7xl" closeBtn="yes">
-            @include('livewire.page.application.application-list.apply_membership')
+            @include('livewire.page.application.application-list.details.membership')
         </x-modal.modal>
 </div>

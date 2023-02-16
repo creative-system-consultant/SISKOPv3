@@ -10,11 +10,16 @@ class Membership extends Component
 {
     public User $User;
     public $memberships;
-    public $custApply;
+    public $membership;
+
+    public function clearApplication()
+    {
+        $this->membership = NULL;
+    }
 
     public function showApplication($uuid)
     {
-        $this->custApply = ApplyMember::where('uuid', $uuid)->with('customer')->first();
+        $this->membership = ApplyMember::where('uuid', $uuid)->with('customer')->first();
     }
 
     public function mount()

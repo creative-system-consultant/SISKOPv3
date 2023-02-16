@@ -63,71 +63,34 @@
             </div>
             <br>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
-            <div class="grid grid-cols-12 gap-6 mt-8">
+            <x-table.table>
+                <x-slot name="thead">
+                    <x-table.table-header class="text-left" value="Approval By / Role" sort="" />
+                    <x-table.table-header class="text-left" value="Approval" sort="" />
+                    <x-table.table-header class="text-left" value="Note" sort="" />
+                    <x-table.table-header class="text-left" value="Date" sort="" />
+                </x-slot>
+                <x-slot name="tbody">
                 @foreach ($Approver->approvals as $item)
-                    @if($item->order == $Approver->step)
-                        @if($item->vote == NULL) @break 
-                        @elseif($item->type == 'vote1')
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-8">
-                        @endif
-                    @endif
-                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                        <x-form.text-area
-                            label="Note / Comment"
-                            value="{{ $item->note }}"
-                            name=""
-                            rows=""
-                            disable="readonly"
-                            mandatory=""
-                            placeholder=""
-                        />
-                        @if($item->vote != NULL)
-                        <x-form.input
-                            label="Vote"
-                            name="vote"
-                            value="{{ $item->vote }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        <x-form.input
-                            label="Vote By"
-                            name="vote_by"
-                            value="{{ $item->user?->name }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        @else
-                        <x-form.input
-                            label="Approval"
-                            name="approval"
-                            value="{{ $item->type }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        <x-form.input
-                            label="Approval By"
-                            name="approval_by"
-                            value="{{ $item->user?->name }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                        @endif
-                        <x-form.input
-                            label=""
-                            name="Role"
-                            value="{{ $item->rolegroup?->name }}"
-                            mandatory=""
-                            disable="readonly"
-                            type="text"
-                        />
-                    </div>
+                @if((str_contains($item->type,'vote') && $item->vote == NULL) || $item->type == NULL) @continue @endif
+                    <tr>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $item->user?->name ?? "-" }} <br>
+                            {{ $item->rolegroup?->name }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            @if(str_contains($item->type,'vote')) {{ $item->vote ?? "-" }} @else {{ $item->type ?? "-" }} @endif
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $item->note ?? "-" }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            @if($item->type == NULL || (str_contains($item->type,'vote') && $item->vote == NULL)) - @else {{ $item->updated_at }} @endif
+                        </x-table.table-body>
+                    </tr>
                 @endforeach
-            </div>
+                </x-slot>
+            </x-table.table>
             @if($Approval->order == 1) No Approvals Yet @endif
             <br>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Vote</h2>
