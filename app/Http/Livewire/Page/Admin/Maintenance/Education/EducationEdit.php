@@ -7,27 +7,18 @@ use App\Models\Ref\RefEducation;
 
 class EducationEdit extends Component
 {
-    public $edu_description;
-    public $edu_code;
-    public $edu_status;
-    public $education;
+    public RefEducation $education;
 
-    public function submit($id)
+    protected $rules = [
+        'education.description' => "required|max:255",
+        'education.code'        => "required|max:255",
+        'education.status'      => "",
+    ];
+
+    public function submit()
     {
-        $this->validate([
-            'edu_description' => ['required', 'string'],
-            'edu_code'        => ['required', 'string'],
-        ]);
-
-        $education = RefEducation::where('id', $id)->first();
-
-        $education->update([
-            'description'     => trim(strtoupper($this->edu_description)),
-            'code'            => trim(strtoupper($this->edu_code)),
-            'status'          => $this->status == true ? '1' : '0',
-            'updated_at'      => now(),
-            'updated_by'      => Auth()->user()->name,
-        ]);
+        $this->education->status = $this->education->status ? '1' : '0';
+        $this->education->save();
 
         session()->flash('message', 'Education Edited');
         session()->flash('success');
@@ -36,20 +27,17 @@ class EducationEdit extends Component
         return redirect()->route('education.list');
     }
 
-    public function load($id)
-    {
-        $education = RefEducation::where('id', $id)->first();
-
-        $this->edu_description    = $education->description;
-        $this->edu_code           = $education->code;
-        $this->edu_status         = $education->status == true ? 'checked' : '';
-    }
-
     public function mount($id)
     {
-        $this->education = RefEducation::where('id', $id)->first();
+        $this->education = RefEducation::find($id);
+        $this->education->status = $this->education->status ? TRUE : FALSE;
+    }
 
-        $this->load($id);
+    public function deb()
+    {
+        dd([
+            'education' => $this->education,
+        ]);
     }
 
     public function render()
