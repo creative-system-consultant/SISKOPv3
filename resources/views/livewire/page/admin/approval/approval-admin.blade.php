@@ -30,16 +30,16 @@
                                         </button>
                                         <button type="button" @if($loop->first) @else wire:click="up({{ $list->order }})" @endif class="flex items-center justify-center p-2 mx-1 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                                             @if($loop->first)
-                                            <x-heroicon-o-minus-sm class="w-7 h-7 text-white-800" />
+                                            <x-heroicon-o-minus-small class="w-7 h-7 text-white-800" />
                                             @else
-                                            <x-heroicon-o-arrow-circle-up class="w-7 h-7 text-white-800" />
+                                            <x-heroicon-o-arrow-up-circle class="w-7 h-7 text-white-800" />
                                             @endif
                                         </button>
                                         <button type="button" @if($loop->last) @else wire:click="down({{ $list->order }})" @endif class="flex items-center justify-center p-2 mx-1 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                                             @if($loop->last)
-                                            <x-heroicon-o-minus-sm class="w-7 h-7 text-white-800" />
+                                            <x-heroicon-o-minus-small class="w-7 h-7 text-white-800" />
                                             @else
-                                            <x-heroicon-o-arrow-circle-down class="w-7 h-7 text-white-800" />
+                                            <x-heroicon-o-arrow-down-circle class="w-7 h-7 text-white-800" />
                                             @endif
                                         </button>
                                         <div x-data="{ruleModal:false}">
@@ -82,8 +82,8 @@
                                                         />
                                                     </div>
                                                     @else
-                                                        @php 
-                                                            $firstMaker = TRUE; 
+                                                        @php
+                                                            $firstMaker = TRUE;
                                                             $list->rule_min = 0;
                                                             $list->rule_max = 0;
                                                             $list->save();
@@ -122,9 +122,9 @@
                             </tr>
                         @endforelse
                             <tr>
-                                <x-table.table-body colspan="2" class="bg-gray-50 text-left">
+                                <x-table.table-body colspan="2" class="text-left bg-gray-50">
                                 </x-table.table-body>
-                                <x-table.table-body colspan="" class="bg-gray-50 text-left">
+                                <x-table.table-body colspan="" class="text-left bg-gray-50">
                                     <x-form.dropdown
                                         label=""
                                         value=""
@@ -142,7 +142,7 @@
                                     @endforelse
                                     </x-form.dropdown>
                                 </x-table.table-body>
-                                <x-table.table-body colspan="" class="bg-gray-50 text-left">
+                                <x-table.table-body colspan="" class="text-left bg-gray-50">
                                     <button type="button" wire:click="add" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                                         ADD
                                     </button>
@@ -153,7 +153,7 @@
                 </div>
             </div>
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
-                <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="flex items-center justify-center mb-4 space-x-2">
                     <p>All changes are saved automatically</p>
                 </div>
                 <div class="flex items-center justify-center space-x-2">

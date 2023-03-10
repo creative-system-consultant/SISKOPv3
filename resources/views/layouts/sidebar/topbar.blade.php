@@ -5,7 +5,7 @@
             <!-- Mobile hamburger -->
             <button class="p-2 -ml-1 rounded-md bg-primary-800 hover:bg-primary-700 md:hidden focus:outline-none focus:shadow-outline-purple "
                 @click="toggleSideMenu" aria-label="Menu">
-                <x-heroicon-o-menu class="w-6 h-6 text-white" />
+                <x-heroicon-o-bars-3 class="w-6 h-6 text-white" />
             </button>
 
             <!-- Desktop hamburger -->
@@ -14,10 +14,10 @@
                     <button class="p-1 -ml-1 rounded-md focus:outline-none"
                             aria-label="Menu">
                             <template x-if="isSideMenuOpenDesktop" >
-                                <x-heroicon-o-menu-alt-1 class="w-6 h-6 text-white" x-cloak />
+                                <x-heroicon-o-bars-2 class="w-6 h-6 text-white" x-cloak />
                             </template>
                             <template x-if="!isSideMenuOpenDesktop">
-                                <x-heroicon-o-menu  class="w-6 h-6 text-white"  x-cloak/>
+                                <x-heroicon-o-bars-3  class="w-6 h-6 text-white"  x-cloak/>
                             </template>
                     </button>
                 </div>
@@ -119,7 +119,7 @@
                         <li class="flex">
                             <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
                                 href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <x-heroicon-o-logout class="w-5 h-5 mr-2" />
+                                <x-heroicon-o-arrow-left-on-rectangle class="w-5 h-5 mr-2" />
                                 <span>Logout</span>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST"

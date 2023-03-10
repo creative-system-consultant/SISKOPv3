@@ -26,7 +26,7 @@
                 @if (isset($closeBtn) and $closeBtn == "yes")
                     <button type="button" @if(isset($closeFn) && $closeFn != "") wire:click="{{ $closeFn }}" @endif class="z-10 flex items-center justify-center w-8 h-8 p-2 text-white transition duration-300 ease-in-out rounded-lg bg-primary-800 hover:bg-primary-900 focus:outline-none dark:bg-primary-600 dark:hover:bg-primary-600"
                     @click="{{ $modalActive }} = false">
-                        <x-heroicon-o-x class="w-5 h-5"/>
+                        <x-heroicon-o-x-mark class="w-5 h-5"/>
                     </button>
                 @endif
             </div>

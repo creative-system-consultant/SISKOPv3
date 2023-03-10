@@ -24,22 +24,22 @@
                     </x-sidebar.nav-item>
 
                     <x-sidebar.nav-item title="Report" route="{{ route('list-reporting') }}" uri="list-reporting">
-                        <x-heroicon-o-clipboard-list class="w-7 h-7" />
+                        <x-heroicon-o-clipboard-document-list class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="APPLICATION" uri="application/*">
                         <x-slot name="icon">
-                            <x-heroicon-o-document-search class="w-7 h-7" />
+                            <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                         </x-slot>
                         <div class="leading-5">
                             <x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-document-add class="w-7 h-7" />
+                                    <x-heroicon-o-document-plus class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-archive class="w-7 h-7" />
+                                    <x-heroicon-o-archive-box class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Add Share" href="{{ route('share.apply') }}" uri="applyShare">
@@ -49,17 +49,17 @@
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Sell / Exchange Share" href="{{ route('share.sell') }}" uri="applySellShare">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-switch-horizontal class="w-7 h-7" />
+                                    <x-heroicon-o-arrows-right-left class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Contribution" href="{{ route('contribution.apply') }}" uri="applyContribution">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-document-add class="w-7 h-7" />
+                                    <x-heroicon-o-document-plus class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Withdrawal Contribution" href="{{ route('contribution.withdraw') }}" uri="withdrawContribution">
                                 <x-slot name="icon">
-                                    <x-heroicon-o-document-remove class="w-7 h-7" />
+                                    <x-heroicon-o-document-minus class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                             <x-sidebar.dropdown-item title="Apply Financing" href="{{ route('financing.list') }}" uri="financingList">
@@ -76,13 +76,13 @@
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
                     <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">
-                        <x-heroicon-o-search-circle class="w-7 h-7" />
+                        <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                     </x-sidebar.nav-item>
                     <x-sidebar.nav-item title="Register / Update Product" route="{{ route('product.list') }}" uri="product">
                         <x-heroicon-o-briefcase class="w-7 h-7" />
                     </x-sidebar.nav-item>
                     <x-sidebar.nav-item title="Membership Maintenance" route="{{ route('membership.admin') }}" uri="membership">
-                        <x-heroicon-o-search-circle class="w-7 h-7" />
+                        <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
@@ -91,7 +91,7 @@
                         </x-slot>
                         <x-sidebar.dropdown-item title="COOP" href="{{ route('coop.list') }}" uri="">
                             <x-slot name="icon">
-                                <x-heroicon-o-library class="w-7 h-7" />
+                                <x-heroicon-o-building-library class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="APPROVAL FINANCING" href="{{ url('Admin/Approval/Financing') }}" uri="">
@@ -147,22 +147,22 @@
                         </x-slot>
                         <x-sidebar.dropdown-item title="SPECIAL AID" href="{{ route('special_aid.list') }}" uri="specialAid/list">
                             <x-slot name="icon">
-                                <x-heroicon-o-archive class="w-7 h-7" />
+                                <x-heroicon-o-archive-box class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="Add Customer Field" href="{{ route('coop.cust') }}" uri="">
                             <x-slot name="icon">
-                                <x-heroicon-o-user-add class="w-7 h-7" />
+                                <x-heroicon-o-user-plus class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-nav-item type="2" active="open" title="REFERENCE" uri="reference/*">
                             <x-slot name="icon">
-                                <x-heroicon-o-document-search class="w-7 h-7" />
+                                <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                             </x-slot>
                             <div class="leading-5">
                                 <x-sidebar.dropdown-item title="BANK" href="{{ route('bank.list') }}" uri="bank">
                                     <x-slot name="icon">
-                                        <x-heroicon-o-library class="w-7 h-7" />
+                                        <x-heroicon-o-building-library class="w-7 h-7" />
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
                                 <x-sidebar.dropdown-item title="COUNTRY" href="{{ route('country.list') }}" uri="country">
@@ -173,13 +173,13 @@
 
                                 <x-sidebar.dropdown-item title="RELIGION" href="{{ route('religion.list') }}" uri="religion">
                                     <x-slot name="icon">
-                                        <x-heroicon-o-hand class="w-7 h-7" />
+                                        <x-heroicon-o-hand-raised class="w-7 h-7" />
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
 
                                 <x-sidebar.dropdown-item title="STATE" href="{{ route('state.list') }}" uri="state">
                                     <x-slot name="icon">
-                                        <x-heroicon-o-office-building class="w-7 h-7" />
+                                        <x-heroicon-o-building-office class="w-7 h-7" />
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
                                 <x-sidebar.dropdown-item title="GENDER" href="{{ route('gender.list') }}" uri="gender">
@@ -196,7 +196,7 @@
 
                                 <x-sidebar.dropdown-item title="RACE" href="{{ route('race.list') }}" uri="race">
                                     <x-slot name="icon">
-                                        <x-heroicon-o-globe class="w-7 h-7" />
+                                        <x-heroicon-o-globe-alt class="w-7 h-7" />
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
 
@@ -214,7 +214,7 @@
 
                                 <x-sidebar.dropdown-item title="MARITAL" href="{{ route('marital.list') }}" uri="marital">
                                     <x-slot name="icon">
-                                        <x-heroicon-o-terminal class="w-7 h-7" />
+                                        <x-heroicon-o-command-line class="w-7 h-7" />
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
                             </div>

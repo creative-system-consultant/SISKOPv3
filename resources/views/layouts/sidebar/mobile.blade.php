@@ -39,12 +39,12 @@
                         </x-sidebar.nav-item>
 
                         <x-sidebar.nav-item title="MENU" route="#" uri="#">
-                            <x-heroicon-o-chart-square-bar class="w-7 h-7" />
+                            <x-heroicon-o-chart-bar-square class="w-7 h-7" />
                         </x-sidebar.nav-item>
 
                         <x-sidebar.dropdown-nav-item active="open" title="PERMOHONAN" uri="pemohonan/*">
                             <x-slot name="icon">
-                                <x-heroicon-o-document-search class="w-7 h-7" />
+                                <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                             </x-slot>
                             <div class="leading-5">
                                 <x-sidebar.dropdown-item title="Menu" href="#" uri="">

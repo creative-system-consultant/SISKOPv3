@@ -5,7 +5,7 @@
             <x-general.card class="flex items-center w-full mb-2 overflow-x-auto bg-white rounded-md ">
                 <x-tab.title name="0" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-archive class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <x-heroicon-o-archive-box class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         Financing
                     </div>
                 </x-tab.title>
@@ -17,19 +17,19 @@
                 </x-tab.title>
                 <x-tab.title name="2" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-switch-horizontal class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <x-heroicon-o-arrows-right-left class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         Share
                     </div>
                 </x-tab.title>
                 <x-tab.title name="3" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-document-add class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <x-heroicon-o-document-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                             Sell/Exchange Share
                         </div>
                 </x-tab.title>
                 <x-tab.title name="4" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-document-remove class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <x-heroicon-o-document-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                             Add Contribution
                         </div>
                 </x-tab.title>
