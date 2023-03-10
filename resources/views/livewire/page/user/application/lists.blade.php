@@ -57,13 +57,13 @@
                     @include('livewire.page.user.application.share')
                 </x-tab.content>
                 <x-tab.content name="3">
-                    @include('livewire.page.user.application.sell_exchange_share')
+                    @include('livewire.page.user.application.sell-exchange-share')
                 </x-tab.content>
                 <x-tab.content name="4">
                     @include('livewire.page.user.application.contribution')
                 </x-tab.content>
                 <x-tab.content name="5">
-                    @include('livewire.page.user.application.withdrawal_contribution')
+                    @include('livewire.page.user.application.withdrawal-contribution')
                 </x-tab.content>
                 <x-tab.content name="6">
                     @include('livewire.page.user.application.special_aid')

@@ -58,11 +58,11 @@ use App\Http\Livewire\Page\Admin\Role\RoleGroupManagement;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\Contribution;
-use App\Http\Livewire\Page\Application\ApplicationList\Sell_ExchangeShare;
+use App\Http\Livewire\Page\Application\ApplicationList\SellExchangeShare;
 use App\Http\Livewire\Page\Application\ApplicationList\Share;
 use App\Http\Livewire\Page\Application\ApplicationList\SpecialAid;
-use App\Http\Livewire\Page\Application\ApplicationList\Withdrawal_Contribution;
-use App\Http\Livewire\Page\Application\ApplySpecialAid\Apply_SpecialAid;
+use App\Http\Livewire\Page\Application\ApplicationList\WithdrawalContribution;
+use App\Http\Livewire\Page\Application\ApplySpecialAid\ApplySpecialAid;
 use App\Http\Livewire\Page\Application\Membership\NewMembership;
 use App\Http\Livewire\Page\Home;
 use App\Http\Livewire\Page\Profile\Index;
@@ -70,10 +70,10 @@ use App\Http\Livewire\Page\Reporting\ListReport;
 use App\Http\Livewire\Page\Reporting\UserReporting;
 use App\Http\Livewire\Page\Executive\Customer\SearchCustomer;
 use App\Http\Livewire\Page\Executive\Customer\EditCustomer;
-use App\Http\Livewire\Page\Application\ApplyContribution\Apply_Contribution;
-use App\Http\Livewire\Page\Application\ApplySellExchangeShare\Apply_Sell_ExchangeShare;
-use App\Http\Livewire\Page\Application\ApplyShare\Apply_Share;
-use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\Apply_WithdrawContribution;
+use App\Http\Livewire\Page\Application\ApplyContribution\ApplyContribution;
+use App\Http\Livewire\Page\Application\ApplySellExchangeShare\ApplySellExchangeShare;
+use App\Http\Livewire\Page\Application\ApplyShare\ApplyShare;
+use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\ApplyWithdrawContribution;
 use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionApproval;
 use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionChecker;
 use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionCommittee;
@@ -99,8 +99,8 @@ use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalCon
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionCommittee;
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionMaker;
 use App\Http\Livewire\Page\Notification\notification;
-use App\Http\Livewire\Page\Application\ApplyFinancing\Apply_Financing;
-use App\Http\Livewire\Page\Application\ApplyFinancing\Financing_List;
+use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
+use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
@@ -161,23 +161,23 @@ Route::middleware('auth')->group(function () {
     //------------------------------- Applications -------------------------------//
     Route::prefix('apply')->group(function(){
         //Applications > Special Aid
-        Route::get('/SpecialAid', Apply_SpecialAid::class)->name('special-aid.apply');
+        Route::get('/SpecialAid', ApplySpecialAid::class)->name('special-aid.apply');
 
         //Applications > Add Share
-        Route::get('/Share', Apply_Share::class)->name('share.apply');
+        Route::get('/Share', ApplyShare::class)->name('share.apply');
 
         //Applications > Sell/Exchange Share
-        Route::get('/SellShare', Apply_Sell_ExchangeShare::class)->name('share.sell');
+        Route::get('/SellShare', ApplySellExchangeShare::class)->name('share.sell');
 
         //Application > Add Contribution
-        Route::get('/Contribution', Apply_Contribution::class)->name('contribution.apply');
+        Route::get('/Contribution', ApplyContribution::class)->name('contribution.apply');
 
         //Application > W/D Contribution
-        Route::get('/withdrawContribution', Apply_WithdrawContribution::class)->name('contribution.withdraw');
+        Route::get('/withdrawContribution', ApplyWithdrawContribution::class)->name('contribution.withdraw');
 
         //Financing > Apply
-        Route::get('/Financing/List', Financing_List::class)->name('financing.list');
-        Route::get('/Financing/{product_id}', Apply_Financing::class)->name('financing.apply');
+        Route::get('/Financing/List', FinancingList::class)->name('financing.list');
+        Route::get('/Financing/{product_id}', ApplyFinancing::class)->name('financing.apply');
         // Route::get('/Financing}', Apply_Financing::class)->name('financing.apply');
 
         //membership > apply
@@ -327,11 +327,11 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
 
-            Route::get('/sellShare/{uuid}', [Sell_ExchangeShare::class, 'showApplication'])->name('application.sell');
+            Route::get('/sellShare/{uuid}', [SellExchangeShare::class, 'showApplication'])->name('application.sell');
 
             Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
 
-            Route::get('/withdrawContribution/{uuid}', [Withdrawal_Contribution::class, 'showApplication'])->name('application.withdrawal');
+            Route::get('/withdrawContribution/{uuid}', [WithdrawalContribution::class, 'showApplication'])->name('application.withdrawal');
         });
 
         Route::prefix('approval')->group(function(){

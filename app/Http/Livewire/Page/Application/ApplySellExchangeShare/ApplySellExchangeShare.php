@@ -7,7 +7,7 @@ use App\Models\Ref\RefBank;
 use App\Models\Share;
 use Livewire\Component;
 
-class Apply_Sell_ExchangeShare extends Component
+class ApplySellExchangeShare extends Component
 {
     public Customer $cust;
     public $share_apply;
@@ -64,36 +64,28 @@ class Apply_Sell_ExchangeShare extends Component
         $user = auth()->user();
         $customer = new Customer;
 
+        $cust = $customer->where('icno', $user->icno)->first();
+
         if ($this->share_type == 'coop') {
-            $cust = $customer->where('icno', $user->icno)->first();
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
 
             $share->update([
                 'amt_before'   => $this->cust['share'],
                 'apply_amt'    => $this->share_apply,
-                'approved_amt' => NULL,
                 'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_account,
                 'flag'         => '1',
                 'step'         => '1',
                 'created_by'   => strtoupper($cust->name),
             ]);
-
-            session()->flash('message', 'Share Reimbursement Application Successfully Send');
-            session()->flash('success');
-            session()->flash('title');
-
-            return redirect('home');
         }
         elseif ($this->share_type == 'mbr') {
-            $cust = $customer->where('icno', $user->icno)->first();
             $cust_member = $customer->where([['icno', $this->mbr_icno],['icno' ,'<>', $user->icno]])->first();
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'exchange']])->first();
 
             $share->update([
                 'amt_before'   => $this->cust['share'],
                 'apply_amt'    => $this->share_apply,
-                'approved_amt' => NULL,
                 'bank_code'    => $this->bank_code,
                 'bank_account' => $this->bank_acct,
                 'exc_cust_id'  => $cust_member->id,
@@ -101,16 +93,15 @@ class Apply_Sell_ExchangeShare extends Component
                 'step'         => '1',
                 'created_by'   => strtoupper($cust->name),
             ]);
-
-            session()->flash('message', 'Share Reimbursement Application Successfully Send');
-            session()->flash('success');
-            session()->flash('title');
-
-            return redirect('home');
         }
-        else{
-            //
-        }
+
+        $share->make_approvals();
+
+        session()->flash('message', 'Share Reimbursement Application Successfully Send');
+        session()->flash('success');
+        session()->flash('title');
+
+        return redirect('home');
 
     }
 
@@ -235,7 +226,7 @@ class Apply_Sell_ExchangeShare extends Component
     {
         $user = auth()->user();
         $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
+        $this->banks = RefBank::where([['coop_id', $user->coop_id],['status', 1]])->get();
 
         $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);

@@ -7,7 +7,7 @@ use App\Models\Ref\RefBank;
 use App\Models\User;
 use Livewire\Component;
 
-class withdrawal_contribution extends Component
+class WithdrawalContribution extends Component
 {
     public User $User;
     public $withdrawal;
@@ -36,6 +36,6 @@ class withdrawal_contribution extends Component
 
     public function render()
     {
-        return view('livewire.page.application.application-list.withdrawal_contribution');
+        return view('livewire.page.application.application-list.withdrawal-contribution');
     }
 }

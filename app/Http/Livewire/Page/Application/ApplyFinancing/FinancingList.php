@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Page\Application\ApplyFinancing;
 use Livewire\Component;
 use App\Models\AccountProduct;
 
-class Financing_List extends Component
+class FinancingList extends Component
 {
     public $Product;
 

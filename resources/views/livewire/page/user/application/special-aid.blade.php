@@ -10,7 +10,7 @@
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
         <x-slot name="tbody">
-            @forelse ($specialAid as $aid)
+            @forelse ($specialAids as $aid)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
@@ -58,6 +58,6 @@
         </x-slot>
     </x-table.table>
     <x-modal.modal modalActive="openModal" title="Special Aid Application" modalSize="7xl" closeBtn="yes">
-        @include('livewire.page.application.application-list.apply_specialAid')
+        @include('livewire.page.application.application-list.apply-special-aid')
     </x-modal.modal>
 </div>

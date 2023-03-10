@@ -6,7 +6,7 @@ use App\Models\ApplySpecialAid;
 use App\Models\SpecialAid as SpecialAidType;
 use Livewire\Component;
 
-class special_aid extends Component
+class SpecialAid extends Component
 {
     public $specialAid;
     public $specialAid_type;
@@ -29,6 +29,6 @@ class special_aid extends Component
 
     public function render()
     {
-        return view('livewire.page.application.application-list.special_aid');
+        return view('livewire.page.application.application-list.special-aid');
     }
 }

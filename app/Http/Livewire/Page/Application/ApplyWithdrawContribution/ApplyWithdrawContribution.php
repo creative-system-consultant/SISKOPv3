@@ -9,7 +9,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
 
-class Apply_WithdrawContribution extends Component
+class ApplyWithdrawContribution extends Component
 {
     use WithFileUploads;
 

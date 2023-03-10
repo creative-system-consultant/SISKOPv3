@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Page\Application\ApplySpecialAid;
 
-use App\Models\ApplySpecialAid;
+use App\Models\ApplySpecialAid as ModelApplySpecialAid;
 use App\Models\Customer;
 use App\Models\SpecialAid;
 use Illuminate\Support\MessageBag;
 use Livewire\Component;
 
-class Apply_SpecialAid extends Component
+class ApplySpecialAid extends Component
 {
     public $customer_name;
     public $apply_amt;
@@ -36,7 +36,7 @@ class Apply_SpecialAid extends Component
             return back();
         }
         else{
-            $applySpecialAid = ApplySpecialAid::create([
+            $applySpecialAid = ModelApplySpecialAid::create([
                 'name'              => $this->customer_name,
                 'coop_id'           => $customer->coop_id,
                 'cust_id'           => $customer->id,

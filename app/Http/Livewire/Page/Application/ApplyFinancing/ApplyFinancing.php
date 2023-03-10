@@ -22,7 +22,7 @@ use App\Models\Ref\RefState;
 use App\Models\Ref\RefRelationship;
 use App\Models\User;
 
-class Apply_Financing extends Component
+class ApplyFinancing extends Component
 {
     public AccountMaster $Account;
     public AccountProduct $Product;
@@ -452,6 +452,8 @@ class Apply_Financing extends Component
             'guarantor_cust_id' => $this->Guarantor->id,
             'coop_id'       => $this->User->coop_id,
         ]);
+
+        $this->Account->sendWS('Application '.$this->Account->product->name.' have been submitted and will be reviewed');
 
         session()->flash('message', 'Financing application being processed');
         session()->flash('success');

@@ -9,7 +9,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
 
-class Apply_Share extends Component
+class ApplyShare extends Component
 {
     use WithFileUploads;
 

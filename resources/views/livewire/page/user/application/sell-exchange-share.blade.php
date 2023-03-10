@@ -64,6 +64,6 @@
         </x-slot>
     </x-table.table>
     <x-modal.modal modalActive="openModal" title="Share Reimbursement Application" modalSize="7xl" closeBtn="yes">
-        @include('livewire.page.user.application.details.apply_sell_exchange_share')
+        @include('livewire.page.user.application.details.apply-sell-exchange-share')
     </x-modal.modal>
 </div>
