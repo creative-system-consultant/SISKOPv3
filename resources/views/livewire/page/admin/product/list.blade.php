@@ -74,7 +74,7 @@
                                                         <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> {{ $list->profit_rate }}% p.a. </p>
                                                     </div>
                                                     <div>
-                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-clipboard-check -alt class="w-5 h-5 mr-2"/> Eligibility </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-clipboard-document-check -alt class="w-5 h-5 mr-2"/> Eligibility </p>
                                                         <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Minimum Wage Scale </p>
                                                         <p class="flex items-center justify-center space-x-2 font-bold text-red-500"> RM .00 </p>
                                                         <p class="flex items-center justify-center mt-2 space-x-2 text-sm"> Employment Qualifications</p>
@@ -93,7 +93,7 @@
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-dots-circle-horizontal -alt class="w-5 h-5 mr-2"/> Other Info </p>
+                                                        <p class="flex items-center justify-center mt-2 space-x-2 font-bold"> <x-heroicon-o-ellipsis-horizontal-circle -alt class="w-5 h-5 mr-2"/> Other Info </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,7 +101,7 @@
                                     </x-modal.modal>
                                 </div>
                                 <p> <a href="{{ route('product.edit', $list->id) }}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
-                                    <x-heroicon-s-pencil-alt class="w-4 h-4 mr-2"/>
+                                    <x-heroicon-s-pencil-square class="w-4 h-4 mr-2"/>
                                     Edit
                                 </a> </p>
                             </div>

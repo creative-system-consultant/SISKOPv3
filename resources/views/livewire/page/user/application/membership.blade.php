@@ -47,7 +47,7 @@
                             <button
                                 wire:click="showApplication('{{ $item->uuid }}')"
                                 @click="openModal = true"
-                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" 
+                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400"
                                 title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
@@ -56,7 +56,7 @@
                             <a href="{{ route('membership.maker', $item->uuid) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                             </a>
                         @endif
 
@@ -64,7 +64,7 @@
                         <a href="{{ route('membership.checker', $item->uuid) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                             </a>
                         @endif
 
@@ -72,7 +72,7 @@
                         <a href="{{ route('membership.committee', $item->uuid) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                             </a>
                         @endif
 
@@ -80,7 +80,7 @@
                         <a href="{{ route('membership.approver', $item->uuid) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
-                                <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                             </a>
                         @endif
 

@@ -52,7 +52,7 @@
                                 <a href="{{ route('contribution.maker', $item->uuid) }}"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                 title="Approval Process">
-                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                    <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                                 </a>
                             @endif
 
@@ -60,7 +60,7 @@
                                 <a href="{{ route('contribution.checker', $item->uuid) }}"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                 title="Approval Process">
-                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                    <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                                 </a>
                             @endif
 
@@ -68,7 +68,7 @@
                                 <a href="{{ route('contribution.committee', $item->uuid) }}"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                 title="Approval Process">
-                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                    <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                                 </a>
                             @endif
 
@@ -76,7 +76,7 @@
                                 <a href="{{ route('contribution.approval', $item->uuid) }}"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                 title="Approval Process">
-                                    <x-heroicon-s-arrow-circle-right class="w-5 h-5"/>
+                                    <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                                 </a>
                             @endif
                         </div>

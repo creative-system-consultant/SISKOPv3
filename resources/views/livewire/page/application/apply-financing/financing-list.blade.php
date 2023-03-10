@@ -43,7 +43,7 @@
                                                         <div class="flex items-center justify-center space-x-2 font-bold text-red"> {{ $list->profit_rate }}% p.a. </div>
                                                     </div>
                                                     <div>
-                                                        <div class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-clipboard-check -alt class="w-5 h-5 mr-2"/> Eligibility </div>
+                                                        <div class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-clipboard-document-check -alt class="w-5 h-5 mr-2"/> Eligibility </div>
                                                         <div class="flex items-center justify-center mt-2 space-x-2 text-sm"> Minimum Wage Scale </div>
                                                         <div class="flex items-center justify-center space-x-2 font-bold text-red">  </div>
                                                         <div class="flex items-center justify-center mt-2 space-x-2 text-sm"> Employment Qualifications</div>
@@ -55,7 +55,7 @@
                                                         <div class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-document-text -alt class="w-5 h-5 mr-2"/> Supporting Documents Required </div>
                                                     </div>
                                                     <div>
-                                                        <div class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-dots-circle-horizontal -alt class="w-5 h-5 mr-2"/> Other Info </div>
+                                                        <div class="flex items-center justify-center mt-2 space-x-2 font-bold text-red-500"> <x-heroicon-o-ellipsis-horizontal-circle -alt class="w-5 h-5 mr-2"/> Other Info </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,7 +63,7 @@
                                     </x-modal.modal>
                                 </div>
                                 <p> <a href="{{ route('financing.apply', $list->uuid) }}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
-                                    <x-heroicon-s-pencil-alt class="w-4 h-4 mr-2"/>
+                                    <x-heroicon-s-pencil-square class="w-4 h-4 mr-2"/>
                                     Apply
                                 </a> </p>
                             </div>
@@ -89,7 +89,7 @@
                                 </button>
                             </div>
                             <p> <button class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
-                                <x-heroicon-s-pencil-alt class="w-4 h-4 mr-2"/>
+                                <x-heroicon-s-pencil-square class="w-4 h-4 mr-2"/>
                                 Apply
                             </button> </p>
                         </div>

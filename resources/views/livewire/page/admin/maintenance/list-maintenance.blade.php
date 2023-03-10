@@ -47,7 +47,7 @@
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <a href="{{ route('edit-maintenance',['id' => 1]) }}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded hover:bg-orange-400">
-                            <x-heroicon-o-pencil-alt class="w-4 h-4 mr-2" />
+                            <x-heroicon-o-pencil-square class="w-4 h-4 mr-2" />
                             Edit
                         </a>
                     </x-table.table-body>
