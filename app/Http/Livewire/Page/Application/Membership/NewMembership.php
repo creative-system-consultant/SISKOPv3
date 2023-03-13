@@ -226,6 +226,11 @@ class NewMembership extends Component
         }
     }
 
+    public function updatedCustIcno()
+    {
+        $this->Cust->birthdate = $this->birthdate();
+    }
+
     public function birthdate()
     {
         $tempIC     = substr($this->Cust->icno, 0, 6);   //yymmdd
@@ -291,7 +296,10 @@ class NewMembership extends Component
     {
         $this->User = auth()->user();
         $this->Coop = Coop::find($this->User->coop_id);
-        $this->Cust = Customer::where([['icno', $this->User->icno],['coop_id', $this->Coop->id]])->first();
+        $this->Cust = Customer::firstOrCreate([
+            'icno'    => $this->User->icno,
+            'coop_id' => $this->Coop->id
+        ]);
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL){
             session()->flash('message', 'You are already a member of '.$this->Coop->name);
@@ -336,13 +344,13 @@ class NewMembership extends Component
         $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id],);
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate();
 
-        $this->title_id          = RefCustTitle::all();
-        $this->education_id      = RefEducation::all();
-        $this->gender_id         = RefGender::where('id', $this->Cust->gender_id)->get();
-        $this->marital_id        = RefMarital::all();
-        $this->relationship      = RefRelationship::whereIn('id', [1,2,5,6])->get();
-        $this->race_id           = RefRace::all();
-        $this->state_id          = RefState::all();
+        $this->title_id          = RefCustTitle::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->education_id      = RefEducation::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->gender_id         = RefGender::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->marital_id        = RefMarital::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->relationship      = RefRelationship::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->race_id           = RefRace::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->state_id          = RefState::where([['coop_id', $this->User->coop_id],['status','1']])->get();
 
     }
 

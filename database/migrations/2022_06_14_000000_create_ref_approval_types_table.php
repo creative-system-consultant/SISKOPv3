@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description_bm',150)->nullable();
             $table->string('status',1)->default('0');
             $table->bigInteger('coop_id');
-            $table->string('code',4);
+            $table->string('code',25);
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

@@ -37,6 +37,11 @@ return new class extends Migration
             $table->bigInteger('country_id')->nullable();
             $table->bigInteger('education_id')->nullable();
 
+            $table->bigInteger('status_id')->default('1');
+            $table->string('cust_status',1)->default('N');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
+
             $table->unsignedDecimal('member_fee',12,2)->default('0.00');
             $table->unsignedDecimal('share',12,2)->default('0.00');
             $table->unsignedDecimal('share_monthly',12,2)->default('0.00');

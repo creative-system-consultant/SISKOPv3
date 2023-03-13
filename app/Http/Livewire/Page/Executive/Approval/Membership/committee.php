@@ -15,7 +15,7 @@ class Committee extends Component
     public $banks;
 
     protected $rules = [
-        'Approval.note'     => 'required',
+        'Approval.note'     => 'required|max:255',
     ];
 
     public function next()

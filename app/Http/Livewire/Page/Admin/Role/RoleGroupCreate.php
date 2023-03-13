@@ -28,7 +28,7 @@ class RoleGroupCreate extends Component
         'group.coop_id'         => 'required',
     ];
     protected $messages = [
-        'group.name.*'          => 'Please specify NAME (Min 5 character, Max 255 Character)',
+        'group.name.*'          => 'Please specify NAME (Min 5 character, Max 50 Character)',
         'group.role_id.*'       => 'Please select a ROLE',
     ];
 

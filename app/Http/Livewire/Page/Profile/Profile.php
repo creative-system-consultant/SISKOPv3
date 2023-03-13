@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Page\Profile;
 
+use App\Models\Customer;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\User;
@@ -13,59 +14,43 @@ class Profile extends Component
     public $profile_img = null;
 
     // public $Uid;
-    public $name;
-    public $icno;
-    public $phone_no;
-    public $email;
-    public $User;
+    public User $User;
+    public Customer $Cust;
 
-    public function submit($id)
-{
-    $this->validate([
-        'name'           => ['required', 'string'],
-        'icno'           => ['required', 'string'],
-        'phone_no'       => ['required', 'string'],
-        'email'          => ['required', 'string'],
-    ]);
+    protected $rules = [
+        'User.name'     => ['required', 'string'],
+        'User.icno'     => ['required', 'string'],
+        'User.phone_no' => ['required', 'string'],
+        'User.email'    => ['required', 'string'],
+    ];
 
-    $User = User::where('id', $id)->first();
+    public function submit()
+    {
+        $this->User->save();
 
-    $User->update([
-        'name'                => $this->name,
-        'icno'                => $this->icno,
-        'phone_no'            => $this->phone_no,
-        'email'               => $this->email,
-    ]);
+        $this->Cust->name   = $this->User->name;
+        $this->Cust->icno   = $this->User->icno;
+        $this->Cust->mobile_num = $this->User->phone_no;
+        $this->Cust->save();
 
-    session()->flash('message', 'Profile Details Updated');
-    session()->flash('success');
-    session()->flash('title');
+        session()->flash('message', 'Profile Details Updated');
+        session()->flash('success');
+        session()->flash('title');
 
-    return redirect()->route('Index');
-}
+        return redirect()->route('Index');
+    }
 
-public function  loadUser($id)
-{
-    $User = User::where('id', $id)->first();
-
-    $this->name             = $User->name;
-    $this->icno             = $User->icno;
-    $this->phone_no         = $User->phone_no;
-    $this->email            = $User->email;
-}
-
-public function mount()
-{
-    $user = auth()->user();
-    $this->User = User::where('id', $user->id)->first();
-
-    $this->name         = $this->User->name;
-    $this->icno         = $this->User->icno;
-    $this->phone_no     = $this->User->phone_no;
-    $this->email        = $this->User->email;
-    // $this->loadUser($id);
-    // dd($id);
-}
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
+        $this->Cust = Customer::firstOrCreate([
+            'icno'      => $this->User->icno,
+            'coop_id'   => $this->User->coop_id,
+        ],[
+            'name'      => $this->User->name,
+            'mobile_num'=> $this->User->phone_no,
+        ]);
+    }
 
     public function render()
     {

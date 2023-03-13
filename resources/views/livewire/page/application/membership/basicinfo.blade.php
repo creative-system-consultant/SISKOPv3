@@ -121,7 +121,7 @@
                name="Cust.gender_id"
                id=""
                mandatory=""
-               disable="true"
+               disable=""
                default="yes"
                wire:model="Cust.gender_id"
            >

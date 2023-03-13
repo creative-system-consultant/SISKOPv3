@@ -26,6 +26,22 @@ class Financing extends Component
         $this->genderName = RefGender::where('coop_id', $this->financing->coop_id)->get();
     }
 
+    public function remake_approvals()
+    {
+        $this->financing->remove_approvals();
+        $this->financing->make_approvals();
+        $this->financing->apply_step = 1;
+        $this->financing->save();
+
+        $this->dispatchBrowserEvent('swal',[
+            'title' => 'Success!',
+            'text'  => 'Approvals have been reset',
+            'icon'  => 'success',
+            'showConfirmButton' => false,
+            'timer' => 360000,
+        ]);
+    }
+
     public function mount()
     {
         $this->User = Auth()->user();

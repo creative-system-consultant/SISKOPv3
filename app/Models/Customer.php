@@ -77,4 +77,13 @@ class Customer extends Model implements Auditable
         return $this->morphMany(introducer::class,'introduce');
     }
 
+    public function status()
+    {
+        if($this->cust_status == 'Y'){
+            return "ACTIVE";
+        } else {
+            return "NOT ACTIVE";
+        }
+    }
+
 }

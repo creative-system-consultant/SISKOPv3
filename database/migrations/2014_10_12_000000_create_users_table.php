@@ -19,8 +19,9 @@ return new class extends Migration
             $table->uuid('uuid')->default(DB::raw('newid()'));
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('icno')->unique();
+            $table->string('icno');
             $table->string('phone_no');
+            $table->bigInteger('cust_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

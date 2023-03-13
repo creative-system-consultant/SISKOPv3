@@ -25,12 +25,15 @@ class Financing extends Component
     public $lists       = [];
 
     protected $rules = [
-        'lists.*.name'  => "nullable|max:50",
-        'lists.*.rule_min' => "numeric",
-        'lists.*.rule_max' => "numeric",
+        'lists.*.name'          => "nullable|max:50",
+        'lists.*.rule_min'      => "numeric",
+        'lists.*.rule_max'      => "numeric",
         'lists.*.rule_employee' => "nullable",
-        'custom'        => "nullable|max:50",
-        'product.id'    => "nullable",
+        'lists.*.rule_whatsapp' => "nullable",
+        'lists.*.rule_sms'      => "nullable",
+        'lists.*.rule_email'    => "nullable",
+        'custom'                => "nullable|max:50",
+        'product.id'            => "nullable",
     ];
 
     protected $validationAttributes = [
