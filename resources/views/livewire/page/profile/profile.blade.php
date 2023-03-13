@@ -33,45 +33,43 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
             <x-form.input
                 label="Full Name"
-                name="name"
+                id="User.name"
+                name="User.name"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="name"
+                wire:model="User.name"
             />
-
             <x-form.input
                 label="IC Number"
-                name="icno"
+                id="User.icno"
+                name="User.icno"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="icno"
+                wire:model="User.icno"
             />
-
-
             <x-form.input
                 label="Phone No"
-                name="phone_no"
+                id="User.phone_no"
+                name="User.phone_no"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="phone_no"
+                wire:model="User.phone_no"
             />
-
-
-
             <x-form.input
                 label="Email"
-                name="email"
+                id="User.email"
+                name="User.email"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="email"
+                wire:model="User.email"
             />
         </div>
 

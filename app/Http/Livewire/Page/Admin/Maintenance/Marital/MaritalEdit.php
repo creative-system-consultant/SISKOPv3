@@ -4,30 +4,26 @@ namespace App\Http\Livewire\Page\Admin\Maintenance\Marital;
 
 use Livewire\Component;
 use App\Models\Ref\RefMarital;
+use App\Models\User;
 
 class MaritalEdit extends Component
 {
-    public $marital_description;
-    public $marital_code;
-    public $marital_status;
-    public $marital;
+    public User $User;
+    public RefMarital $marital;
 
-    public function submit($id)
+    protected $rules = [
+        'marital.description' => ['required', 'string'],
+        'marital.code'        => ['required', 'string'],
+        'marital.status'      => ['required'],
+    ];
+
+    public function submit()
     {
-        $this->validate([
-            'marital_description' => ['required', 'string'],
-            'marital_code'        => ['required', 'string'],
-        ]);
-
-        $marital = RefMarital::where('id', $id)->first();
-
-        $marital->update([
-            'description'     => trim(strtoupper($this->description)),
-            'code'            => trim(strtoupper($this->code)),
-            'status'          => $this->status == true ? '1' : '0',
-            'updated_at'      => now(),
-            'updated_by'      => Auth()->user()->name,
-        ]);
+        $this->marital->description = trim(strtoupper($this->marital->description));
+        $this->marital->code        = trim(strtoupper($this->marital->code));
+        $this->marital->status      = $this->marital->status == true ? '1' : '0';
+        $this->marital->updated_by  = $this->User->name;
+        $this->marital->save();
 
         session()->flash('message', 'Marital Edited');
         session()->flash('success');
@@ -36,20 +32,10 @@ class MaritalEdit extends Component
         return redirect()->route('marital.list');
     }
 
-    public function load($id)
-    {
-        $marital = RefMarital::where('id', $id)->first();
-
-        $this->marital_description    = $marital->description;
-        $this->marital_code           = $marital->code;
-        $this->marital_status         = $marital->status == true ? 'checked' : '';
-    }
-
     public function mount($id)
     {
+        $this->User    = User::find(auth()->user()->id);
         $this->marital = RefMarital::where('id', $id)->first();
-
-        $this->load($id);
     }
 
     public function render()

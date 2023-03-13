@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Page\Admin\Maintenance\Country;
 
 use App\Models\Ref\RefCountry;
+use App\Models\User;
 use Livewire\Component;
 
 class CountryCreate extends Component
 {
+    public User $User;
     public $description;
     public $code;
     public $status;
@@ -22,6 +24,7 @@ class CountryCreate extends Component
         $RefCountry = RefCountry::create([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
+            'coop_id'         => $this->User->coop_id,
             'status'          => $this->status == true ? '1' : '0',
             'created_at'      => now(),
             'created_by'      => Auth()->user()->name,
@@ -32,6 +35,11 @@ class CountryCreate extends Component
         session()->flash('title');
 
         return redirect()->route('country.list');
+    }
+
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
     }
 
     public function render()

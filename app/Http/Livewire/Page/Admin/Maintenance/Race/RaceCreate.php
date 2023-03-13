@@ -4,9 +4,11 @@ namespace App\Http\Livewire\Page\Admin\Maintenance\Race;
 
 use Livewire\Component;
 use App\Models\Ref\RefRace;
+use App\Models\User;
 
 class RaceCreate extends Component
 {
+    public User $User;
     public $race_description;
     public $race_code;
     public $race_status;
@@ -22,6 +24,7 @@ class RaceCreate extends Component
         $race = RefRace::create([
             'description' => trim(strtoupper($this->race_description)),
             'code'        => trim(strtoupper($this->race_code)),
+            'coop_id'     => $this->User->coop_id,
             'status'      => $this->race_status == true ? '1' : '0',
             'created_at'  => now(),
             'created_by'  => Auth()->user()->name,
@@ -32,6 +35,11 @@ class RaceCreate extends Component
         session()->flash('title');
 
         return redirect()->route('race.list');
+    }
+
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
     }
 
     public function render()

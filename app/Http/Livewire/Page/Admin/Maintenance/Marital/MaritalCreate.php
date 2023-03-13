@@ -4,9 +4,11 @@ namespace App\Http\Livewire\Page\Admin\Maintenance\Marital;
 
 use Livewire\Component;
 use App\Models\Ref\RefMarital;
+use App\Models\User;
 
 class MaritalCreate extends Component
 {
+    public User $User;
     public $marital_description;
     public $marital_code;
     public $marital_status;
@@ -22,6 +24,7 @@ class MaritalCreate extends Component
         $marital = RefMarital::create([
             'description' => trim(strtoupper($this->marital_description)),
             'code'        => trim(strtoupper($this->marital_code)),
+            'coop_id'     => $this->User->coop_id,
             'status'      => $this->marital_status == true ? '1' : '0',
             'created_at'  => now(),
             'created_by'  => Auth()->user()->name,
@@ -32,6 +35,11 @@ class MaritalCreate extends Component
         session()->flash('title');
 
         return redirect()->route('marital.list');
+    }
+
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
     }
 
     public function render()

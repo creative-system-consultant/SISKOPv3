@@ -9,39 +9,41 @@
                             <div>
                                 <x-form.input
                                     label="Marital Status"
-                                    name="marital_description"
+                                    id="marital.description"
+                                    name="marital.description"
                                     value=""
                                     mandatory=""
                                     disable=""
                                     type="text"
-                                    wire:model.defer='marital_description'
+                                    wire:model.defer='marital.description'
                                 />
                             </div>
 
                             <div>
                                 <x-form.input
                                     label="Code"
-                                    name="marital_code"
+                                    id="marital.code"
+                                    name="marital.code"
                                     value=""
                                     mandatory=""
                                     disable=""
                                     type="text"
-                                    wire:model.defer='marital_code'
+                                    wire:model.defer='marital.code'
                                 />
                             </div>
 
                             <div class="flex items-center w-full mt-3">
-                                <label for="race_status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
+                                <label for="marital.status" class="block mr-3 text-sm font-semibold leading-5 text-gray-700">
                                     Status
                                 </label>
-                                <label for="marital_status" class="flex items-center cursor-pointer">
+                                <label for="marital.status" class="flex items-center cursor-pointer">
                                     <div class="relative">
                                         <input
                                             type="checkbox"
-                                            id="marital_status"
                                             class="sr-only"
-                                            name="marital_status"
-                                            wire:model.defer='marital_status'
+                                            id="marital.status"
+                                            name="marital.status"
+                                            wire:model.defer='marital.status'
                                         >
                                         <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
                                         <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>

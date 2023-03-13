@@ -33,7 +33,7 @@ class Register extends Component
     {
         $this->validate([
             'name'      => ['required'],
-            'icno'      => ['required', 'unique:App\Models\User'],
+            'icno'      => ['required'],
             'phone_no'  => ['required', 'unique:App\Models\User'],
             'email'     => ['required', 'email', 'unique:App\Models\User'],
             'password'  => ['required', 'min:8', 'same:passwordConfirmation'],

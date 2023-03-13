@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Page\Admin\Maintenance\Gender;
 
 use App\Models\Ref\RefGender;
+use App\Models\User;
 use Livewire\Component;
 
 class GenderCreate extends Component
 {
+    public User $User;
     public $description;
     public $code;
     public $status;
@@ -22,6 +24,7 @@ class GenderCreate extends Component
         $RefGender = RefGender::create([
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
+            'coop_id'         => $this->User->coop_id,
             'status'          => $this->status == true ? '1' : '0',
             'created_at'      => now(),
             'created_by'      => Auth()->user()->name,
@@ -32,6 +35,11 @@ class GenderCreate extends Component
         session()->flash('title');
 
         return redirect()->route('gender.list');
+    }
+
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
     }
 
     public function render()

@@ -64,7 +64,7 @@ class ProductCreate extends Component
 
         $this->Product = New AccountProduct;
 
-        $this->producttype_id = RefProductType::all();
+        $this->producttype = RefProductType::all();
 
         $this->refdocument = RefProductDocuments::where('coop_id', $this->User->coop_id)->get();
 

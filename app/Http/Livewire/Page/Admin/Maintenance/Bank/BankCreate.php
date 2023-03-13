@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Page\Admin\Maintenance\Bank;
 
 use App\Models\Ref\RefBank;
+use App\Models\User;
 use Livewire\Component;
 
 class BankCreate extends Component
 {
+    public User $User;
     public $description;
     public $code;
     public $status;
@@ -23,8 +25,9 @@ class BankCreate extends Component
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
+            'coop_id'         => $this->User->coop_id,
             'created_at'      => now(),
-            'created_by'      => Auth()->user()->name,
+            'created_by'      => $this->User->name,
         ]);
 
         session()->flash('message', 'Bank Information Created');
@@ -32,6 +35,11 @@ class BankCreate extends Component
         session()->flash('title');
 
         return redirect()->route('bank.list');
+    }
+
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
     }
 
     public function render()

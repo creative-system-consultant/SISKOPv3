@@ -28,7 +28,7 @@
                     default="yes"
                     wire:model="Product.product_type"
                 >
-                @foreach ($producttype_id as $list)
+                @foreach ($producttype as $list)
                     <option value="{{ $list->id }}"> {{ $list->description }} </option>
                 @endforeach
                 </x-form.dropdown>

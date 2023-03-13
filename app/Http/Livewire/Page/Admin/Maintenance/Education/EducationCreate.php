@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Page\Admin\Maintenance\Education;
 
 use App\Models\Ref\RefEducation;
+use App\Models\User;
 use Livewire\Component;
 
 class EducationCreate extends Component
 {
+    public User $User;
     public $edu_description;
     public $edu_code;
     public $edu_status;
@@ -22,6 +24,7 @@ class EducationCreate extends Component
         $education = RefEducation::create([
             'description' => trim(strtoupper($this->edu_description)),
             'code'        => trim(strtoupper($this->edu_code)),
+            'coop_id'     => $this->User->coop_id,
             'status'      => $this->edu_status == true ? '1' : '0',
             'created_at'  => now(),
             'created_by'  => Auth()->user()->name,
@@ -32,6 +35,11 @@ class EducationCreate extends Component
         session()->flash('title');
 
         return redirect()->route('education.list');
+    }
+
+    public function mount()
+    {
+        $this->User = User::find(auth()->user()->id);
     }
 
     public function render()
