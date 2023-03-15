@@ -1,3 +1,4 @@
+@isset($sellShare)
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
@@ -6,7 +7,7 @@
                 <x-form.input
                     label="Name"
                     name="custname"
-                    value="{{ $custApply->customer->name ?? '' }}"
+                    value="{{ $sellShare->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -15,7 +16,7 @@
                 <x-form.input
                     label="Identity Number"
                     name="custic"
-                    value="{{ $custApply->customer->icno ?? '' }}"
+                    value="{{ $sellShare->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -31,7 +32,7 @@
                     default="yes"
                     >
                     @foreach ($banks ?? [] as $bank)
-                        <option @if ($bank->code == $custApply->bank_code) selected @endif>{{ $bank->description }}</option>
+                        <option @if ($bank->code == $sellShare->bank_code) selected @endif>{{ $bank->description }}</option>
                     @endforeach
                 </x-form.dropdown>
 
@@ -39,14 +40,14 @@
                     label="Account Bank No."
                     name="bank_acct"
                     id="bank_acct"
-                    value="{{ $custApply->bank_account ?? '' }}"
+                    value="{{ $sellShare->bank_account ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
                 />
             </div>
 
-            @if(isset($custApply->direction) && $custApply->direction !== 'sell'  )
+            @if(isset($sellShare->direction) && $sellShare->direction !== 'sell'  )
             <div>
                 <div>
                     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Buyer Information</h2>
@@ -54,7 +55,7 @@
                         <x-form.input
                             label="Member Name"
                             name="buyer_name"
-                            value="{{ isset($custApply->exc_cust_id) && $custApply->exc_cust_id == NULL ? '' : $custApply->buyer->name ?? '' }}"
+                            value="{{ isset($sellShare->exc_cust_id) && $sellShare->exc_cust_id == NULL ? '' : $sellShare->buyer->name ?? '' }}"
                             mandatory=""
                             disable="true"
                             type="text"
@@ -63,7 +64,7 @@
                         <x-form.input
                             label="Member IC No."
                             name="buyer_icno"
-                            value="{{ isset($custApply->exc_cust_id) && $custApply->exc_cust_id == NULL ? '' : $custApply->buyer->icno ?? '' }}"
+                            value="{{ isset($sellShare->exc_cust_id) && $sellShare->exc_cust_id == NULL ? '' : $sellShare->buyer->icno ?? '' }}"
                             mandatory=""
                             disable="true"
                             type="text"
@@ -80,7 +81,7 @@
                         label="Reimbursement of Share Capital applied"
                         type="text"
                         name="share_apply"
-                        value="{{ $custApply->apply_amt ?? '' }}"
+                        value="{{ $sellShare->apply_amt ?? '' }}"
                         placeholder="0.00"
                         leftTag="RM"
                         rightTag=""
@@ -94,7 +95,7 @@
                         label="Reimbursement of Share Capital approved"
                         type="text"
                         name="share_approved"
-                        value="{{ $custApply->approved_amt ?? '' }}"
+                        value="{{ $sellShare->approved_amt ?? '' }}"
                         placeholder="0.00"
                         leftTag="RM"
                         rightTag=""
@@ -105,7 +106,7 @@
                 <div>
                     <x-form.input
                         label="Types of Share Reimbursement"
-                        value="{{ isset($custApply->direction) && $custApply->direction == 'sell' ? 'Co-operative' : 'Member' }}"
+                        value="{{ isset($sellShare->direction) && $sellShare->direction == 'sell' ? 'Co-operative' : 'Member' }}"
                         name="share_type"
                         id="share_type"
                         mandatory=""
@@ -113,6 +114,36 @@
                     />
                 </div>
             </div>
+
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
+            <x-table.table>
+                <x-slot name="thead">
+                    <x-table.table-header class="text-left" value="Approval By / Role" sort="" />
+                    <x-table.table-header class="text-left" value="Approval" sort="" />
+                    <x-table.table-header class="text-left" value="Note" sort="" />
+                    <x-table.table-header class="text-left" value="Date" sort="" />
+                </x-slot>
+                <x-slot name="tbody">
+                @foreach ($sellShare->approvals as $item)
+                    <tr>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $item->user?->name ?? "-" }} <br>
+                            {{ $item->rolegroup?->name }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            @if(str_contains($item->type,'vote')) {{ $item->vote ?? "-" }} @else {{ $item->type ?? "-" }} @endif
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{ $item->note ?? "-" }}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            @if($item->type == NULL || (str_contains($item->type,'vote') && $item->vote == NULL)) - @else {{ $item->updated_at->format('d-m-Y H:i a') }} @endif
+                        </x-table.table-body>
+                    </tr>
+                @endforeach
+                </x-slot>
+            </x-table.table>
+
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <div class="flex items-center justify-center space-x-2">
@@ -125,3 +156,4 @@
         </div>
     </x-general.card>
 </div>
+@endisset
