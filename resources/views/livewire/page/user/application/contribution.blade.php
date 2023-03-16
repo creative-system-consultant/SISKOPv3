@@ -63,6 +63,6 @@
         </x-slot>
     </x-table.table>
     <x-modal.modal modalActive="openModal" title="Add Contribution Application" modalSize="7xl" closeBtn="yes">
-        @include('livewire.page.application.application-list.details.apply_contribution')
+        @include('livewire.page.application.application-list.details.apply-contribution')
     </x-modal.modal>
 </div>

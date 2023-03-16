@@ -66,7 +66,7 @@
                     @include('livewire.page.user.application.withdrawal-contribution')
                 </x-tab.content>
                 <x-tab.content name="6">
-                    @include('livewire.page.user.application.special_aid')
+                    @include('livewire.page.user.application.special-aid')
                 </x-tab.content>
             </div>
         </div>

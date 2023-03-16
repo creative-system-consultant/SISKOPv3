@@ -59,16 +59,16 @@
                     <livewire:page.application.application-list.share>
                 </x-tab.content>
                 <x-tab.content name="3">
-                    <livewire:page.application.application-list.sell_exchange_share>
+                    <livewire:page.application.application-list.sell-exchange-share>
                 </x-tab.content>
                 <x-tab.content name="4">
                     <livewire:page.application.application-list.contribution>
                 </x-tab.content>
                 <x-tab.content name="5">
-                    <livewire:page.application.application-list.withdrawal_contribution>
+                    <livewire:page.application.application-list.withdrawal-contribution>
                 </x-tab.content>
                 <x-tab.content name="6">
-                    <livewire:page.application.application-list.special_aid>
+                    <livewire:page.application.application-list.special-aid>
                 </x-tab.content>
             </div>
         </div>

@@ -17,13 +17,13 @@ class Lists extends Component
     public User $User;
     public Customer $Customer;
     public $banks;
-    public $contribution;
-    public $financing;
+    public $contributions;
+    public $financings;
     public $memberships;
-    public $sellShare;
+    public $sellShares;
     public $sell_share;
     public $shares;
-    public $specialAid;
+    public $specialAids;
     public $withdrawals;
 
     public function mount()
@@ -32,7 +32,7 @@ class Lists extends Component
         $this->Customer  = Customer::where([['coop_id', $this->User->coop_id],['icno',$this->User->icno]])->firstOrFail();
         $this->banks     = RefBank::where('coop_id', $this->User->coop_id)->get();
 
-        $this->financing    = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
+        $this->financings   = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->memberships  = ApplyMembership::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
         $this->shares       = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
         $this->sellShares   = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])
@@ -42,7 +42,7 @@ class Lists extends Component
                                    })->get();
         $this->contributions= Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','buy']])->get();
         $this->withdrawals  = Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','withdraw']])->get();
-        $this->specialAid   = ApplySpecialAid::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
+        $this->specialAids  = ApplySpecialAid::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
     }
 
     public function showApplication()
