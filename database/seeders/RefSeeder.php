@@ -259,6 +259,7 @@ class RefSeeder extends Seeder
             ['description' => 'SELL SHARE',            'coop_id' => '1', 'code' => 'share_sell'],
             ['description' => 'ADD CONTIBUTION',       'coop_id' => '1', 'code' => 'contri_add'],
             ['description' => 'WITHDRAW CONTRIBUTION', 'coop_id' => '1', 'code' => 'contri_wd'],
+            ['description' => 'DIVIDEND PAYOUT',       'coop_id' => '1', 'code' => 'dividend'],
         ];
         DB::table('ref.approval_types')->insert($approval_type);
 

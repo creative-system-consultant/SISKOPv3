@@ -101,6 +101,11 @@ use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalCon
 use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
+use App\Http\Livewire\Page\Application\Dividend\ApplyDividend;
+use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendApprover;
+use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendMaker;
+use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendChecker;
+use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
@@ -182,6 +187,9 @@ Route::middleware('auth')->group(function () {
 
         //membership > apply
         Route::get('membership', NewMembership::class)->name('membership.apply');
+
+        //Application > Applydividend
+        Route::get('/Dividend', ApplyDividend::class)->name('dividend.apply');
     });
     //------------------------------- End Applications ---------------------------//
 
@@ -381,6 +389,14 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', FinancingChecker::class)->name('financing.checker');
                 Route::get('committee/{uuid}', FinancingCommittee::class)->name('financing.committee');
                 Route::get('approver/{uuid}', FinancingApprover::class)->name('financing.approver');
+            });
+
+            //Exec > approval > Dividend
+            Route::prefix('dividend')->group(function(){
+                Route::get('maker/{uuid}', DividendMaker::class)->name('dividend.maker');
+                Route::get('checker/{uuid}', DividendChecker::class)->name('dividend.checker');
+                Route::get('committee/{uuid}', DividendCommittee::class)->name('dividend.committee');
+                Route::get('approver/{uuid}', DividendApprover::class)->name('dividend.approver');
             });
 
             //Exec > approval > Membership

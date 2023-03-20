@@ -47,6 +47,12 @@
                             Special Aid
                         </div>
                 </x-tab.title>
+                <x-tab.title name="7" livewire="">
+                    <div class="flex flex-col items-center lg:flex-row">
+                        <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                            Dividend Payout
+                        </div>
+                </x-tab.title>
             </x-general.card>
             <div x-cloak class="pt-4">
                 <x-tab.content name="0">
@@ -69,6 +75,9 @@
                 </x-tab.content>
                 <x-tab.content name="6">
                     <livewire:page.application.application-list.special-aid>
+                </x-tab.content>
+                <x-tab.content name="7">
+                    <livewire:page.application.application-list.dividend>
                 </x-tab.content>
             </div>
         </div>

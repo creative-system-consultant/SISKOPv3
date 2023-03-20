@@ -67,6 +67,11 @@
                                     <x-heroicon-o-scale class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply dividend Payout" href="{{ route('dividend.apply') }}" uri="dividendApply">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-receipt-percent class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item>
                     <x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
