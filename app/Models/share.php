@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
+use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Share extends Model implements Auditable
 {
+    use HasCoop;
     use HasCustomer;
     use HasFiles;
     use SoftDeletes;
@@ -18,11 +21,6 @@ class Share extends Model implements Auditable
     protected $table   = 'siskop.shares';
     protected $guarded = [];
     protected $dates   = ['online_date','cdm_date','cheque_date','created_at','deleted_at','updated_at'];
-
-    public function coop()
-    {
-        return $this->belongsTo(Coop::class,'coop_id');
-    }
 
     public function buyer()
     {

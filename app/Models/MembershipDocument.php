@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCoop;
 use App\Models\Ref\RefMembershipDocument;
 use Illuminate\Database\Eloquent\Model;
 
 class MembershipDocument extends Model
 {
+    use HasCoop;
+
     protected $table   = "SISKOP.MEMBERSHIP_DOCUMENT";
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
-
-    public function Coop()
-    {
-        return $this->belongsTo(Coop::class,'coop_id','id');
-    }
 
     public function membership()
     {

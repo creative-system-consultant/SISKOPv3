@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
 use App\Models\Ref\RefAccountStatus;
@@ -12,6 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class AccountMaster extends Model implements Auditable
 {
+    use HasCoop;
     use HasCustomer;
     use HasFiles;
     use SoftDeletes;
@@ -20,11 +22,6 @@ class AccountMaster extends Model implements Auditable
     protected $table   = "FMS.Account_Masters";
     protected $guarded = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
-
-    public function coop()
-    {
-        return $this->belongsTo(Coop::class,'coop_id');
-    }
 
     public function product()
     {

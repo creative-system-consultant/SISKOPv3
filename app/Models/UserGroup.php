@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCoop;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class UserGroup extends Model implements Auditable
 {
+    use HasCoop;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
@@ -29,11 +31,6 @@ class UserGroup extends Model implements Auditable
     public function getNameAttribute()
     {
         return $this->user->name;
-    }
-
-    public function coop()
-    {
-        return $this->belongsTo(Coop::class,'coop_id');
     }
 
     public function status()

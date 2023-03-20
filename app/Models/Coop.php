@@ -34,6 +34,11 @@ class Coop extends Model implements Auditable
         });
     }
 
+    public function customers()
+    {
+        return $this->hasMany(Customer::class,'coop_id');
+    }
+
     public function address()
     {
         return $this->morphMany(Address::class,'addressable');

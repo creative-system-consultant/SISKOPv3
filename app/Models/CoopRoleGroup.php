@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasCoop;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class CoopRoleGroup extends Model implements Auditable
 {
+    use HasCoop;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
@@ -15,11 +17,6 @@ class CoopRoleGroup extends Model implements Auditable
     protected $guarded = [];
     protected $appends = [];
     protected $dates   = ['created_at','deleted_at','updated_at'];
-
-    public function coop()
-    {
-        return $this->belongsTo(Coop::class,'coop_id');
-    }
 
     public function users()
     {
