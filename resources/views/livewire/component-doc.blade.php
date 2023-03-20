@@ -4,7 +4,7 @@
             <div class="flex w-full mb-2 overflow-x-auto bg-white rounded-md flex-nowrap">
                 <x-tab.title name="6" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-code class="w-6 h-6 mr-2"/>
+                        <x-heroicon-o-code-bracket class="w-6 h-6 mr-2"/>
                         <p>Create Livewire</p>
                     </div>
                 </x-tab.title>
@@ -16,25 +16,25 @@
                 </x-tab.title>
                 <x-tab.title name="0" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-collection class="w-6 h-6 mr-2"/>
+                        <x-heroicon-o-rectangle-stack class="w-6 h-6 mr-2"/>
                         <p>Component List</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="1" livewire="">
                     <div class="flex items-center w-24 md:w-full">
-                        <x-heroicon-o-duplicate class="w-6 h-6 mr-2"/>
+                        <x-heroicon-o-document-duplicate class="w-6 h-6 mr-2"/>
                         <p>Call Swall</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="2" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-color-swatch class="w-6 h-6 mr-2"/>
+                        <x-heroicon-o-swatch class="w-6 h-6 mr-2"/>
                         <p>Customize color</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="3" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-annotation class="w-6 h-6 mr-2"/>
+                        <x-heroicon-o-chat-bubble-bottom-center-text class="w-6 h-6 mr-2"/>
                         <p>Custom Helper</p>
                     </div>
                 </x-tab.title>

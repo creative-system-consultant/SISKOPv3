@@ -299,6 +299,8 @@ class NewMembership extends Component
         $this->Cust = Customer::firstOrCreate([
             'icno'    => $this->User->icno,
             'coop_id' => $this->Coop->id
+        ],[
+            'name'    => $this->User->name,
         ]);
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL){

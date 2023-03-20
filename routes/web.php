@@ -111,6 +111,7 @@ use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingCommittee;
 use App\Http\Livewire\Page\User\Application\Lists;
+use App\Http\Livewire\Page\User\Application\Membership\MembershipStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,6 +157,7 @@ Route::middleware('auth')->group(function () {
     //User
     Route::prefix('User')->group(function(){
         Route::get('Application/List', Lists::class)->name('user_application.list');
+        Route::get('Application/Membership/Status', MembershipStatus::class)->name('user_membership.status');
     });
 
     //--------------------------------- Notification ---------------------------------//

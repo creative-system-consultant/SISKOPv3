@@ -80,6 +80,9 @@
                     <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
+                    <x-sidebar.nav-item title="COOP Membership Status" route="{{ route('user_membership.status') }}" uri="membershipStatus">
+                        <x-heroicon-o-document-text class="w-7 h-7" />
+                    </x-sidebar.nav-item>
                     <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">
                         <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                     </x-sidebar.nav-item>

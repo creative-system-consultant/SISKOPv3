@@ -2,5 +2,5 @@
 
 function cameltoString($string)
 {
-    return preg_replace('/(?<=\\w)(?=[A-Z])/'," $1", $string);
+    return str_replace("_","",preg_replace('/(?<=\\w)(?=[A-Z])/'," $1", $string));
 }
