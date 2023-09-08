@@ -17,7 +17,11 @@ class CustFamily extends Model implements Auditable
 
     protected $table   = "CIF.cust_family";
     protected $guarded = ['uuid'];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function data()
     {

@@ -12,7 +12,11 @@ class CustCustomField extends Model implements Auditable
     protected $table    = 'SISKOP.cust_custom_field';
     protected $guarded  = [];
     protected $appends  = [ 'value', ];
-    protected $dates    = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function fieldable()
     {

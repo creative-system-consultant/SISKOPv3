@@ -34,11 +34,13 @@ class User extends Authenticatable implements Auditable
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
     ];
     protected $appends = [
         'profile_photo_url','coop_id', 'all_coop_id'
     ];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
 
     public function getCoopIdAttribute()
     {

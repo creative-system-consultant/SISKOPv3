@@ -11,6 +11,10 @@ class RefGender extends Model
 
     protected $table   = 'ref.gender';
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
 }

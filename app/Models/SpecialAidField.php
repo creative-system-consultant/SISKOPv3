@@ -9,7 +9,11 @@ class SpecialAidField extends Model
     protected $table = 'SISKOP.sys_field_special_aid';
     protected $guarded = [];
     protected $appends = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function fieldable()
     {

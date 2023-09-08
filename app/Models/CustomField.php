@@ -9,7 +9,11 @@ class CustomField extends Model
     protected $table = 'SISKOP.sys_custom_field';
     protected $guarded = [];
     protected $appends = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function fieldable()
     {

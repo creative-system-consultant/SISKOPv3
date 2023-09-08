@@ -15,7 +15,11 @@ class ApplySpecialAid extends Model
 
     protected $table = 'SISKOP.apply_special_aid';
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function field()
     {

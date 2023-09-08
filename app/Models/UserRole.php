@@ -14,7 +14,11 @@ class UserRole extends Model implements Auditable
     protected $table   = 'SISKOP.SYS_ROLE';
     protected $guarded = [];
     protected $appends = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     //
 }

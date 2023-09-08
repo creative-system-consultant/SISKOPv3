@@ -20,7 +20,14 @@ class Share extends Model implements Auditable
 
     protected $table   = 'siskop.shares';
     protected $guarded = [];
-    protected $dates   = ['online_date','cdm_date','cheque_date','created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'online_date'   => 'datetime',
+        'cdm_date'      => 'datetime',
+        'cheque_date'   => 'datetime',
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function buyer()
     {

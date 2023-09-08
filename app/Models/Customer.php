@@ -15,12 +15,12 @@ class Customer extends Model implements Auditable
 
     protected $table   = "CIF.customers";
     protected $guarded = ['uuid'];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
-
-    public function getCoopIdAttribute()
-    {
-        return '1';
-    }
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
+    protected $appends = [];
 
     public function family()
     {

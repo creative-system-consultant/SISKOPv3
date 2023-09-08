@@ -11,7 +11,11 @@ class MembershipField extends Model
 
     protected $table   = "SISKOP.MEMBERSHIP_FIELD";
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function membership()
     {

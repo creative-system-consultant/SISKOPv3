@@ -11,7 +11,11 @@ class FieldMaster extends Model
 
     protected $table   = 'SISKOP.SYS_FIELD_MASTER';
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
 
 }

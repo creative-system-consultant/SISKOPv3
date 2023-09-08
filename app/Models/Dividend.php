@@ -17,6 +17,10 @@ class Dividend extends Model implements Auditable
 
     protected $table   = "FMS.DIVIDEND";
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
 }

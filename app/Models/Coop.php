@@ -18,7 +18,11 @@ class Coop extends Model implements Auditable
 
     protected $table   = "SISKOP.Coop";
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     protected static function boot(){
         parent::boot();
@@ -68,5 +72,14 @@ class Coop extends Model implements Auditable
     public function rules()
     {
         return $this->morphMany(CoopRules::class, 'ruleable');
+    }
+
+    public function admins()
+    {
+        return $this->hasMany(CoopAdmin::class,'coop_id');
+    }
+    public function getids()
+    {
+        return explode(',',$this->admins()->select('user_id')->get()->implode('user_id',','));
     }
 }

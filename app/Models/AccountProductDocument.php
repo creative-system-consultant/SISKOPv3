@@ -10,7 +10,11 @@ class AccountProductDocument extends Model
 
     protected $table   = "SISKOP.Account_Product_document";
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function product()
     {

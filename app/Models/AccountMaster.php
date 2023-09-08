@@ -21,7 +21,11 @@ class AccountMaster extends Model implements Auditable
 
     protected $table   = "FMS.Account_Masters";
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function product()
     {
@@ -63,12 +67,18 @@ class AccountMaster extends Model implements Auditable
         return $this->belongsTo(RefAccountStatus::class,'account_status');
     }
 
+    public function make_ref_num()
+    {
+        return '';
+    }
+
     public function remove_approvals()
     {
         $approval = $this->approvals;
         foreach ($approval as $key => $value) {
             $value->delete();
         }
+        return true;
     }
 
     public function clear_approvals($order = NULL)

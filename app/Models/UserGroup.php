@@ -16,7 +16,11 @@ class UserGroup extends Model implements Auditable
     protected $table = 'SISKOP.USER_GROUP';
     protected $guarded = [];
     protected $appends = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
 
     public function grouping()
     {
