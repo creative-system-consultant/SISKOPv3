@@ -16,13 +16,19 @@ class CoopApprovalRole extends Model implements Auditable
 
     protected $table   = 'siskop.coop_approval_role';
     protected $guarded = [];
-    protected $dates   = ['created_at','deleted_at','updated_at'];
-    protected $appends = ['rule_min','rule_max','rule_employee'];
-
-    public function coop()
-    {
-        return $this->belongsTo(Coop::class,'coop_id');
-    }
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+    ];
+    protected $appends = [
+                            'rule_min',
+                            'rule_max',
+                            'rule_employee',
+                            'rule_whatsapp',
+                            'rule_sms',
+                            'rule_email'
+                        ];
 
     public function rolegroup()
     {
@@ -87,6 +93,51 @@ class CoopApprovalRole extends Model implements Auditable
     public function setRuleEmployeeAttribute($value)
     {
         return $this->setRule('employee',$value);
+    }
+    /*    end    */
+
+    /* 
+        $this->rule_whatsapp
+        start
+    */
+    public function getRuleWhatsappAttribute()
+    {
+        return $this->getRule('whatsapp',FALSE);
+    }
+
+    public function setRuleWhatsappAttribute($value)
+    {
+        return $this->setRule('whatsapp',$value);
+    }
+    /*    end    */
+
+    /* 
+        $this->rule_whatsapp
+        start
+    */
+    public function getRuleSmsAttribute()
+    {
+        return $this->getRule('sms',FALSE);
+    }
+
+    public function setRuleSmsAttribute($value)
+    {
+        return $this->setRule('sms',$value);
+    }
+    /*    end    */
+
+    /* 
+        $this->rule_whatsapp
+        start
+    */
+    public function getRuleEmailAttribute()
+    {
+        return $this->getRule('email',FALSE);
+    }
+
+    public function setRuleEmailAttribute($value)
+    {
+        return $this->setRule('email',$value);
     }
     /*    end    */
 }

@@ -27,6 +27,14 @@ class Approver extends Component
             $newnum = date('y').str_pad($this->User->coop_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
             $this->Approver->Customer->ref_no = $newnum;
             $this->Approver->Customer->save();
+
+            if ($this->Approval->rule_whatsapp){
+                $this->Approver->sendWS('SISKOPv3 Membership Application ('.$this->Approver->coop->name.') have been approved by APPROVER');
+            }
+    
+            if ($this->Approval->rule_sms){
+                $this->Approver->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->Approver->coop->name.') have been approved by APPROVER');
+            }
         }
         $this->Approver->save();
         $this->Approval->user_id = $this->User->id;

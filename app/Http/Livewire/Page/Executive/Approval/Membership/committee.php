@@ -23,6 +23,14 @@ class Committee extends Component
         $this->validate();
         if ($this->Committee->approvals()->where('type','like','vote%')->whereNull('vote')->count() <= 1){
             $this->Committee->step++;
+
+            if ($this->Approval->rule_whatsapp){
+                $this->Committee->sendWS('SISKOPv3 Membership Application ('.$this->Committee->coop->name.') have been pre-approved by COMMITTEE');
+            }
+    
+            if ($this->Approval->rule_sms){
+                $this->Committee->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->Committee->coop->name.') have been pre-approved by COMMITTEE');
+            }
         }
 
         $this->Committee->save();

@@ -27,7 +27,15 @@ class FinancingCommittee extends Component
     {
         if ($this->Account->approvals()->where('type','like','vote%')->whereNull('vote')->count() <= 1){
             $this->Account->apply_step++;
-            
+
+            if ($this->Approval->rule_whatsapp){
+                $this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by COMMITTEE');
+            }
+
+            if ($this->Approval->rule_sms){
+                $this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+            }
+
         }
         $this->Account->save();
         $this->Approval->vote = 'lulus';

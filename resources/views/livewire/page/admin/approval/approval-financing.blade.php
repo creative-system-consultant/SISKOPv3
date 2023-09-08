@@ -122,6 +122,36 @@
                                                             wire:model.defer="lists.{{ $key }}.rule_employee"
                                                         />
                                                     </div>
+                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                                                        <x-form.checkbox
+                                                            label="Send Whatsapp"
+                                                            id="sendWs"
+                                                            name="sendWs"
+                                                            value=""
+                                                            disable=""
+                                                            wire:model.defer="lists.{{ $key }}.rule_whatsapp"
+                                                        />
+                                                    </div>
+                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                                                        <x-form.checkbox
+                                                            label="Send SMS"
+                                                            id="sendSms"
+                                                            name="sendSms"
+                                                            value=""
+                                                            disable=""
+                                                            wire:model.defer="lists.{{ $key }}.rule_sms"
+                                                        />
+                                                    </div>
+                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                                                        <x-form.checkbox
+                                                            label="Send E-mail"
+                                                            id="sendEmail"
+                                                            name="sendEmail"
+                                                            value=""
+                                                            disable=""
+                                                            wire:model.defer="lists.{{ $key }}.rule_email"
+                                                        />
+                                                    </div>
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                                                         <button @click="ruleModal = false" wire:click="saveRule({{ $key }})" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                                                             Save and Close

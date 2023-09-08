@@ -16,6 +16,7 @@ class PrepMigration extends Migration
         DB::statement("IF NOT EXISTS ( SELECT * FROM sys.schemas WHERE name = N'FMS' ) EXEC('CREATE SCHEMA [FMS]');");
         DB::statement("IF NOT EXISTS ( SELECT * FROM sys.schemas WHERE name = N'CIF' ) EXEC('CREATE SCHEMA [CIF]');");
         DB::statement("IF NOT EXISTS ( SELECT * FROM sys.schemas WHERE name = N'REF' ) EXEC('CREATE SCHEMA [REF]');");
+        DB::statement("IF NOT EXISTS ( SELECT * FROM sys.schemas WHERE name = N'SYSTM' ) EXEC('CREATE SCHEMA [SYSTM]');");
     }
 
     /**
@@ -29,5 +30,6 @@ class PrepMigration extends Migration
         DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'FMS' ) DROP SCHEMA FMS");
         DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'CIF' ) DROP SCHEMA CIF");
         DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'REF' ) DROP SCHEMA REF");
+        DB::statement("IF EXISTS ( SELECT * FROM sys.schemas WHERE name = N'SYSTM' ) DROP SCHEMA SYSTM");
     }
 };

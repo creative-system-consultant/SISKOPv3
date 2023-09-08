@@ -27,6 +27,14 @@ class Maker extends Component
         $this->Approval->type = 'lulus';
         $this->Approval->save();
 
+        if ($this->Approval->rule_whatsapp){
+            $this->maker->sendWS('SISKOPv3 Membership Application ('.$this->maker->coop->name.') have been pre-approved by MAKER');
+        }
+
+        if ($this->Approval->rule_sms){
+            $this->maker->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->maker->coop->name.') have been pre-approved by MAKER');
+        }
+
         session()->flash('message', 'Application Pre-Approved');
         session()->flash('success');
         session()->flash('title', 'Success!');

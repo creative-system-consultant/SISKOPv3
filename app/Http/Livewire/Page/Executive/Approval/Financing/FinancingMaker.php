@@ -31,6 +31,14 @@ class FinancingMaker extends Component
         $this->Approval->type = 'lulus';
         $this->Approval->save();
 
+        if ($this->Approval->rule_whatsapp){
+            $this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+        }
+
+        if ($this->Approval->rule_sms){
+            $this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+        }
+
         session()->flash('message', 'Application Pre-Approved');
         session()->flash('success');
         session()->flash('title', 'Success!');

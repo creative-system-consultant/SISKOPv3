@@ -27,6 +27,14 @@ class Checker extends Component
         $this->Approval->type = 'lulus';
         $this->Approval->save();
 
+        if ($this->Approval->rule_whatsapp){
+            $this->checker->sendWS('SISKOPv3 Membership Application ('.$this->checker->coop->name.') have been pre-approved by CHECKER');
+        }
+
+        if ($this->Approval->rule_sms){
+            $this->checker->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->checker->coop->name.') have been pre-approved by CHECKER');
+        }
+
         session()->flash('message', 'Application Pre-Approved');
         session()->flash('success');
         session()->flash('title', 'Success!');

@@ -27,6 +27,14 @@ class FinancingApprover extends Component
     {
         if ($this->Account->approvals()->where('type','like','vote%')->whereNull('vote')->count() <= 1){
             $this->Account->account_status = 1;
+
+            if ($this->Approval->rule_whatsapp){
+                $this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been approved by APPROVER');
+            }
+
+            if ($this->Approval->rule_sms){
+                $this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+            }
         }
         $this->Account->save();
         $this->Approval->vote = 'lulus';
@@ -81,6 +89,15 @@ class FinancingApprover extends Component
 
             return redirect()->route('application.list');
         }
+    }
+
+    public function debug()
+    {
+        dd([
+            'User'      => $this->User,
+            'Account'   => $this->Account,
+            'customer'  => date('Y'),
+        ]);
     }
 
     public function render()
