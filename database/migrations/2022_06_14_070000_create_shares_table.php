@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -45,6 +46,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->string('updated_by')->nullable();
         });
+
+        DB::statement("DBCC CHECKIDENT ('SISKOP.shares',RESEED,101)");
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -50,6 +51,7 @@ return new class extends Migration
             $table->decimal('referer_pay',16,2)->nullable();
             $table->decimal('referer_pay_percent',5,2)->nullable();
 
+            $table->string('last_action',10)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
             $table->timestamp('deleted_at')->nullable();

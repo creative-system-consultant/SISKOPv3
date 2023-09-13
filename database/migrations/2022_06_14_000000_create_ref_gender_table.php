@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -19,7 +20,6 @@ return new class extends Migration
             $table->string('description_bm')->nullable();
             $table->string('code',20)->nullable();
             $table->string('status',1)->default('0');
-            $table->bigInteger('coop_id')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
