@@ -91,23 +91,6 @@ return [
             'prefix_indexes' => true,
         ],
 
-        'sqlsrv_mac' => [
-            'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'options' => [
-                PDO::DBLIB_ATTR_STRINGIFY_UNIQUEIDENTIFIER => true, // temporary solution for mac os compability ( window user can ignore)
-                PDO::DBLIB_ATTR_DATETIME_CONVERT => true, //please set date format = %Y-%m-%d %H:%M:%S.%z in /opt/homebrew/etc/locales.conf
-            ],
-            'prefix_indexes' => true,
-        ],
-
     ],
 
     /*

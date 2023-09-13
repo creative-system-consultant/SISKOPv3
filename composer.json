@@ -1,8 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "aizuddin-yusoff/siskopv3",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "SISTEM KOPERASI v3",
+    "keywords": ["siskop", "sistem koperasi"],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
