@@ -4,7 +4,9 @@ namespace App\Http\Livewire\Page\Admin\Coop;
 
 use App\Models\Address;
 use App\Models\Coop;
+use App\Models\CoopAdmin;
 use App\Models\Ref\RefState;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -15,7 +17,15 @@ class CoopCreate extends Component
 
     public Coop $coop;
     public Address $address;
+    public User $admin;
+    public User $User;
+    public $ids    = [];
+    public $idrem  = [];
+    public $search = '';
+    public $users  = [];
+    public $userList = [];
     public $states;
+    public $selected;
     public $logo;
     public $page = 'Create';
 
@@ -32,6 +42,7 @@ class CoopCreate extends Component
         'address.town'      => 'required|max:255',
         'address.postcode'  => 'required|integer|digits:5',
         'address.def_state_id'=> 'required|integer',
+        'search'            => 'nullable|max:255',
         'logo'              => 'nullable|image|max:5120'             //filesize max 5mb
     ];
     protected $messages = [
@@ -58,15 +69,38 @@ class CoopCreate extends Component
 
     public function mount($coop_id = NULL)
     {
+        $this->User = User::find(auth()->user()->id);
+
         if ($coop_id != NULL){
             $this->coop     = Coop::find($coop_id);
             $this->address  = $this->coop->address()->firstOrCreate();
             $this->page     = "Edit";
+            $this->ids      = $this->coop->getids();
+            $this->ids      = array_filter($this->ids);
+            $this->users    = CoopAdmin::where('coop_id', $this->coop->id)->get();
         } else {
-            $this->coop     = new Coop;
-            $this->address  = new Address;
-            }
-        $this->states   = RefState::where('coop_id', Auth()->user()->coop_id)->get();
+            $this->coop    = new Coop;
+            $this->address = new Address;
+
+            $this->coop->created_by = $this->User->name;
+            $this->address->created_by = $this->User->name;
+        }
+        $this->states = RefState::where('coop_id', '1')->get();
+    }
+
+    public function add()
+    {
+        $this->ids   = [...$this->ids, $this->selected ];
+        $this->users = User::whereIn('id', $this->ids)->get();
+        $this->idrem = array_diff($this->idrem, [$this->selected]);
+    }
+
+    public function rem($id)
+    {
+        $this->idrem = [...$this->idrem, $id ];
+        $this->ids   = array_diff($this->ids, [$id]);
+        $this->ids   = array_filter($this->ids);
+        $this->users = User::whereIn('id', $this->ids)->get();
     }
 
     public function submit()
@@ -74,7 +108,21 @@ class CoopCreate extends Component
         //dd($this->coop);
         $this->validate();
 
-        $this->coop->created_by     = auth()->user()->name;
+        if($this->ids == []){
+            if ($this->coop->status == 1){
+                $this->addError('coop.status', 'Can\'t set active without any Admins active');
+                $this->addError('search', 'Can\'t set active without any Admins active');
+                $this->dispatchBrowserEvent('swal',[
+                    'title' => 'Warning!',
+                    'text'  => 'Can\'t set ACTIVE without any Admins active',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 10000,
+                ]);
+                return back();
+            }
+        }
+
         $this->coop->save();
 
         if($this->logo){
@@ -96,6 +144,15 @@ class CoopCreate extends Component
             }
         }
 
+        foreach ($this->ids as $key => $value) {
+            $admin = CoopAdmin::where('coop_id', $this->coop->id)->updateOrCreate([
+                'user_id'   => $value,
+                'coop_id'   => $this->coop->id,
+                'status'    => '1',
+                'updated_by'=> $this->User->name,
+            ]);
+        }
+ 
         $this->coop->address()->save($this->address);
         $this->coop->address_id = $this->address->id;
         $this->coop->save();
@@ -103,10 +160,28 @@ class CoopCreate extends Component
         return redirect()->route('coop.list');
     }
 
+    public function searchUser()
+    {
+        if (strlen($this->search) > 2){
+            $this->userList = User::where('name', 'like', '%'.$this->search.'%')->select('id','name')->orderBy('name')->take(5)->get();
+        } else {
+            $this->userList = [];
+        }
+    }
+
     public function updatedPhoto()
     {
         $this->validate([
             'logo' => 'image|max:5120', // 5MB Max
+        ]);
+    }
+
+    public function deb()
+    {
+        dd([
+            'ids'   => $this->ids,
+            'idrem' => $this->idrem,
+            'users' => $this->users,
         ]);
     }
 
