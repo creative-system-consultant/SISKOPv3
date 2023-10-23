@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('SISKOP.sys_notification', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('coop_id')->default('1');
+            $table->bigInteger('client_id')->default('1');
             $table->bigInteger('notification_id')->nullable();
             $table->string('notification_type')->nullable();
             $table->string('name',50);

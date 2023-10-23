@@ -132,7 +132,7 @@ class CreateSpecialAid extends Component
         }
         else {
             $specialAid = SpecialAid::create([
-                'coop_id'            => $user->coop_id,
+                'client_id'            => $user->client_id,
                 'name'               => ucwords($this->specialAid_name),
                 'apply_amt_enable'   => $this->enabled_apply_amt == true ? '1' : '0',
                 'default_apply_amt'  => $this->default_apply_amount ?? NULL,

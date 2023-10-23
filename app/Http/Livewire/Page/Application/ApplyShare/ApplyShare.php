@@ -180,7 +180,7 @@ class ApplyShare extends Component
     public function contApply($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id,
+            'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
         ], [
             'amt_before'  => $this->cust->share,
@@ -200,7 +200,7 @@ class ApplyShare extends Component
     {
         $user = auth()->user();
         $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
+        $this->banks = RefBank::where('client_id', $user->client_id)->get();
 
         $this->restricApply($this->cust->id);
         $this->contApply($this->cust->id);

@@ -19,7 +19,7 @@ class WithdrawalContributionCommittee extends Component
     public function mount($uuid)
     {
        $this->committee = Contribution::where('uuid', $uuid)->with('customer')->first();
-       $this->banks = RefBank::where('coop_id', $this->committee->coop_id)->get();
+       $this->banks = RefBank::where('client_id', $this->committee->client_id)->get();
     }
 
     public function render()

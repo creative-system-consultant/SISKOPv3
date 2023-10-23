@@ -24,7 +24,7 @@ class RelationshipCreate extends Component
         $relationship = RefRelationship::create([
             'description' => trim(strtoupper($this->relationship_description)),
             'code'        => trim(strtoupper($this->relationship_code)),
-            'coop_id'     => $this->User->coop_id,
+            'client_id'     => $this->User->client_id,
             'status'      => $this->relationship_status == true ? '1' : '0',
             'created_at'  => now(),
             'created_by'  => Auth()->user()->name,

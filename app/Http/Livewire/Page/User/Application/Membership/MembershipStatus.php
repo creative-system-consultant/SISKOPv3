@@ -18,9 +18,9 @@ class MembershipStatus extends Component
     public function mount()
     {
         $this->User     = User::find(auth()->user()->id);
-        $Customer       = Customer::where('coop_id', $this->User->coop_id)->first();
-        $this->Coop     = Coop::find($this->User->coop_id);
-        $this->coops    = Coop::where([['id',$this->User->all_coop_id]])->get();
+        $Customer       = Customer::where('client_id', $this->User->client_id)->first();
+        $this->Coop     = Coop::find($this->User->client_id);
+        $this->coops    = Coop::where([['id',$this->User->all_client_id]])->get();
         $this->memberships = ApplyMembership::where([['cust_id', $Customer->id]])->with('coop')->get();
     }
 

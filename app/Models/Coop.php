@@ -40,7 +40,7 @@ class Coop extends Model implements Auditable
 
     public function customers()
     {
-        return $this->hasMany(Customer::class,'coop_id');
+        return $this->hasMany(Customer::class,'client_id');
     }
 
     public function address()
@@ -76,7 +76,7 @@ class Coop extends Model implements Auditable
 
     public function admins()
     {
-        return $this->hasMany(CoopAdmin::class,'coop_id');
+        return $this->hasMany(CoopAdmin::class,'client_id');
     }
     public function getids()
     {

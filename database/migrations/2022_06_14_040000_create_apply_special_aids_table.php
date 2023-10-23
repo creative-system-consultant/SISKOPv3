@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
             $table->string('name');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('cust_id');
             $table->bigInteger('special_aid_id');
 

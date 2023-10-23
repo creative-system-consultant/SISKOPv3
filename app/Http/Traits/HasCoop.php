@@ -8,6 +8,6 @@ trait HasCoop
 {
     public function coop()
     {
-        return $this->belongsTo(Coop::class,'coop_id');
+        return $this->belongsTo(Coop::class,'client_id');
     }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('mbr_no')->nullable();
             $table->bigInteger('agent_id')->nullable();
             $table->bigInteger('cust_id');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('flag')->default(0);
             $table->bigInteger('step')->default(0);
 

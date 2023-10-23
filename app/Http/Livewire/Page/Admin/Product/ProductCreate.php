@@ -66,7 +66,7 @@ class ProductCreate extends Component
 
         $this->producttype = RefProductType::all();
 
-        $this->refdocument = RefProductDocuments::where('coop_id', $this->User->coop_id)->get();
+        $this->refdocument = RefProductDocuments::where('client_id', $this->User->client_id)->get();
 
     }
     public function deb()
@@ -80,7 +80,7 @@ class ProductCreate extends Component
 
         // $document = AccountProductDocument::Create([
         //     'product_id'    => $this->Product->id,
-        //     'coop_id'       => $this->User->coop_id,
+        //     'client_id'       => $this->User->client_id,
         //     'type'          => $code,
         //     'name'          => $name,
         // ]);
@@ -90,7 +90,7 @@ class ProductCreate extends Component
         // ]);
 
         $this->document[$num-1] = New AccountProductDocument;
-        $this->document[$num-1]->coop_id = $this->User->coop_id;
+        $this->document[$num-1]->client_id = $this->User->client_id;
         $this->document[$num-1]->type = $code;
         $this->document[$num-1]->name = $name;
         $this->document[$num-1]->status = !$this->document[$num-1]->status;
@@ -102,10 +102,10 @@ class ProductCreate extends Component
 
         $this->validate();
 
-        $this->Product->coop_id = $this->User->coop_id;
+        $this->Product->client_id = $this->User->client_id;
         $this->Product->save();
 
-        $coop = Auth()->user()->coop_id;
+        $coop = Auth()->user()->client_id;
 
         //brochure file
         if($this->brochure){

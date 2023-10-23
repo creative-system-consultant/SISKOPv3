@@ -16,7 +16,7 @@ class NotificationAdmin extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->notifications = ModelsNotificationAdmin::where([['coop_id', $this->User->coop_id]])->get();
+        $this->notifications = ModelsNotificationAdmin::where([['client_id', $this->User->client_id]])->get();
     }
 
     public function render()

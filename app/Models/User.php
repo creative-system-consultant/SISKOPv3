@@ -39,15 +39,15 @@ class User extends Authenticatable implements Auditable
         'deleted_at'    => 'datetime',
     ];
     protected $appends = [
-        'profile_photo_url','coop_id', 'all_coop_id'
+        'profile_photo_url','client_id', 'all_client_id'
     ];
 
-    public function getCoopIdAttribute()
+    public function getClientIdAttribute()
     {
         return '1';
     }
 
-    public function getAllCoopIdAttribute()
+    public function getAllClientIdAttribute()
     {
         return [0 => '1'];
     }
@@ -59,12 +59,12 @@ class User extends Authenticatable implements Auditable
 
     public function coop_cust($id)
     {
-        return $this->customer()->where('coop_id', $id)->first();
+        return $this->customer()->where('client_id', $id)->first();
     }
 
     public function roles()
     {
-        return $this->hasMany(UserGroup::class,'user_id')->where('coop_id', $this->coop_id);
+        return $this->hasMany(UserGroup::class,'user_id')->where('client_id', $this->client_id);
     }
 
     public function role_ids()

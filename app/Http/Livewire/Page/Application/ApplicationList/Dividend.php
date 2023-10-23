@@ -25,7 +25,7 @@ class Dividend extends Component
     public function mount()
     {
         $this->User      = User::find(auth()->user()->id);
-        $this->dividends = ApplyDividend::where([['coop_id', $this->User->coop_id]])->orderBy('created_at','desc')->with('customer')->get();
+        $this->dividends = ApplyDividend::where([['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()

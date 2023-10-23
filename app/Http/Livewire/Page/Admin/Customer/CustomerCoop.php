@@ -19,7 +19,7 @@ class CustomerCoop extends Component
     protected $validationAttributes = [];
 
     public function mount(){
-        $this->Coop     = Coop::where('id', Auth()->user()->coop_id)->firstOrFail();
+        $this->Coop     = Coop::where('id', Auth()->user()->client_id)->firstOrFail();
         $this->field    = new CustomField;
 
         foreach ($this->Coop->fields as $item) {

@@ -38,7 +38,7 @@ class ApplySpecialAid extends Component
         else{
             $applySpecialAid = ModelApplySpecialAid::create([
                 'name'              => $this->customer_name,
-                'coop_id'           => $customer->coop_id,
+                'client_id'           => $customer->client_id,
                 'cust_id'           => $customer->id,
                 'special_aid_id'    => $this->type_specialAid,
                 'step'              => 1,
@@ -102,7 +102,7 @@ class ApplySpecialAid extends Component
     public function mount()
     {
         $user = auth()->user();
-        $this->specialAids = SpecialAid::where([['coop_id', $user->coop_id], ['status', 1]])->get();
+        $this->specialAids = SpecialAid::where([['client_id', $user->client_id], ['status', 1]])->get();
 
         foreach ($this->specialAids as $index => $specialAid) {
             $this->apply_amt[$index] = $specialAid->default_apply_amt;

@@ -25,7 +25,7 @@ class BankCreate extends Component
             'description'     => trim(strtoupper($this->description)),
             'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
-            'coop_id'         => $this->User->coop_id,
+            'client_id'         => $this->User->client_id,
             'created_at'      => now(),
             'created_by'      => $this->User->name,
         ]);

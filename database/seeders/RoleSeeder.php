@@ -15,10 +15,10 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $roles = [
-            [ 'name'      => 'MAKER',    'coop_id'   => '1', ],
-            [ 'name'      => 'CHECKER',  'coop_id'   => '1', ],
-            [ 'name'      => 'COMMITTEE','coop_id'   => '1', ],
-            [ 'name'      => 'APPROVER', 'coop_id'   => '1', ],
+            [ 'name'      => 'MAKER',    'client_id'   => '1', ],
+            [ 'name'      => 'CHECKER',  'client_id'   => '1', ],
+            [ 'name'      => 'COMMITTEE','client_id'   => '1', ],
+            [ 'name'      => 'APPROVER', 'client_id'   => '1', ],
         ];
 
         DB::table('SISKOP.SYS_ROLE')->insert($roles);

@@ -25,7 +25,7 @@ class ListSpecialAid extends Component
     {
         $user = Auth()->user();
 
-        $this->specialAids = SpecialAid::where('coop_id', $user->coop_id)->get();
+        $this->specialAids = SpecialAid::where('client_id', $user->client_id)->get();
 
         foreach ($this->specialAids as $index => $value) {
             $this->statusTabung[$index] = $value->status == 1 ? 'checked' : false;

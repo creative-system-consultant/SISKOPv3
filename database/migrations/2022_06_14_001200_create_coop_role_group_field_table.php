@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->bigInteger('coop_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
             $table->bigInteger('role_id')->nullable();
 
             $table->string('name',50);

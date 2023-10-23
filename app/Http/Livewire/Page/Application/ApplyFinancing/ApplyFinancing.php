@@ -201,7 +201,7 @@ class ApplyFinancing extends Component
             $this->Account->save();
             $this->Customer->save();
             $this->CustAddress->save();
-            $this->CustFamily->coop_id = $this->User->coop_id;
+            $this->CustFamily->client_id = $this->User->client_id;
             $this->CustFamily->save();
             $this->Family->family_id = $this->CustFamily->id;
             $this->Family->save();
@@ -296,7 +296,7 @@ class ApplyFinancing extends Component
     public function mount($product_id)
     {
         $this->User = User::find(Auth()->user()->id);
-        $coop_id = $this->User->coop_id;
+        $client_id = $this->User->client_id;
 
         $this->Customer             = Customer::where('icno', $this->User->icno)->first();
         $this->Customer->birthdate  = $this->birthdate();
@@ -304,19 +304,19 @@ class ApplyFinancing extends Component
         $this->Customer->email      = $this->Customer->email ?? $this->User->email;
 
         $this->Product    = AccountProduct::where('uuid',$product_id)->first();
-        $max_active = CoopRules::where([['ruleable_id', $coop_id],['name', 'max_active']])->first();
+        $max_active = CoopRules::where([['ruleable_id', $client_id],['name', 'max_active']])->first();
         $this->max_active = $max_active ? $max_active->value : '0';
 
         $Account          = AccountMaster::where([
             ['cust_id'       , $this->Customer->id],
-            ['coop_id'       , $this->User->coop_id],
+            ['client_id'       , $this->User->client_id],
             ['product_id'    , $this->Product->id],
             ['account_status', '>', 14]
         ])->get();
 
         $AllAccount          = AccountMaster::where([
             ['cust_id'       , $this->Customer->id],
-            ['coop_id'       , $this->User->coop_id],
+            ['client_id'       , $this->User->client_id],
             ['account_status', '>', 14]
         ])->get();
 
@@ -344,7 +344,7 @@ class ApplyFinancing extends Component
         }*/
         $this->Account          = AccountMaster::firstOrCreate([
             'cust_id'           => $this->Customer->id,
-            'coop_id'           => $this->User->coop_id,
+            'client_id'           => $this->User->client_id,
             'product_id'        => $this->Product->id,
             'profit_rate'       => $this->Product->profit_rate,
             'account_status'    => 15
@@ -374,18 +374,18 @@ class ApplyFinancing extends Component
         }
 
         $this->Family->family_id = $this->CustFamily->id;
-        $this->CustFamily->coop_id = $this->User->coop_id;
+        $this->CustFamily->client_id = $this->User->client_id;
 
         $this->Employer         = CustEmployer::firstorCreate(['cust_id' => $this->Customer->id]);
         $this->EmployerAddress  = $this->Employer->Address()->firstorCreate();
 
         /*
-        $Introducer              = Introducer::where('coop_id', $this->User->coop_id)->first();
+        $Introducer              = Introducer::where('client_id', $this->User->client_id)->first();
         if ($Introducer != NULL){
             $this->Introducer    = Customer::find($Introducer->intro_cust_id);
             $this->search_introducer        = $this->Introducer->icno;
         }
-        $Guarantor              = Guarantor::where('coop_id', $this->User->coop_id)->first();
+        $Guarantor              = Guarantor::where('client_id', $this->User->client_id)->first();
         if ($Guarantor != NULL){
             $this->Guarantor    = Customer::find($Guarantor->guarantor_cust_id);
             $this->search_guarantor       = $this->Guarantor->icno;
@@ -446,11 +446,11 @@ class ApplyFinancing extends Component
 
         $this->Account->introducers()->firstOrCreate([
             'intro_cust_id' => $this->Introducer->id,
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
         ]);
         $this->Account->guarantors()->firstOrCreate([
             'guarantor_cust_id' => $this->Guarantor->id,
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
         ]);
 
         $this->Account->sendWS('Application '.$this->Account->product->name.' have been submitted and will be reviewed');

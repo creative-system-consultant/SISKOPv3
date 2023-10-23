@@ -48,11 +48,11 @@ class ApprovalAdmin extends Component
         $this->page      = $type;
         $this->User      = User::find(Auth()->user()->id);
 
-        $this->approval  = CoopApproval::firstOrCreate(['coop_id' => $this->User->coop_id, 'approval_type' => $type]);
+        $this->approval  = CoopApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => $type]);
 
         $this->loadList();
 
-        $this->coopGroup = CoopRoleGroup::where('coop_id', $this->User->coop_id)->get();
+        $this->coopGroup = CoopRoleGroup::where('client_id', $this->User->client_id)->get();
     }
 
     public function loadList()
@@ -71,7 +71,7 @@ class ApprovalAdmin extends Component
         $this->approval->approvals()->withTrashed()->updateOrCreate(
             [
                 'order'   => $last,
-                'coop_id' => $this->User->coop_id
+                'client_id' => $this->User->client_id
             ],
             [
                 'role_id'   => $this->selected,
@@ -109,7 +109,7 @@ class ApprovalAdmin extends Component
 
     public function rem($id)
     {
-        $rem   = CoopApprovalRole::where([['id', $id],['coop_id', $this->User->coop_id]])->firstOrFail();
+        $rem   = CoopApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
         $rem->delete();
         $this->lists    = $this->approval->approvals()->orderBy('order')->get();
         foreach($this->lists as $key=>$list){

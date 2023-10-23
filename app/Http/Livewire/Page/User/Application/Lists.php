@@ -29,20 +29,20 @@ class Lists extends Component
     public function mount()
     {
         $this->User      = auth()->user();
-        $this->Customer  = Customer::where([['coop_id', $this->User->coop_id],['icno',$this->User->icno]])->firstOrFail();
-        $this->banks     = RefBank::where('coop_id', $this->User->coop_id)->get();
+        $this->Customer  = Customer::where([['client_id', $this->User->client_id],['icno',$this->User->icno]])->firstOrFail();
+        $this->banks     = RefBank::where('client_id', $this->User->client_id)->get();
 
-        $this->financings   = AccountMaster::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
-        $this->memberships  = ApplyMembership::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
-        $this->shares       = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
-        $this->sellShares   = Share::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])
+        $this->financings   = AccountMaster::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();
+        $this->memberships  = ApplyMembership::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();
+        $this->shares       = Share::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
+        $this->sellShares   = Share::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])
                                    ->where(function($query) {
                                       $query->where('direction', 'sell');
                                       $query->orWhere('direction', 'exchange');
                                    })->get();
-        $this->contributions= Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','buy']])->get();
-        $this->withdrawals  = Contribution::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id],['direction','withdraw']])->get();
-        $this->specialAids  = ApplySpecialAid::where([['coop_id', $this->User->coop_id],['cust_id', $this->Customer->id]])->get();
+        $this->contributions= Contribution::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id],['direction','buy']])->get();
+        $this->withdrawals  = Contribution::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id],['direction','withdraw']])->get();
+        $this->specialAids  = ApplySpecialAid::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();
     }
 
     public function showApplication()

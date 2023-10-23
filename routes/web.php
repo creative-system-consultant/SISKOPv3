@@ -225,7 +225,7 @@ Route::middleware('auth')->group(function () {
             Route::prefix('coop')->group(function(){
                 Route::get('/', CoopAdmin::class)->name('coop.list');
                 Route::get('create', CoopCreate::class)->name('coop.create');
-                Route::get('edit/{coop_id}', CoopCreate::class)->name('coop.edit');
+                Route::get('edit/{client_id}', CoopCreate::class)->name('coop.edit');
             });
             Route::prefix('CustCoop')->group(function(){
                 Route::get('/', CustomerCoop::class)->name('coop.cust');

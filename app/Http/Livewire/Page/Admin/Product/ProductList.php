@@ -22,9 +22,9 @@ class ProductList extends Component
     public function mount()
     {
         $this->User = User::find(Auth()->user()->id);
-        $coop_id = $this->User->coop_id;
-        $this->Coop = Coop::find($coop_id);
-        $this->Product = AccountProduct::where([['coop_id', $coop_id]])->get();
+        $client_id = $this->User->client_id;
+        $this->Coop = Coop::find($client_id);
+        $this->Product = AccountProduct::where([['client_id', $client_id]])->get();
         $this->max_active = $this->Coop->rules()->firstOrCreate([
             'name'  => 'max_active'
         ],[

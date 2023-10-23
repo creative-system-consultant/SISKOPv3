@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('siskop.guarantors', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
-            $table->bigInteger('coop_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
             $table->morphs('guarantee');
 
             $table->bigInteger('guarantor_cust_id')->nullable();

@@ -146,7 +146,7 @@ class ApplySellExchangeShare extends Component
     public function contApplyMember($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id,
+            'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
             'direction'   => 'exchange',
         ], [
@@ -167,7 +167,7 @@ class ApplySellExchangeShare extends Component
     public function contApplyCoop($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id,
+            'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
             'direction'   => 'sell',
         ], [
@@ -226,7 +226,7 @@ class ApplySellExchangeShare extends Component
     {
         $user = auth()->user();
         $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where([['coop_id', $user->coop_id],['status', 1]])->get();
+        $this->banks = RefBank::where([['client_id', $user->client_id],['status', 1]])->get();
 
         $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);

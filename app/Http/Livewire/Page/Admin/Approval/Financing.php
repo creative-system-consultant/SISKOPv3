@@ -51,12 +51,12 @@ class Financing extends Component
         $this->page      = 'Financing';
         $this->User      = User::find(Auth()->user()->id);
 
-        $this->products  = AccountProduct::where([['coop_id', $this->User->coop_id]])->select('id','name', 'product_type')->get();
-        $this->approval  = CoopApproval::firstOrCreate(['coop_id' => $this->User->coop_id, 'approval_type' => 'Financing']);
+        $this->products  = AccountProduct::where([['client_id', $this->User->client_id]])->select('id','name', 'product_type')->get();
+        $this->approval  = CoopApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => 'Financing']);
 
         $this->loadList();
 
-        $this->coopGroup = CoopRoleGroup::where('coop_id', $this->User->coop_id)->get();
+        $this->coopGroup = CoopRoleGroup::where('client_id', $this->User->client_id)->get();
     }
 
     public function loadList()
@@ -77,7 +77,7 @@ class Financing extends Component
         $this->approval->approvals($this->product_id)->withTrashed()->updateOrCreate(
             [
                 'order'   => $last,
-                'coop_id' => $this->User->coop_id
+                'client_id' => $this->User->client_id
             ],
             [
                 'product_id'=> $this->product_id,
@@ -116,7 +116,7 @@ class Financing extends Component
 
     public function rem($id)
     {
-        $rem   = CoopApprovalRole::where([['id', $id],['coop_id', $this->User->coop_id]])->firstOrFail();
+        $rem   = CoopApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
         $rem->delete();
         $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
         foreach($this->lists as $key=>$list){

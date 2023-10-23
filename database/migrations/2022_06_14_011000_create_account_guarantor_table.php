@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('mbr_no')->nullable();
             $table->bigInteger('cust_id');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
 
             $table->bigInteger('account_id')->nullable();
             $table->string('account_no')->nullable();

@@ -106,7 +106,7 @@ class DividendApprover extends Component
         $this->User      = User::find(auth()->user()->id);
         $this->Apply     = ApplyDividend::where('uuid', $uuid)->firstOrFail();
         $this->Cust      = Customer::find($this->Apply->cust_id);
-        $this->Dividend  = Dividend::where([['coop_id', $this->User->coop_id],['cust_id', $this->Cust->id]])->first();
+        $this->Dividend  = Dividend::where([['client_id', $this->User->client_id],['cust_id', $this->Cust->id]])->first();
 
         $this->Approval  = Approval::where([
             ['approval_id',   $this->Apply->id],

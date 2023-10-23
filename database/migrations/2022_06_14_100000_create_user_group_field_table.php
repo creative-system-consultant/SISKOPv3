@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
 
             $table->morphs('grouping');
-            $table->bigInteger('coop_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
             $table->bigInteger('user_id')->nullable();
 
             $table->timestamp('created_at')->useCurrent();

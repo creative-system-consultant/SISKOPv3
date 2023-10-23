@@ -17,7 +17,7 @@ class SellExchangeShare extends Component
     public function showApplication($uuid)
     {
         $this->sellShare = Share::where('uuid', $uuid)->with('customer')->first();
-        $this->banks = RefBank::where('coop_id', $this->sellShare->coop_id)->get();
+        $this->banks = RefBank::where('client_id', $this->sellShare->client_id)->get();
     }
 
     public function mount()
