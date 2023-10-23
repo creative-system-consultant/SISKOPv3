@@ -25,7 +25,7 @@ class Share extends Component
     public function mount()
     {
         $this->User   = User::find(auth()->user()->id);
-        $this->shares = ApplyShare::where([['direction', 'buy'],['coop_id', $this->User->coop_id]])->orderBy('created_at','desc')->with('customer')->get();
+        $this->shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()

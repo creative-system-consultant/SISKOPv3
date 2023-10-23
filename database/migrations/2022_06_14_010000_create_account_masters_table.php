@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('agent_id')->nullable();
             $table->bigInteger('officer_id')->nullable();
             $table->bigInteger('cust_id');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
 
             $table->string('account_no')->nullable();
             $table->string('product_id');

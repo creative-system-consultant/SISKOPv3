@@ -23,7 +23,7 @@ class WithdrawalContributionApproval extends Component
     public function mount($uuid)
     {
        $this->approve = Contribution::where('uuid', $uuid)->with('customer')->first();
-       $this->banks = RefBank::where('coop_id', $this->approve->coop_id)->get();
+       $this->banks = RefBank::where('client_id', $this->approve->client_id)->get();
     }
 
     public function render()

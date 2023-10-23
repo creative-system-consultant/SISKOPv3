@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('siskop.coop_approval_role', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('role_id');
             $table->bigInteger('approval_id');
             $table->bigInteger('product_id')->nullable();

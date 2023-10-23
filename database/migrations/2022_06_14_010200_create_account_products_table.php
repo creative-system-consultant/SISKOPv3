@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
             $table->string('name');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('product_type');
             $table->smallInteger('apply_limit')->default('1');
             $table->smallInteger('apply_lifetime')->nullable();

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
             $table->string('name');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
 
             $table->string('apply_amt_enable',1)->default('1');
             $table->unsignedDecimal('default_apply_amt',8,2)->nullable();

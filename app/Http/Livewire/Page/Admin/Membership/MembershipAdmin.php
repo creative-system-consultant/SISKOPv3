@@ -26,12 +26,12 @@ class MembershipAdmin extends Component
         $this->User = auth()->user();
 
         $this->membership = Membership::firstOrCreate([
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
         ],[
             'created_by'    => $this->User->name,
         ]);
 
-        $this->refdocument = RefMembershipDocument::where('coop_id', $this->User->coop_id)->get();
+        $this->refdocument = RefMembershipDocument::where('client_id', $this->User->client_id)->get();
         //$this->documentlist = $this->membership->documents;
     }
 
@@ -39,7 +39,7 @@ class MembershipAdmin extends Component
     {
         $field = MembershipField::firstOrCreate([
             'membership_id' => $this->membership->id,
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
             'field_id'      => $id,
         ]);
 
@@ -51,7 +51,7 @@ class MembershipAdmin extends Component
     {
         $document = MembershipDocument::firstOrCreate([
             'membership_id' => $this->membership->id,
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
             'type'          => $code,
             'name'          => $name,
         ]);

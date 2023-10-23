@@ -24,7 +24,7 @@ class RaceCreate extends Component
         $race = RefRace::create([
             'description' => trim(strtoupper($this->race_description)),
             'code'        => trim(strtoupper($this->race_code)),
-            'coop_id'     => $this->User->coop_id,
+            'client_id'     => $this->User->client_id,
             'status'      => $this->race_status == true ? '1' : '0',
             'created_at'  => now(),
             'created_by'  => Auth()->user()->name,

@@ -21,12 +21,12 @@ class DashExecWorkQueue extends Component
     {
         $this->User             = User::find(auth()->user()->id);
         $this->group            = UserGroup::where('user_id', $this->User->id)->orderBy('grouping_id')->get();
-        $this->approval_type    = RefApprovalType::where([['coop_id', $this->User->coop_id]])->get();
+        $this->approval_type    = RefApprovalType::where([['client_id', $this->User->client_id]])->get();
         foreach ($this->group as $key => $value) {
-            $this->approval_role[$key+1] = CoopApprovalRole::where([['coop_id', $this->User->coop_id],['role_id', $value->grouping_id]])->get();
+            $this->approval_role[$key+1] = CoopApprovalRole::where([['client_id', $this->User->client_id],['role_id', $value->grouping_id]])->get();
             foreach ($this->approval_role[$key+1] as $key1 => $value1) {
                 $accounts = AccountMaster::where([
-                                    ['coop_id', $this->User->coop_id],
+                                    ['client_id', $this->User->client_id],
                                     ['apply_step', $value1->order],
                                     //['product_id', ]
                             ])->get();

@@ -89,9 +89,9 @@ class ApplyDividend extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->Cust = Customer::where([['coop_id', $this->User->coop_id],['icno', $this->User->icno]])->firstOrFail();
+        $this->Cust = Customer::where([['client_id', $this->User->client_id],['icno', $this->User->icno]])->firstOrFail();
 
-        $this->Dividend = Dividend::where([['coop_id', $this->User->coop_id],['cust_id', $this->Cust->id]])->first();
+        $this->Dividend = Dividend::where([['client_id', $this->User->client_id],['cust_id', $this->Cust->id]])->first();
         if ($this->Dividend == NULL){
             session()->flash('message', 'There are no Dividend Payout for this Customer');
             session()->flash('warning');
@@ -101,11 +101,11 @@ class ApplyDividend extends Component
         } else if ($this->Dividend) {
 
         }
-        $apply = ModelApplydividend::where([['coop_id', $this->User->coop_id],['cust_id', $this->Cust->id],['div_year', date('Y')]])->first();
+        $apply = ModelApplydividend::where([['client_id', $this->User->client_id],['cust_id', $this->Cust->id],['div_year', date('Y')]])->first();
 
         if ($apply == NULL){
             $this->apply = new ModelApplydividend;
-            $this->apply->coop_id   = $this->User->coop_id;
+            $this->apply->client_id   = $this->User->client_id;
             $this->apply->cust_id   = $this->Cust->id;
             $this->apply->mbr_no    = $this->Cust->ref_no;
             $this->apply->div_year  = date('Y');

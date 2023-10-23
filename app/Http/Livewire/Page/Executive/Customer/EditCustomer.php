@@ -69,7 +69,7 @@ class EditCustomer extends Component
 
     public function mount($uuid = NULL)
     {
-        $this->Coop             = Coop::find(auth()->user()->coop_id);
+        $this->Coop             = Coop::find(auth()->user()->client_id);
         $this->Cust             = Customer::where('uuid', $uuid)->first();
         $this->title            = RefCustTitle::all();
         $this->education        = RefEducation::all();

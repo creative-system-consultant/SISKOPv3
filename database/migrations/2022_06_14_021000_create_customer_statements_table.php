@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('CIF.customer_statements', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('cust_id')->nullable();
-            $table->bigInteger('coop_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
             $table->string('mbr_no')->nullable();
 
             $table->string('trn_code')->nullable();

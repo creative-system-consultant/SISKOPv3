@@ -275,11 +275,11 @@ class NewMembership extends Component
             if ($ic != NULL && strlen($ic) == 12){
                 $this->CustFamily    = Customer::where([
                                             ['icno', $ic],
-                                            ['coop_id', $this->User->coop_id]
+                                            ['client_id', $this->User->client_id]
                                     ])
                                     ->firstOrCreate([
                                         'icno'    => $ic,
-                                        'coop_id' => $this->User->coop_id
+                                        'client_id' => $this->User->client_id
                                     ],[
                                         'name'       => $this->CustFamily->name ?? '',
                                         'created_by' => $this->User->name,
@@ -295,12 +295,12 @@ class NewMembership extends Component
     public function mount()
     {
         $this->User = auth()->user();
-        $this->Coop = Coop::find($this->User->coop_id);
+        $this->Coop = Coop::find($this->User->client_id);
         $this->Cust = Customer::firstOrCreate([
-            'icno'    => $this->User->icno,
-            'coop_id' => $this->Coop->id
+            'icno'      => $this->User->icno,
+            'client_id' => $this->Coop->id
         ],[
-            'name'    => $this->User->name,
+            'name'      => $this->User->name,
         ]);
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL){
@@ -325,19 +325,19 @@ class NewMembership extends Component
             $this->FamilyAddress = $this->CustFamily->Address()->firstOrCreate();
         }
 
-        $this->Member            = Membership::where('coop_id', $this->User->coop_id)->first();
+        $this->Member            = Membership::where('client_id', $this->User->client_id)->first();
         $this->field             = MembershipField::where('membership_id', $this->Member->id)->get();
         $this->document          = MembershipDocument::where('membership_id', $this->Member->id)->get();
         $this->CustIntroducer    = new Customer;
         $this->Introducer        = $this->Cust->introducer()->firstOrCreate([
                                     ],[
-                                        'coop_id' => $this->User->coop_id,
+                                        'client_id' => $this->User->client_id,
                                     ]);
         if ($this->Introducer != NULL){
             $this->CustIntroducer= Customer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
             $this->search        = $this->CustIntroducer->icno;
         }
-        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'coop_id' => $this->User->coop_id],[]);
+        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id],[]);
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = 50;
         $this->applymember->contribution_fee = 50;
@@ -346,13 +346,13 @@ class NewMembership extends Component
         $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id],);
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate();
 
-        $this->title_id          = RefCustTitle::where([['coop_id', $this->User->coop_id],['status','1']])->get();
-        $this->education_id      = RefEducation::where([['coop_id', $this->User->coop_id],['status','1']])->get();
-        $this->gender_id         = RefGender::where([['coop_id', $this->User->coop_id],['status','1']])->get();
-        $this->marital_id        = RefMarital::where([['coop_id', $this->User->coop_id],['status','1']])->get();
-        $this->relationship      = RefRelationship::where([['coop_id', $this->User->coop_id],['status','1']])->get();
-        $this->race_id           = RefRace::where([['coop_id', $this->User->coop_id],['status','1']])->get();
-        $this->state_id          = RefState::where([['coop_id', $this->User->coop_id],['status','1']])->get();
+        $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id],['status','1']])->get();
+        $this->education_id      = RefEducation::where([['client_id', $this->User->client_id],['status','1']])->get();
+        $this->gender_id         = RefGender::where([['client_id', $this->User->client_id],['status','1']])->get();
+        $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id],['status','1']])->get();
+        $this->relationship      = RefRelationship::where([['client_id', $this->User->client_id],['status','1']])->get();
+        $this->race_id           = RefRace::where([['client_id', $this->User->client_id],['status','1']])->get();
+        $this->state_id          = RefState::where([['client_id', $this->User->client_id],['status','1']])->get();
 
     }
 
@@ -482,7 +482,7 @@ class NewMembership extends Component
         $this->Employer->address()->save($this->EmployAddress);
         $this->applymember->introducers()->firstOrCreate([
             'intro_cust_id' => $this->introducer->id,
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
         ]);
         // $this->Family->address()->save($this->FamilyAddress);
 

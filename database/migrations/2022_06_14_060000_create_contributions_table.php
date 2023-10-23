@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('cust_id');
 
             $table->string('direction',10)->default('buy');

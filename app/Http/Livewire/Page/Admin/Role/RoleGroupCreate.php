@@ -25,7 +25,7 @@ class RoleGroupCreate extends Component
         'group.description'     => 'max:255',
         'group.role_id'         => 'required',
         'group.status'          => '',
-        'group.coop_id'         => 'required',
+        'group.client_id'         => 'required',
     ];
     protected $messages = [
         'group.name.*'          => 'Please specify NAME (Min 5 character, Max 50 Character)',
@@ -41,7 +41,7 @@ class RoleGroupCreate extends Component
             $this->users = User::whereIn('id', $this->ids)->get();
         } else {
             $this->group          = new CoopRoleGroup;
-            $this->group->coop_id = $this->user->coop_id;
+            $this->group->client_id = $this->user->client_id;
             $this->group->created_by = $this->user->name;
         }
         $this->roles = UserRole::all();
@@ -122,7 +122,7 @@ class RoleGroupCreate extends Component
         foreach ($this->ids as $key => $value) {
             $this->group->users()->updateOrCreate([
                 'user_id'   => $value,
-                'coop_id'   => $this->user->coop_id,
+                'client_id'   => $this->user->client_id,
                 'updated_by'=> $this->user->name,
             ]);
         }

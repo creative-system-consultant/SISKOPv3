@@ -30,7 +30,7 @@
                             {{ $specialAid->name }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
-                            {{ $specialAid->coop_id }}
+                            {{ $specialAid->client_id }}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left" x-cloak x-bind:class="isActive ? '': 'text-gray-500 bg-gray-200'">
                             <div class="flex items-center w-full mt-3">

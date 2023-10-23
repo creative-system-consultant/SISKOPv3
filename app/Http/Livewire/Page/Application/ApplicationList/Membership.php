@@ -25,7 +25,7 @@ class Membership extends Component
     public function mount()
     {
         $this->User = auth()->user();
-        $this->memberships = ApplyMember::where('coop_id', $this->User->coop_id)->orderBy('created_at','desc')->with('customer')->get();
+        $this->memberships = ApplyMember::where('client_id', $this->User->client_id)->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()

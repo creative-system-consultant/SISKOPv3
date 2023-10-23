@@ -23,15 +23,15 @@ class WithdrawalContribution extends Component
     public function showApplication($uuid)
     {
         $this->withdraw = ApplyContribution::where('uuid', $uuid)->with('customer')->first();
-        $this->bankName = RefBank::where('coop_id', $this->User->coop_id)->get();
+        $this->bankName = RefBank::where('client_id', $this->User->client_id)->get();
     }
 
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->withdrawal = ApplyContribution::where([['direction', 'withdraw'],['coop_id', $this->User->coop_id]])->orderBy('created_at','desc')->with('customer')->get();
+        $this->withdrawal = ApplyContribution::where([['direction', 'withdraw'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->get();
 
-        $this->banks = RefBank::where('coop_id', $this->User->coop_id)->get();
+        $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
     }
 
     public function render()

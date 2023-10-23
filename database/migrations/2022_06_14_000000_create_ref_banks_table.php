@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('code',20)->nullable();
             $table->string('status',1)->default('0');
             $table->string('priority',5)->default('0');
-            $table->bigInteger('coop_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');

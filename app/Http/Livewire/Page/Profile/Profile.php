@@ -45,7 +45,7 @@ class Profile extends Component
         $this->User = User::find(auth()->user()->id);
         $this->Cust = Customer::firstOrCreate([
             'icno'      => $this->User->icno,
-            'coop_id'   => $this->User->coop_id,
+            'client_id'   => $this->User->client_id,
         ],[
             'name'      => $this->User->name,
             'mobile_num'=> $this->User->phone_no,

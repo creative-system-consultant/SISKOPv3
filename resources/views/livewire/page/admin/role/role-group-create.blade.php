@@ -18,7 +18,7 @@
                     <x-form.input
                         label=""
                         type="hidden"
-                        name="group.coop_id"
+                        name="group.client_id"
                         value=""
                         mandatory=""
                         disable=""
@@ -155,7 +155,7 @@
             </div>
 
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
-                <input type="hidden" name="group.coop_id" value="{{ auth()->user()->coop_id }}" wire:model="group.coop_id" >
+                <input type="hidden" name="group.client_id" value="{{ auth()->user()->client_id }}" wire:model="group.client_id" >
                 <div class="flex items-center justify-center space-x-2">
                     <a href="{{ route('user.rolegroup') }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                         CANCEL

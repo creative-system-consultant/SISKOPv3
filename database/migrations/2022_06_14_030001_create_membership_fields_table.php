@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
 
             $table->bigInteger('membership_id');
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('field_id');
             $table->string('status',1)->default(0);
 

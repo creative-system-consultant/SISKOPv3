@@ -15,115 +15,115 @@ class RefSeeder extends Seeder
     public function run()
     {
         $education = [
-            ['description' => 'SPM',     'code' => 'SPM', 'coop_id' => '1'],
-            ['description' => 'DEGREE',  'code' => 'DEG', 'coop_id' => '1'],
-            ['description' => 'MASTER',  'code' => 'MAS', 'coop_id' => '1'],
-            ['description' => 'PHD',     'code' => 'PHD', 'coop_id' => '1'],
+            ['description' => 'SPM',     'code' => 'SPM', 'client_id' => '1'],
+            ['description' => 'DEGREE',  'code' => 'DEG', 'client_id' => '1'],
+            ['description' => 'MASTER',  'code' => 'MAS', 'client_id' => '1'],
+            ['description' => 'PHD',     'code' => 'PHD', 'client_id' => '1'],
         ];
         DB::table('ref.education')->insert($education);
 
         $bank = [
-            ['description' => 'BANK MUAMALAT MALAYSIA', 'code' => 'BMMB', 'coop_id' => '1'],
-            ['description' => 'MALAYAN BANKING BERHAD', 'code' => 'MBB',  'coop_id' => '1'],
+            ['description' => 'BANK MUAMALAT MALAYSIA', 'code' => 'BMMB', 'client_id' => '1'],
+            ['description' => 'MALAYAN BANKING BERHAD', 'code' => 'MBB',  'client_id' => '1'],
         ];
         DB::table('ref.banks')->insert($bank);
 
         $country = [
-            ['description' => 'MALAYSIA',  'code' => 'MY', 'coop_id' => '1'],
-            ['description' => 'INDONESIA', 'code' => 'ID', 'coop_id' => '1'],
+            ['description' => 'MALAYSIA',  'code' => 'MY', 'client_id' => '1'],
+            ['description' => 'INDONESIA', 'code' => 'ID', 'client_id' => '1'],
         ];
         DB::table('ref.countries')->insert($country);
 
         $country = [
-            ['description' => 'MALAYSIA',  'code' => 'MY', 'coop_id' => '1'],
-            ['description' => 'INDONESIA', 'code' => 'ID', 'coop_id' => '1'],
+            ['description' => 'MALAYSIA',  'code' => 'MY', 'client_id' => '1'],
+            ['description' => 'INDONESIA', 'code' => 'ID', 'client_id' => '1'],
         ];
         DB::table('ref.countries')->insert($country);
 
         $marital = [
-            ['description' => 'SINGLE',  'code' => 'S', 'coop_id' => '1'],
-            ['description' => 'MARRIED', 'code' => 'M', 'coop_id' => '1'],
-            ['description' => 'DIVORCED','code' => 'D', 'coop_id' => '1'],
+            ['description' => 'SINGLE',  'code' => 'S', 'client_id' => '1'],
+            ['description' => 'MARRIED', 'code' => 'M', 'client_id' => '1'],
+            ['description' => 'DIVORCED','code' => 'D', 'client_id' => '1'],
         ];
         DB::table('ref.marital')->insert($marital);
 
         $titles = [
-            ['description' => 'MR',     'code' => 'MR',     'coop_id' => '1'],
-            ['description' => 'MRS',    'code' => 'MRS',    'coop_id' => '1'],
-            ['description' => 'MS',     'code' => 'MS',     'coop_id' => '1'],
-            ['description' => 'DR',     'code' => 'DR',     'coop_id' => '1'],
-            ['description' => 'SIR',    'code' => 'SIR',    'coop_id' => '1'],
-            ['description' => 'TUN',    'code' => 'TUN',    'coop_id' => '1'],
-            ['description' => 'TAN SRI','code' => 'TS',     'coop_id' => '1'],
-            ['description' => 'PUAN SRI','code' => 'PS',    'coop_id' => '1'],
-            ['description' => 'DATO\'', 'code' => 'DATO\'', 'coop_id' => '1'],
-            ['description' => 'DATUK',  'code' => 'DATUK',  'coop_id' => '1'],
-            ['description' => 'DATIN',  'code' => 'DATIN',  'coop_id' => '1'],
+            ['description' => 'MR',     'code' => 'MR',     'client_id' => '1'],
+            ['description' => 'MRS',    'code' => 'MRS',    'client_id' => '1'],
+            ['description' => 'MS',     'code' => 'MS',     'client_id' => '1'],
+            ['description' => 'DR',     'code' => 'DR',     'client_id' => '1'],
+            ['description' => 'SIR',    'code' => 'SIR',    'client_id' => '1'],
+            ['description' => 'TUN',    'code' => 'TUN',    'client_id' => '1'],
+            ['description' => 'TAN SRI','code' => 'TS',     'client_id' => '1'],
+            ['description' => 'PUAN SRI','code' => 'PS',    'client_id' => '1'],
+            ['description' => 'DATO\'', 'code' => 'DATO\'', 'client_id' => '1'],
+            ['description' => 'DATUK',  'code' => 'DATUK',  'client_id' => '1'],
+            ['description' => 'DATIN',  'code' => 'DATIN',  'client_id' => '1'],
         ];
         DB::table('ref.cust_titles')->insert($titles);
 
         $gender = [
-            ['description' => 'MALE',   'code' => 'M', 'coop_id' => '1'],
-            ['description' => 'FEMALE', 'code' => 'F', 'coop_id' => '1'],
+            ['description' => 'MALE',   'code' => 'M', 'client_id' => '1'],
+            ['description' => 'FEMALE', 'code' => 'F', 'client_id' => '1'],
         ];
         DB::table('ref.gender')->insert($gender);
 
         $race = [
-            ['description' => 'MELAYU',       'code' => 'M',  'coop_id' => '1'],
-            ['description' => 'CINA',         'code' => 'C',  'coop_id' => '1'],
-            ['description' => 'INDIA',        'code' => 'I',  'coop_id' => '1'],
-            ['description' => 'SIAM',         'code' => 'S',  'coop_id' => '1'],
-            ['description' => 'IBAN',         'code' => 'IB', 'coop_id' => '1'],
-            ['description' => 'BIDAYUH',      'code' => 'B',  'coop_id' => '1'],
-            ['description' => 'KADAZAN',      'code' => 'K',  'coop_id' => '1'],
-            ['description' => 'MELANAU',      'code' => 'E',  'coop_id' => '1'],
-            ['description' => 'INDIA MUSLIM', 'code' => 'IM', 'coop_id' => '1'],
-            ['description' => 'CINA MUSLIM',  'code' => 'CM', 'coop_id' => '1'],
-            ['description' => 'ORANG ASLI',   'code' => 'A',  'coop_id' => '1'],
-            ['description' => 'BUMIPUTERA SABAH','code' => 'BS',  'coop_id' => '1'],
-            ['description' => 'BUMIPUTERA SARAWAK','code' => 'BA',  'coop_id' => '1'],
-            ['description' => 'OTHERS',       'code' => 'L',  'coop_id' => '1'],
+            ['description' => 'MELAYU',       'code' => 'M',  'client_id' => '1'],
+            ['description' => 'CINA',         'code' => 'C',  'client_id' => '1'],
+            ['description' => 'INDIA',        'code' => 'I',  'client_id' => '1'],
+            ['description' => 'SIAM',         'code' => 'S',  'client_id' => '1'],
+            ['description' => 'IBAN',         'code' => 'IB', 'client_id' => '1'],
+            ['description' => 'BIDAYUH',      'code' => 'B',  'client_id' => '1'],
+            ['description' => 'KADAZAN',      'code' => 'K',  'client_id' => '1'],
+            ['description' => 'MELANAU',      'code' => 'E',  'client_id' => '1'],
+            ['description' => 'INDIA MUSLIM', 'code' => 'IM', 'client_id' => '1'],
+            ['description' => 'CINA MUSLIM',  'code' => 'CM', 'client_id' => '1'],
+            ['description' => 'ORANG ASLI',   'code' => 'A',  'client_id' => '1'],
+            ['description' => 'BUMIPUTERA SABAH','code' => 'BS',  'client_id' => '1'],
+            ['description' => 'BUMIPUTERA SARAWAK','code' => 'BA',  'client_id' => '1'],
+            ['description' => 'OTHERS',       'code' => 'L',  'client_id' => '1'],
         ];
         DB::table('ref.races')->insert($race);
 
         $religion = [
-            ['description' => 'ISLAM',   'code' => 'I', 'coop_id' => '1'],
-            ['description' => 'KRISTIAN','code' => 'K', 'coop_id' => '1'],
-            ['description' => 'HINDU',   'code' => 'H', 'coop_id' => '1'],
-            ['description' => 'BUDDHA',  'code' => 'B', 'coop_id' => '1'],
-            ['description' => 'CONFUCIUS','code' => 'C', 'coop_id' => '1'],
-            ['description' => 'ATHEIS',  'code' => 'N', 'coop_id' => '1'],
-            ['description' => 'ANIMISM', 'code' => 'A', 'coop_id' => '1'],
-            ['description' => 'OTHERS',  'code' => 'L', 'coop_id' => '1'],
+            ['description' => 'ISLAM',   'code' => 'I', 'client_id' => '1'],
+            ['description' => 'KRISTIAN','code' => 'K', 'client_id' => '1'],
+            ['description' => 'HINDU',   'code' => 'H', 'client_id' => '1'],
+            ['description' => 'BUDDHA',  'code' => 'B', 'client_id' => '1'],
+            ['description' => 'CONFUCIUS','code' => 'C', 'client_id' => '1'],
+            ['description' => 'ATHEIS',  'code' => 'N', 'client_id' => '1'],
+            ['description' => 'ANIMISM', 'code' => 'A', 'client_id' => '1'],
+            ['description' => 'OTHERS',  'code' => 'L', 'client_id' => '1'],
         ];
         DB::table('ref.religions')->insert($religion);
 
         $state = [
-            ['description' => 'JOHOR',           'code' => '01', 'coop_id' => '1'],
-            ['description' => 'KEDAH',           'code' => '02', 'coop_id' => '1'],
-            ['description' => 'KELANTAN',        'code' => '03', 'coop_id' => '1'],
-            ['description' => 'MELAKA',          'code' => '04', 'coop_id' => '1'],
-            ['description' => 'NEGERI SEMBILAN', 'code' => '05', 'coop_id' => '1'],
-            ['description' => 'PAHANG',          'code' => '06', 'coop_id' => '1'],
-            ['description' => 'PULAU PINANG',    'code' => '07', 'coop_id' => '1'],
-            ['description' => 'PERAK',           'code' => '08', 'coop_id' => '1'],
-            ['description' => 'PERLIS',          'code' => '09', 'coop_id' => '1'],
-            ['description' => 'SELANGOR',        'code' => '10', 'coop_id' => '1'],
-            ['description' => 'TERENGGANU',      'code' => '11', 'coop_id' => '1'],
-            ['description' => 'SABAH',           'code' => '12', 'coop_id' => '1'],
-            ['description' => 'SARAWAK',         'code' => '13', 'coop_id' => '1'],
-            ['description' => 'W.P KUALA LUMPUR','code' => '14', 'coop_id' => '1'],
-            ['description' => 'W.P LABUAN',      'code' => '15', 'coop_id' => '1'],
-            ['description' => 'W.P PUTRAJAYA',   'code' => '16', 'coop_id' => '1'],
+            ['description' => 'JOHOR',           'code' => '01', 'client_id' => '1'],
+            ['description' => 'KEDAH',           'code' => '02', 'client_id' => '1'],
+            ['description' => 'KELANTAN',        'code' => '03', 'client_id' => '1'],
+            ['description' => 'MELAKA',          'code' => '04', 'client_id' => '1'],
+            ['description' => 'NEGERI SEMBILAN', 'code' => '05', 'client_id' => '1'],
+            ['description' => 'PAHANG',          'code' => '06', 'client_id' => '1'],
+            ['description' => 'PULAU PINANG',    'code' => '07', 'client_id' => '1'],
+            ['description' => 'PERAK',           'code' => '08', 'client_id' => '1'],
+            ['description' => 'PERLIS',          'code' => '09', 'client_id' => '1'],
+            ['description' => 'SELANGOR',        'code' => '10', 'client_id' => '1'],
+            ['description' => 'TERENGGANU',      'code' => '11', 'client_id' => '1'],
+            ['description' => 'SABAH',           'code' => '12', 'client_id' => '1'],
+            ['description' => 'SARAWAK',         'code' => '13', 'client_id' => '1'],
+            ['description' => 'W.P KUALA LUMPUR','code' => '14', 'client_id' => '1'],
+            ['description' => 'W.P LABUAN',      'code' => '15', 'client_id' => '1'],
+            ['description' => 'W.P PUTRAJAYA',   'code' => '16', 'client_id' => '1'],
         ];
         DB::table('ref.states')->insert($state);
 
         $address = [
-            ['description' => 'HOME',      'coop_id' => '1'],
-            ['description' => 'PERMANENT', 'coop_id' => '1'],
-            ['description' => 'OFFICE',    'coop_id' => '1'],
-            ['description' => 'EMPLOYER',  'coop_id' => '1'],
-            ['description' => 'FAMILY',    'coop_id' => '1'],
+            ['description' => 'HOME',      'client_id' => '1'],
+            ['description' => 'PERMANENT', 'client_id' => '1'],
+            ['description' => 'OFFICE',    'client_id' => '1'],
+            ['description' => 'EMPLOYER',  'client_id' => '1'],
+            ['description' => 'FAMILY',    'client_id' => '1'],
         ];
         DB::table('ref.address_types')->insert($address);
 
@@ -134,24 +134,24 @@ class RefSeeder extends Seeder
         DB::table('ref.coop_types')->insert($cooptype);
 
         $product = [
-            ['description' => 'HOME FINANCING',      'code' => 'HF', 'coop_id' => '1'],
-            ['description' => 'PERSONAL FINANCING',  'code' => 'PF', 'coop_id' => '1'],
-            ['description' => 'INVESTMENT FINANCING','code' => 'IF', 'coop_id' => '1'],
-            ['description' => 'EDUCATION FINANCING', 'code' => 'EF', 'coop_id' => '1'],
-            ['description' => 'PRODUCT FINANCING',   'code' => 'HP', 'coop_id' => '1'],
-            ['description' => 'CAR FINANCING',       'code' => 'CF', 'coop_id' => '1'],
-            ['description' => 'TAKAFUL',             'code' => 'TK', 'coop_id' => '1'],
-            ['description' => 'MEDICAL CARD',        'code' => 'MC', 'coop_id' => '1'],
+            ['description' => 'HOME FINANCING',      'code' => 'HF', 'client_id' => '1'],
+            ['description' => 'PERSONAL FINANCING',  'code' => 'PF', 'client_id' => '1'],
+            ['description' => 'INVESTMENT FINANCING','code' => 'IF', 'client_id' => '1'],
+            ['description' => 'EDUCATION FINANCING', 'code' => 'EF', 'client_id' => '1'],
+            ['description' => 'PRODUCT FINANCING',   'code' => 'HP', 'client_id' => '1'],
+            ['description' => 'CAR FINANCING',       'code' => 'CF', 'client_id' => '1'],
+            ['description' => 'TAKAFUL',             'code' => 'TK', 'client_id' => '1'],
+            ['description' => 'MEDICAL CARD',        'code' => 'MC', 'client_id' => '1'],
         ];
         DB::table('ref.product_types')->insert($product);
 
         $memberDocument = [
-            ['description' => 'IDENTIFICATION CARD (FRONT & BACK)',     'code' => 'IC', 'coop_id' => '1'],
-            ['description' => 'WORKER CARD (FRONT)',                    'code' => 'WC', 'coop_id' => '1'],
-            ['description' => 'LATEST PAYCHECK',                        'code' => 'P1', 'coop_id' => '1'],
-            ['description' => 'LAST MONTH PAYCHECK',                    'code' => 'P2', 'coop_id' => '1'],
-            ['description' => 'LAST 2 MONTH PAYCHECK',                  'code' => 'P3', 'coop_id' => '1'],
-            ['description' => 'EMPLOYER VERIFICATION',                  'code' => 'EV', 'coop_id' => '1'],
+            ['description' => 'IDENTIFICATION CARD (FRONT & BACK)',     'code' => 'IC', 'client_id' => '1'],
+            ['description' => 'WORKER CARD (FRONT)',                    'code' => 'WC', 'client_id' => '1'],
+            ['description' => 'LATEST PAYCHECK',                        'code' => 'P1', 'client_id' => '1'],
+            ['description' => 'LAST MONTH PAYCHECK',                    'code' => 'P2', 'client_id' => '1'],
+            ['description' => 'LAST 2 MONTH PAYCHECK',                  'code' => 'P3', 'client_id' => '1'],
+            ['description' => 'EMPLOYER VERIFICATION',                  'code' => 'EV', 'client_id' => '1'],
         ];
         DB::table('ref.membership_documents')->insert($memberDocument);
 
@@ -199,8 +199,8 @@ class RefSeeder extends Seeder
         DB::table('ref.identification_type')->insert($ic_type);
 
         $language = [
-            ['description' => 'ENGLISH',       'coop_id' => '1', 'code' => 'EN', 'status' => '1'],
-            ['description' => 'BAHASA MELAYU', 'coop_id' => '1', 'code' => 'BM', 'status' => '1'],
+            ['description' => 'ENGLISH',       'client_id' => '1', 'code' => 'EN', 'status' => '1'],
+            ['description' => 'BAHASA MELAYU', 'client_id' => '1', 'code' => 'BM', 'status' => '1'],
         ];
         DB::table('ref.language')->insert($language);
 
@@ -227,53 +227,53 @@ class RefSeeder extends Seeder
         DB::table('ref.steps')->insert($steps);
 
         $relationship = [
-            ['description' => 'HUSBAND',          'code' => 'H',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'WIFE',             'code' => 'W',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'SON',              'code' => 'S',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'DAUGHTER',         'code' => 'D',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'FATHER',           'code' => 'F',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'MOTHER',           'code' => 'M',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'BROTHER',          'code' => 'B',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'SISTER',           'code' => 'S',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'UNCLE',            'code' => 'U',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'AUNT',             'code' => 'A',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'COUSIN',           'code' => 'C',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'NEPHEW',           'code' => 'N1', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'NIECE',            'code' => 'N2', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'GRANDFATHER',      'code' => 'GF', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'GRANDMOTHER',      'code' => 'GM', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'GRANDSON',         'code' => 'GS', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'GRANDDAUGHTER',    'code' => 'GD', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'OTHERS',           'code' => 'O',  'coop_id' => '1', 'status' => '1'],
-            ['description' => 'FRIEND',           'code' => 'FR', 'coop_id' => '1', 'status' => '1'],
-            ['description' => 'FIANCE',           'code' => 'FI', 'coop_id' => '1', 'status' => '1'],
+            ['description' => 'HUSBAND',          'code' => 'H',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'WIFE',             'code' => 'W',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'SON',              'code' => 'S',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'DAUGHTER',         'code' => 'D',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'FATHER',           'code' => 'F',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'MOTHER',           'code' => 'M',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'BROTHER',          'code' => 'B',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'SISTER',           'code' => 'S',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'UNCLE',            'code' => 'U',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'AUNT',             'code' => 'A',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'COUSIN',           'code' => 'C',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'NEPHEW',           'code' => 'N1', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'NIECE',            'code' => 'N2', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDFATHER',      'code' => 'GF', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDMOTHER',      'code' => 'GM', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDSON',         'code' => 'GS', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'GRANDDAUGHTER',    'code' => 'GD', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'OTHERS',           'code' => 'O',  'client_id' => '1', 'status' => '1'],
+            ['description' => 'FRIEND',           'code' => 'FR', 'client_id' => '1', 'status' => '1'],
+            ['description' => 'FIANCE',           'code' => 'FI', 'client_id' => '1', 'status' => '1'],
          ];
         DB::table('ref.relationships')->insert($relationship);
 
         $approval_type = [
-            ['description' => 'SPECIAL AID',           'coop_id' => '1', 'code' => 'special_aid'],
-            ['description' => 'FINANCING',             'coop_id' => '1', 'code' => 'fin_apply'],
-            ['description' => 'MEMBERSHIP',            'coop_id' => '1', 'code' => 'member_apply'],
-            ['description' => 'STOP MEMBERSHIP',       'coop_id' => '1', 'code' => 'member_stop'],
-            ['description' => 'ADD SHARE',             'coop_id' => '1', 'code' => 'share_add'],
-            ['description' => 'SELL SHARE',            'coop_id' => '1', 'code' => 'share_sell'],
-            ['description' => 'ADD CONTIBUTION',       'coop_id' => '1', 'code' => 'contri_add'],
-            ['description' => 'WITHDRAW CONTRIBUTION', 'coop_id' => '1', 'code' => 'contri_wd'],
-            ['description' => 'DIVIDEND PAYOUT',       'coop_id' => '1', 'code' => 'dividend'],
+            ['description' => 'SPECIAL AID',           'client_id' => '1', 'code' => 'special_aid'],
+            ['description' => 'FINANCING',             'client_id' => '1', 'code' => 'fin_apply'],
+            ['description' => 'MEMBERSHIP',            'client_id' => '1', 'code' => 'member_apply'],
+            ['description' => 'STOP MEMBERSHIP',       'client_id' => '1', 'code' => 'member_stop'],
+            ['description' => 'ADD SHARE',             'client_id' => '1', 'code' => 'share_add'],
+            ['description' => 'SELL SHARE',            'client_id' => '1', 'code' => 'share_sell'],
+            ['description' => 'ADD CONTIBUTION',       'client_id' => '1', 'code' => 'contri_add'],
+            ['description' => 'WITHDRAW CONTRIBUTION', 'client_id' => '1', 'code' => 'contri_wd'],
+            ['description' => 'DIVIDEND PAYOUT',       'client_id' => '1', 'code' => 'dividend'],
         ];
         DB::table('ref.approval_types')->insert($approval_type);
 
         $product_documents = [
-            ['description' => 'Latest Pay Slip',                 'coop_id' => '1', 'code' => 'pay_slip'],
-            ['description' => 'Last Month Pay Slip',             'coop_id' => '1', 'code' => 'pay_slip2'],
-            ['description' => 'Last 2 Month Pay Slip',           'coop_id' => '1', 'code' => 'pay_slip3'],
-            ['description' => 'Guatantor Latest Pay Slip',       'coop_id' => '1', 'code' => 'g_pay_slip'],
-            ['description' => 'Guarantor Last Month Pay Slip',   'coop_id' => '1', 'code' => 'g_pay_slip2'],
-            ['description' => 'Guarantor Last 2 Month Pay Slip', 'coop_id' => '1', 'code' => 'g_pay_slip3'],
-            ['description' => 'MYKAD (Front & Back)',            'coop_id' => '1', 'code' => 'ic'],
-            ['description' => 'MYKAD (Spouse)',                  'coop_id' => '1', 'code' => 'ic_spouse'],
-            ['description' => 'MYKAD (Child)',                   'coop_id' => '1', 'code' => 'ic_child'],
-            ['description' => 'Work Confirmation',               'coop_id' => '1', 'code' => 'work_confirm'],
+            ['description' => 'Latest Pay Slip',                 'client_id' => '1', 'code' => 'pay_slip'],
+            ['description' => 'Last Month Pay Slip',             'client_id' => '1', 'code' => 'pay_slip2'],
+            ['description' => 'Last 2 Month Pay Slip',           'client_id' => '1', 'code' => 'pay_slip3'],
+            ['description' => 'Guatantor Latest Pay Slip',       'client_id' => '1', 'code' => 'g_pay_slip'],
+            ['description' => 'Guarantor Last Month Pay Slip',   'client_id' => '1', 'code' => 'g_pay_slip2'],
+            ['description' => 'Guarantor Last 2 Month Pay Slip', 'client_id' => '1', 'code' => 'g_pay_slip3'],
+            ['description' => 'MYKAD (Front & Back)',            'client_id' => '1', 'code' => 'ic'],
+            ['description' => 'MYKAD (Spouse)',                  'client_id' => '1', 'code' => 'ic_spouse'],
+            ['description' => 'MYKAD (Child)',                   'client_id' => '1', 'code' => 'ic_child'],
+            ['description' => 'Work Confirmation',               'client_id' => '1', 'code' => 'work_confirm'],
         ];
         DB::table('ref.product_documents')->insert($product_documents);
     }

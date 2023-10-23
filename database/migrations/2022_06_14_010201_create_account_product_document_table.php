@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('SISKOP.Account_Product_document', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->bigInteger('product_id');
 
             $table->string('name');

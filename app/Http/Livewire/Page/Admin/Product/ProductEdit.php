@@ -64,7 +64,7 @@ class ProductEdit extends Component
         $this->User = auth()->user();
         $this->Product            = AccountProduct::where('id', $id)->first();
         $this->producttype_id     = RefProductType::all();
-        $this->refdocument        = RefProductDocuments::where('coop_id', $this->User->coop_id)->get();
+        $this->refdocument        = RefProductDocuments::where('client_id', $this->User->client_id)->get();
         $this->brochure_file      = $this->Product->files()->where('filename', 'brochure')->first();
         $this->payment_table_file = $this->Product->files()->where('filename', 'payment_table')->first();
     }
@@ -73,7 +73,7 @@ class ProductEdit extends Component
     {
         $this->document = AccountProductDocument::firstOrCreate([
             'product_id'    => $this->Product->id,
-            'coop_id'       => $this->User->coop_id,
+            'client_id'       => $this->User->client_id,
             'type'          => $code,
             'name'          => $name,
         ]);
@@ -88,10 +88,10 @@ class ProductEdit extends Component
 
         $this->validate();
 
-        $this->Product->coop_id = $this->User->coop_id;
+        $this->Product->client_id = $this->User->client_id;
         $this->Product->save();
 
-        $coop = Auth()->user()->coop_id;
+        $coop = Auth()->user()->client_id;
 
         if($this->brochure){
             $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension();

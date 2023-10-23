@@ -61,7 +61,7 @@ class ShareMaker extends Component
     {
        $this->User      = User::find(auth()->user()->id);
        $this->maker     = Share::where('uuid', $uuid)->with('customer')->first();
-       $this->banks     = RefBank::where('coop_id', $this->maker->coop_id)->get();
+       $this->banks     = RefBank::where('client_id', $this->maker->client_id)->get();
        $this->Approval  = Approval::where([
             ['approval_id', $this->maker->id],
             ['order', $this->maker->step],

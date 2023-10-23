@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('siskop.coop_approval', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('coop_id');
+            $table->bigInteger('client_id');
             $table->string('approval_type',50)->nullable();
 
             $table->timestamp('created_at')->useCurrent();

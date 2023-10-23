@@ -24,7 +24,7 @@ class Approver extends Component
         if ($this->Approver->approvals()->where('type','like','vote%')->whereNull('vote')->count() <= 1){
             $this->Approver->flag = 20;
             $num = $this->User->id;
-            $newnum = date('y').str_pad($this->User->coop_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
+            $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
             $this->Approver->Customer->ref_no = $newnum;
             $this->Approver->Customer->save();
 

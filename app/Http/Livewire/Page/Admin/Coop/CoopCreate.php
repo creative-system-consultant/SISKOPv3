@@ -67,17 +67,17 @@ class CoopCreate extends Component
         'address.def_state_id'  => 'State',
     ];
 
-    public function mount($coop_id = NULL)
+    public function mount($client_id = NULL)
     {
         $this->User = User::find(auth()->user()->id);
 
-        if ($coop_id != NULL){
-            $this->coop     = Coop::find($coop_id);
+        if ($client_id != NULL){
+            $this->coop     = Coop::find($client_id);
             $this->address  = $this->coop->address()->firstOrCreate();
             $this->page     = "Edit";
             $this->ids      = $this->coop->getids();
             $this->ids      = array_filter($this->ids);
-            $this->users    = CoopAdmin::where('coop_id', $this->coop->id)->get();
+            $this->users    = CoopAdmin::where('client_id', $this->coop->id)->get();
         } else {
             $this->coop    = new Coop;
             $this->address = new Address;
@@ -85,7 +85,7 @@ class CoopCreate extends Component
             $this->coop->created_by = $this->User->name;
             $this->address->created_by = $this->User->name;
         }
-        $this->states = RefState::where('coop_id', '1')->get();
+        $this->states = RefState::where('client_id', '1')->get();
     }
 
     public function add()
@@ -145,9 +145,9 @@ class CoopCreate extends Component
         }
 
         foreach ($this->ids as $key => $value) {
-            $admin = CoopAdmin::where('coop_id', $this->coop->id)->updateOrCreate([
+            $admin = CoopAdmin::where('client_id', $this->coop->id)->updateOrCreate([
                 'user_id'   => $value,
-                'coop_id'   => $this->coop->id,
+                'client_id'   => $this->coop->id,
                 'status'    => '1',
                 'updated_by'=> $this->User->name,
             ]);

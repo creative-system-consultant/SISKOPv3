@@ -114,7 +114,7 @@ class ApplyWithdrawContribution extends Component
     public function applyCont($cust_id)
     {
         $contribution = Contribution::where('cust_id', $cust_id)->firstOrCreate([
-            'coop_id'     => $this->cust->coop_id,
+            'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
             'direction'   => 'withdraw',
         ], [
@@ -133,7 +133,7 @@ class ApplyWithdrawContribution extends Component
     {
         $user = auth()->user();
         $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where('coop_id', $user->coop_id)->get();
+        $this->banks = RefBank::where('client_id', $user->client_id)->get();
 
         $this->restrictApply($this->cust->id);
         $this->applyCont($this->cust->id);
