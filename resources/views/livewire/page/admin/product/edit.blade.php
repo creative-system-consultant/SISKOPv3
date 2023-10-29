@@ -15,7 +15,20 @@
                     disable=""
                     wire:model="Product.name"
                 />
-
+                <x-form.dropdown
+                    label="Financing Calculation Type"
+                    value=""
+                    name="Product.fin_type"
+                    id="Product.fin_type"
+                    mandatory=""
+                    disable=""
+                    default="yes"
+                    wire:model="Product.fin_type"
+                >
+                @foreach ($loanType as $list)
+                    <option value="{{ $list->id }}"> {{ $list->description }} </option>
+                @endforeach
+                </x-form.dropdown>
             </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <x-form.dropdown
@@ -28,7 +41,7 @@
                     default="yes"
                     wire:model="Product.product_type"
                 >
-                @foreach ($producttype_id as $list)
+                @foreach ($producttype as $list)
                     <option value="{{ $list->id }}"> {{ $list->description }} </option>
                 @endforeach
                 </x-form.dropdown>

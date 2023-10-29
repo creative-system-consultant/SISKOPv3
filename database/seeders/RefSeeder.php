@@ -40,6 +40,13 @@ class RefSeeder extends Seeder
         ];
         DB::table('ref.countries')->insert($country);
 
+        $fin_calc_type = [
+            ['description' => 'RULE 78',           'code' => '78', 'client_id' => '1'],
+            ['description' => 'FLAT RATE',         'code' => 'FR', 'client_id' => '1'],
+            ['description' => 'REDUCING BALANCE',  'code' => 'RB', 'client_id' => '1'],
+        ];
+        DB::table('ref.fin_calc_type')->insert($fin_calc_type);
+
         $marital = [
             ['description' => 'SINGLE',  'code' => 'S', 'client_id' => '1'],
             ['description' => 'MARRIED', 'code' => 'M', 'client_id' => '1'],

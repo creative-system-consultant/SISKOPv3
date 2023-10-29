@@ -28,6 +28,8 @@ use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryEdit;
 use App\Http\Livewire\Page\Admin\Maintenance\Education\EducationList;
 use App\Http\Livewire\Page\Admin\Maintenance\Education\EducationCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Education\EducationEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\Financing\CalculationTypeList;
+use App\Http\Livewire\Page\Admin\Maintenance\Financing\CalculationTypeCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Gender\GenderList;
 use App\Http\Livewire\Page\Admin\Maintenance\Gender\GenderCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Gender\GenderEdit;
@@ -255,6 +257,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('/', EducationList::class)->name('education.list');
                 Route::get('create', EducationCreate::class)->name('education.create');
                 Route::get('edit/{id}', EducationEdit::class)->name('education.edit');
+            });
+
+            //Admin > Maintenance > Financing Calculation Type
+            Route::prefix('calculationType')->group(function(){
+                Route::get('/', CalculationTypeList::class)->name('calculationType.list');
+                Route::get('create', CalculationTypeCreate::class)->name('calculationType.create');
+                Route::get('edit/{id}', CalculationTypeCreate::class)->name('calculationType.edit');
             });
 
             //Admin > Maintenance > Country

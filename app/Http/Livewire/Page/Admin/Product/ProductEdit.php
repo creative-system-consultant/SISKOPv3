@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use App\Models\Ref\RefProductType;
 use App\Models\AccountProduct;
 use App\Models\AccountProductDocument;
+use App\Models\Ref\RefFinCalcType;
 use App\Models\Ref\RefProductDocuments;
 use App\Models\User;
 use Storage;
@@ -17,6 +18,7 @@ class ProductEdit extends Component
 
     public User $User;
     public AccountProduct $Product;
+    public $loanType;
     public $producttype;
     public $brochure;
     public $brochure_file;
@@ -28,6 +30,7 @@ class ProductEdit extends Component
 
     protected $rules = [
         'Product.name'               => 'required|string',
+        'Product.fin_type'           => 'required|integer',
         'Product.product_type'       => 'required|integer',
         'Product.profit_rate'        => ['required', 'numeric', 'lte:100'],
         'Product.amt_min'            => ['required', 'numeric', 'lte:Product.amt_max', 'gt:0'],
@@ -51,6 +54,7 @@ class ProductEdit extends Component
 
     protected $validationAttributes = [
         'Product.name'           => 'Name',
+        'Product.fin_type'       => 'Financing Calculation Type',
         'Product.product_type'   => 'Product Type',
         'Product.profit_rate'    => 'Profit Rate',
         'Product.amt_min'        => 'Minimum Financing',
@@ -63,10 +67,11 @@ class ProductEdit extends Component
     {
         $this->User = auth()->user();
         $this->Product            = AccountProduct::where('id', $id)->first();
-        $this->producttype_id     = RefProductType::all();
+        $this->producttype        = RefProductType::all();
         $this->refdocument        = RefProductDocuments::where('client_id', $this->User->client_id)->get();
         $this->brochure_file      = $this->Product->files()->where('filename', 'brochure')->first();
         $this->payment_table_file = $this->Product->files()->where('filename', 'payment_table')->first();
+        $this->loanType           = RefFinCalcType::where('client_id', $this->User->client_id)->get();
     }
 
     public function enableDoc($code,$name)

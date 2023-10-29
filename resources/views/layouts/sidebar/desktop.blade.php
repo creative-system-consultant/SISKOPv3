@@ -179,6 +179,12 @@
                                     </x-slot>
                                 </x-sidebar.dropdown-item>
 
+                                <x-sidebar.dropdown-item title="CALCULATION TYPE" href="{{ route('calculationType.list') }}" uri="calculationType">
+                                    <x-slot name="icon">
+                                        <x-heroicon-o-banknotes class="w-7 h-7" />
+                                    </x-slot>
+                                </x-sidebar.dropdown-item>
+
                                 <x-sidebar.dropdown-item title="RELIGION" href="{{ route('religion.list') }}" uri="religion">
                                     <x-slot name="icon">
                                         <x-heroicon-o-hand-raised class="w-7 h-7" />
