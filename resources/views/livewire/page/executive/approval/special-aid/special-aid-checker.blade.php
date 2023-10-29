@@ -109,7 +109,7 @@
 
             <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                 <x-form.text-area
-                    label="Note / Comment"
+                    label="Note / Comment : ({{ strlen($Approval->note) }}/255)"
                     value="approval_note"
                     name=""
                     rows=""

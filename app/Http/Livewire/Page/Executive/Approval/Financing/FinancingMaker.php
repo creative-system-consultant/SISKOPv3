@@ -25,6 +25,9 @@ class FinancingMaker extends Component
 
     public function next()
     {
+        $this->validate([
+            'Approval.note' => 'required|max:255'
+        ]);
         $this->Account->apply_step++;
         $this->Account->save();
         $this->Approval->user_id = $this->User->id;
