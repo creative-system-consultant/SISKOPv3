@@ -34,6 +34,7 @@ class Profile extends Component
         $this->Cust->save();
 
         session()->flash('message', 'Profile Details Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

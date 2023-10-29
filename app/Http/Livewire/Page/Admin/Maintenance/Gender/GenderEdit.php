@@ -31,6 +31,7 @@ class GenderEdit extends Component
         ]);
 
         session()->flash('message', 'Gender Details Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

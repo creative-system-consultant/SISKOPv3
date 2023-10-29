@@ -98,6 +98,7 @@ class ApplySellExchangeShare extends Component
         $share->make_approvals();
 
         session()->flash('message', 'Share Reimbursement Application Successfully Send');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 
@@ -122,6 +123,7 @@ class ApplySellExchangeShare extends Component
 
         if ($share != null) {
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
+            session()->flash('time', 10000);
             session()->flash('info');
             session()->flash('title');
 
@@ -135,6 +137,7 @@ class ApplySellExchangeShare extends Component
 
         if ($share != null) {
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
+            session()->flash('time', 10000);
             session()->flash('info');
             session()->flash('title');
 

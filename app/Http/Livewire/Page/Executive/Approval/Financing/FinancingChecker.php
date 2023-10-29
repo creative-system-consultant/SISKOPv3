@@ -42,6 +42,7 @@ class FinancingChecker extends Component
         session()->flash('message', 'Application Pre-Approved');
         session()->flash('success');
         session()->flash('title', 'Success!');
+        session()->flash('time', '10000');
 
         return redirect()->route('application.list');
     }
@@ -55,6 +56,7 @@ class FinancingChecker extends Component
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
             session()->flash('title', 'Success!');
+            session()->flash('time', '10000');
 
             return redirect()->route('application.list');
         } else {
@@ -63,7 +65,7 @@ class FinancingChecker extends Component
                 'text'  => 'Application cant go back anymore',
                 'icon'  => 'error',
                 'showConfirmButton' => false,
-                'timer' => 3500,
+                'timer' => 10000,
             ]);
         }
 

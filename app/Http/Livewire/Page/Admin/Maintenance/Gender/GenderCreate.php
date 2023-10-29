@@ -31,6 +31,7 @@ class GenderCreate extends Component
         ]);
 
         session()->flash('message', 'Gender Information Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

@@ -136,6 +136,7 @@ class EditSpecialAid extends Component
         }
 
         session()->flash('message', 'Special Aid Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

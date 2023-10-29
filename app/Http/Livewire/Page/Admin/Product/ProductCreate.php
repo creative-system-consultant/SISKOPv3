@@ -145,6 +145,7 @@ class ProductCreate extends Component
         }
 
         session()->flash('message', 'Product Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

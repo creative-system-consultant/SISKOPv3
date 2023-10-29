@@ -34,6 +34,7 @@ class AccountSetting extends Component
         }
         else{
             session()->flash('message', 'The provided password does not match your current password.');
+            session()->flash('time', 10000);
             session()->flash('error');
             session()->flash('title');
 
@@ -41,6 +42,7 @@ class AccountSetting extends Component
         }
 
         session()->flash('message', 'Password Changed');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

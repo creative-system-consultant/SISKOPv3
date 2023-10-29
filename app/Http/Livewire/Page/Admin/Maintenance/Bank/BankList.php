@@ -20,6 +20,7 @@ class BankList extends Component
         $data->delete();
 
         session()->flash('message', 'Bank Record Deleted');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

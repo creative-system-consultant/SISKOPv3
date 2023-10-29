@@ -31,6 +31,7 @@ class RaceCreate extends Component
         ]);
 
         session()->flash('message', 'Race Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

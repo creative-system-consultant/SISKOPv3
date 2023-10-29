@@ -76,7 +76,7 @@ class Approver extends Component
                 'text'  => 'No previous step, this is the first Approval step.',
                 'icon'  => 'error',
                 'showConfirmButton' => false,
-                'timer' => 3500,
+                'timer' => 10000,
             ]);
         }
     }

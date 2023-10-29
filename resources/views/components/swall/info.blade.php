@@ -5,7 +5,7 @@
             icon: 'info',
             title: `{{ $message }}`,
             showConfirmButton: false,
-            timer: 2500
+            timer: `{{ $time ?? 10000 }}`
         })
     });
 </script>

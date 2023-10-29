@@ -65,7 +65,7 @@ class FinancingCommittee extends Component
                 'text'  => 'Application cant go back anymore',
                 'icon'  => 'error',
                 'showConfirmButton' => false,
-                'timer' => 3500,
+                'timer' => 10000,
             ]);
         }
     }

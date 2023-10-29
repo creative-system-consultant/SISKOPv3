@@ -20,6 +20,7 @@ class GenderList extends Component
         $data->delete();
 
         session()->flash('message', 'Gender Record Deleted');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

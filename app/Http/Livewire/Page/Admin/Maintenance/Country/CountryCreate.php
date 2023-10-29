@@ -31,6 +31,7 @@ class CountryCreate extends Component
         ]);
 
         session()->flash('message', 'Country Information Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

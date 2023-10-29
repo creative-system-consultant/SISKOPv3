@@ -31,6 +31,7 @@ class BankCreate extends Component
         ]);
 
         session()->flash('message', 'Bank Information Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

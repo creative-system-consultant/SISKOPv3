@@ -92,6 +92,7 @@ class ApplySpecialAid extends Component
         ]);
 
         session()->flash('message', 'Special Aid Applied');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

@@ -164,6 +164,7 @@ class CreateSpecialAid extends Component
         }
 
         session()->flash('message', 'Success');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

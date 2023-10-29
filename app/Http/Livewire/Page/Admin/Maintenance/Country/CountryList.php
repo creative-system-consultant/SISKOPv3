@@ -20,6 +20,7 @@ class CountryList extends Component
         $data->delete();
 
         session()->flash('message', 'Country Record Deleted');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

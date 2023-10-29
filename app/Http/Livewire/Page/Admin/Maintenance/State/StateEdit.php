@@ -31,6 +31,7 @@ class StateEdit extends Component
         ]);
 
         session()->flash('message', 'State Details Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

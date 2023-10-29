@@ -94,6 +94,7 @@ class ApplyShare extends Component
 
         if ($this->share_apply == 0) {
             session()->flash('message', 'Application must be more than RM0');
+            session()->flash('time', 10000);
             session()->flash('warning');
             session()->flash('title');
 
@@ -130,6 +131,7 @@ class ApplyShare extends Component
             ]);
 
             session()->flash('message', 'Share Application Successfully Send');
+            session()->flash('time', 10000);
             session()->flash('success');
             session()->flash('title');
 
@@ -149,6 +151,7 @@ class ApplyShare extends Component
             ]);
 
             session()->flash('message', 'Share Application Successfully Send');
+            session()->flash('time', 10000);
             session()->flash('success');
             session()->flash('title');
 
@@ -157,6 +160,7 @@ class ApplyShare extends Component
         else {
             // dd('Cheque);
             session()->flash('message', 'Share Application Successfully Send');
+            session()->flash('time', 10000);
             session()->flash('success');
             session()->flash('title');
 
@@ -170,6 +174,7 @@ class ApplyShare extends Component
 
         if ($share != null) {
             session()->flash('message', 'Add share application is been processed. If you want to make another application, please wait until the application is processed');
+            session()->flash('time', 10000);
             session()->flash('info');
             session()->flash('title');
 

@@ -14,6 +14,7 @@ class WithdrawalContributionApproval extends Component
     public function submit()
     {
         session()->flash('message', 'Withdrawal contribution application has been successfully approved');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

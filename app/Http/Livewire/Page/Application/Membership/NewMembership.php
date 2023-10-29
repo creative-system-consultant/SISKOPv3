@@ -305,6 +305,7 @@ class NewMembership extends Component
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL){
             session()->flash('message', 'You are already a member of '.$this->Coop->name);
+            session()->flash('time', 10000);
             session()->flash('warning');
             session()->flash('title');
 
@@ -435,6 +436,7 @@ class NewMembership extends Component
         ]);
 
         session()->flash('message', 'Membership Application Registered');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 
@@ -505,6 +507,7 @@ class NewMembership extends Component
         // ]);
 
         session()->flash('message', 'Membership Application Registered');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

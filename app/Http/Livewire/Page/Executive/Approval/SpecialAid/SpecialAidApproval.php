@@ -14,6 +14,7 @@ class SpecialAidApproval extends Component
     public function submit()
     {
         session()->flash('message', 'Special Aid application has been successfully approved');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

@@ -31,6 +31,7 @@ class ReligionCreate extends Component
         ]);
 
         session()->flash('message', 'Religion Information Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

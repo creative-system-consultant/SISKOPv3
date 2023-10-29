@@ -31,6 +31,7 @@ class StateCreate extends Component
         ]);
 
         session()->flash('message', 'State Information Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

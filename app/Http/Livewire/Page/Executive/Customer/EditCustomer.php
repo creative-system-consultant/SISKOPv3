@@ -61,6 +61,7 @@ class EditCustomer extends Component
         }
 
         session()->flash('message', 'Profile Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

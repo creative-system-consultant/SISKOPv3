@@ -31,6 +31,7 @@ class BankEdit extends Component
         ]);
 
         session()->flash('message', 'Bank Details Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

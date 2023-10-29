@@ -31,6 +31,7 @@ class CountryEdit extends Component
         ]);
 
         session()->flash('message', 'Country Details Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

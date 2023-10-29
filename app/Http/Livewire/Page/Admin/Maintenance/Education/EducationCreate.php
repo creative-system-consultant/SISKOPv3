@@ -31,6 +31,7 @@ class EducationCreate extends Component
         ]);
 
         session()->flash('message', 'Education Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

@@ -60,13 +60,13 @@
         </div>
 
         @if (session('error'))
-            <x-swall.error  message="{{ session('message') }}"/>
+            <x-swall.error time="{{ session('time') ?? 5500 }}" message="{{ session('message') }}"/>
         @elseif (session('info'))
-            <x-swall.info  message="{{ session('message') }}"/>
+            <x-swall.info time="{{ session('time') ?? 5500 }}" message="{{ session('message') }}"/>
         @elseif (session('success'))
-            <x-swall.success message="{{ session('message') }}"/>
+            <x-swall.success time="{{ session('time') ?? 5500 }}" message="{{ session('message') }}"/>
         @elseif (session('warning'))
-            <x-swall.warning  message="{{ session('message') }}"/>
+            <x-swall.warning time="{{ session('time') ?? 5500 }}" message="{{ session('message') }}"/>
         @endif
         @livewireScripts
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.4/dist/sweetalert2.all.min.js"></script>

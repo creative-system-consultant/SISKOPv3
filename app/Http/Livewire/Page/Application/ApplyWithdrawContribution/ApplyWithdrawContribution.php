@@ -92,6 +92,7 @@ class ApplyWithdrawContribution extends Component
         ]);
 
         session()->flash('message', 'Withdrawal Contribution Application Successfully Send');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 
@@ -104,6 +105,7 @@ class ApplyWithdrawContribution extends Component
 
         if ($contribution != null) {
             session()->flash('message', 'Withdrawal contribution application is been processed. If you want to make another application, please wait until the application is processed');
+            session()->flash('time', 10000);
             session()->flash('info');
             session()->flash('title');
 

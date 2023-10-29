@@ -20,6 +20,7 @@ class ReligionList extends Component
         $data->delete();
 
         session()->flash('message', 'Religion Record Deleted');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

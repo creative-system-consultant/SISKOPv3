@@ -28,6 +28,7 @@ class TitleCreate extends Component
         ]);
 
         session()->flash('message', 'Title Created');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

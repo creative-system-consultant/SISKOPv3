@@ -456,6 +456,7 @@ class ApplyFinancing extends Component
         $this->Account->sendWS('Application '.$this->Account->product->name.' have been submitted and will be reviewed');
 
         session()->flash('message', 'Financing application being processed');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 

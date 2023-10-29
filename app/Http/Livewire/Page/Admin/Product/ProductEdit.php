@@ -120,6 +120,7 @@ class ProductEdit extends Component
         };
 
         session()->flash('message', 'Product Updated');
+        session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
 
