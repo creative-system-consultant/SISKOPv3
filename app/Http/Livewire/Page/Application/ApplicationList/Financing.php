@@ -5,26 +5,26 @@ namespace App\Http\Livewire\Page\Application\ApplicationList;
 
 
 use App\Models\User;
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
 use App\Models\Ref\RefGender;
 use Livewire\Component;
 
 class Financing extends Component
 {
     public User $User;
-    public AccountMaster $financing;
+    public AccountApplication $financing;
     public $financings;
     public $gender;
     public $genderName;
 
     public function closeApplication()
     {
-        $this->financing = new AccountMaster;
+        $this->financing = new AccountApplication;
     }
 
     public function showApplication($uuid)
     {
-        $this->financing = AccountMaster::where('uuid', $uuid)->with('customer')->first();
+        $this->financing = AccountApplication::where('uuid', $uuid)->with('customer')->first();
         $this->genderName = RefGender::where('client_id', $this->financing->client_id)->get();
     }
 
@@ -48,8 +48,8 @@ class Financing extends Component
     {
         $this->User = Auth()->user();
 
-        $this->financings = AccountMaster::where('client_id', $this->User->client_id)
-                            ->where('account_status','>','14')
+        $this->financings = AccountApplication::where('client_id', $this->User->client_id)
+                            //->where('account_status','>','14')
                             ->select('id','uuid','cust_id','apply_step','purchase_price','product_id','created_at','account_status')
                             ->orderBy('created_at','desc')
                             ->with('customer:id,name,icno')

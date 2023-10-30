@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Page\Executive\Approval\Financing;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
+use App\Models\AccountDeduction;
 use App\Models\Approval;
 use App\Models\Customer;
 use App\Models\User;
@@ -10,7 +11,8 @@ use Livewire\Component;
 
 class FinancingCommittee extends Component
 {
-    public AccountMaster $Account;
+    public AccountApplication $Account;
+    public AccountDeduction $Deduction;
     public Approval $Approval;
     public Customer $Customer;
     public User $User;
@@ -20,6 +22,9 @@ class FinancingCommittee extends Component
         'Account.selling_price'    => 'required',
         'Account.approved_duration'=> 'required',
         'Account.instal_amount'    => 'required',
+        'Deduction.process_fee'    => 'required|numeric|gt:0',
+        'Deduction.duty_stamp'     => 'required|numeric|gt:0',
+        'Deduction.insurance'      => 'required|numeric',
         'Approval.note'            => 'required|max:255',
     ];
 
@@ -87,12 +92,13 @@ class FinancingCommittee extends Component
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->Account  = AccountMaster::where('uuid', $uuid)->firstOrFail();
+        $this->Account  = AccountApplication::where('uuid', $uuid)->firstOrFail();
+        $this->Deduction= $this->Account->deduction()->firstOrCreate();
         $this->Approval = Approval::where([
                                 ['approval_id', $this->Account->id],
                                 ['order',       $this->Account->apply_step],
                                 ['user_id',     $this->User->id],
-                                ['approval_type','App\Models\AccountMaster']
+                                ['approval_type','App\Models\AccountApplication']
                           ])->firstOrFail();
         $this->Customer = Customer::find($this->Account->cust_id);
 

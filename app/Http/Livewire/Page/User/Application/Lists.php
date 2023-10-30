@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Page\User\Application;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
 use App\Models\ApplyMembership;
 use App\Models\ApplySpecialAid;
 use App\Models\Contribution;
@@ -32,7 +32,7 @@ class Lists extends Component
         $this->Customer  = Customer::where([['client_id', $this->User->client_id],['icno',$this->User->icno]])->firstOrFail();
         $this->banks     = RefBank::where('client_id', $this->User->client_id)->get();
 
-        $this->financings   = AccountMaster::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();
+        $this->financings   = AccountApplication::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();
         $this->memberships  = ApplyMembership::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();
         $this->shares       = Share::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id],['direction', 'buy']])->get();
         $this->sellShares   = Share::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])

@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplyFinancing;
 
 use Livewire\Component;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
 use App\Models\AccountProduct;
 use App\Models\Address;
 use App\Models\CoopRules;
@@ -24,7 +24,9 @@ use App\Models\User;
 
 class ApplyFinancing extends Component
 {
-    public AccountMaster $Account;
+    use WithFileUploads;
+
+    public AccountApplication $Account;
     public AccountProduct $Product;
     public Customer $Customer;
     public Address $CustAddress;
@@ -307,18 +309,17 @@ class ApplyFinancing extends Component
         $max_active = CoopRules::where([['ruleable_id', $client_id],['name', 'max_active']])->first();
         $this->max_active = $max_active ? $max_active->value : '0';
 
-        $Account          = AccountMaster::where([
+        $Account          = AccountApplication::where([
             ['cust_id'       , $this->Customer->id],
-            ['client_id'       , $this->User->client_id],
+            ['client_id'     , $this->User->client_id],
             ['product_id'    , $this->Product->id],
-            ['account_status', '>', 14]
+            ['account_status', 0]
         ])->get();
 
-        $AllAccount          = AccountMaster::where([
+        $AllAccount          = AccountApplication::where([
             ['cust_id'       , $this->Customer->id],
-            ['client_id'       , $this->User->client_id],
-            ['account_status', '>', 14]
-        ])->get();
+            ['client_id'       , $this->User->client_id]
+        ])->whereNotIn('account_status', [3,4,23,24,25])->get();
 
         if ($Account->count() >= $this->Product->apply_limit){
             session()->flash('message', 'There can be only '.$this->Product->apply_limit.' Pending Application of product '.$this->Product->name.' exists');
@@ -334,20 +335,13 @@ class ApplyFinancing extends Component
 
             return redirect()->route('financing.list');
         }
-        /*
-        if ($Account != NULL && $Account->account_status != 15){
-            session()->flash('message', 'There must be only 1 Financing Application active. Financing Application being processed');
-            session()->flash('warning');
-            session()->flash('title');
 
-            return redirect()->route('home');
-        }*/
-        $this->Account          = AccountMaster::firstOrCreate([
-            'cust_id'           => $this->Customer->id,
-            'client_id'           => $this->User->client_id,
-            'product_id'        => $this->Product->id,
-            'profit_rate'       => $this->Product->profit_rate,
-            'account_status'    => 15
+        $this->Account       = AccountApplication::firstOrCreate([
+            'cust_id'        => $this->Customer->id,
+            'client_id'      => $this->User->client_id,
+            'product_id'     => $this->Product->id,
+            'profit_rate'    => $this->Product->profit_rate,
+            'account_status' => 0
         ]);
 
         $this->CustAddress      = $this->Customer->Address()->firstorCreate();
@@ -405,8 +399,11 @@ class ApplyFinancing extends Component
     public function submit()
     {
         $this->validate();
-        $this->Account->account_status = 16;
-        $this->Account->apply_step     = 1;
+        $this->Account->apply_step        = 1;
+        $this->Account->account_status    = 1;
+        $this->Account->approved_limit    = $this->Account->purchase_price;
+        $this->Account->duration          = $this->Account->duration * 12;
+        $this->Account->approved_duration = $this->Account->duration * 12;
         $this->Account->save();
         $this->Account->make_approvals();
 

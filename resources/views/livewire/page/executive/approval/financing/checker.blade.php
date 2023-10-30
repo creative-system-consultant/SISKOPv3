@@ -59,7 +59,7 @@
                 mandatory=""
                 disable="true"
                 leftTag=""
-                rightTag="YEAR"
+                rightTag="MONTH"
                 type="text"
             />
             <x-form.input-tag
@@ -93,7 +93,7 @@
                 value=""
                 mandatory=""
                 leftTag=""
-                rightTag="YEAR"
+                rightTag="MONTH"
                 disable=""
                 type="text"
                 wire:model="Account.approved_duration"

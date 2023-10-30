@@ -59,7 +59,7 @@
                 mandatory=""
                 disable="true"
                 leftTag=""
-                rightTag="YEAR"
+                rightTag="MONTH"
                 type="text"
             />
         </div>

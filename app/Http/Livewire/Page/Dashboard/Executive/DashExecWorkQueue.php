@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Page\Dashboard\Executive;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
 use App\Models\CoopApprovalRole;
 use App\Models\Ref\RefApprovalType;
 use App\Models\User;
@@ -25,7 +25,7 @@ class DashExecWorkQueue extends Component
         foreach ($this->group as $key => $value) {
             $this->approval_role[$key+1] = CoopApprovalRole::where([['client_id', $this->User->client_id],['role_id', $value->grouping_id]])->get();
             foreach ($this->approval_role[$key+1] as $key1 => $value1) {
-                $accounts = AccountMaster::where([
+                $accounts = AccountApplication::where([
                                     ['client_id', $this->User->client_id],
                                     ['apply_step', $value1->order],
                                     //['product_id', ]

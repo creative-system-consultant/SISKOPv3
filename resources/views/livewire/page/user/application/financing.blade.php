@@ -23,7 +23,7 @@
                         {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->product->name }}
+                        {{ $item->product?->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         RM {{ $item->purchase_price }}

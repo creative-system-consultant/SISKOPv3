@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Page\Executive\Approval\Financing;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
+use App\Models\AccountDeduction;
 use App\Models\Approval;
 use App\Models\Customer;
 use App\Models\User;
@@ -10,26 +11,31 @@ use Livewire\Component;
 
 class FinancingMaker extends Component
 {
-    public AccountMaster $Account;
+    public AccountApplication $Account;
+    public AccountDeduction $Deduction;
     public Approval $Approval;
     public Customer $Customer;
     public User $User;
+    public $profit;
 
     protected $rules = [
         'Account.purchase_price'   => 'required',
+        'Account.approved_limit'   => 'required',
         'Account.selling_price'    => 'required',
         'Account.approved_duration'=> 'required',
         'Account.instal_amount'    => 'required',
+        'Deduction.process_fee'    => 'required|numeric|gt:0',
+        'Deduction.duty_stamp'     => 'required|numeric|gt:0',
+        'Deduction.insurance'      => 'required|numeric',
         'Approval.note'            => 'required|max:255',
     ];
 
     public function next()
     {
-        $this->validate([
-            'Approval.note' => 'required|max:255'
-        ]);
+        $this->validate();
         $this->Account->apply_step++;
         $this->Account->save();
+        $this->Deduction->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = 'lulus';
         $this->Approval->save();
@@ -54,6 +60,7 @@ class FinancingMaker extends Component
         if ($this->Account->apply_step > 1){
             $this->Account->apply_step--;
             $this->Account->save();
+            $this->Deduction->save();
 
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
@@ -77,6 +84,7 @@ class FinancingMaker extends Component
             'Account'  => $this->Account,
             'Approval' => $this->Approval,
             'approvals'=> $this->Account->approvals,
+            'deduction'=> $this->Deduction,
         ]);
     }
 
@@ -88,8 +96,9 @@ class FinancingMaker extends Component
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->Account  = AccountMaster::where('uuid', $uuid)->firstOrFail();
-        $this->Approval = Approval::where([['approval_id', $this->Account->id],['approval_type','App\Models\AccountMaster'],['order', $this->Account->apply_step]])->firstOrFail();
+        $this->Account  = AccountApplication::where('uuid', $uuid)->firstOrFail();
+        $this->Deduction= $this->Account->deduction()->firstOrCreate();
+        $this->Approval = Approval::where([['approval_id', $this->Account->id],['approval_type','App\Models\AccountApplication'],['order', $this->Account->apply_step]])->firstOrFail();
         $this->Customer = Customer::find($this->Account->cust_id);
     }
 

@@ -58,7 +58,7 @@
                 mandatory=""
                 disable="true"
                 leftTag=""
-                rightTag="YEAR"
+                rightTag="MONTH"
                 type="text"
             />
             <x-form.input-tag
