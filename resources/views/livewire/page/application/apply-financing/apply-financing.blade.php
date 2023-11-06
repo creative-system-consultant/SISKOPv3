@@ -7,6 +7,9 @@
             <p class="@if ($numpage == 2)  font-bold underline @endif" > Introducer / Guarantor Info </p>
             <p class="@if ($numpage == 3)  font-bold underline @endif" > Document Info </p>
             <p class="@if ($numpage == 4)  font-bold underline @endif" > Checklist </p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p><span style="font-weight: bold; color: red">*</span> indicates MANDATORY Field</p>
         </div>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
             <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>

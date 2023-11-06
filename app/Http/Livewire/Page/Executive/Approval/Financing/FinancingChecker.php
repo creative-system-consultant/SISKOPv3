@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Page\Executive\Approval\Financing;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
+use App\Models\AccountDeduction;
 use App\Models\Approval;
 use App\Models\Customer;
 use App\Models\User;
@@ -10,36 +11,57 @@ use Livewire\Component;
 
 class FinancingChecker extends Component
 {
-    public AccountMaster $Account;
+    public AccountApplication $Account;
+    public AccountDeduction $Deduction;
     public Approval $Approval;
     public Customer $Customer;
     public User $User;
+    public $forward = false;
+    public $approval_type = 'lulus';
+    public $message = 'Application Pre-Approved';
 
     protected $rules = [
         'Account.purchase_price'   => 'required',
-        'Account.selling_price'    => 'required',
+        'Account.profit_rate'      => 'required',
+        'Account.approved_limit'   => 'required',
         'Account.approved_duration'=> 'required',
         'Account.instal_amount'    => 'required',
+        'Deduction.process_fee'    => 'required|numeric|gt:0',
+        'Deduction.duty_stamp'     => 'required|numeric|gt:0',
+        'Deduction.insurance'      => 'required|numeric',
         'Approval.note'            => 'required|max:255',
     ];
 
+    public function forward() {
+        $this->approval_type = 'Send to next level';
+        $this->message       = 'Application send to next level';
+        $this->next();
+    }
+
+    public function decline() {
+        $this->approval_type = 'gagal';
+        $this->message       = 'Application is reccomended to declined';
+        $this->next();
+    }
+
     public function next()
     {
+        $this->validate();
         $this->Account->apply_step++;
         $this->Account->save();
         $this->Approval->user_id = $this->User->id;
-        $this->Approval->type = 'lulus';
+        $this->Approval->type = $this->approval_type;
         $this->Approval->save();
 
         if ($this->Approval->rule_whatsapp){
-            $this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by CHECKER');
+            //$this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by CHECKER');
         }
 
         if ($this->Approval->rule_sms){
-            $this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+            //$this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
         }
 
-        session()->flash('message', 'Application Pre-Approved');
+        session()->flash('message', $this->message);
         session()->flash('success');
         session()->flash('title', 'Success!');
         session()->flash('time', '10000');
@@ -68,24 +90,27 @@ class FinancingChecker extends Component
                 'timer' => 10000,
             ]);
         }
-
     }
 
     public function debug()
     {
         dd([
+            'forward'  => $this->forward,
             'Account'  => $this->Account,
             'Approval' => $this->Approval,
             'approvals'=> $this->Account->approvals,
+            'forward'  => $this->forward,
         ]);
     }
 
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->Account  = AccountMaster::where('uuid', $uuid)->firstOrFail();
-        $this->Approval = Approval::where([['approval_id', $this->Account->id],['approval_type','App\Models\AccountMaster'],['order', $this->Account->apply_step]])->firstOrFail();
+        $this->Account  = AccountApplication::where('uuid', $uuid)->firstOrFail();
+        $this->Deduction= $this->Account->deduction()->firstOrCreate();
+        $this->Approval = Approval::where([['approval_id', $this->Account->id],['approval_type','App\Models\AccountApplication'],['order', $this->Account->apply_step]])->firstOrFail();
         $this->Customer = Customer::find($this->Account->cust_id);
+        $this->forward  = $this->Approval->rule_forward ?? FALSE;
     }
 
     public function render()

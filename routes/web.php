@@ -112,6 +112,7 @@ use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingCommittee;
+use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingResolution;
 use App\Http\Livewire\Page\User\Application\Lists;
 use App\Http\Livewire\Page\User\Application\Membership\MembershipStatus;
 
@@ -400,6 +401,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', FinancingChecker::class)->name('financing.checker');
                 Route::get('committee/{uuid}', FinancingCommittee::class)->name('financing.committee');
                 Route::get('approver/{uuid}', FinancingApprover::class)->name('financing.approver');
+                Route::get('resolution/{uuid}', FinancingResolution::class)->name('financing.resolution');
             });
 
             //Exec > approval > Dividend

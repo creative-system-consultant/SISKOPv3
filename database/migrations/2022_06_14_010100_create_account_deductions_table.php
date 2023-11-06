@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('FMS.Account_Disbursement_Deductions', function (Blueprint $table) {
+        Schema::create('SISKOP.ACCOUNT_DISBURSEMENT_DEDUCTIONS', function (Blueprint $table) {
             $table->id();
 
             $table->string('mbr_no')->nullable();
             $table->bigInteger('account_id');
-            $table->string('account_no');
+            $table->string('account_no')->nullable();
 
+            $table->decimal('share',16,2)->default(0);
             $table->decimal('contribution',16,2)->default(0);
             $table->decimal('duty_stamp',16,2)->default(0);
+            $table->decimal('credit_report_fee',16,2)->default(0);
             $table->decimal('process_fee',16,2)->default(0);
             $table->decimal('insurance',16,2)->default(0);
             $table->decimal('advance_payment',16,2)->default(0);
@@ -37,7 +39,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('FMS.Account_Disbursement_Deductions',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.ACCOUNT_DISBURSEMENT_DEDUCTIONS',RESEED,101)");
     }
 
     /**
@@ -47,6 +49,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Disbursement_Deductions');
+        Schema::dropIfExists('SISKOP.ACCOUNT_DISBURSEMENT_DEDUCTIONS');
     }
 };

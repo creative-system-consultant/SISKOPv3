@@ -5,13 +5,13 @@ namespace App\Models;
 use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
-use App\Models\Ref\RefAccountStatus;
+use App\Models\Ref\RefApplyStatus;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class AccountMaster extends Model implements Auditable
+class AccountApplication extends Model implements Auditable
 {
     use HasCoop;
     use HasCustomer;
@@ -19,7 +19,7 @@ class AccountMaster extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "FMS.Account_Masters";
+    protected $table   = "SISKOP.ACCOUNT_APPLICATION";
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -32,9 +32,9 @@ class AccountMaster extends Model implements Auditable
         return $this->belongsTo(AccountProduct::class,'product_id','id');
     }
 
-    public function position()
+    public function deduction()
     {
-        return $this->hasMany(AccountPosition::class,'account_no','account_no');
+        return $this->hasOne(AccountDeduction::class,'account_id','id');
     }
 
     public function introducers()
@@ -64,7 +64,7 @@ class AccountMaster extends Model implements Auditable
 
     public function status()
     {
-        return $this->belongsTo(RefAccountStatus::class,'account_status');
+        return $this->belongsTo(RefApplyStatus::class,'account_status','code');
     }
 
     public function make_ref_num()

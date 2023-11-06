@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('FMS.Account_Masters', function (Blueprint $table) {
+        Schema::create('SISKOP.ACCOUNT_APPLICATION', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->decimal('instal_Autopay',18,4)->nullable();
             $table->decimal('total_instal_amount',18,4)->nullable();
             $table->decimal('duration',3,0)->default('12');
-            $table->decimal('approved_duration',2,0)->default('1');
+            $table->decimal('approved_duration',2,0)->default('12');
 
             $table->string('cancel_tag')->nullable();
             $table->string('cancel_desc')->nullable();
@@ -60,7 +60,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('FMS.Account_Masters',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.ACCOUNT_APPLICATION',RESEED,101)");
     }
 
     /**
@@ -70,6 +70,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FMS.Account_Masters');
+        Schema::dropIfExists('SISKOP.ACCOUNT_APPLICATION');
     }
 };

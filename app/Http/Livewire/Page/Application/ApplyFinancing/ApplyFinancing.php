@@ -4,15 +4,13 @@ namespace App\Http\Livewire\Page\Application\ApplyFinancing;
 
 use Livewire\Component;
 
-use App\Models\AccountMaster;
+use App\Models\AccountApplication;
 use App\Models\AccountProduct;
 use App\Models\Address;
 use App\Models\CoopRules;
 use App\Models\Customer;
 use App\Models\CustFamily;
 use App\Models\CustEmployer;
-use App\Models\Introducer;
-use App\Models\Guarantor;
 use App\Models\Ref\RefCustTitle;
 use App\Models\Ref\RefEducation;
 use App\Models\Ref\RefGender;
@@ -21,10 +19,14 @@ use App\Models\Ref\RefRace;
 use App\Models\Ref\RefState;
 use App\Models\Ref\RefRelationship;
 use App\Models\User;
+use Livewire\WithFileUploads;
+use Storage;
 
 class ApplyFinancing extends Component
 {
-    public AccountMaster $Account;
+    use WithFileUploads;
+
+    public AccountApplication $Account;
     public AccountProduct $Product;
     public Customer $Customer;
     public Address $CustAddress;
@@ -53,15 +55,12 @@ class ApplyFinancing extends Component
     public $search_guarantor;
     public $mbr_no = [];
     public $max_active;
+    public $online_file;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
 
     protected $rule1 = [
-        'Product.name'                     => 'required',
-        'Product.profit_rate'              => 'required',
-        'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
-        'Account.duration'                 => 'required|gte:Product.term_min|lte:Product.term_max',
         'Product.name'                     => 'required',
         'Product.profit_rate'              => 'required',
         'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
@@ -78,10 +77,11 @@ class ApplyFinancing extends Component
         'CustAddress.def_state_id'         => 'required',
         'Customer.email'                   => 'required|email',
         'Customer.title_id'                => 'required',
-        'Customer.education_id'            => 'required',
+        'Customer.education_id'            => 'required|numeric',
         'Customer.gender_id'               => 'required',
         'Customer.marital_id'              => 'required',
         'Customer.race_id'                 => 'required',
+        'Customer.ref_no'                  => 'nullable',
         'Family.relationship_id'           => 'required',
         'CustFamily.name'                  => 'required|string',
         'CustFamily.icno'                  => 'required|numeric|digits:12',
@@ -128,14 +128,11 @@ class ApplyFinancing extends Component
         'Product.profit_rate'              => 'required',
         'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
         'Account.duration'                 => 'required|gte:Product.term_min|lte:Product.term_max',
-        'Product.name'                     => 'required',
-        'Product.profit_rate'              => 'required',
-        'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
-        'Account.duration'                 => 'required|gte:Product.term_min|lte:Product.term_max',
         'Customer.name'                    => 'required|string',
         'Customer.icno'                    => 'required',
         'Customer.birthdate'               => 'required',
-        'Customer.mobile_num'              => 'nullable',
+        'Customer.mobile_num'              => 'required|numeric',
+        'Customer.ref_no'                  => 'nullable',
         'CustAddress.address1'             => 'required',
         'CustAddress.address2'             => 'required',
         'CustAddress.address3'             => 'nullable',
@@ -143,7 +140,7 @@ class ApplyFinancing extends Component
         'CustAddress.postcode'             => 'required',
         'CustAddress.def_state_id'         => 'required',
         'Customer.email'                   => 'required|email',
-        'Customer.title_id'                => 'required',
+        'Customer.title_id'                => 'nullable',
         'Customer.education_id'            => 'required',
         'Customer.gender_id'               => 'required',
         'Customer.marital_id'              => 'required',
@@ -188,10 +185,10 @@ class ApplyFinancing extends Component
     //     'Account.duration.lt'              => ':attribute must be less than Maximum Financing Term',
     // ];
 
-    // protected $validationAttributes = [
-    //     'Account.purchase_price'    => 'Purchase Price',
-    //     'Account.duration'          => 'Financing Period',
-    // ];
+    protected $validationAttributes = [
+            'Introducer.name'    => 'Introducer Name',
+            'Guarantor.name'     => 'Guarantor Name',
+    ];
 
     public function next()
     {
@@ -211,6 +208,30 @@ class ApplyFinancing extends Component
 
         if ($this->numpage == 2){
             $this->validate($this->rule2);
+            $this->Account->introducers()->firstOrCreate([
+                'intro_cust_id' => $this->Introducer->id,
+                'client_id'     => $this->User->client_id,
+            ]);
+            $this->Account->guarantors()->firstOrCreate([
+                'guarantor_cust_id' => $this->Guarantor->id,
+                'client_id'         => $this->User->client_id,
+            ]);
+        }
+
+        if ($this->numpage == 3){
+            if($this->online_file){
+                $filepath = 'Files/'.$this->Customer->id.'/Financing//'.$this->Account->id.'/IC_Photo'.'.'.$this->online_file->extension();
+    
+                Storage::disk('local')->putFileAs('public/Files/' . $this->Customer->id. '/Financing//'.$this->Account->id.'//',$this->online_file, 'IC_Photo'.'.'.$this->online_file->extension());
+    
+                $this->Account->files()->updateOrCreate([
+                    'filename' => 'IC_Photo',
+                ],[
+                    'filedesc' => 'IC Photo (Front & Back)',
+                    'filetype' => $this->online_file->extension(),
+                    'filepath' => $filepath,
+                ]);
+            };
         }
         //if ($this->numpage == 3){ $this->validate($this->rule3); }
         //if ($this->numpage == 4){ $this->validate($this->rule4); }
@@ -283,7 +304,7 @@ class ApplyFinancing extends Component
 
     public function gender()
     {
-        $tempGender  = substr($this->Customer->icno, 0, 12);
+        $tempGender  = substr($this->Customer->icno, 11, 12);
         $this->Customer->gender_id;
          if ($tempGender % 2 == 0) {
             $this->Customer->gender_id == '2';
@@ -307,22 +328,22 @@ class ApplyFinancing extends Component
         $max_active = CoopRules::where([['ruleable_id', $client_id],['name', 'max_active']])->first();
         $this->max_active = $max_active ? $max_active->value : '0';
 
-        $Account          = AccountMaster::where([
+        $Account          = AccountApplication::where([
             ['cust_id'       , $this->Customer->id],
-            ['client_id'       , $this->User->client_id],
+            ['client_id'     , $this->User->client_id],
             ['product_id'    , $this->Product->id],
-            ['account_status', '>', 14]
+            ['account_status', 0]
         ])->get();
 
-        $AllAccount          = AccountMaster::where([
+        $AllAccount          = AccountApplication::where([
             ['cust_id'       , $this->Customer->id],
-            ['client_id'       , $this->User->client_id],
-            ['account_status', '>', 14]
-        ])->get();
+            ['client_id'       , $this->User->client_id]
+        ])->whereNotIn('account_status', [3,4,23,24,25])->get();
 
         if ($Account->count() >= $this->Product->apply_limit){
             session()->flash('message', 'There can be only '.$this->Product->apply_limit.' Pending Application of product '.$this->Product->name.' exists');
             session()->flash('warning');
+            session()->flash('time', 10000);
             session()->flash('title','Warning');
 
             return redirect()->route('financing.list');
@@ -330,27 +351,21 @@ class ApplyFinancing extends Component
         if ($AllAccount->count() >= $this->max_active && $this->max_active != 0 ){
             session()->flash('message', 'There can be only '.$this->max_active.' Pending Application for all product');
             session()->flash('warning');
+            session()->flash('time', 10000);
             session()->flash('title','Warning');
 
             return redirect()->route('financing.list');
         }
-        /*
-        if ($Account != NULL && $Account->account_status != 15){
-            session()->flash('message', 'There must be only 1 Financing Application active. Financing Application being processed');
-            session()->flash('warning');
-            session()->flash('title');
 
-            return redirect()->route('home');
-        }*/
-        $this->Account          = AccountMaster::firstOrCreate([
-            'cust_id'           => $this->Customer->id,
-            'client_id'           => $this->User->client_id,
-            'product_id'        => $this->Product->id,
-            'profit_rate'       => $this->Product->profit_rate,
-            'account_status'    => 15
+        $this->Account       = AccountApplication::firstOrCreate([
+            'cust_id'        => $this->Customer->id,
+            'client_id'      => $this->User->client_id,
+            'product_id'     => $this->Product->id,
+            'profit_rate'    => $this->Product->profit_rate,
+            'account_status' => 0
         ]);
 
-        $this->CustAddress      = $this->Customer->Address()->firstorCreate();
+        $this->CustAddress   = $this->Customer->Address()->firstorCreate();
 
         if ($this->Customer->marital_id == 2){
             $married = TRUE;
@@ -379,18 +394,17 @@ class ApplyFinancing extends Component
         $this->Employer         = CustEmployer::firstorCreate(['cust_id' => $this->Customer->id]);
         $this->EmployerAddress  = $this->Employer->Address()->firstorCreate();
 
-        /*
-        $Introducer              = Introducer::where('client_id', $this->User->client_id)->first();
-        if ($Introducer != NULL){
-            $this->Introducer    = Customer::find($Introducer->intro_cust_id);
-            $this->search_introducer        = $this->Introducer->icno;
+        $intro = $this->Account->introducers()->first();
+        $guaran = $this->Account->guarantors()->first();
+
+        if($intro != NULL) {
+            $this->Introducer = Customer::where([['icno', $intro->data->icno],['client_id', $this->User->client_id]])->first();
+            $this->search_introducer = $this->Introducer->icno;
         }
-        $Guarantor              = Guarantor::where('client_id', $this->User->client_id)->first();
-        if ($Guarantor != NULL){
-            $this->Guarantor    = Customer::find($Guarantor->guarantor_cust_id);
-            $this->search_guarantor       = $this->Guarantor->icno;
+        if($guaran != NULL) {
+            $this->Guarantor = Customer::where([['icno', $guaran->data->icno],['client_id', $this->User->client_id]])->first();
+            $this->search_guarantor  = $this->Guarantor->icno;
         }
-        */
 
         $this->title            = RefCustTitle::all();
         $this->education        = RefEducation::all();
@@ -398,15 +412,18 @@ class ApplyFinancing extends Component
         $this->marital          = RefMarital::all();
         $this->race             = RefRace::all();
         $this->state            = RefState::all();
-        $this->relationship     = RefRelationship::whereIn('id', [1,2,5,6])->get();
+        $this->relationship     = RefRelationship::all();
         //dd($this->Customer);
     }
 
     public function submit()
     {
         $this->validate();
-        $this->Account->account_status = 16;
-        $this->Account->apply_step     = 1;
+        $this->Account->apply_step        = 1;
+        $this->Account->account_status    = 1;
+        $this->Account->approved_limit    = $this->Account->purchase_price;
+        $this->Account->duration          = $this->Account->duration * 12;
+        $this->Account->approved_duration = $this->Account->duration;
         $this->Account->save();
         $this->Account->make_approvals();
 
@@ -446,14 +463,14 @@ class ApplyFinancing extends Component
 
         $this->Account->introducers()->firstOrCreate([
             'intro_cust_id' => $this->Introducer->id,
-            'client_id'       => $this->User->client_id,
+            'client_id'     => $this->User->client_id,
         ]);
         $this->Account->guarantors()->firstOrCreate([
             'guarantor_cust_id' => $this->Guarantor->id,
-            'client_id'       => $this->User->client_id,
+            'client_id'         => $this->User->client_id,
         ]);
 
-        $this->Account->sendWS('Application '.$this->Account->product->name.' have been submitted and will be reviewed');
+        //$this->Account->sendWS('Application '.$this->Account->product->name.' have been submitted and will be reviewed');
 
         session()->flash('message', 'Financing application being processed');
         session()->flash('time', 10000);
@@ -461,7 +478,6 @@ class ApplyFinancing extends Component
         session()->flash('title');
 
         return redirect()->route('home');
-
     }
 
     public function alertConfirm()
@@ -478,6 +494,15 @@ class ApplyFinancing extends Component
             'title'         => 'Are you sure you want to apply financing for this product?',
             'html'          => $message,
             'note'          => 'Please recheck all your details before click "Submit" button.',
+        ]);
+    }
+
+    public function deb() {
+        dd([
+            'Account'   => $this->Account,
+            'Account Files'   => $this->Account->files,
+            'Customer'  => $this->Customer,
+            'File 1'    => $this->online_file,
         ]);
     }
 
