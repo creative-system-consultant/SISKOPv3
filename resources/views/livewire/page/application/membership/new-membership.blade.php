@@ -7,6 +7,8 @@
         <p class="@if ($numpage == 3) text-blue-600 font-bold underline @endif">Payment Info</p>
         <p class="@if ($numpage == 4) text-blue-600 font-bold underline @endif">Document Info</p>
         <p class="@if ($numpage == 5) text-blue-600 font-bold underline @endif">Checklist</p>
+        <p>&nbsp;</p>
+        <p><span style="font-weight: bold; color:red">*</span> indicates MANDATORY Field</p>
     </div>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
         {{-- <x-form.basic-form wire:submit.prevent="submit" class="p-4"> --}}

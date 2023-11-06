@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Membership Application (APPROVER)</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Membership Application (RESOLUTION)</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div class="pb-4 pl-4 pr-4">
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
@@ -7,7 +7,7 @@
                 <x-form.input
                     label="Name"
                     name="custname"
-                    value="{{ $Approver->customer->name ?? '' }}"
+                    value="{{ $Resolution->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -15,7 +15,7 @@
                 <x-form.input
                     label="Identity Number"
                     name="custic"
-                    value="{{ $Approver->customer->icno ?? '' }}"
+                    value="{{ $Resolution->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -34,7 +34,7 @@
                         rightTag=""
                         mandatory=""
                         disable="readonly"
-                        wire:model="Approver.register_fee"
+                        wire:model="Resolution.register_fee"
                     />
                 </div>
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -47,7 +47,7 @@
                         rightTag=""
                         mandatory=""
                         disable="readonly"
-                        wire:model="Approver.share_fee"
+                        wire:model="Resolution.share_fee"
                     />
                 </div>
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -60,7 +60,7 @@
                         rightTag=""
                         mandatory=""
                         disable="readonly"
-                        wire:model="Approver.contribution_fee"
+                        wire:model="Resolution.contribution_fee"
                     />
                 </div>
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
@@ -73,11 +73,11 @@
                         rightTag=""
                         mandatory=""
                         disable="readonly"
-                        wire:model="Approver.share_monthly"
+                        wire:model="Resolution.share_monthly"
                     />
                 </div>
             </div>
-            <br>
+            @if($Approval->order > 1)<br>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
             <x-table.table>
                 <x-slot name="thead">
@@ -87,7 +87,7 @@
                     <x-table.table-header class="text-left" value="Date" sort="" />
                 </x-slot>
                 <x-slot name="tbody">
-                @foreach ($Approver->approvals as $item)
+                @foreach ($Resolution->approvals as $item)
                 @if((str_contains($item->type,'vote') && $item->vote == NULL) || $item->type == NULL) @continue @endif
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
@@ -106,10 +106,9 @@
                     </tr>
                 @endforeach
                 </x-slot>
-            </x-table.table>
-            @if($Approval->order == 1) No Approvals Yet @endif
+            </x-table.table>@endif
             <br>
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Vote</h2>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval</h2>
             <div class="grid grid-cols-12 gap-6 mt-8">
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.text-area
@@ -133,7 +132,7 @@
                     <x-form.input
                         label=""
                         name="Role"
-                        value="{{ $Approver->current_approval_role()->name }}"
+                        value="{{ $Resolution->current_approval_role()->name }}"
                         mandatory=""
                         disable="readonly"
                         type="text"
@@ -144,18 +143,13 @@
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <button type="button" wire:click="decline" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                        VOTE REFUSE
+                        Decline
                     </button>
-                    @if($Approver->step > 1)
                     <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Previous
                      </button>
-                     @endif
-                    <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-                        Debug
-                     </button>
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        VOTE APPROVE
+                        Approve
                     </button>
                 </div>
             </div>

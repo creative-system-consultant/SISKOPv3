@@ -10,29 +10,33 @@ use Livewire\Component;
 class Maker extends Component
 {
     public User $User;
+    public ApplyMembership $Maker;
     public Approval $Approval;
-    public $maker;
     public $banks;
 
     protected $rules = [
-        'Approval.note'     => 'required|max:255',
+        'Approval.note'         => ['required','max:255'],
+        'Maker.share_fee'       => ['required','gt:0'],
+        'Maker.share_monthly'   => ['required','gt:0'],
+        'Maker.register_fee'    => ['required','gt:0'],
+        'Maker.contribution_fee'=> ['required','gt:0'],
     ];
 
     public function next()
     {
         $this->validate();
-        $this->maker->step++;
-        $this->maker->save();
+        $this->Maker->step++;
+        $this->Maker->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = 'lulus';
         $this->Approval->save();
 
         if ($this->Approval->rule_whatsapp){
-            $this->maker->sendWS('SISKOPv3 Membership Application ('.$this->maker->coop->name.') have been pre-approved by MAKER');
+            //$this->Maker->sendWS('SISKOPv3 Membership Application ('.$this->Maker->coop->name.') have been pre-approved by MAKER');
         }
 
         if ($this->Approval->rule_sms){
-            $this->maker->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->maker->coop->name.') have been pre-approved by MAKER');
+            //$this->Maker->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->Maker->coop->name.') have been pre-approved by MAKER');
         }
 
         session()->flash('message', 'Application Pre-Approved');
@@ -44,9 +48,9 @@ class Maker extends Component
 
     public function back()
     {
-        if ($this->maker->step > 1){
-            $this->maker->step--;
-            $this->maker->save();
+        if ($this->Maker->step > 1){
+            $this->Maker->step--;
+            $this->Maker->save();
 
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
@@ -67,23 +71,26 @@ class Maker extends Component
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->maker    = ApplyMembership::where('uuid', $uuid)->with('customer')->first();
+        $this->Maker    = ApplyMembership::where('uuid', $uuid)->with('customer')->first();
         $this->Approval = Approval::where([
-                            ['approval_id', $this->maker->id],
-                            ['order', $this->maker->step],
+                            ['approval_id', $this->Maker->id],
+                            ['order', $this->Maker->step],
                             ['role_id', '1'],
                             ['approval_type', 'App\Models\ApplyMembership'],
                         ])->firstOrFail();
     }
 
+    public function deb() {
+        dd([
+            'roles'     => $this->User->role_ids(),
+            'approvals' => $this->Maker->approvals,
+            'approval'  => $this->Approval, 
+            'Maker'     => $this->Maker,
+        ]);
+    }
+
     public function render()
     {
-        /* dd([
-            'roles'     => $this->User->role_ids(),
-            'approvals' => $this->maker->approvals,
-            'approval'  => $this->Approval, 
-            'maker'     => $this->maker,
-        ]); */
         return view('livewire.page.executive.approval.membership.maker')->extends('layouts.head');
     }
 }

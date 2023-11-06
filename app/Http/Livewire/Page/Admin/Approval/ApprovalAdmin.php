@@ -27,6 +27,8 @@ class ApprovalAdmin extends Component
         'lists.*.name'          => "nullable|max:50",
         'lists.*.rule_min'      => "numeric",
         'lists.*.rule_max'      => "numeric",
+        'lists.*.rule_vote'     => "nullable",
+        'lists.*.rule_forward'  => "nullable",
         'lists.*.rule_employee' => "nullable",
         'lists.*.rule_whatsapp' => "nullable",
         'lists.*.rule_sms'      => "nullable",

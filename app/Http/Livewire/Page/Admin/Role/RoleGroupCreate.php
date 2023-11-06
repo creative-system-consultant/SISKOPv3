@@ -72,6 +72,7 @@ class RoleGroupCreate extends Component
     public function deb()
     {
         dump([
+            'group' => $this->group,
             'id'    => $this->ids,
             'user'  => $this->users,
             'selected' => $this->selected,

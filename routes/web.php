@@ -84,6 +84,7 @@ use App\Http\Livewire\Page\Executive\Approval\Membership\Maker as MembershipMake
 use App\Http\Livewire\Page\Executive\Approval\Membership\Checker as MembershipChecker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Committee as MembershipCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Approver as MembershipApprover;
+use App\Http\Livewire\Page\Executive\Approval\Membership\Resolution as MembershipResolution;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareApproval;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareChecker;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareCommittee;
@@ -418,6 +419,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', MembershipChecker::class)->name('membership.checker');
                 Route::get('committee/{uuid}', MembershipCommittee::class)->name('membership.committee');
                 Route::get('approver/{uuid}', MembershipApprover::class)->name('membership.approver');
+                Route::get('resolution/{uuid}', MembershipResolution::class)->name('membership.resolution');
             });
         });
 

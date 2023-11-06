@@ -6,7 +6,7 @@
             label="Registration Fee"
             name="applymember.register_fee"
             value=""
-            mandatory=""
+            mandatory="true"
             disable=""
             leftTag="RM"
             rightTag=""
@@ -22,7 +22,7 @@
             label="Share Fee"
             name="applymember.share_fee"
             value=""
-            mandatory=""
+            mandatory="true"
             disable=""
             leftTag="RM"
             rightTag=""
@@ -38,7 +38,7 @@
                 label="Contribution Fee"
                 name="applymember.contribution_fee"
                 value=""
-                mandatory=""
+                mandatory="true"
                 disable=""
                 leftTag="RM"
                 rightTag=""
@@ -50,9 +50,9 @@
 
 
     <div class="flex items-center justify-center space-x-2">
-        <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+        <!-- <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
             deb
-        </button>
+        </button> -->
         <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             previous
         </button>

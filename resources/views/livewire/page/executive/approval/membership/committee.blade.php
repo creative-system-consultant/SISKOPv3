@@ -28,36 +28,52 @@
                     <x-form.input-tag
                         label="Register FEE"
                         type="text"
-                        name="register_fee"
-                        value="{{ $Committee->register_fee }}"
+                        name=""
+                        value=""
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
-                        disable="true"
+                        disable="readonly"
+                        wire:model="Committee.register_fee"
+                    />
+                </div>
+                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input-tag
+                        label="SHARE FEE"
+                        type="text"
+                        name=""
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable="readonly"
+                        wire:model="Committee.share_fee"
+                    />
+                </div>
+                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input-tag
+                        label="CONTRIBUTION FEE"
+                        type="text"
+                        name=""
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable="readonly"
+                        wire:model="Committee.contribution_fee"
                     />
                 </div>
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
                         label="SHARE MONTHLY"
                         type="text"
-                        name="register_fee"
-                        value="{{ $Committee->share_fee }}"
+                        name=""
+                        value=""
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
-                        disable="true"
-                    />
-                </div>
-                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input-tag
-                        label="CONTRIBUTION MONTHLY"
-                        type="text"
-                        name="register_fee"
-                        value="{{ $Committee->contribution_fee }}"
-                        leftTag="RM"
-                        rightTag=""
-                        mandatory=""
-                        disable="true"
+                        disable="readonly"
+                        wire:model="Committee.share_monthly"
                     />
                 </div>
             </div>

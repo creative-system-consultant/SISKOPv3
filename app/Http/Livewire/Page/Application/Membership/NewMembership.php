@@ -540,7 +540,6 @@ class NewMembership extends Component
             'customer'    => $this->Cust,
             'custfamily'  => $this->CustFamily,
             'family'      => $this->Family,
-            'introducer'  => $this->introducer,
             'employer'    => $this->Employer,
             'address'     => $this->CustAddress,
             'emp address' => $this->EmployAddress,

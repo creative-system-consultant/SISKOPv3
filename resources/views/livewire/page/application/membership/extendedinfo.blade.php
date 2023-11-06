@@ -6,7 +6,7 @@
             label="SEARCH INTRODUCER (by IC Number)"
             name="search"
             value=""
-            mandatory=""
+            mandatory="true"
             disable=""
             type="text"
             wire:keyup="searchUser"
@@ -25,7 +25,6 @@
             type="text"
             wire:model="CustIntroducer.name"
             readonly
-
         />
     </div>
     <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-4">
@@ -68,19 +67,15 @@
     </div>
 </div>
 
-
-
     <div class="flex items-center justify-center space-x-2">
-        <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+        <!-- <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
             deb
-        </button>
+        </button> -->
         <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             previous
         </button>
-
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>
-
     </div>
 </div>

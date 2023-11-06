@@ -84,26 +84,21 @@ class ApplyMembership extends Model implements Auditable
         foreach ($CoopApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
-                $lastuser = '';
-                $cnt = 1;
-                foreach ($value->rolegroup->users()->orderby('user_id')->get() as $key1 => $value1){
-                    if($lastuser == $value1->user_id){ continue; }
-                    $approval = $this->approvals()->withTrashed()->firstOrCreate(['order' => $count,'type' => 'vote'.$cnt]);
+                foreach ($value->rolegroup->users as $key1 => $value1){
+                    $approval = $this->approvals()->firstOrCreate(['order' => $count,'type' => 'vote'.$key1+1]);
                     $approval->group_id = $value->role_id;
                     $approval->rules    = $value->rules;
                     $approval->user_id  = $value1->user_id;
-                    $approval->type     = 'vote'.$cnt;
                     $approval->role_id  = $value->sys_role->id;
+                    $approval->type     = 'vote'.$key1+1;
                     $approval->note     = NULL;
                     $approval->vote     = NULL;
-                    $approval->deleted_at = NULL;
                     $approval->save();
-                    $lastuser = $value1->user_id;
-                    $cnt++;
                 }
+                $count++;
             } else {
 
-                $approval = $this->approvals()->withTrashed()->firstOrCreate(['order' => $count]);
+                $approval = $this->approvals()->firstOrCreate(['order' => $count]);
                 $approval->group_id = $value->role_id;
                 $approval->rules    = $value->rules;
                 $approval->user_id  = NULL;
@@ -111,7 +106,6 @@ class ApplyMembership extends Model implements Auditable
                 $approval->type     = NULL;
                 $approval->note     = NULL;
                 $approval->vote     = NULL;
-                $approval->deleted_at = NULL;
                 $approval->save();
 
                 $count++;
@@ -129,5 +123,13 @@ class ApplyMembership extends Model implements Auditable
     public function approval_unvoted_id($type = 3)
     {
         return explode(',',$this->approvals()->where([['order', $this->step],['vote', NULL],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+    }
+
+    public function approval_vote_yes() {
+        return $this->approvals()->where([['order', $this->step],['vote', 'lulus']])->count();
+    }
+
+    public function approval_vote_no() {
+        return $this->approvals()->where([['order', $this->step],['vote', 'gagal']])->count();
     }
 }

@@ -1,70 +1,71 @@
 <div class="@if ($numpage != 1) hidden @endif">
-<h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
+    <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
 
-<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1">
-      <div @if ($Member->field_status(2) == '0') style="display: none" @endif >
-        <div class="p-4 mt-8 text-grey-900 bg-grey-200">
-            <p><x-form.input
-                label="Full Name"
-                name="Cust.name"
-                value=""
-                mandatory=""
-                disable=""
-                type="text"
-                wire:model="Cust.name"
-            />  </p>
+    <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-1">
+        <div @if ($Member->field_status(2) == '0') style="display: none" @endif >
+            <div class="p-4 mt-8 text-grey-900 bg-grey-200">
+                <p><x-form.input
+                    label="Full Name"
+                    name="Cust.name"
+                    value=""
+                    mandatory="true"
+                    disable=""
+                    type="text"
+                    wire:model="Cust.name"
+                /></p>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
         <div @if ($Member->field_status(3) == '0') style="display: none" @endif >
-             <div class="p-4 text-grey-900 bg-grey-200">
-            <p><x-form.input
-                label="IC Number"
-                name="Cust.icno"
-                value=""
-                mandatory=""
-                disable=""
-                type="text"
-                wire:model="Cust.icno"
-            />  </p>
+            <div class="p-4 text-grey-900 bg-grey-200">
+                <p><x-form.input
+                    label="IC Number"
+                    name="Cust.icno"
+                    value=""
+                    mandatory="true"
+                    disable=""
+                    type="text"
+                    wire:model="Cust.icno"
+                /></p>
+            </div>
         </div>
-        </div>
+
         <div @if ($Member->field_status(5) == '0') style="display: none" @endif >
             <div class="p-4 text-grey-900 bg-grey-200">
-            <p><x-form.input
-                label="Birthdate"
-                name="Cust.birthdate"
-                value=""
-                mandatory=""
-                disable="true"
-                type="text"
-                wire:model="Cust.birthdate"
-            /></p>
+                <p><x-form.input
+                    label="Birthdate"
+                    name="Cust.birthdate"
+                    value=""
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                    wire:model="Cust.birthdate"
+                /></p>
             </div>
         </div>
 
        <div @if ($Member->field_status(7) == '0') style="display: none" @endif >
-        <div class="p-4 text-grey-900 bg-grey-200">
-            <p><x-form.input
-                label="Mobile Number"
-                name="Cust.mobile_num"
-                value=""
-                mandatory=""
-                disable=""
-                type="text"
-                wire:model="Cust.mobile_num"
-            />  </p>
+            <div class="p-4 text-grey-900 bg-grey-200">
+                <p><x-form.input
+                    label="Mobile Number"
+                    name="Cust.mobile_num"
+                    value=""
+                    mandatory="true"
+                    disable=""
+                    type="text"
+                    wire:model="Cust.mobile_num"
+                /></p>
+            </div>
         </div>
-   </div>
-</div>
+    </div>
 
     <div @if ($Member->field_status(13) == '0') style="display: none" @endif >
         <div class="p-4 text-grey-900 bg-grey-200">
             <p><x-form.address class="mt-2"
                 label="Home Address"
-                mandatory=""
+                mandatory="true"
                 disable=""
                 name1="CustAddress.address1"
                 name2="CustAddress.address2"
@@ -74,80 +75,62 @@
                 name6="CustAddress.def_state_id"
                 :state="$state_id"
                 condition="state"
-            />
-        </p>
+            /></p>
         </div>
     </div>
 
-<div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-    <div @if ($Member->field_status(8) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
-            <p><x-form.input
-                label="Email"
-                name="Cust.email"
-                value=""
-                mandatory=""
-                disable=""
-                type="text"
-                wire:model="Cust.email"
-            />  </p>
+    <div class="grid grid-cols-1 gap-6 mt-50 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
+        <div @if ($Member->field_status(8) == '0') style="display: none" @endif >
+            <div class="p-4 mt-2 text-grey-900 bg-grey-200">
+                <p><x-form.input
+                    label="Email"
+                    name="Cust.email"
+                    value=""
+                    mandatory="true"
+                    disable=""
+                    type="text"
+                    wire:model="Cust.email"
+                /></p>
+            </div>
         </div>
-    </div>
 
         <div @if ($Member->field_status(11) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
-            <p><x-form.dropdown
-                label="Race"
-                value=""
-                name="Cust.race_id"
-                id=""
-                mandatory=""
-                disable=""
-                default="yes"
-                wire:model="Cust.race_id"
-            >
-            @foreach ($race_id as $list)
-            <option value="{{ $list->id }}"> {{ $list->description }}</option>
-            @endforeach
-            </x-form.dropdown></p>
-        </div>
-        </div>
-
-    <div @if ($Member->field_status(9) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
-           <p><x-form.dropdown
-               label="Gender"
-               value=""
-               name="Cust.gender_id"
-               id=""
-               mandatory=""
-               disable=""
-               default="yes"
-               wire:model="Cust.gender_id"
-           >
-           @foreach ($gender_id as $list)
+            <div class="p-4 mt-2 text-grey-900 bg-grey-200">
+                <p><x-form.dropdown
+                    label="Race"
+                    value=""
+                    name="Cust.race_id"
+                    id=""
+                    mandatory="true"
+                    disable=""
+                    default="yes"
+                    wire:model="Cust.race_id"
+                >
+                @foreach ($race_id as $list)
                 <option value="{{ $list->id }}"> {{ $list->description }}</option>
-           @endforeach
-           </x-form.dropdown></p>
-           {{-- <p>
-            @foreach ($gender_id as $list)
-            <x-form.input
-            label="Gender"
-            name="Cust.gender_id"
-            value=""
-            mandatory=""
-            disable="true"
-            type="text"
-            wire:model="Cust.gender_id"
-        />
-
-        <option value="{{ $list->id }}"> {{ $list->description }}</option>
-   @endforeach
-    </p> --}}
-
-
+                @endforeach
+                </x-form.dropdown></p>
+            </div>
         </div>
-       </div>
+
+        <div @if ($Member->field_status(9) == '0') style="display: none" @endif >
+            <div class="p-4 mt-2 text-grey-900 bg-grey-200">
+                <p><x-form.dropdown
+                    label="Gender"
+                    value=""
+                    name="Cust.gender_id"
+                    id=""
+                    mandatory="true"
+                    disable=""
+                    default="yes"
+                    wire:model="Cust.gender_id"
+                >
+                @foreach ($gender_id as $list)
+                        <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                @endforeach
+                </x-form.dropdown></p>
+            </div>
+        </div>
 
        <div @if ($Member->field_status(12) == '0') style="display: none" @endif >
         <div class="p-4 mt-2 text-grey-900 bg-grey-200">
@@ -235,11 +218,11 @@
               label="Full Name"
               name="CustFamily.name"
               value=""
-              mandatory=""
+              mandatory="true"
               disable=""
               type="text"
               wire:model="CustFamily.name"
-          />  </p>
+          /></p>
       </div>
     </div>
   </div>
@@ -250,7 +233,7 @@
                 label="IC Number"
                 name="CustFamily.icno"
                 value=""
-                mandatory=""
+                mandatory="true"
                 disable=""
                 type="text"
                 wire:model="CustFamily.icno"
@@ -258,19 +241,6 @@
             />
         </div>
       </div>
-      {{--<div @if ($Member->field_status(16) == '0') style="display: none" @endif >
-        <div class="p-4 mt-2 text-grey-900 bg-grey-200">
-            <x-form.input
-                label="Email"
-                name="CustFamily.email"
-                value=""
-                mandatory=""
-                disable=""
-                type="text"
-                wire:model="CustFamily.email"
-            />
-        </div>
-      </div>--}}
       <div @if ($Member->field_status(17) == '0') style="display: none" @endif >
         <div class="p-4 text-grey-900 bg-grey-200">
             <x-form.input
@@ -284,13 +254,12 @@
             />
         </div>
       </div>
-
 </div>
     <div @if ($Member->field_status(18) == '0') style="display: none" @endif >
         <div class="p-4 text-grey-900 bg-grey-200">
             <x-form.address class="mt-2"
                 label="Home Address"
-                mandatory=""
+                mandatory="true"
                 disable=""
                 name1="FamilyAddress.address1"
                 name2="FamilyAddress.address2"
@@ -311,11 +280,11 @@
               label="Company Name"
               name="Employer.name"
               value=""
-              mandatory=""
+              mandatory="true"
               disable=""
               type="text"
               wire:model="Employer.name"
-          />  </p>
+          /></p>
       </div>
     </div>
   </div>
@@ -326,11 +295,11 @@
                 label="Name Of Department"
                 name="Employer.department"
                 value=""
-                mandatory=""
+                mandatory="true"
                 disable=""
                 type="text"
                 wire:model="Employer.department"
-            />  </p>
+            /></p>
         </div>
       </div>
       <div @if ($Member->field_status(21) == '0') style="display: none" @endif >
@@ -339,11 +308,11 @@
                 label="Position"
                 name="Employer.position"
                 value=""
-                mandatory=""
+                mandatory="true"
                 disable=""
                 type="text"
                 wire:model="Employer.position"
-            />  </p>
+            /></p>
         </div>
       </div>
     </div>
@@ -354,11 +323,11 @@
                     label="Office Telephone Number"
                     name="Employer.office_num"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     type="text"
                     wire:model="Employer.office_num"
-                />  </p>
+                /></p>
             </div>
         </div>
         <div @if ($Member->field_status(23) == '0') style="display: none" @endif >
@@ -367,13 +336,13 @@
                     label="Salary"
                     name="Employer.salary"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     leftTag="RM"
                     rightTag=""
                     disable=""
                     type="text"
                     wire:model="Employer.salary"
-                />  </p>
+                /></p>
             </div>
         </div>
         <div @if ($Member->field_status(24) == '0') style="display: none" @endif >
@@ -382,11 +351,11 @@
                     label="Worker Number"
                     name="Employer.worker_num"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     type="text"
                     wire:model="Employer.worker_num"
-                />  </p>
+                /></p>
             </div>
         </div>
     </div>
@@ -395,7 +364,7 @@
             <div class="p-4 text-grey-900 bg-grey-200">
                 <p><x-form.address class="mt-2"
                     label="Office Address"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     name1="EmployAddress.address1"
                     name2="EmployAddress.address2"
@@ -405,16 +374,15 @@
                     name6="EmployAddress.def_state_id"
                     :state="$state_id"
                     condition="state"
-                />  </p>
+                /></p>
             </div>
         </div>
 
   <div class="p-4 mt-6 rounded-md bg-gray-50">
     <div class="flex items-center justify-center space-x-2">
-
-        <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+        <!-- <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
             deb
-        </button>
+        </button> -->
         <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
             Next
         </button>

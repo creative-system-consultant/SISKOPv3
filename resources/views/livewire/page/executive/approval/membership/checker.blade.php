@@ -7,7 +7,7 @@
                 <x-form.input
                     label="Name"
                     name="custname"
-                    value="{{ $checker->customer->name ?? '' }}"
+                    value="{{ $Checker->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -15,7 +15,7 @@
                 <x-form.input
                     label="Identity Number"
                     name="custic"
-                    value="{{ $checker->customer->icno ?? '' }}"
+                    value="{{ $Checker->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -28,40 +28,56 @@
                     <x-form.input-tag
                         label="Register FEE"
                         type="text"
-                        name="register_fee"
-                        value="{{ $checker->register_fee }}"
+                        name=""
+                        value=""
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
-                        disable="true"
+                        disable="readonly"
+                        wire:model="Checker.register_fee"
+                    />
+                </div>
+                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input-tag
+                        label="SHARE FEE"
+                        type="text"
+                        name=""
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable="readonly"
+                        wire:model="Checker.share_fee"
+                    />
+                </div>
+                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input-tag
+                        label="CONTRIBUTION FEE"
+                        type="text"
+                        name=""
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable="readonly"
+                        wire:model="Checker.contribution_fee"
                     />
                 </div>
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
                         label="SHARE MONTHLY"
                         type="text"
-                        name="register_fee"
-                        value="{{ $checker->share_fee }}"
+                        name=""
+                        value=""
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
-                        disable="true"
-                    />
-                </div>
-                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input-tag
-                        label="CONTRIBUTION MONTHLY"
-                        type="text"
-                        name="register_fee"
-                        value="{{ $checker->contribution_fee }}"
-                        leftTag="RM"
-                        rightTag=""
-                        mandatory=""
-                        disable="true"
+                        disable="readonly"
+                        wire:model="Checker.share_monthly"
                     />
                 </div>
             </div>
-            <br>
+            @if($Approval->order > 1)<br>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
             <x-table.table>
                 <x-slot name="thead">
@@ -71,7 +87,7 @@
                     <x-table.table-header class="text-left" value="Date" sort="" />
                 </x-slot>
                 <x-slot name="tbody">
-                @foreach ($checker->approvals as $item)
+                @foreach ($Checker->approvals as $item)
                 @if((str_contains($item->type,'vote') && $item->vote == NULL) || $item->type == NULL) @continue @endif
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
@@ -90,8 +106,7 @@
                     </tr>
                 @endforeach
                 </x-slot>
-            </x-table.table>
-            @if($Approval->order == 1) No Approvals Yet @endif
+            </x-table.table>@endif
             <br>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval</h2>
             <div class="grid grid-cols-12 gap-6 mt-8">
@@ -117,7 +132,7 @@
                     <x-form.input
                         label=""
                         name="Role"
-                        value="{{ $checker->current_approval_role()->name }}"
+                        value="{{ $Checker->current_approval_role()->name }}"
                         mandatory=""
                         disable="readonly"
                         type="text"
@@ -127,17 +142,23 @@
 
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
-                    <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                        Cancel Application
+                    <button type="button" wire:click="decline" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
+                        Decline
                     </button>
-                    @if($checker->step > 1)
+                    @if($Checker->step > 1)
                     <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Previous
                      </button>
                      @endif
+                    <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                        Debug
+                    </button>
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         Approve
                     </button>
+                    @if($forward) <button wire:click="forward" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-orange-500 rounded-md focus:outline-none">
+                       Send To Next Approval
+                    </button>@endif
                 </div>
             </div>
         </div>
