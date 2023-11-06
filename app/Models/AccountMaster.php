@@ -123,6 +123,7 @@ class AccountMaster extends Model implements Auditable
                     $approval->vote     = NULL;
                     $approval->save();
                 }
+                $count++;
             } else {
 
                 $approval = $this->approvals()->firstOrCreate(['order' => $count]);
@@ -150,6 +151,14 @@ class AccountMaster extends Model implements Auditable
     public function approval_unvoted_id($type = 3)
     {
         return explode(',',$this->approvals()->where([['order', $this->apply_step],['vote', NULL],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+    }
+
+    public function approval_vote_yes() {
+        return $this->approvals()->where([['order', $this->apply_step],['vote', 'lulus']])->count();
+    }
+
+    public function approval_vote_no() {
+        return $this->approvals()->where([['order', $this->apply_step],['vote', 'gagal']])->count();
     }
 
     public function sendWS($msg)
@@ -187,7 +196,7 @@ class AccountMaster extends Model implements Auditable
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,
@@ -242,7 +251,7 @@ class AccountMaster extends Model implements Auditable
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,
@@ -297,7 +306,7 @@ class AccountMaster extends Model implements Auditable
         $email      = $cust->email;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,

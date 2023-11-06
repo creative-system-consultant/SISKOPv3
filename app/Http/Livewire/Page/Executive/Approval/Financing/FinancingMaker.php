@@ -41,11 +41,11 @@ class FinancingMaker extends Component
         $this->Approval->save();
 
         if ($this->Approval->rule_whatsapp){
-            $this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+            //$this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
         }
 
         if ($this->Approval->rule_sms){
-            $this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
+            //$this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by MAKER');
         }
 
         session()->flash('message', 'Application Pre-Approved');
@@ -64,6 +64,7 @@ class FinancingMaker extends Component
 
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
+            session()->flash('time', '10000');
             session()->flash('title', 'Success!');
 
             return redirect()->route('application.list');
@@ -91,6 +92,17 @@ class FinancingMaker extends Component
     public function cancel()
     {
         //
+    }
+
+    public function calculate() {
+        $amount   = $this->Account->approved_limit;
+        $rate     = $this->Account->profit_rate;
+        $duration = $this->Account->approved_duration;
+        $profit  = $amount * ($duration / 12 * ($rate/100));
+
+        $this->profit = number_format($profit,2,'.','');
+        $this->Account->selling_price = number_format($amount+$profit,2,'.','');
+        $this->Account->instal_amount = number_format(($profit+$amount) / $duration,2,'.','');
     }
 
     public function mount($uuid)

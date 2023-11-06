@@ -74,105 +74,119 @@
                 rightTag="%"
                 type="text"
             />
-            <x-form.input-tag
-                label="Selling Price"
-                id="Account.selling_price"
-                name="Account.selling_price"
-                value=""
-                mandatory=""
-                disable="true"
-                leftTag="RM"
-                rightTag=""
-                type="text"
-            />
-            <x-form.input-tag
-                label="Total Profit"
-                id="Account.selling_price"
-                name="Account.selling_price"
-                value=""
-                mandatory=""
-                disable="true"
-                leftTag="RM"
-                rightTag=""
-                type="text"
-            />
-            <x-form.input-tag
-                label="Monthly Payment"
-                id="Account.selling_price"
-                name="Account.selling_price"
-                value=""
-                mandatory=""
-                disable="true"
-                leftTag="RM"
-                rightTag=""
-                type="text"
-            />
         </div>
         <br>
         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Financing Approval</h2>
         <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             <x-form.input-tag
-                label="Approved Price"
-                name="Account.selling_price"
-                id="Account.selling_price"
+                label="Approved Limit"
+                name="Account.approved_limit"
+                id="Account.approved_limit"
                 value=""
                 leftTag="RM"
                 rightTag=""
-                mandatory=""
+                mandatory="true"
                 disable=""
                 type="text"
-                wire:model="Account.selling_price"
+                wire:model="Account.approved_limit"
             />
             <x-form.input-tag
                 label="Approved Duration"
                 name="Account.approved_duration"
                 id="Account.approved_duration"
                 value=""
-                mandatory=""
+                mandatory="true"
                 leftTag=""
-                rightTag="YEAR"
+                rightTag="MONTH"
                 disable=""
                 type="text"
                 wire:model="Account.approved_duration"
             />
+            <x-form.input-tag
+                label="Selling Price"
+                id="Account.selling_price"
+                name="Account.selling_price"
+                value=""
+                mandatory=""
+                disable="readonly"
+                leftTag="RM"
+                rightTag=""
+                type="text"
+                wire:model="Account.selling_price"
+            />
+            <x-form.input-tag
+                label="Total Profit"
+                id=""
+                name=""
+                value=""
+                mandatory=""
+                disable="readonly"
+                leftTag="RM"
+                rightTag=""
+                type="text"
+                wire:model="profit"
+            />
+            <x-form.input-tag
+                label="Monthly Payment"
+                id=""
+                name=""
+                value=""
+                mandatory=""
+                disable="readonly"
+                leftTag="RM"
+                rightTag=""
+                type="text"
+                wire:model="Account.instal_amount"
+            />
+            <div class="p-4 mt-2 rounded-md">
+                <div class="flex items-center justify-center space-x-2">
+                    <button wire:click="calculate" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                        CALCULATE
+                    </button>
+                </div>
+            </div>
         </div>
         <br>
         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Financing Charges</h2>
         <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             <x-form.input-tag
-                label="Process Charge"
-                name=""
-                id=""
+                label="Process Fee"
+                name="Deduction.process_fee"
+                id="Deduction.process_fee"
                 value=""
-                mandatory=""
+                mandatory="true"
                 leftTag="RM"
                 rightTag=""
                 disable=""
                 type="text"
+                wire:model="Deduction.process_fee"
             />
             <x-form.input-tag
                 label="Duty Stamp"
-                name=""
-                id=""
+                name="Deduction.duty_stamp"
+                id="Deduction.duty_stamp"
                 value=""
-                mandatory=""
+                mandatory="true"
                 leftTag="RM"
                 rightTag=""
                 disable=""
                 type="text"
+                wire:model="Deduction.duty_stamp"
             />
             <x-form.input-tag
                 label="Takaful"
-                name=""
-                id=""
+                name="Deduction.insurance"
+                id="Deduction.insurance"
                 value=""
-                mandatory=""
+                mandatory="true"
                 leftTag="RM"
                 rightTag=""
                 disable=""
                 type="text"
+                wire:model="Deduction.insurance"
             />
         </div>
+        @if($Approval->order != 1)
         <br>
         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
         <x-table.table>
@@ -203,7 +217,7 @@
             @endforeach
             </x-slot>
         </x-table.table>
-        @if($Approval->order == 1) No Approvals Yet @endif
+        @endif
         <br>
         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval</h2>
         <div class="grid grid-cols-12 gap-6 mt-8">
@@ -242,13 +256,13 @@
                 <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                     Cancel Application
                 </button>
-                <button wire:click="debug" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                {{--<button wire:click="debug" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     debug
-                </button>
+                </button>--}}
                 <button wire:click="back" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     Previous
                  </button>
-                <button wire:click="next" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                <button wire:click="next" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                    Next
                 </button>
             </div>

@@ -1,3 +1,4 @@
+
 <div x-data="{ openModal : false }" wire:poll.30000ms>
     <x-table.table>
         <x-slot name="thead">
@@ -18,25 +19,25 @@
                         {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->customer->name }}
+                        {{ $item->customer?->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->customer->icno }}
+                        {{ $item->customer?->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->id }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->product->name }}
+                        {{ $item->product?->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->purchase_price }}
+                        RM {{ number_format($item->purchase_price,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->status->description }}
+                        {{ $item->status?->description }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
@@ -73,6 +74,14 @@
 
                             @if ($item->account_status == 1 && in_array($User->id,$item->approval_unvoted_id(4)))
                                 <a href="{{ route('financing.approver', $item->uuid) }}"
+                                   class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                                   title="Approval Process">
+                                    <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                                </a>
+                            @endif
+
+                            @if ($item->account_status == 1 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 5)
+                                <a href="{{ route('financing.resolution', $item->uuid) }}"
                                    class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                    title="Approval Process">
                                     <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>

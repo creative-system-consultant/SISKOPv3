@@ -20,8 +20,11 @@ class Approval extends Model implements Auditable
         'deleted_at'    => 'datetime',
     ];
     protected $appends = [
+                            'role',
                             'rule_min',
                             'rule_max',
+                            'rule_vote',
+                            'rule_forward',
                             'rule_employee',
                             'rule_whatsapp',
                             'rule_sms',
@@ -55,6 +58,22 @@ class Approval extends Model implements Auditable
     }
 
     /* 
+        $this->role
+        start
+    */
+    public function getRoleAttribute()
+    {
+        return $this->getRule('role',NULL);
+    }
+
+    public function setRoleAttribute($value)
+    {
+        return $this->setRule('role',$value);
+    }
+    /*    end    */
+
+
+    /* 
         $this->rule_min
         start
     */
@@ -81,6 +100,36 @@ class Approval extends Model implements Auditable
     public function setRuleMaxAttribute($value)
     {
         return $this->setRule('max',$value);
+    }
+    /*    end    */
+
+    /* 
+        $this->rule_forward
+        start
+    */
+    public function getRuleForwardAttribute()
+    {
+        return $this->getRule('forward',FALSE);
+    }
+
+    public function setRuleForwardAttribute($value)
+    {
+        return $this->setRule('forward',$value);
+    }
+    /*    end    */
+
+    /* 
+        $this->rule_vote
+        start
+    */
+    public function getRuleVoteAttribute()
+    {
+        return $this->getRule('vote',FALSE);
+    }
+
+    public function setRuleVoteAttribute($value)
+    {
+        return $this->setRule('vote',$value);
     }
     /*    end    */
 

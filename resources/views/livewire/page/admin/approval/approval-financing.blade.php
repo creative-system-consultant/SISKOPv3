@@ -41,6 +41,7 @@
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
                                     {{ $list->rolegroup->role->name }}
+                                    @php $list->role = $list->rolegroup->role->name; @endphp
                                 </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
                                     <div class="flex items-center">
@@ -73,6 +74,7 @@
                                             >
                                                 <div class="p-4">
                                                     <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Value</h2>
+                                                    {{-- This rule is not implemented for First MAKER only. --}}
                                                     @if($list->rolegroup->role_id != 1 || $firstMaker)
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                                         <x-form.input-tag
@@ -108,6 +110,7 @@
                                                             $list->save();
                                                         @endphp
                                                     @endif
+                                                    @if( $list->role == 'MAKER')
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                                         <x-form.input-tag
                                                             label="Employer"
@@ -122,11 +125,34 @@
                                                             wire:model.defer="lists.{{ $key }}.rule_employee"
                                                         />
                                                     </div>
+                                                    @elseif( $list->role == 'CHECKER')
+                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                                                        <x-form.checkbox
+                                                            label="Send To Next"
+                                                            id=""
+                                                            name=""
+                                                            value=""
+                                                            disable=""
+                                                            wire:model.defer="lists.{{ $key }}.rule_forward"
+                                                        />
+                                                    </div>
+                                                    @elseif( $list->role == 'COMMITTEE' || $list->role == 'APPROVER' )
+                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                                                        <x-form.checkbox
+                                                            label="Votes must be unanimous"
+                                                            id=""
+                                                            name=""
+                                                            value=""
+                                                            disable=""
+                                                            wire:model.defer="lists.{{ $key }}.rule_vote"
+                                                        />
+                                                    </div>
+                                                    @endif
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                                         <x-form.checkbox
                                                             label="Send Whatsapp"
-                                                            id="sendWs"
-                                                            name="sendWs"
+                                                            id=""
+                                                            name=""
                                                             value=""
                                                             disable=""
                                                             wire:model.defer="lists.{{ $key }}.rule_whatsapp"
@@ -135,8 +161,8 @@
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                                         <x-form.checkbox
                                                             label="Send SMS"
-                                                            id="sendSms"
-                                                            name="sendSms"
+                                                            id=""
+                                                            name=""
                                                             value=""
                                                             disable=""
                                                             wire:model.defer="lists.{{ $key }}.rule_sms"
@@ -145,8 +171,8 @@
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                                         <x-form.checkbox
                                                             label="Send E-mail"
-                                                            id="sendEmail"
-                                                            name="sendEmail"
+                                                            id=""
+                                                            name=""
                                                             value=""
                                                             disable=""
                                                             wire:model.defer="lists.{{ $key }}.rule_email"

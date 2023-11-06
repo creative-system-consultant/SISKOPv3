@@ -4,15 +4,15 @@
         <div class="mt-4 bg-white rounded-md">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                 <x-form.input
-                    label="File"
-                    name=""
-                    id=""
+                    label="Upload photo Of IC (Front & Back) :"
+                    name="online_file"
+                    id="online_file"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     type="file"
-                    accept=""
-                    wire:model=""
+                    accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                    wire:model.defer="online_file"
                 />
             </div>
         </div>

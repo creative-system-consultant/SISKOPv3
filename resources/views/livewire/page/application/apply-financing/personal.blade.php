@@ -6,7 +6,7 @@
             name="Product.name"
             value=""
             mandatory=""
-            disable="true"
+            disable="readonly"
             wire:model="Product.name"
         />
         <x-form.input-tag
@@ -17,7 +17,7 @@
             leftTag=""
             rightTag="%"
             mandatory=""
-            disable="true"
+            disable="readonly"
             wire:model="Product.profit_rate"
         />
     </div>
@@ -29,7 +29,7 @@
             value=""
             leftTag="RM"
             rightTag=""
-            mandatory=""
+            mandatory="true"
             disable=""
             wire:model="Account.purchase_price"
         />
@@ -40,7 +40,7 @@
             id="Account.duration"
             leftTag=""
             rightTag="Year"
-            mandatory=""
+            mandatory="true"
             disable=""
             default="yes"
             wire:model="Account.duration"
@@ -60,7 +60,7 @@
                     type="text"
                     name="Customer.name"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     wire:model="Customer.name"
                 />
@@ -69,7 +69,7 @@
                     type="text"
                     name="Customer.icno"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable="true"
                     wire:model="Customer.icno"
                 />
@@ -90,7 +90,7 @@
                     type="text"
                     name="Customer.mobile_num"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     wire:model="Customer.mobile_num"
                 />
@@ -98,7 +98,7 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
                 <x-form.address class="mt-6"
                     label="Address"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     name1="CustAddress.address1"
                     name2="CustAddress.address2"
@@ -116,7 +116,7 @@
                     type="text"
                     name="Customer.email"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     wire:model="Customer.email"
                 />
@@ -126,9 +126,9 @@
                     type="text"
                     name="membership_no"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable="true"
-                    wire:model=""
+                    wire:model="Customer.ref_no"
                 />
 
                 <x-form.dropdown
@@ -136,7 +136,7 @@
                     value=""
                     name="Customer.gender_id"
                     id="Customer.gender_id"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     default="yes"
                     wire:model="Customer.gender_id"
@@ -152,7 +152,7 @@
                     value=""
                     name="Customer.race_id"
                     id="Customer.race_id"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     default="yes"
                     wire:model="Customer.race_id"
@@ -167,7 +167,7 @@
                     value=""
                     name="Customer.education_id"
                     id="Customer.education_id"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     default="yes"
                     wire:model="Customer.education_id"
@@ -181,7 +181,7 @@
                     value=""
                     name="Customer.marital_id"
                     id="Customer.marital_id"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     default="yes"
                     wire:model="Customer.marital_id"
@@ -217,7 +217,7 @@
                     value=""
                     name="Family.relationship_id"
                     id="Family.relationship_id"
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     default="yes"
                     wire:model="Family.relationship_id"
@@ -231,7 +231,7 @@
                     type="text"
                     name="CustFamily.name"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     wire:model="CustFamily.name"
                 />
@@ -242,7 +242,7 @@
                     type="text"
                     name="CustFamily.icno"
                     value=""
-                    mandatory=""
+                    mandatory="true"
                     disable=""
                     wire:model="CustFamily.icno"
                 />

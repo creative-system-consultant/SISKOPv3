@@ -182,15 +182,6 @@ class RefSeeder extends Seeder
             ['description' => 'RECALL',         'code' => '10'],
             ['description' => 'CANCEL',         'code' => '11'],
             ['description' => 'FAILED',         'code' => '12'],
-            ['description' => 'reserved',       'code' => '13'],
-            ['description' => 'reserved',       'code' => '14'],
-            ['description' => 'APPLYING',       'code' => '15'],
-            ['description' => 'APPROVAL',       'code' => '16'],
-            ['description' => 'reserved',       'code' => '17'],
-            ['description' => 'reserved',       'code' => '18'],
-            ['description' => 'reserved',       'code' => '19'],
-            ['description' => 'ACCEPTANCE',     'code' => '20'],
-            ['description' => 'REJECT',         'code' => '21'],
         ];
         DB::table('ref.account_statuses')->insert($account_status);
 
@@ -215,12 +206,15 @@ class RefSeeder extends Seeder
             ['description' => 'APPLYING',      'code' => '0'],
             ['description' => 'PROCESS START', 'code' => '1'],
             ['description' => 'reserved',      'code' => '2'],
-            ['description' => 'CANCEL',        'code' => '3'],
-            ['description' => 'REJECT',        'code' => '4'],
-            ['description' => 'reserved',      'code' => '5'],
-            ['description' => 'APPROVED',      'code' => '6'],
+            ['description' => 'USER CANCELED', 'code' => '3'],
+            ['description' => 'COOP CANCELED', 'code' => '4'],
+            ['description' => 'RESOLUTION',    'code' => '11'],
+            ['description' => 'APPROVED',      'code' => '20'],
+            ['description' => 'USER REJECTED', 'code' => '23'],
+            ['description' => 'COOP REJECTED', 'code' => '24'],
+            ['description' => 'RESOLUTION REJECTED', 'code' => '25'],
         ];
-        DB::table('ref.status')->insert($statuses);
+        DB::table('ref.apply_status')->insert($statuses);
 
         $steps = [
             ['description' => 'APPLYING',             'code' => '0', 'type' => 'share_sell', 'status' => '1'],
