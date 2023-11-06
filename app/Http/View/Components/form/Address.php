@@ -17,6 +17,7 @@ class Address extends Component
     public $state;
     public $mandatory;
     public $disable;
+    public $mailFlag;
 
     public function __construct(
         $label,
@@ -28,7 +29,8 @@ class Address extends Component
         $name6,
         $condition,
         $mandatory="false",
-        $disable="false"
+        $disable="false",
+        $mailFlag="false",
     )
     {
         $this->label = $label;
@@ -41,6 +43,7 @@ class Address extends Component
         $this->condition = $condition;
         $this->mandatory = $mandatory;
         $this->disable = $disable;
+        $this->mailFlag = $mailFlag;
         // $this->state = RefState::all();
         $this->state = "";
     }

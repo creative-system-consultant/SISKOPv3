@@ -1,63 +1,232 @@
-<div class="@if ($numpage != 3) hidden @endif">
-    <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Payment Details</h2>
-    <div @if ($Member->field_status(4) == '0') style="display: none" @endif >
-    <div class="p-4 text-green-900 bg-green-200">
-        <p><x-form.input-tag
-            label="Registration Fee"
-            name="applymember.register_fee"
-            value=""
-            mandatory="true"
-            disable=""
-            leftTag="RM"
-            rightTag=""
-            type="text"
-            wire:model="applymember.register_fee"
-        />  </p>
-    </div>
-    </div>
-
-    <div @if ($Member->field_status(5) == '0') style="display: none" @endif >
-    <div class="p-4 text-green-900 bg-green-200">
-        <p><x-form.input-tag
-            label="Share Fee"
-            name="applymember.share_fee"
-            value=""
-            mandatory="true"
-            disable=""
-            leftTag="RM"
-            rightTag=""
-            type="text"
-            wire:model="applymember.share_fee"
-        />  </p>
-    </div>
-    </div>
-
-    <div @if ($Member->field_status(6) == '0') style="display: none" @endif >
-        <div class="p-4 text-green-900 bg-green-200">
-            <p><x-form.input-tag
-                label="Contribution Fee"
-                name="applymember.contribution_fee"
-                value=""
-                mandatory="true"
-                disable=""
-                leftTag="RM"
-                rightTag=""
-                type="text"
-                wire:model="applymember.contribution_fee"
-            />  </p>
+<div x-show="active == 5">
+    <!-- Deduction -->
+    <div  class="px-6 py-4 mt-4">
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Deduction </h2>
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
+            <div>
+                <x-form.input-tag
+                    label="Member Fee (One-time only)"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model=""
+                /> 
+            </div>
+            <div>
+                <x-form.input-tag
+                    label="Contribution (Minimum RM50)"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model=""
+                /> 
+            </div>
+            <div>
+                <x-form.input-tag
+                    label="Share (Minimum RM500)"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model=""
+                /> 
+            </div>
+            <div>
+                <x-form.input-tag
+                    label="Share (Minimum RM500)"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model=""
+                /> 
+            </div>
+            <div>
+                <x-form.dropdown
+                    label="Type of Deduction Payment"
+                    value=""
+                    name=""
+                    id=""
+                    mandatory=""
+                    disable=""
+                    default="yes"
+                    wire:model=""
+                >
+                <option value=""></option>
+                </x-form.dropdown>
+            </div>
+            <div>
+                <x-form.input-tag
+                    label="Total"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model=""
+                /> 
+            </div>
         </div>
+    </div>
+
+    <!-- Payment -->
+    <div  class="px-6 py-4 mt-4">
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Payment </h2>
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
+            {{-- <div @if ($Member->field_status(4) == '0') style="display: none" @endif >
+                <x-form.input-tag
+                    label="Registration Fee"
+                    name="applymember.register_fee"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="applymember.register_fee"
+                /> 
+            </div>
+            <div @if ($Member->field_status(5) == '0') style="display: none" @endif >
+                <x-form.input-tag
+                    label="Share Fee"
+                    name="applymember.share_fee"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="applymember.share_fee"
+                />  
+            </div>
+            <div @if ($Member->field_status(6) == '0') style="display: none" @endif >
+                <x-form.input-tag
+                    label="Contribution Fee"
+                    name="applymember.contribution_fee"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="applymember.contribution_fee"
+                /> 
+            </div> --}}
+            <div>
+                <x-form.dropdown
+                    label="Payment Made by"
+                    value=""
+                    name=""
+                    id=""
+                    mandatory=""
+                    disable=""
+                    default="yes"
+                    wire:model=""
+                >
+                <option value=""></option>
+                </x-form.dropdown>
+            </div>
+            <div>
+                <x-form.input
+                    label="Member No."
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    wire:model=""
+                />
+            </div>
+            <div>
+                <x-form.input
+                    label="Full Name"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    wire:model=""
+                />
+            </div>
+            <div>
+                <x-form.input
+                    label="IC No"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    wire:model=""
+                />
+            </div>
+            <div>
+                <x-form.dropdown
+                    label="Payment Type"
+                    value=""
+                    name=""
+                    id=""
+                    mandatory=""
+                    disable=""
+                    default="yes"
+                    wire:model=""
+                >
+                <option value=""></option>
+                </x-form.dropdown>
+            </div>
+            <div>
+                <x-form.input
+                    label="Autopay"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    wire:model=""
+                />
+            </div>
+            <div>
+                <x-form.input
+                    label="SI"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    wire:model=""
+                />
+            </div>
         </div>
+    </div>
 
-
-    <div class="flex items-center justify-center space-x-2">
-        <!-- <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-            deb
-        </button> -->
-        <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-            previous
-        </button>
-        <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-            Next
-        </button>
+    <div  class="px-6 py-4 mt-4">
+        <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">
+            <div class="flex items-center justify-center space-x-2">
+                <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                    deb
+                </button>
+                <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    previous
+                </button>
+                <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    Next
+                </button>
+            </div>
+        </div>
     </div>
 </div>
