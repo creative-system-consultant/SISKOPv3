@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\general;
+namespace App\Http\View\Components\general;
 
 use Illuminate\View\Component;
 
@@ -9,7 +9,7 @@ class Accordion extends Component
     public $active;
     public $tab;
     public $bg;
-    
+
     public function __construct($active,$tab,$bg)
     {
         $this->active = $active;

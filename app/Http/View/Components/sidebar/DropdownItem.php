@@ -1,21 +1,21 @@
 <?php
 
-namespace App\View\Components\sidebar;
+namespace App\Http\View\Components\sidebar;
 
 use Illuminate\View\Component;
 
 class DropdownItem extends Component
 {
-    
+
     public $title;
     public $uri;
 
     public function __construct($title,$uri)
     {
-        
+
         $this->title = $title;
         $this->uri = $uri;
-        
+
     }
 
 

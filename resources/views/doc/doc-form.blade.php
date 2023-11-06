@@ -17,7 +17,7 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-form.basic-form wire:submit.prevent="">
     //content
 &lt;/x-form.basic-form>
@@ -39,10 +39,10 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.input 
-                        label="Input Label" 
-                        name="" 
-                        value="" 
+                    <x-form.input
+                        label="Input Label"
+                        name=""
+                        value=""
                         mandatory=""
                         disable=""
                         type="text"
@@ -50,11 +50,11 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.input 
-    label="Input Label" 
-    name="" 
-    value="" 
+                    <code class="language-html">
+&lt;x-form.input
+    label="Input Label"
+    name=""
+    value=""
     mandatory=""
     disable=""
     type="text"
@@ -76,10 +76,10 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.input-tag 
+                    <x-form.input-tag
                         label="Tag Input Label"
-                        type="text" 
-                        name="" 
+                        type="text"
+                        name=""
                         value=""
                         leftTag="RM"
                         rightTag="%"
@@ -89,11 +89,11 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.input-tag 
-    label="Tag Input Label" 
+                    <code class="language-html">
+&lt;x-form.input-tag
+    label="Tag Input Label"
     type="text"
-    name="" 
+    name=""
     value=""
     leftTag="RM"
     rightTag="%"
@@ -117,14 +117,14 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.dropdown 
+                    <x-form.dropdown
                         label="Dropdown Label"
                         value=""
-                        name="" 
+                        name=""
                         id=""
                         mandatory=""
                         disable=""
-                        default="yes"  
+                        default="yes"
                     >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -133,15 +133,15 @@
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.dropdown 
+                    <code class="language-html">
+&lt;x-form.dropdown
     label="Dropdown Label"
     value=""
-    name="" 
+    name=""
     id=""
     mandatory=""
     disable=""
-    default="yes"  
+    default="yes"
 >
     &lt;option value="1">1&lt;/option>
     &lt;option value="2">2&lt;/option>
@@ -164,25 +164,27 @@
         <x-slot name="content">
             <div class="px-6 border-t-2">
                 <div class="p-4 my-4 bg-white shadow-lg">
-                    <x-form.text-area 
-                        label="Text Area Label" 
-                        value="" 
-                        name="" 
-                        id="" 
+                    <x-form.text-area
+                        label="Text Area Label"
+                        value=""
+                        name=""
                         rows=""
-                        placeholder="Place Holder" 
+                        placeholder="Place Holder"
+                        disable=""
+                        mandatory=""
                     />
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
-&lt;x-form.text-area 
-    label="Text Area Label" 
-    value="" 
-    name="" 
-    id="" 
+                    <code class="language-html">
+&lt;x-form.text-area
+    label="Text Area Label"
+    value=""
+    name=""
     rows=""
-    placeholder="Place Holder" 
+    disable=""
+    mandatory=""
+    placeholder="Place Holder"
 />
                     </code>
                 </pre>
@@ -191,7 +193,7 @@
     </x-general.accordion>
     <!-- end Textarea Input component -->
 
-     <!-- start addrress Input component -->
+    <!-- start addrress Input component -->
     <x-general.accordion active="selected" tab="564" bg="white">
         <x-slot name="title">
             <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
@@ -203,28 +205,31 @@
                 <div class="p-4 my-4 bg-white shadow-lg">
                     <x-form.address class="mt-6"
                         label="Address"
-                        value1="address1"
-                        value2="address2"
-                        value3="address3"
-                        value4="town"
-                        value5="postcode"
-                        value6="state"
+                        mandatory=""
+                        disable="true"
+                        name1="your_wire_model_address1"
+                        name2="your_wire_model_address2"
+                        name3="your_wire_model_address3"
+                        name4="your_wire_model_town"
+                        name5="your_wire_model_postcode"
+                        name6="your_wire_model_state"
                         {{-- :state="$states" --}}
-                        state="$states"
                         condition="state"
                     />
                 </div>
                 <p class="font-semibold">Code</p>
                 <pre class="-mt-4 language-html" wire:ignore>
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-form.address class="mt-6"
     label="Address"
-    value1="address1"
-    value2="address2"
-    value3="address3"
-    value4="town"
-    value5="postcode"
-    value6="state"
+    mandatory=""
+    disable=""
+    name1="your_wire_model_address1"
+    name2="your_wire_model_address2"
+    name3="your_wire_model_address3"
+    name4="your_wire_model_town"
+    name5="your_wire_model_postcode"
+    name6="your_wire_model_state"
     &#x7b;&#x7b; -- :state="$states" -- &#x7d;&#x7d;
     condition="state"
 />
@@ -233,4 +238,201 @@
             </div>
         </x-slot>
     </x-general.accordion>
+
+         <!-- start switch toggle Input component -->
+         <x-general.accordion active="selected" tab="444" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                    <p class="text-sm">Switch Toggle</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="px-6 border-t-2">
+                    <div class="p-4 my-4 bg-white shadow-lg">
+                        <div class="flex items-center w-full">
+                            <label for="your-id" class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input
+                                        type="checkbox"
+                                        id="your-id"
+                                        class="sr-only"
+                                        {{-- wire:click="statusBtn(your-id)" --}}
+                                    >
+                                    <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
+                                    <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="-mt-4 language-html" wire:ignore>
+                        <code class="language-html">
+    &lt;div class="flex items-center w-full">
+        &lt;label for="your-id" class="flex items-center cursor-pointer">
+            &lt;div class="relative">
+                &lt;input
+                    type="checkbox"
+                    id="your-id"
+                    class="sr-only"
+                    &#x7b;&#x7b;-- wire:click="funtionInLivewire(your-id)" --&#x7d;&#x7d;
+                >
+                &lt;div class="block h-8 bg-gray-300 rounded-full w-14 body">&lt;/div>
+                &lt;div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1">&lt;/div>
+            &lt;/div>
+        &lt;/label>
+    &lt;/div>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+
+    <!-- start submit button -->
+    <x-general.accordion active="selected" tab="32524546768543623" bg="white">
+        <x-slot name="title">
+            <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                <p class="text-sm">Submit Cancel Button</p>
+            </div>
+        </x-slot>
+        <x-slot name="content">
+            <div class="px-6 border-t-2">
+                <div class="p-4 my-4 bg-white shadow-lg">
+                   This component must be inside<br>
+                   &lt;x-form.basic-form wire:submit.prevent=""><br>
+                   // content<br>
+                   &lt;/x-form.basic-form>
+                <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
+                    <div class="flex items-center justify-center space-x-2">
+                        <a href="{{ url()->previous() }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
+                            Cancel
+                        </a>
+                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                </div>
+                <p class="font-semibold">Code</p>
+                <pre class="-mt-4 language-html" wire:ignore>
+                    <code class="language-html">
+&lt;div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
+    &lt;div class="flex items-center justify-center space-x-2">
+        &lt;a href="&#x7b;&#x7b;url()->previous()&#x7d;&#x7d;" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
+            Cancel
+        &lt;/a>
+        &lt;button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+            Submit
+        &lt;/button>
+    &lt;/div>
+&lt;/div>
+                    </code>
+                </pre>
+            </div>
+        </x-slot>
+    </x-general.accordion>
+    <!-- end Submit button -->
+
+
+        <!-- start radio btn form component -->
+        <x-general.accordion active="selected" tab="6433234" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                    <p class="text-sm">Radio</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="px-6 border-t-2">
+                    <div class="p-4 my-4 bg-white shadow-lg">
+                        <x-form.radio
+                            label="Radio Label 1"
+                            id="id1"
+                            name="name"
+                            value=""
+                            disable=""
+                        />
+                        <x-form.radio
+                            label="Radio Label 2"
+                            id="id2"
+                            name="name"
+                            value=""
+                            disable=""
+                            checked
+                        />
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="-mt-4 language-html" wire:ignore>
+                        <code class="language-html">
+&lt;x-form.radio
+    label="Radio Label 1"
+    id="id1"
+    name="name"
+    value=""
+    disable=""
+/>
+&lt;x-form.radio
+    label="Radio Label 2"
+    id="id2"
+    name="name"
+    value=""
+    disable=""
+    checked
+/>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+        <!-- end radio btn form component -->
+
+         <!-- start checkBox  form component -->
+         <x-general.accordion active="selected" tab="12984384234" bg="white">
+            <x-slot name="title">
+                <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                    <p class="text-sm">Check Box</p>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="px-6 border-t-2">
+                    <div class="p-4 my-4 bg-white shadow-lg">
+                        <x-form.checkbox
+                            label="CheckBox Label 1"
+                            id="id"
+                            name="name"
+                            value=""
+                            disable=""
+                        />
+                        <x-form.checkbox
+                            label="CheckBox Label 2"
+                            id="id2"
+                            name="name2"
+                            value=""
+                            disable=""
+                            checked
+                        />
+                    </div>
+                    <p class="font-semibold">Code</p>
+                    <pre class="-mt-4 language-html" wire:ignore>
+                        <code class="language-html">
+&lt;x-form.checkbox
+    label="CheckBox Label 1"
+    id="id"
+    name="name"
+    value=""
+    disable=""
+/>
+&lt;x-form.checkbox
+    label="CheckBox Label 2"
+    id="id2"
+    name="name2"
+    value=""
+    disable=""
+    checked
+/>
+                        </code>
+                    </pre>
+                </div>
+            </x-slot>
+        </x-general.accordion>
+        <!-- end checkBox form component -->
 </div>
+

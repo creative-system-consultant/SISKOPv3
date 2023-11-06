@@ -1,62 +1,158 @@
 <div>
-    <div class="p-4">
+    <div class="p-4" x-cloak>
         <div x-data="{active : 0}">
-            <div class="bg-white rounded-md flex flex-nowrap mb-2 w-full overflow-x-auto">
+            <div class="flex w-full mb-2 overflow-x-auto bg-white rounded-md flex-nowrap">
+                <x-tab.title name="6" livewire="">
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-code-bracket class="w-6 h-6 mr-2"/>
+                        <p>Create Livewire</p>
+                    </div>
+                </x-tab.title>
+                <x-tab.title name="7" livewire="">
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-presentation-chart-bar class="w-6 h-6 mr-2"/>
+                        <p>Chart</p>
+                    </div>
+                </x-tab.title>
                 <x-tab.title name="0" livewire="">
-                    <div class="flex items-center  w-36 md:w-full">
-                        <x-heroicon-o-collection class="w-6 h-6 mr-2"/> 
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-rectangle-stack class="w-6 h-6 mr-2"/>
                         <p>Component List</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="1" livewire="">
                     <div class="flex items-center w-24 md:w-full">
-                        <x-heroicon-o-duplicate class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-document-duplicate class="w-6 h-6 mr-2"/>
                         <p>Call Swall</p>
                     </div>
                 </x-tab.title>
                 <x-tab.title name="2" livewire="">
                     <div class="flex items-center w-36 md:w-full">
-                        <x-heroicon-o-color-swatch class="w-6 h-6 mr-2"/> 
+                        <x-heroicon-o-swatch class="w-6 h-6 mr-2"/>
                         <p>Customize color</p>
                     </div>
                 </x-tab.title>
+                <x-tab.title name="3" livewire="">
+                    <div class="flex items-center w-36 md:w-full">
+                        <x-heroicon-o-chat-bubble-bottom-center-text class="w-6 h-6 mr-2"/>
+                        <p>Custom Helper</p>
+                    </div>
+                </x-tab.title>
             </div>
-            <div class="bg-white pt-4 border-t-2">
+            <div class="pt-4 bg-white border-t-2">
+
+                <x-tab.content name="6">
+                    <div class="p-4" x-data="{selected : 0}" >
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl"></h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                            <div class="p-6 bg-white rounded-md shadow-md ">
+                                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">To Create livewire page, must run this command for folder strucure</h2>
+                                <p class="font-semibold">Code</p>
+                                <pre class="-mt-4 language-html" wire:ignore>
+                                    <code class="language-html">
+php artisan make:livewire Page/YourPageName
+                                    </code>
+                                </pre>
+                            </div>
+                            <div class="p-6 bg-white rounded-md shadow-md ">
+                                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">To rename livewire page (to refactor or typo), use this command</h2>
+                                <p class="font-semibold">Code</p>
+                                <pre class="-mt-4 language-html" wire:ignore>
+                                    <code class="language-html">
+php artisan livewire:move yourpageName Page/YourPageName
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </x-tab.content>
+
+                <x-tab.content name="7">
+                    <div class="p-4" x-data="{selected : 0}">
+                        <h1 class="mb-2 text-base font-semibold md:text-2xl">Chart</h1>
+                        <p class="mb-6 text-base font-normal md:text-base">for more type of chart you can visit this link <a href="https://apexcharts.com/javascript-chart-demos/" target="_blank" class="text-blue-500 hover:text-blue-400">https://apexcharts.com/javascript-chart-demos/</a></p>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                            @include('doc.doc-chart')
+                        </div>
+                    </div>
+                </x-tab.content>
+
                 <x-tab.content name="0">
                     <div class="p-4" x-data="{selected : 0}">
-                        <h1 class="font-semibold md:text-2xl text-base mb-6">Component List</h1>
-                        <x-general.grid mobile="1" gap="6" sm="2" md="2" lg="2" xl="2" class="col-span-12 mt-6">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl">Component List</h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             @include('doc.doc-form')
                             @include('doc.doc-general')
                             @include('doc.doc-grid')
-                        </x-general.grid>
+                            <div class="p-6 bg-white rounded-md shadow-md ">
+                            <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Icon Component</h2>
+                            <!-- star Icon component -->
+                                <x-general.accordion active="selected" tab="3545236325" bg="white">
+                                    <x-slot name="title">
+                                        <div class="flex items-center p-4 space-x-2 font-semibold rounded-md bg-gray-50">
+                                            <p class="text-sm">HeroIcons</p>
+                                        </div>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <div class="px-6 border-t-2">
+                                            <div class="p-4 my-4 bg-white shadow-lg">
+                                                For Icon u can using this link  <a href="https://heroicons.com/" target="_blank" class="text-blue-500 hover:text-blue-400">https://heroicons.com/</a>
+                                                <div class="flex mt-4 space-x-3 ">
+                                                    <x-heroicon-o-home class="w-7 h-7 text-primary-800" />
+                                                    <x-heroicon-s-home class="w-7 h-7 text-primary-800" />
+                                                </div>
+                                            </div>
+                                            <p class="font-semibold">Code</p>
+                                            <pre class="-mt-4 language-html" wire:ignore>
+                                                <code class="language-html">
+//outline icon
+&lt;x-heroicon-o-home class="w-7 h-7 text-primary-800" />
+//solid icon
+&lt;x-heroicon-s-home class="w-7 h-7 text-primary-800" />
+                                                </code>
+                                            </pre>
+                                        </div>
+                                    </x-slot>
+                                </x-general.accordion>
+                                <!-- end Submit Icon component -->
+                        </div>
+                    </div>
+                    </div>
+                </x-tab.content>
+                <x-tab.content name="3">
+                    <div class="p-4" x-data="{selected : 0}">
+                        <h1 class="mb-2 text-base font-semibold md:text-2xl">Custom PHP Function / Helper</h1>
+                        <p class="mb-6 text-base font-normal md:text-base">All the functions are in App/Helper/Custom.php</p>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                            @include('doc.doc-custom')
+                        </div>
                     </div>
                 </x-tab.content>
                 <x-tab.content name="1">
                     <div class="p-4" x-data="{selected : 0}">
-                        <h1 class="font-semibold md:text-2xl text-base mb-6">Call Swall</h1>
-                        <x-general.grid mobile="1" gap="6" sm="2" md="2" lg="2" xl="2" class="col-span-12 mt-6">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl">Call Swall</h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             @include('doc.doc-swall')
-                        </x-general.grid>
+                        </div>
                     </div>
                 </x-tab.content>
                 <x-tab.content name="2">
                     <div class="p-4" x-data="{selected : 0}">
-                        <h1 class="font-semibold md:text-2xl text-base mb-6">COLOR PLATE</h1>
-                        <x-general.grid mobile="1" gap="6" sm="2" md="2" lg="2" xl="2" class="col-span-12 mt-6">
+                        <h1 class="mb-6 text-base font-semibold md:text-2xl">COLOR PLATE</h1>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                             @include('doc.doc-colors')
-                            <div class="bg-white rounded-md p-6 shadow-md ">
+                            <div class="p-6 bg-white rounded-md shadow-md ">
 
-                                <div class="border-t-2 px-6">
-                                    <div class="bg-white shadow-lg p-4 my-4">
+                                <div class="px-6 border-t-2">
+                                    <div class="p-4 my-4 bg-white shadow-lg">
                                         <x-form.basic-form wire:submit.prevent="">
                                             choose color plate
                                         </x-form.basic-form>
                                     </div>
                                     <p class="font-semibold">tailwind.config.js</p>
-                                    <div class="h-96 overflow-y-auto">
-                                    <pre class="language-html -mt-4" wire:ignore>
-                                        <code class="language-html"> 
+                                    <div class="overflow-y-auto h-96">
+                                    <pre class="-mt-4 language-html" wire:ignore>
+                                        <code class="language-html">
     Slate: {
         50 : '#f8fafc',
         100: '#f1f5f9',
@@ -321,15 +417,14 @@
         800: '#9f1239',
         900: '#881337',
     },
-},
 
                                         </code>
                                     </pre>
                                 </div>
                                 </div>
-                            
+
                             </div>
-                        </x-general.grid>
+                        </div>
                     </div>
                 </x-tab.content>
             </div>

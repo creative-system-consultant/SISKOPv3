@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\toaster;
+namespace App\Http\View\Components\toaster;
 
 use Illuminate\View\Component;
 
@@ -14,7 +14,7 @@ class Success extends Component
         $this->title = $title;
         $this->message = $message;
     }
-    
+
     public function render()
     {
         return view('components.toaster.success');

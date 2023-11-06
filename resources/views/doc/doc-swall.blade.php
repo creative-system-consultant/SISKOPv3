@@ -19,7 +19,7 @@
                 </div>
                 <p class="font-semibold">livewire.php code</p>
                 <pre class="language-php -mt-4" wire:ignore>
-                    <code class="language-php"> 
+                    <code class="language-php">
 public function submit (){
 
     $this->dispatchBrowserEvent('swal',[
@@ -34,7 +34,7 @@ public function submit (){
                 </pre>
                 <p class="font-semibold">livewire.blade.php code</p>
                 <pre class="language-html -mt-4" wire:ignore >
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-form.basic-form wire:submit.prevent="submit">
     &lt;button type="submit" class="flex justify-center items-center p-2 text-sm bg-green-500 rounded-md focus:outline-none text-white">
         Show Swall
@@ -75,7 +75,7 @@ public function submit (){
                 </div>
                 <p class="font-semibold">livewire.php code</p>
                 <pre class="language-php -mt-4" wire:ignore>
-                    <code class="language-php"> 
+                    <code class="language-php">
 public function submit2 (){
 
     session()->flash('message', 'Success Message');
@@ -88,7 +88,7 @@ public function submit2 (){
                 </pre>
                 <p class="font-semibold">livewire.blade.php code</p>
                 <pre class="language-html -mt-4" wire:ignore >
-                    <code class="language-html"> 
+                    <code class="language-html">
 &lt;x-form.basic-form wire:submit.prevent="submit2">
     &lt;button type="submit" class="flex justify-center items-center p-2 text-sm bg-green-500 rounded-md focus:outline-none text-white">
         Show Swall

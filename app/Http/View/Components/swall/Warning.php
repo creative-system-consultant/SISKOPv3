@@ -1,18 +1,20 @@
 <?php
 
-namespace App\View\Components\swall;
+namespace App\Http\View\Components\swall;
 
 use Illuminate\View\Component;
 
 class Warning extends Component
 {
     public $message;
-    
-    public function __construct($message)
+    public $time;
+
+    public function __construct($message, $time = 10000)
     {
         $this->message = $message;
+        $this->time = $time;
     }
-    
+
     public function render()
     {
         return view('components.swall.warning');

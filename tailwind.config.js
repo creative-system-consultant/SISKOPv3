@@ -1,6 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
@@ -42,7 +43,9 @@ module.exports = {
         './resources/**/*.twig',
     ],
     plugins: [
-        require('@tailwindcss/forms'),
+        require("@tailwindcss/forms")({
+            strategy: 'class',
+        }), 
         require('@tailwindcss/typography'),
     ],
 };

@@ -22,7 +22,9 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        //
+        //\Doctrine\DBAL\Driver\Exception::class,
+        //\Doctrine\DBAL\Driver\PDO\Exception::class,
+        \illuminate\Database\Connection::class,
     ];
 
     /**

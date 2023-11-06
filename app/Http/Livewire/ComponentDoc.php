@@ -19,14 +19,14 @@ class ComponentDoc extends Component
     }
 
     public function submit2 (){
-        
+
         session()->flash('message', 'Success Message');
         session()->flash('success');
         session()->flash('title', 'Success!');
 
         return redirect()->route('doc');
     }
-    
+
     public function render()
     {
         return view('livewire.component-doc')->extends('doc.doc-head');

@@ -56,7 +56,7 @@ return [
     |
     */
 
-    'editor' => env('DEBUGBAR_EDITOR', 'phpstorm'),
+    'editor' => env('DEBUGBAR_EDITOR', 'vscode'),
 
     /*
     |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\sidebar;
+namespace App\Http\View\Components\sidebar;
 
 use Illuminate\View\Component;
 
@@ -17,7 +17,7 @@ class NavItem extends Component
         $this->uri = $uri;
     }
 
-    
+
     public function render()
     {
         return view('components.sidebar.nav-item');

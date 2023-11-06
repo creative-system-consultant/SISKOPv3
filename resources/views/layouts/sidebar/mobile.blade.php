@@ -12,10 +12,10 @@
         class="fixed inset-0 z-10 flex items-end bg-gray-800 bg-opacity-50 sm:items-center sm:justify-center"
         @click="closeSideMenu"
     ></div>
-    
+
     <aside
         x-cloak
-        class="fixed inset-y-0 z-20 flex-shrink-0 w-64 overflow-y-auto bg-white  md:hidden"
+        class="fixed inset-y-0 z-20 flex-shrink-0 w-64 overflow-y-auto bg-white md:hidden dark:bg-gray-800"
         x-show="isSideMenuOpen"
         x-transition:enter="transition ease-in-out duration-150"
         x-transition:enter-start="opacity-0 transform -translate-x-20"
@@ -27,24 +27,24 @@
         <div class="mb-6 animate">
             <div class="text-primary">
                 <div class="flex justify-center pt-4">
-                    <x-logo class="w-auto h-10" /> 
+                    <x-logo class="w-auto h-10" />
                 </div>
-                <div class="flex justify-center text-black">
+                <div class="flex justify-center text-black dark:text-white">
                     <p class="italic font-semibold">{{ config('app.name') }}</p>
                 </div>
                 <div>
                     <ul class="mt-6 leading-10">
-                        <x-sidebar.nav-item title="HALAMAN UTAMA" route="{{route('home')}}" uri="home">
+                        <x-sidebar.nav-item title="HALAMAN UTAMA" route="{{ route('home') }}" uri="home">
                             <x-heroicon-o-home class="w-7 h-7" />
                         </x-sidebar.nav-item>
-    
+
                         <x-sidebar.nav-item title="MENU" route="#" uri="#">
-                            <x-heroicon-o-chart-square-bar class="w-7 h-7" />
+                            <x-heroicon-o-chart-bar-square class="w-7 h-7" />
                         </x-sidebar.nav-item>
-    
+
                         <x-sidebar.dropdown-nav-item active="open" title="PERMOHONAN" uri="pemohonan/*">
                             <x-slot name="icon">
-                                <x-heroicon-o-document-search class="w-7 h-7" />
+                                <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                             </x-slot>
                             <div class="leading-5">
                                 <x-sidebar.dropdown-item title="Menu" href="#" uri="">
