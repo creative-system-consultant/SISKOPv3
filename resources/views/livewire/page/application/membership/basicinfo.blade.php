@@ -320,6 +320,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
     <!-- Work Details -->
     <div x-show="active == 3">
