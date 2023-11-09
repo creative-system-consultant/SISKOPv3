@@ -14,6 +14,7 @@ class ApplyShare extends Component
     use WithFileUploads;
 
     public Customer $cust;
+    public Share $Share;
     public $share_apply;
     public $pay_method;
     public $online_date;
@@ -90,7 +91,6 @@ class ApplyShare extends Component
     {
         $user = auth()->user();
         $customer = Customer::where('icno', $user->icno)->first();
-        $share = Share::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
 
         if ($this->share_apply == 0) {
             session()->flash('message', 'Application must be more than RM0');
@@ -101,7 +101,7 @@ class ApplyShare extends Component
             return redirect()->route('share.apply');
         }
 
-        $share->update([
+        $this->Share->update([
             'method'       => $this->pay_method,
             'online_date'  => $this->online_date ??= NULL,
             'cdm_date'     => $this->cdm_date ??= NULL,
@@ -114,16 +114,16 @@ class ApplyShare extends Component
             'step'         => 1,
             'created_by'   => strtoupper($customer->name),
         ]);
-        $share->remove_approvals();
-        $share->make_approvals();
+        $this->Share->remove_approvals();
+        $this->Share->make_approvals();
 
         if ($this->pay_method == 'online') {
             // dd('Online Banking');
-            $filepath = 'Files/'.$customer->id.'/share//'.$share->id.'/'.'online_receipt'.'.'.$this->online_file->extension();
+            $filepath = 'Files/'.$customer->id.'/share//'.$this->Share->id.'/'.'online_receipt'.'.'.$this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/share//'.$share->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/share//'.$this->Share->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
 
-            $share->files()->create([
+            $this->Share->files()->create([
                 'filename' => 'online_receipt',
                 'filedesc' => 'Online Payment Receipt',
                 'filetype' => $this->online_file->extension(),
@@ -141,9 +141,9 @@ class ApplyShare extends Component
             // dd('CDM');
             $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/'.$customer->id. '/share//'.$share->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/'.$customer->id. '/share//'.$this->Share->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
 
-            $share->files()->create([
+            $this->Share->files()->create([
                 'filename' => 'cdm_receipt',
                 'filedesc' => 'CDM Payment Receipt',
                 'filetype' => $this->cdm_file->extension(),
@@ -168,47 +168,34 @@ class ApplyShare extends Component
         }
     }
 
-    public function restricApply($id)
-    {
-        $share = Share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
-
-        if ($share != null) {
-            session()->flash('message', 'Add share application is been processed. If you want to make another application, please wait until the application is processed');
-            session()->flash('time', 10000);
-            session()->flash('info');
-            session()->flash('title');
-
-            return redirect()->route('home');
-        }
-    }
-
-    public function contApply($cust_id)
-    {
-        $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'client_id'     => $this->cust->client_id,
-            'cust_id'     => $this->cust->id,
-        ], [
-            'amt_before'  => $this->cust->share,
-            'flag'        => 0,
-            'step'        => 0,
-            'apply_amt'   => '0.00',
-        ]);
-
-        $this->share_apply = $share->apply_amt;
-        $this->online_date = $share?->online_date?->format('Y-m-d');
-        $this->cdm_date = $share?->cdm_date?->format('Y-m-d');
-        $this->cheque_no = $share?->cheque_no;
-        $this->cheque_date = $share?->cheque_date?->format('Y-m-d');
-    }
-
     public function mount()
     {
         $user = auth()->user();
         $this->cust = Customer::where('icno', $user->icno)->first();
         $this->banks = RefBank::where('client_id', $user->client_id)->get();
 
-        $this->restricApply($this->cust->id);
-        $this->contApply($this->cust->id);
+        $this->Share = Share::firstOrCreate([
+            'cust_id'   => $this->cust->id,
+            'client_id' => $this->cust->client_id,
+            'flag'      => 0,
+            'step'      => 0,
+            'direction' => 'buy'
+        ],[
+            'amt_before'  => $this->cust->share,
+            'apply_amt'   => '0.00',
+        ]);
+
+        $this->share_apply = $this->Share->apply_amt;
+        $this->online_date = $this->Share?->online_date?->format('Y-m-d');
+        $this->cdm_date = $this->Share?->cdm_date?->format('Y-m-d');
+        $this->cheque_no = $this->Share?->cheque_no;
+        $this->cheque_date = $this->Share?->cheque_date?->format('Y-m-d');
+    }
+
+    public function deb(){
+        dd([
+            'Share' => $this->Share,
+        ]);
     }
 
     public function render()
