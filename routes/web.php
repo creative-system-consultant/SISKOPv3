@@ -85,14 +85,15 @@ use App\Http\Livewire\Page\Executive\Approval\Membership\Checker as MembershipCh
 use App\Http\Livewire\Page\Executive\Approval\Membership\Committee as MembershipCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Approver as MembershipApprover;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Resolution as MembershipResolution;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Approver as ShareApprover;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Checker as ShareChecker;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Committee as ShareCommittee;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Maker as ShareMaker;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Resolution as ShareResolution;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareApproval;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareChecker;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareCommittee;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareMaker;
-use App\Http\Livewire\Page\Executive\Approval\Share\Approver as ShareApproval;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareChecker;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareCommittee;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareMaker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidApproval;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidChecker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidCommittee;
@@ -369,7 +370,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('maker/{uuid}', ShareMaker::class)->name('share.maker');
                 Route::get('checker/{uuid}', ShareChecker::class)->name('share.checker');
                 Route::get('committee/{uuid}', ShareCommittee::class)->name('share.committee');
-                Route::get('approval/{uuid}', ShareApproval::class)->name('share.approval');
+                Route::get('approval/{uuid}', ShareApprover::class)->name('share.approval');
+                Route::get('resolution/{uuid}', ShareResolution::class)->name('share.resolution');
             });
 
             //Exec > approval > sell/exchange share

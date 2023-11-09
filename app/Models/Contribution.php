@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasApprovals;
 use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
@@ -11,6 +12,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Contribution extends Model implements Auditable
 {
+    use HasApprovals;
     use SoftDeletes;
     use HasCoop;
     use HasCustomer;
@@ -29,27 +31,9 @@ class Contribution extends Model implements Auditable
         'deleted_at'    => 'datetime',
     ];
 
-    public function approvals()
-    {
-        return $this->morphMany(Approval::class,'approval');
-    }
-
     public function current_approval()
     {
         return $this->approvals()->where('order', $this->step)->first();
-    }
-
-    public function current_approval_role()
-    {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
-    }
-
-    public function remove_approvals()
-    {
-        $approval = $this->approvals;
-        foreach ($approval as $key => $value) {
-            $value->delete();
-        }
     }
 
     public function clear_approvals($order = NULL)

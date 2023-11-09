@@ -18,6 +18,7 @@ class ApprovalAdmin extends Component
     public $selected;
     public $custom;
     public $page;
+    public $rule_vote_type = 'majority';
     public $firstMaker = false;
     public $isRule = false;
     public $coopGroup   = [];
@@ -137,11 +138,17 @@ class ApprovalAdmin extends Component
 
     public function change_rule($id)
     {
-        $this->isRule =! $this->isRule;
+        $this->rule_vote_type = $this->lists[$id-1]->rule_vote_type;
     }
 
     public function saveRule($key)
     {
+        if($this->rule_vote_type == 'majority'){
+            $this->lists[$key]->rule_vote = FALSE;
+        } else {
+            $this->lists[$key]->rule_vote = TRUE;
+        }
+        $this->lists[$key]->rule_vote_type = $this->rule_vote_type;
         $this->lists[$key]->save();
 
     }

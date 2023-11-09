@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasApprovals;
 use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
-use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Share extends Model implements Auditable
 {
+    use HasApprovals;
     use HasCoop;
     use HasCustomer;
     use HasFiles;
@@ -34,27 +35,9 @@ class Share extends Model implements Auditable
         return $this->belongsTo(Customer::class, 'exc_cust_id', 'id');
     }
 
-    public function approvals()
-    {
-        return $this->morphMany(Approval::class,'approval');
-    }
-
     public function current_approval()
     {
         return $this->approvals()->where('order', $this->step)->first();
-    }
-
-    public function current_approval_role()
-    {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
-    }
-
-    public function remove_approvals()
-    {
-        $approval = $this->approvals;
-        foreach ($approval as $key => $value) {
-            $value->delete();
-        }
     }
 
     public function clear_approvals($order = NULL)
@@ -88,26 +71,21 @@ class Share extends Model implements Auditable
         foreach ($CoopApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
-                $lastuser = '';
-                $cnt = 1;
-                foreach ($value->rolegroup->users()->orderby('user_id')->get() as $key1 => $value1){
-                    if($lastuser == $value1->user_id){ continue; }
-                    $approval = $this->approvals()->withTrashed()->firstOrCreate(['order' => $count,'type' => 'vote'.$cnt]);
+                foreach ($value->rolegroup->users as $key1 => $value1){
+                    $approval = $this->approvals()->firstOrCreate(['order' => $count,'type' => 'vote'.$key1+1]);
                     $approval->group_id = $value->role_id;
                     $approval->rules    = $value->rules;
                     $approval->user_id  = $value1->user_id;
-                    $approval->type     = 'vote'.$cnt;
                     $approval->role_id  = $value->sys_role->id;
+                    $approval->type     = 'vote'.$key1+1;
                     $approval->note     = NULL;
                     $approval->vote     = NULL;
-                    $approval->deleted_at = NULL;
                     $approval->save();
-                    $lastuser = $value1->user_id;
-                    $cnt++;
                 }
+                $count++;
             } else {
 
-                $approval = $this->approvals()->withTrashed()->firstOrCreate(['order' => $count]);
+                $approval = $this->approvals()->firstOrCreate(['order' => $count]);
                 $approval->group_id = $value->role_id;
                 $approval->rules    = $value->rules;
                 $approval->user_id  = NULL;
@@ -115,7 +93,6 @@ class Share extends Model implements Auditable
                 $approval->type     = NULL;
                 $approval->note     = NULL;
                 $approval->vote     = NULL;
-                $approval->deleted_at = NULL;
                 $approval->save();
 
                 $count++;
@@ -133,5 +110,13 @@ class Share extends Model implements Auditable
     public function approval_unvoted_id($type = 3)
     {
         return explode(',',$this->approvals()->where([['order', $this->step],['vote', NULL],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+    }
+
+    public function approval_vote_yes() {
+        return $this->approvals()->where([['order', $this->step],['vote', 'lulus']])->count();
+    }
+
+    public function approval_vote_no() {
+        return $this->approvals()->where([['order', $this->step],['vote', 'gagal']])->count();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Page\Executive\Approval\Share;
+namespace App\Http\Livewire\Page\Executive\Approval\BuyShare;
 
 use App\Models\Approval;
 use App\Models\Ref\RefBank;
@@ -8,21 +8,24 @@ use App\Models\Share;
 use App\Models\User;
 use Livewire\Component;
 
-class ShareChecker extends Component
+class Maker extends Component
 {
     public User $User;
     public Approval $Approval;
-    public $checker;
+    public Share $Maker;
+    public $banks;
 
     protected $rules = [
-        'Approval.note' => 'required',
+        'Approval.note'      => 'required|max:255',
+        'Maker.approved_amt' => 'required',
+        'Maker.bank_code'    => 'required',
     ];
 
     public function next()
     {
         $this->validate();
-        $this->checker->step++;
-        $this->checker->save();
+        $this->Maker->step++;
+        $this->Maker->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = 'lulus';
         $this->Approval->save();
@@ -36,9 +39,9 @@ class ShareChecker extends Component
 
     public function back()
     {
-        if ($this->checker->step > 1){
-            $this->checker->step--;
-            $this->checker->save();
+        if ($this->Maker->step > 1){
+            $this->Maker->step--;
+            $this->Maker->save();
 
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
@@ -58,18 +61,26 @@ class ShareChecker extends Component
 
     public function mount($uuid)
     {
-        $this->User     = User::find(auth()->user()->id);
-        $this->checker  = Share::where('uuid', $uuid)->with('customer')->first();
-        $this->Approval = Approval::where([
-            ['approval_id', $this->checker->id],
-            ['order', $this->checker->step],
-            ['role_id', '2'],
+       $this->User      = User::find(auth()->user()->id);
+       $this->Maker     = Share::where('uuid', $uuid)->with('customer')->first();
+       $this->banks     = RefBank::where('client_id', $this->Maker->client_id)->where('status', '1')->orderby('priority','asc')->orderby('description')->get();
+       $this->Approval  = Approval::where([
+            ['approval_id', $this->Maker->id],
+            ['order', $this->Maker->step],
+            ['role_id', '1'],
             ['approval_type', 'App\Models\Share'],
         ])->firstOrFail();
+        //dd($this->Maker->approvals);
+    }
+
+    public function deb() {
+        dd([
+            'banks' => $this->banks,
+        ]);
     }
 
     public function render()
     {
-        return view('livewire.page.executive.approval.share.share-checker')->extends('layouts.head');
+        return view('livewire.page.executive.approval.share.share-maker')->extends('layouts.head');
     }
 }
