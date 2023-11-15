@@ -1,5 +1,5 @@
 <div>
-
+<div x-data="{ activeTab: @entangle('numpage') }">
     <!-- Customer Details -->
     <div x-show="active == 0">
         <div class="px-6 py-4 mt-4">
@@ -531,12 +531,24 @@
         </div>
     </div>
 
-    <div x-show="active == 0 || active == 1 || active == 2 || active == 3">
+    <div x-show="active == 0">
         <div class="px-6">
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-800">
                 <div class="flex items-center justify-center space-x-2">
-                    <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        deb
+                    <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div x-show="active == 1 || active == 2 || active == 3">
+        <div class="px-6">
+            <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-800">
+                <div class="flex items-center justify-center space-x-2">
+                    <button type="button" wire:click="previous" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                        Previous
                     </button>
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Next
@@ -546,4 +558,5 @@
         </div>
     </div>
 
+</div>
 </div>
