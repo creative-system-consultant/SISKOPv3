@@ -62,6 +62,7 @@ class NewMembership extends Component
     public $search;
     public $mbr_no = [];
     public $birthdate;
+    public $tab1 = 1, $tab2 = 0, $tab3 = 0, $tab4 = 0, $tab5 = 0, $tab6 = 0, $tab7 = 0, $tab8 = 0;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -183,10 +184,10 @@ class NewMembership extends Component
         'applymember.total_fee'              => 'required|numeric',
     ];
 
-    public function updateNumpage($newPage)
-    {
-        $this->numpage = $newPage;
-    }
+    // public function updateNumpage($newPage)
+    // {
+    //     $this->numpage = $newPage;
+    // }
 
 
     public function previous()
@@ -197,49 +198,63 @@ class NewMembership extends Component
         }
     }
 
-    public function next()
+    public function next($newPage, $tab)
     {
-        if ($this->numpage > 0 && $this->numpage < 8) {
+        $this->numpage = $newPage;
+
+        if ($tab != 1) {
+            switch ($this->numpage) {
+                case 1:
+                    $this->validate($this->rule1);
+                    $this->birthdate();
+                    $this->Cust->save();
+                    $this->tab2 = 1;
+                    break;
+                case 2:
+                    $this->validate($this->rule2);
+                    $this->CustAddress->save();
+                    $this->EmployAddress->save();
+                    $this->tab3 = 1;
+                    break;
+                case 3:
+                    $this->validate($this->rule3);
+                    $this->CustFamily->save();
+                    $this->Family->save();
+                    $this->FamilyAddress->save();
+                    $this->tab4 = 1;
+                    break;
+                case 4:
+                    $this->validate($this->rule4);
+                    $this->Employer->save();
+                    $this->tab5 = 1;
+                    break;
+                case 5:
+                    $this->validate($this->rule5);
+                    $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
+                    $this->Introducer->save();
+                    $this->tab6 = 1;
+                    break;
+                case 6:
+                    $this->totalfee();
+                    $this->validate($this->rule6);
+                    $this->applymember->save();
+                    $this->tab7 = 1;
+                    break;
+                case 7:
+                    $this->fileupload();
+                    $this->tab8 = 1;
+                    break;
+            }
             $this->dispatchBrowserEvent('increment-tab');
             $this->numpage++;
-        }
-        if ($this->numpage == 2) {
-            $this->validate($this->rule1);
-            $this->birthdate();
-            $this->Cust->save();
-        }
-        if ($this->numpage == 3) {
-            $this->CustAddress->save();
-            $this->EmployAddress->save();
-        }
-
-        if ($this->numpage == 4) {
-            $this->CustFamily->save();
-            $this->Family->save();
-            $this->FamilyAddress->save();
-        }
-
-        if ($this->numpage == 5) {
-            $this->Employer->save();
-        }
-
-        if ($this->numpage == 6) {
-            $this->validate($this->rule5);
-            $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
-            $this->Introducer->save();
-        }
-        if ($this->numpage == 7) {
-            $this->totalfee();
-            $this->validate($this->rule6);
-            $this->applymember->save();
-        }
-        if ($this->numpage == 8) {
-            $this->fileupload();
+        } else if ($tab == 1) {
+            // $this->dispatchBrowserEvent('activeTab');
         }
 
 
         $this->render();
     }
+
 
 
     public function searchUser()
