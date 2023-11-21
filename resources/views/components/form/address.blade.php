@@ -1,10 +1,24 @@
 <div {{ $attributes }}>
-    <label class="block text-sm font-semibold leading-5 text-gray-700">
-        {{ $label }}
-        @if( $mandatory ?? '' == "true")
-            <span class="font-semibold text-red-600">*</span>
+    <div class="flex items-center justify-between w-full">
+        <label class="block text-sm font-semibold leading-5 text-gray-700">
+            {{ $label }}
+            @if( $mandatory ?? '' == "true")
+                <span class="font-semibold text-red-600">*</span>
+            @endif
+        </label>
+        @if($mailFlag ?? '' == "true")
+        <div>
+            <x-form.checkbox
+                label="Mailing Flag"
+                id=""
+                name=""
+                value=""
+                disable=""
+                wire:model=""
+            />
+        </div>
         @endif
-    </label>
+    </div>
     <div class="flex mt-1 mb-2 rounded-md shadow-sm">
         <input
             @if( $disable == "true" )

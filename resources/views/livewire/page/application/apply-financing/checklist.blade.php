@@ -1,5 +1,5 @@
-<div class="p-4 @if ($numpage != 4) hidden @endif ">
-    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+<div  x-show="active == 9">
+    <div  class="px-6 py-4 mt-4">
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Checklist </h2>
         <div class="mt-4 bg-white rounded-md">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1">
@@ -43,6 +43,5 @@
                 </button>
             </div>
         </div>
-
-    </x-general.card>
+    </div>
 </div>

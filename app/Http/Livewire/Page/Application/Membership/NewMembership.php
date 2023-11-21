@@ -62,6 +62,8 @@ class NewMembership extends Component
     public $search;
     public $mbr_no = [];
     public $birthdate;
+    public $activeTab = 0;
+    public $tab1 = 1, $tab2 = 0, $tab3 = 0, $tab4 = 0, $tab5 = 0, $tab6 = 0, $tab7 = 0, $tab8 = 0;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -77,12 +79,32 @@ class NewMembership extends Component
         'Cust.marital_id'                    => 'required',
         'Cust.email'                         => 'required',
         'Cust.title_id'                      => 'required',
+    ];
+
+    protected $rule2 = [
         'CustAddress.address1'               => 'required',
         'CustAddress.address2'               => 'required',
         'CustAddress.address3'               => 'nullable',
         'CustAddress.postcode'               => 'required',
         'CustAddress.town'                   => 'required',
         'CustAddress.def_state_id'           => 'required',
+    ];
+
+    protected $rule3 = [
+        'FamilyAddress.address1'             => 'required',
+        'FamilyAddress.address2'             => 'required',
+        'FamilyAddress.address3'             => 'nullable',
+        'FamilyAddress.postcode'             => 'required',
+        'FamilyAddress.town'                 => 'required',
+        'FamilyAddress.def_state_id'         => 'required',
+        'Family.relationship_id'             => 'required',
+        'CustFamily.name'                    => 'required',
+        'CustFamily.icno'                    => 'required',
+        'CustFamily.email'                   => 'required',
+        'CustFamily.mobile_num'              => 'required',
+    ];
+
+    protected $rule4 = [
         'Employer.name'                      => 'required',
         'Employer.department'                => 'required',
         'Employer.position'                  => 'required',
@@ -95,20 +117,9 @@ class NewMembership extends Component
         'EmployAddress.postcode'             => 'required',
         'EmployAddress.town'                 => 'required',
         'EmployAddress.def_state_id'         => 'required',
-        'FamilyAddress.address1'             => 'required',
-        'FamilyAddress.address2'             => 'required',
-        'FamilyAddress.address3'             => 'nullable',
-        'FamilyAddress.postcode'             => 'required',
-        'FamilyAddress.town'                 => 'required',
-        'FamilyAddress.def_state_id'         => 'required',
-        'Family.relationship_id'             => 'required',
-        'CustFamily.name'                    => 'required',
-        'CustFamily.icno'                    => 'required',
-        //'CustFamily.email'                   => 'required',
-        'CustFamily.mobile_num'              => 'required',
     ];
 
-    protected $rule2 = [
+    protected $rule5 = [
         'CustIntroducer.name'                    => 'required',
         'CustIntroducer.icno'                    => 'nullable',
         'CustIntroducer.email'                   => 'nullable',
@@ -116,7 +127,7 @@ class NewMembership extends Component
         'search'                             => 'required|numeric|digits:12',
     ];
 
-    protected $rule3 = [
+    protected $rule6 = [
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
@@ -174,54 +185,142 @@ class NewMembership extends Component
         'applymember.total_fee'              => 'required|numeric',
     ];
 
-    public function next()
+    // public function updateNumpage($newPage)
+    // {
+    //     $this->numpage = $newPage;
+    // }
+
+
+    public function previous()
     {
-        if ($this->numpage == 1){
-            $this->validate($this->rule1);
-            $this->birthdate();
-
-            $this->Cust->save();
-            $this->CustAddress->save();
-            $this->CustFamily->save();
-            $this->Family->save();
-            $this->FamilyAddress->save();
-            $this->Employer->save();
-            $this->EmployAddress->save();
-        }
-        if ($this->numpage == 2){
-            $this->validate($this->rule2);
-            $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
-            $this->Introducer->save();
-        }
-
-        if ($this->numpage == 3){
-            $this->totalfee();
-            $this->validate($this->rule3);
-            $this->applymember->save();
-        }
-
-        if ($this->numpage == 4){
-            $this->fileupload();
-        }
-
-        if ($this->numpage < 5){
-            $this->numpage++;
-        }
-
-        $this->render();
-
-    }
-
-    public function back()
-    {
-        if ($this->numpage > 0){
+        if ($this->numpage > 1 && $this->numpage <= 8) {
+            $this->dispatchBrowserEvent('decrement-tab');
             $this->numpage--;
         }
     }
 
+    public function next($newPage, $tab)
+    {
+
+        $this->numpage = $newPage;
+
+        if ($tab != 1) {
+            switch ($this->numpage) {
+                case 1:
+                    $this->validate($this->rule1);
+                    $this->birthdate();
+                    $this->Cust->save();
+                    $this->tab2 = 1;
+                    break;
+                case 2:
+                    $this->validate($this->rule2);
+                    $this->CustAddress->save();
+                    $this->EmployAddress->save();
+                    $this->tab3 = 1;
+                    break;
+                case 3:
+                    $this->validate($this->rule3);
+                    $this->CustFamily->save();
+                    $this->Family->save();
+                    $this->FamilyAddress->save();
+                    $this->tab4 = 1;
+                    break;
+                case 4:
+                    $this->validate($this->rule4);
+                    $this->Employer->save();
+                    $this->tab5 = 1;
+                    break;
+                case 5:
+                    $this->validate($this->rule5);
+                    $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
+                    $this->Introducer->save();
+                    $this->tab6 = 1;
+                    break;
+                case 6:
+                    $this->totalfee();
+                    $this->validate($this->rule6);
+                    $this->applymember->save();
+                    $this->tab7 = 1;
+                    break;
+                case 7:
+                    $this->fileupload();
+                    $this->tab8 = 1;
+                    break;
+            }
+            $this->dispatchBrowserEvent('increment-tab');
+            $this->numpage++;
+        }
+
+
+
+        $this->render();
+    }
+
+    public function nextTab($curPage, $newPage, $tab)
+    {
+        $this->activeTab = $newPage - 1;
+
+        $this->numpage = $newPage;
+        if ($tab == 1) {
+            switch ($curPage) {
+                case 1:
+                    $this->validate($this->rule1);
+                    $this->birthdate();
+                    $this->Cust->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 2:
+                    $this->validate($this->rule2);
+                    $this->CustAddress->save();
+                    $this->EmployAddress->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 3:
+                    $this->validate($this->rule3);
+                    $this->CustFamily->save();
+                    $this->Family->save();
+                    $this->FamilyAddress->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+                    break;
+                case 4:
+                    $this->validate($this->rule4);
+                    $this->Employer->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 5:
+                    $this->validate($this->rule5);
+                    $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
+                    $this->Introducer->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 6:
+                    $this->totalfee();
+                    $this->validate($this->rule6);
+                    $this->applymember->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 7:
+                    $this->fileupload();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+            }
+        }
+
+
+        $this->render();
+    }
+
+
+
     public function searchUser()
     {
-        if(strlen($this->search) == 12 ){
+        if (strlen($this->search) == 12) {
             $this->CustIntroducer = Customer::where('icno', $this->search)->first();
         }
     }
@@ -238,16 +337,14 @@ class NewMembership extends Component
         $tempmonth  = substr($tempIC, 2, 2);             //mm
         $tempday    = substr($tempIC, 4, 2);             //dd
 
-        if ($tempyear > now())
-        {
-            $tempyear = '19'.$tempyear;
+        if ($tempyear > now()) {
+            $tempyear = '19' . $tempyear;
         } else {
-            $tempyear = '20'.$tempyear;
+            $tempyear = '20' . $tempyear;
         }
         //$this->birthdate  = $tempday.'-'.$tempmonth.'-'.$tempyear;
-        $this->birthdate  = $tempyear.'-'.$tempmonth.'-'.$tempday;
+        $this->birthdate  = $tempyear . '-' . $tempmonth . '-' . $tempday;
         return $this->birthdate;
-
     }
 
     public function gender()
@@ -267,23 +364,23 @@ class NewMembership extends Component
     {
         //$this->CustFamily = new Customer;
         $ic = $this->CustFamily->icno;
-        if ($this->Family->relationship_id != NULL){
+        if ($this->Family->relationship_id != NULL) {
             $this->Family            = CustFamily::firstOrCreate([
-                    'cust_id'         => $this->Cust->id, 
-                    'relationship_id' => $this->Family->relationship_id
-                ],[ 'created_by' => $this->User->name]);
-            if ($ic != NULL && strlen($ic) == 12){
+                'cust_id'         => $this->Cust->id,
+                'relationship_id' => $this->Family->relationship_id
+            ], ['created_by' => $this->User->name]);
+            if ($ic != NULL && strlen($ic) == 12) {
                 $this->CustFamily    = Customer::where([
-                                            ['icno', $ic],
-                                            ['client_id', $this->User->client_id]
-                                    ])
-                                    ->firstOrCreate([
-                                        'icno'    => $ic,
-                                        'client_id' => $this->User->client_id
-                                    ],[
-                                        'name'       => $this->CustFamily->name ?? '',
-                                        'created_by' => $this->User->name,
-                                    ]);
+                    ['icno', $ic],
+                    ['client_id', $this->User->client_id]
+                ])
+                    ->firstOrCreate([
+                        'icno'    => $ic,
+                        'client_id' => $this->User->client_id
+                    ], [
+                        'name'       => $this->CustFamily->name ?? '',
+                        'created_by' => $this->User->name,
+                    ]);
                 $this->Family->family_id = $this->CustFamily->id;
                 $this->Family->save();
                 $this->FamilyAddress = $this->CustFamily->Address()->firstOrCreate();
@@ -299,12 +396,12 @@ class NewMembership extends Component
         $this->Cust = Customer::firstOrCreate([
             'icno'      => $this->User->icno,
             'client_id' => $this->Coop->id
-        ],[
+        ], [
             'name'      => $this->User->name,
         ]);
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
-        if ($this->Cust->ref_no != NULL){
-            session()->flash('message', 'You are already a member of '.$this->Coop->name);
+        if ($this->Cust->ref_no != NULL) {
+            session()->flash('message', 'You are already a member of ' . $this->Coop->name);
             session()->flash('time', 10000);
             session()->flash('warning');
             session()->flash('title');
@@ -320,7 +417,7 @@ class NewMembership extends Component
         $this->FamilyAddress     = new Address;
 
         $family = CustFamily::where('cust_id', $this->Cust->id)->first();
-        if ($family != NULL){
+        if ($family != NULL) {
             $this->Family = $family;
             $this->CustFamily = Customer::find($family->family_id);
             $this->FamilyAddress = $this->CustFamily->Address()->firstOrCreate();
@@ -330,15 +427,14 @@ class NewMembership extends Component
         $this->field             = MembershipField::where('membership_id', $this->Member->id)->get();
         $this->document          = MembershipDocument::where('membership_id', $this->Member->id)->get();
         $this->CustIntroducer    = new Customer;
-        $this->Introducer        = $this->Cust->introducer()->firstOrCreate([
-                                    ],[
-                                        'client_id' => $this->User->client_id,
-                                    ]);
-        if ($this->Introducer != NULL){
-            $this->CustIntroducer= Customer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
+        $this->Introducer        = $this->Cust->introducer()->firstOrCreate([], [
+            'client_id' => $this->User->client_id,
+        ]);
+        if ($this->Introducer != NULL) {
+            $this->CustIntroducer = Customer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
             $this->search        = $this->CustIntroducer->icno;
         }
-        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id],[]);
+        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], []);
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = 50;
         $this->applymember->contribution_fee = 50;
@@ -347,70 +443,69 @@ class NewMembership extends Component
         $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id],);
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate();
 
-        $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id],['status','1']])->get();
-        $this->education_id      = RefEducation::where([['client_id', $this->User->client_id],['status','1']])->get();
-        $this->gender_id         = RefGender::where([['client_id', $this->User->client_id],['status','1']])->get();
-        $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id],['status','1']])->get();
-        $this->relationship      = RefRelationship::where([['client_id', $this->User->client_id],['status','1']])->get();
-        $this->race_id           = RefRace::where([['client_id', $this->User->client_id],['status','1']])->get();
-        $this->state_id          = RefState::where([['client_id', $this->User->client_id],['status','1']])->get();
-
+        $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->gender_id         = RefGender::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->relationship      = RefRelationship::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
     }
 
     public function fileupload()
     {
         $customers = Customer::where('icno', $this->User->icno)->first();
 
-        if($this->online_file){
-            $filepath = 'Files/'.$customers->id.'/membership/IC_Photo'.'.'.$this->online_file->extension();
+        if ($this->online_file) {
+            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo' . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership//',$this->online_file, 'IC_Photo'.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file, 'IC_Photo' . '.' . $this->online_file->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'IC_Photo',
-            ],[
+            ], [
                 'filedesc' => 'IC Photo (Front & Back)',
                 'filetype' => $this->online_file->extension(),
                 'filepath' => $filepath,
             ]);
         };
 
-        if($this->online_file2){
-            $filepath = 'Files/'.$customers->id.'/membership/WorkerCard'.'.'.$this->online_file2->extension();
+        if ($this->online_file2) {
+            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard' . '.' . $this->online_file2->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership//',$this->online_file2, 'WorkerCard'.'.'.$this->online_file2->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file2, 'WorkerCard' . '.' . $this->online_file2->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'WorkerCard',
-            ],[
+            ], [
                 'filedesc' => 'Worker Card',
                 'filetype' => $this->online_file2->extension(),
                 'filepath' => $filepath,
             ]);
         };
 
-        if($this->online_file3){
-            $filepath = 'Files/'.$customers->id.'/membership/Paycheck'.'.'.$this->online_file3->extension();
+        if ($this->online_file3) {
+            $filepath = 'Files/' . $customers->id . '/membership/Paycheck' . '.' . $this->online_file3->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership//',$this->online_file3, 'Paycheck'.'.'.$this->online_file3->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file3, 'Paycheck' . '.' . $this->online_file3->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'Paycheck',
-            ],[
+            ], [
                 'filedesc' => 'Paycheck',
                 'filetype' => $this->online_file3->extension(),
                 'filepath' => $filepath,
             ]);
         };
 
-        if($this->online_file4){
-            $filepath = 'Files/'.$customers->id.'/membership/LastMonthPaycheck'.'.'.$this->online_file4->extension();
+        if ($this->online_file4) {
+            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck' . '.' . $this->online_file4->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id. '/membership//',$this->online_file4, 'LastMonthPaycheck'.'.'.$this->online_file4->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file4, 'LastMonthPaycheck' . '.' . $this->online_file4->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'LastMonthPaycheck',
-            ],[
+            ], [
                 'filedesc' => 'Last Month Paycheck',
                 'filetype' => $this->online_file4->extension(),
                 'filepath' => $filepath,
@@ -452,12 +547,12 @@ class NewMembership extends Component
 
         $this->Cust->save();
         $this->Employer->save();
-        if ($this->CustFamily->id != NULL){
+        if ($this->CustFamily->id != NULL) {
             $this->CustFamily->save();
             $this->Family->address()->save($this->FamilyAddress);
         } else {
-            $Familymember = Customer::where('icno',$this->CustFamily->icno)->first();
-            if ($Familymember != NULL){
+            $Familymember = Customer::where('icno', $this->CustFamily->icno)->first();
+            if ($Familymember != NULL) {
                 $this->Family->family_id = $Familymember->id;
                 $this->Family->save();
 
@@ -465,7 +560,6 @@ class NewMembership extends Component
                 $Familymember->save();
 
                 $this->Family->address()->save($this->FamilyAddress);
-
             } else {
                 $Familymember = Customer::firstOrCreate([
                     'name'            => $this->CustFamily->name,
@@ -476,7 +570,6 @@ class NewMembership extends Component
                 $this->Family->family_id = $Familymember->id;
                 $this->Family->save();
                 $this->Family->address()->save($this->FamilyAddress);
-
             }
         }
 
@@ -516,12 +609,12 @@ class NewMembership extends Component
 
     public function alertConfirm()
     {
-        $message  = '<b>Name</b> : '.$this->Cust->name."<br>";
-        $message .= '<b>Introducer</b> : '.$this->CustIntroducer->name."<br>";
-        $message .= '<b>Register Fee</b> : RM'.$this->applymember->register_fee."<br>";
-        $message .= '<b>Share Fee</b> : RM'.$this->applymember->share_fee."<br>";
-        $message .= '<b>Contribution Fee</b> : RM'.$this->applymember->contribution_fee."<br>";
-        $message .= '<b>Total Fee</b> : RM'.$this->applymember->total_fee."<br>";
+        $message  = '<b>Name</b> : ' . $this->Cust->name . "<br>";
+        $message .= '<b>Introducer</b> : ' . $this->CustIntroducer->name . "<br>";
+        $message .= '<b>Register Fee</b> : RM' . $this->applymember->register_fee . "<br>";
+        $message .= '<b>Share Fee</b> : RM' . $this->applymember->share_fee . "<br>";
+        $message .= '<b>Contribution Fee</b> : RM' . $this->applymember->contribution_fee . "<br>";
+        $message .= '<b>Total Fee</b> : RM' . $this->applymember->total_fee . "<br>";
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'          => 'warning',
@@ -544,7 +637,7 @@ class NewMembership extends Component
             'address'     => $this->CustAddress,
             'emp address' => $this->EmployAddress,
             'fam address' => $this->FamilyAddress,
-            'address fams'=> $this->CustFamily->address()->firstOrCreate(),
+            'address fams' => $this->CustFamily->address()->firstOrCreate(),
         ]);
     }
 
@@ -552,5 +645,4 @@ class NewMembership extends Component
     {
         return view('livewire.page.application.membership.new-membership')->extends('layouts.head');
     }
-
 }
