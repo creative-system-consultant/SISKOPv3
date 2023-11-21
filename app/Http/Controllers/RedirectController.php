@@ -9,10 +9,12 @@ class RedirectController extends Controller
 {
     public function index()
     {
-        if (Auth::user()){
-            return redirect('home');
-        } else {
+        if (Auth::guest()){
             return redirect('login');
+        } else if(Auth::User()->client_id == NULL) {
+            return redirect(route('dash.guest'));
+        } else {
+            return redirect('home');
         }
     }
 }

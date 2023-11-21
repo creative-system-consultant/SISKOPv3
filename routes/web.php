@@ -106,6 +106,7 @@ use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
 use App\Http\Livewire\Page\Application\Dividend\ApplyDividend;
+use App\Http\Livewire\Page\Dashboard\Guest;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendApprover;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendMaker;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendChecker;
@@ -144,20 +145,25 @@ Route::get('password/reset', Email::class)->name('password.request');
 Route::get('password/reset/{token}', Reset::class)->name('password.reset');
 Route::get('retrieve-account', RetrieveAccount::class)->name('retrieve-account');
 
-//----------------------------- page routes -------------------------------//
-Route::middleware('auth')->group(function () {
-    Route::get('home', Home::class)->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('dash/guest', Guest::class)->name('dash.guest');
 
     //------------------------ Auth ------------------------------//
     Route::get('email/verify', Verify::class)->middleware('throttle:6,1')->name('verification.notice');
     Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
     Route::get('password/confirm', Confirm::class)->name('password.confirm');
+
     Route::post('logout', LogoutController::class)->name('logout');
     Route::get('logout', LogoutController::class)->name('logouts');
 
     //profile
     Route::get('profile', Index::class)->name('profile');
     Route::get('Index', Index::class)->name('Index');
+});
+
+//----------------------------- page routes -------------------------------//
+Route::middleware(['auth','mustselectclient'])->group(function () {
+    Route::get('home', Home::class)->name('home');
 
     //User
     Route::prefix('User')->group(function(){
