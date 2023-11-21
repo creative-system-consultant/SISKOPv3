@@ -27,7 +27,7 @@
 
     <div class="{{ $defaultClasses }}
          @if ($varble == 1) {{ $activeClasses }} @elseif ($varble == 0) {{ $inactiveClasses }} @endif"
-         x-on:click.prevent="{{ $activeClick }}"
+         {{-- x-on:click.prevent="{{ $activeClick }}" --}}
          x-bind:class="{'{{ $activeClasses }}': active === {{ $name }} }"
          {{ $attributes }}
     >

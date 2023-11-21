@@ -62,6 +62,7 @@ class NewMembership extends Component
     public $search;
     public $mbr_no = [];
     public $birthdate;
+    public $activeTab = 0;
     public $tab1 = 1, $tab2 = 0, $tab3 = 0, $tab4 = 0, $tab5 = 0, $tab6 = 0, $tab7 = 0, $tab8 = 0;
 
     //Need protected $listerners to run the Livewire.emit event
@@ -200,6 +201,7 @@ class NewMembership extends Component
 
     public function next($newPage, $tab)
     {
+
         $this->numpage = $newPage;
 
         if ($tab != 1) {
@@ -247,8 +249,67 @@ class NewMembership extends Component
             }
             $this->dispatchBrowserEvent('increment-tab');
             $this->numpage++;
-        } else if ($tab == 1) {
-            // $this->dispatchBrowserEvent('activeTab');
+        }
+
+
+
+        $this->render();
+    }
+
+    public function nextTab($curPage, $newPage, $tab)
+    {
+        $this->activeTab = $newPage - 1;
+
+        $this->numpage = $newPage;
+        if ($tab == 1) {
+            switch ($curPage) {
+                case 1:
+                    $this->validate($this->rule1);
+                    $this->birthdate();
+                    $this->Cust->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 2:
+                    $this->validate($this->rule2);
+                    $this->CustAddress->save();
+                    $this->EmployAddress->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 3:
+                    $this->validate($this->rule3);
+                    $this->CustFamily->save();
+                    $this->Family->save();
+                    $this->FamilyAddress->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+                    break;
+                case 4:
+                    $this->validate($this->rule4);
+                    $this->Employer->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 5:
+                    $this->validate($this->rule5);
+                    $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
+                    $this->Introducer->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 6:
+                    $this->totalfee();
+                    $this->validate($this->rule6);
+                    $this->applymember->save();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+                case 7:
+                    $this->fileupload();
+                    $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
+
+                    break;
+            }
         }
 
 
