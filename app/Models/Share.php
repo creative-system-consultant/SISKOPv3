@@ -60,15 +60,15 @@ class Share extends Model implements Auditable
 
     public function make_approvals()
     {
-        $CoopApproval = CoopApproval::where([['approval_type', 'Share'],['client_id',$this->client_id]])->first();
-        if ($CoopApproval != NULL){
-            $CoopApprovalRoles = CoopApprovalRole::where([['client_id', $this->client_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
+        $ClientApproval = ClientApproval::where([['approval_type', 'Share'],['client_id',$this->client_id]])->first();
+        if ($ClientApproval != NULL){
+            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
             return NULL;
         }
 
         $count = 1;
-        foreach ($CoopApprovalRoles as $key => $value) {
+        foreach ($ClientApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
                 foreach ($value->rolegroup->users as $key1 => $value1){

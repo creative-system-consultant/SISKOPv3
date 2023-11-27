@@ -13,7 +13,7 @@
                     leftTag="RM"
                     rightTag=""
                     type="text"
-                    wire:model=""
+                    wire:model="applymember.register_fee"
                 /> 
             </div>
             <div>
@@ -26,7 +26,20 @@
                     leftTag="RM"
                     rightTag=""
                     type="text"
-                    wire:model=""
+                    wire:model="applymember.contribution_fee"
+                /> 
+            </div>
+            <div>
+                <x-form.input-tag
+                    label="Share Monthly (Minimum RM50)"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable=""
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="applymember.share_monthly"
                 /> 
             </div>
             <div>
@@ -39,20 +52,7 @@
                     leftTag="RM"
                     rightTag=""
                     type="text"
-                    wire:model=""
-                /> 
-            </div>
-            <div>
-                <x-form.input-tag
-                    label="Share (Minimum RM500)"
-                    name=""
-                    value=""
-                    mandatory=""
-                    disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model=""
+                    wire:model="applymember.share_fee"
                 /> 
             </div>
             <div>
@@ -75,11 +75,11 @@
                     name=""
                     value=""
                     mandatory=""
-                    disable=""
+                    disable="readonly"
                     leftTag="RM"
                     rightTag=""
                     type="text"
-                    wire:model=""
+                    wire:model="applymember.total_fee"
                 /> 
             </div>
         </div>
@@ -89,45 +89,6 @@
     <div  class="px-6 py-4 mt-4">
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Payment </h2>
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
-            {{-- <div @if ($Member->field_status(4) == '0') style="display: none" @endif >
-                <x-form.input-tag
-                    label="Registration Fee"
-                    name="applymember.register_fee"
-                    value=""
-                    mandatory=""
-                    disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.register_fee"
-                /> 
-            </div>
-            <div @if ($Member->field_status(5) == '0') style="display: none" @endif >
-                <x-form.input-tag
-                    label="Share Fee"
-                    name="applymember.share_fee"
-                    value=""
-                    mandatory=""
-                    disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.share_fee"
-                />  
-            </div>
-            <div @if ($Member->field_status(6) == '0') style="display: none" @endif >
-                <x-form.input-tag
-                    label="Contribution Fee"
-                    name="applymember.contribution_fee"
-                    value=""
-                    mandatory=""
-                    disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.contribution_fee"
-                /> 
-            </div> --}}
             <div>
                 <x-form.dropdown
                     label="Payment Made by"

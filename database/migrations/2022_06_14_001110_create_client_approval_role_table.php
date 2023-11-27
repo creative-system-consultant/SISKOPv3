@@ -14,16 +14,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.COOP_ROLE_GROUP', function (Blueprint $table) {
+        Schema::create('siskop.client_approval_role', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->bigInteger('client_id')->nullable();
-            $table->bigInteger('role_id')->nullable();
+            $table->bigInteger('client_id');
+            $table->bigInteger('role_id');
+            $table->bigInteger('approval_id');
+            $table->bigInteger('product_id')->nullable();
 
-            $table->string('name',50);
-            $table->string('description')->nullable();
+            $table->string('name',50)->nullable();
+            $table->integer('order')->default('1');
             $table->string('status',1)->default('1');
+            $table->string('rules')->default('[]');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -33,7 +35,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.COOP_ROLE_GROUP',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.client_approval_role',RESEED,101)");
     }
 
     /**
@@ -43,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.COOP_ROLE_GROUP');
+        Schema::dropIfExists('siskop.client_approval_role');
     }
 };

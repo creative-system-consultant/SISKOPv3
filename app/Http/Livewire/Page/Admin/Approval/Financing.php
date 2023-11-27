@@ -3,10 +3,10 @@
 namespace App\Http\Livewire\Page\Admin\Approval;
 
 use App\Models\AccountProduct;
-use App\Models\CoopApproval;
-use App\Models\CoopApprovalRole;
+use App\Models\ClientApproval;
+use App\Models\ClientApprovalRole;
 use App\Models\User;
-use App\Models\CoopRoleGroup;
+use App\Models\ClientRoleGroup;
 use Livewire\Component;
 
 class Financing extends Component
@@ -19,6 +19,7 @@ class Financing extends Component
     public $selected;
     public $custom;
     public $page;
+    public $range;
     public $firstMaker = false;
     public $isRule = false;
     public $coopGroup   = [];
@@ -54,11 +55,11 @@ class Financing extends Component
         $this->User      = User::find(Auth()->user()->id);
 
         $this->products  = AccountProduct::where([['client_id', $this->User->client_id]])->select('id','name', 'product_type')->get();
-        $this->approval  = CoopApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => 'Financing']);
+        $this->approval  = ClientApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => 'Financing']);
 
         $this->loadList();
 
-        $this->coopGroup = CoopRoleGroup::where('client_id', $this->User->client_id)->get();
+        $this->coopGroup = ClientRoleGroup::where('client_id', $this->User->client_id)->get();
     }
 
     public function loadList()
@@ -118,7 +119,7 @@ class Financing extends Component
 
     public function rem($id)
     {
-        $rem   = CoopApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
+        $rem   = ClientApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
         $rem->delete();
         $this->lists    = $this->approval->approvals($this->product_id)->orderBy('order')->get();
         foreach($this->lists as $key=>$list){
@@ -140,6 +141,7 @@ class Financing extends Component
             'coopGroup' => $this->coopGroup,
             'lists'     => $this->lists,
             'selected'  => $this->selected,
+            'range'     => $this->range,
         ]);
     }
 

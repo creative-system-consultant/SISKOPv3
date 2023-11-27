@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class CoopApprovalRole extends Model implements Auditable
+class ClientApprovalRole extends Model implements Auditable
 {
     use HasCoop;
     use HasRules;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = 'siskop.coop_approval_role';
+    protected $table   = 'siskop.client_approval_role';
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -37,11 +37,11 @@ class CoopApprovalRole extends Model implements Auditable
 
     public function rolegroup()
     {
-        return $this->belongsTo(CoopRoleGroup::class,'role_id');
+        return $this->belongsTo(ClientRoleGroup::class,'role_id');
     }
 
     public function sys_role()
     {
-        return $this->hasOneThrough(UserRole::class,CoopRoleGroup::class,'id','id','role_id','role_id');
+        return $this->hasOneThrough(UserRole::class,ClientRoleGroup::class,'id','id','role_id','role_id');
     }
 }

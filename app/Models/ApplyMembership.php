@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Http\Traits\HasCoop;
-use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +12,6 @@ class ApplyMembership extends Model implements Auditable
 {
     use HasCoop;
     use HasFiles;
-    use HasCustomer;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
@@ -24,6 +22,11 @@ class ApplyMembership extends Model implements Auditable
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(SiskopCustomer::class,'cust_id','id');
+    }
 
     public function introducers()
     {
@@ -42,7 +45,7 @@ class ApplyMembership extends Model implements Auditable
 
     public function current_approval_role()
     {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
+        return ClientRoleGroup::find($this->current_approval()->group_id);
     }
 
     public function remove_approvals()
@@ -73,15 +76,15 @@ class ApplyMembership extends Model implements Auditable
 
     public function make_approvals()
     {
-        $CoopApproval = CoopApproval::where([['approval_type', 'Membership'],['client_id',$this->client_id]])->first();
-        if ($CoopApproval != NULL){
-            $CoopApprovalRoles = CoopApprovalRole::where([['client_id', $this->client_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
+        $ClientApproval = ClientApproval::where([['approval_type', 'Membership'],['client_id',$this->client_id]])->first();
+        if ($ClientApproval != NULL){
+            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
             return NULL;
         }
 
         $count = 1;
-        foreach ($CoopApprovalRoles as $key => $value) {
+        foreach ($ClientApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
                 foreach ($value->rolegroup->users as $key1 => $value1){

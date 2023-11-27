@@ -9,7 +9,7 @@ class RefApprovalType extends Model
 {
     use SoftDeletes;
 
-    protected $table   = 'ref.approval_types';
+    protected $table   = 'ref.siskop_approval';
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',

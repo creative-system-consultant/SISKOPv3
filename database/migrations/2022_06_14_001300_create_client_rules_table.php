@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.Coop_Rules', function (Blueprint $table) {
+        Schema::create('SISKOP.Client_Rules', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
@@ -37,7 +37,7 @@ return new class extends Migration
 
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.Coop',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.Client_rules',RESEED,100)");
 
     }
 
@@ -48,6 +48,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.Coop');
+        Schema::dropIfExists('SISKOP.Client_rules');
     }
 };

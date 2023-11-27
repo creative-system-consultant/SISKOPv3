@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Customer extends Model implements Auditable
+class SiskopCustomer extends Model implements Auditable
 {
     use HasFiles;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "CIF.customers";
+    protected $table   = "SISKOP.customers";
     protected $guarded = ['uuid'];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -26,7 +26,7 @@ class Customer extends Model implements Auditable
 
     public function family()
     {
-        return $this->hasMany(CustFamily::class,'cust_id');
+        return $this->hasMany(SiskopFamily::class,'cust_id');
     }
 
     public function specialAid()

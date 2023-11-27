@@ -25,6 +25,7 @@ class CalculationTypeCreate extends Component
 
         $this->RefCalcType->description = trim(strtoupper($this->RefCalcType->description));
         $this->RefCalcType->code        = trim(strtoupper($this->RefCalcType->code));
+        $this->RefCalcType->client_id   = $this->User->client_id;
         $this->RefCalcType->status      = $this->status == true ? '1' : '0';
         $this->RefCalcType->save();
 

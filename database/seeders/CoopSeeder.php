@@ -30,7 +30,7 @@ class CoopSeeder extends Seeder
                 'address3' => 'SEKSYEN 9',
                 'postcode' => '43500',
                 'town'     => 'BANDAR BARU BANGI',
-                'def_state_id' => $allstate->where('description','SELANGOR')->first()->id,
+                'state_id' => $allstate->where('description','SELANGOR')->first()->id,
             ],
         ];
         DB::table('cif.address')->insert($coop_add);
@@ -86,15 +86,15 @@ class CoopSeeder extends Seeder
                 'status'      => '1'
             ],
         ];
-        DB::table('SISKOP.COOP_ROLE_GROUP')->insert($role_group);
+        DB::table('SISKOP.CLIENT_ROLE_GROUP')->insert($role_group);
 
         $role_users = [
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '101', 'user_id' => '15', 'client_id' => '1' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '102', 'user_id' => '16', 'client_id' => '1' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '103', 'user_id' => '17', 'client_id' => '1' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '104', 'user_id' => '15', 'client_id' => '1' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '104', 'user_id' => '16', 'client_id' => '1' ],
-            [   'grouping_type' => 'App\Models\CoopRoleGroup', 'grouping_id' => '104', 'user_id' => '1' , 'client_id' => '1' ],
+            [   'grouping_type' => 'App\Models\ClientRoleGroup', 'grouping_id' => '101', 'user_id' => '15', 'client_id' => '1' ],
+            [   'grouping_type' => 'App\Models\ClientRoleGroup', 'grouping_id' => '102', 'user_id' => '16', 'client_id' => '1' ],
+            [   'grouping_type' => 'App\Models\ClientRoleGroup', 'grouping_id' => '103', 'user_id' => '17', 'client_id' => '1' ],
+            [   'grouping_type' => 'App\Models\ClientRoleGroup', 'grouping_id' => '104', 'user_id' => '15', 'client_id' => '1' ],
+            [   'grouping_type' => 'App\Models\ClientRoleGroup', 'grouping_id' => '104', 'user_id' => '16', 'client_id' => '1' ],
+            [   'grouping_type' => 'App\Models\ClientRoleGroup', 'grouping_id' => '104', 'user_id' => '1' , 'client_id' => '1' ],
         ];
         DB::table('SISKOP.USER_GROUP')->insert($role_users);
 

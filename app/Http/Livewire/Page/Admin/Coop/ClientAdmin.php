@@ -2,21 +2,21 @@
 
 namespace App\Http\Livewire\Page\Admin\Coop;
 
-use App\Models\Coop;
+use App\Models\Client;
 use Livewire\Component;
 
-class CoopAdmin extends Component
+class ClientAdmin extends Component
 {
     public $coops;
 
     public function mount()
     {
-        $this->coops = Coop::withTrashed()->get();
+        $this->coops = Client::withTrashed()->get();
     }
 
     public function delete($id)
     {
-        $data=Coop::find($id);
+        $data=Client::find($id);
         $data->delete();
 
         session()->flash('message', 'COOP Delete Success');

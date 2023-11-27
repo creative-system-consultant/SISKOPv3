@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasApprovals;
 use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
@@ -13,6 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class AccountApplication extends Model implements Auditable
 {
+    use HasApprovals;
     use HasCoop;
     use HasCustomer;
     use HasFiles;
@@ -47,19 +49,9 @@ class AccountApplication extends Model implements Auditable
         return $this->morphMany(Guarantor::class, 'guarantee');
     }
 
-    public function approvals()
-    {
-        return $this->morphMany(Approval::class,'approval');
-    }
-
     public function current_approval()
     {
         return $this->approvals()->where('order', $this->apply_step)->first();
-    }
-
-    public function current_approval_role()
-    {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
     }
 
     public function status()
@@ -70,15 +62,6 @@ class AccountApplication extends Model implements Auditable
     public function make_ref_num()
     {
         return '';
-    }
-
-    public function remove_approvals()
-    {
-        $approval = $this->approvals;
-        foreach ($approval as $key => $value) {
-            $value->delete();
-        }
-        return true;
     }
 
     public function clear_approvals($order = NULL)
@@ -101,15 +84,15 @@ class AccountApplication extends Model implements Auditable
 
     public function make_approvals()
     {
-        $CoopApproval = CoopApproval::where([['approval_type', 'financing'],['client_id',$this->client_id]])->first();
-        if ($CoopApproval != NULL){
-            $CoopApprovalRoles = CoopApprovalRole::where([['client_id', $this->client_id],['product_id', $this->product_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
+        $ClientApproval = ClientApproval::where([['approval_type', 'financing'],['client_id',$this->client_id]])->first();
+        if ($ClientApproval != NULL){
+            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['product_id', $this->product_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
             return NULL;
         }
 
         $count = 1;
-        foreach ($CoopApprovalRoles as $key => $value) {
+        foreach ($ClientApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
                 foreach ($value->rolegroup->users as $key1 => $value1){

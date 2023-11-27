@@ -15,15 +15,6 @@
                         disable=""
                         wire:model="group.name"
                     />
-                    <x-form.input
-                        label=""
-                        type="hidden"
-                        name="group.client_id"
-                        value=""
-                        mandatory=""
-                        disable=""
-                        wire:model="group.name"
-                    />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-4">
                     <x-form.dropdown
@@ -66,7 +57,7 @@
                         default="yes"
                         wire:model="group.role_id"
                     >
-                    @forelse ($roles as $role)
+                    @forelse ($user_roles as $role)
                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                     @empty
                     @endforelse
@@ -155,13 +146,12 @@
             </div>
 
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
-                <input type="hidden" name="group.client_id" value="{{ auth()->user()->client_id }}" wire:model="group.client_id" >
                 <div class="flex items-center justify-center space-x-2">
                     <a href="{{ route('user.rolegroup') }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                         CANCEL
                     </a>
                     <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        {{ $page }}
+                        SAVE
                     </button>
                     <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         DEBUG

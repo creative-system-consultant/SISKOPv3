@@ -31,7 +31,7 @@ class ApplyContribution extends Component
 
     protected $rules = [
         'cust.name'                 => 'required',
-        'cust.icno'                 => 'required',
+        'cust.identity_no'                 => 'required',
         'cust.contribution'         => 'required',
         'cust.contribution_monthly' => 'required',
         'cont_apply'                => 'required|numeric|not_in:0',
@@ -103,7 +103,7 @@ class ApplyContribution extends Component
     {
 
         $user = auth()->user();
-        $customer = Customer::where('icno', $user->icno)->first();
+        $customer = Customer::where('identity_no', $user->identity_no)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
 
         $contribution->update([
@@ -193,7 +193,7 @@ class ApplyContribution extends Component
     public function mount()
     {
         $user = auth()->user();
-        $this->cust = Customer::where('icno', $user->icno)->first();
+        $this->cust = Customer::where('identity_no', $user->identity_no)->first();
         $this->banks = RefBank::where('client_id', $user->client_id)->get();
 
         $contribution = Contribution::where('cust_id', $this->cust->id)->firstOrCreate([

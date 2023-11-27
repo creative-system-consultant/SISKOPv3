@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class CoopRoleGroup extends Model implements Auditable
+class ClientRoleGroup extends Model implements Auditable
 {
     use HasCoop;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table = 'SISKOP.COOP_ROLE_GROUP';
+    protected $table = 'SISKOP.CLIENT_ROLE_GROUP';
     protected $guarded = [];
     protected $appends = [];
     protected $casts   = [

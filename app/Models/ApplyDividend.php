@@ -38,7 +38,7 @@ class ApplyDividend extends Model implements Auditable
 
     public function current_approval_role()
     {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
+        return ClientRoleGroup::find($this->current_approval()->group_id);
     }
 
     public function balance()
@@ -85,15 +85,15 @@ class ApplyDividend extends Model implements Auditable
 
     public function make_approvals()
     {
-        $CoopApproval = CoopApproval::where([['approval_type', 'apply_dividend'],['client_id',$this->client_id]])->first();
-        if ($CoopApproval != NULL){
-            $CoopApprovalRoles = CoopApprovalRole::where([['client_id', $this->client_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
+        $ClientApproval = ClientApproval::where([['approval_type', 'apply_dividend'],['client_id',$this->client_id]])->first();
+        if ($ClientApproval != NULL){
+            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
             return NULL;
         }
 
         $count = 1;
-        foreach ($CoopApprovalRoles as $key => $value) {
+        foreach ($ClientApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
                 foreach ($value->rolegroup->users as $key1 => $value1){
@@ -107,6 +107,7 @@ class ApplyDividend extends Model implements Auditable
                     $approval->vote     = NULL;
                     $approval->save();
                 }
+                $count++;
             } else {
 
                 $approval = $this->approvals()->firstOrCreate(['order' => $count]);
@@ -196,7 +197,7 @@ class ApplyDividend extends Model implements Auditable
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,
@@ -251,7 +252,7 @@ class ApplyDividend extends Model implements Auditable
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,
@@ -306,7 +307,7 @@ class ApplyDividend extends Model implements Auditable
         $email      = $cust->email;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,

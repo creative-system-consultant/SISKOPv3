@@ -14,11 +14,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('siskop.coop_approval', function (Blueprint $table) {
+        Schema::create('SISKOP.CLIENT_ROLE_GROUP', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->default(DB::raw('newid()'));
 
-            $table->bigInteger('client_id');
-            $table->string('approval_type',50)->nullable();
+            $table->bigInteger('client_id')->nullable();
+            $table->bigInteger('role_id')->nullable();
+
+            $table->string('name',50);
+            $table->string('description')->nullable();
+            $table->string('status',1)->default('1');
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -28,7 +33,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.coop_approval',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.CLIENT_ROLE_GROUP',RESEED,101)");
     }
 
     /**
@@ -38,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('siskop.coop_approval');
+        Schema::dropIfExists('SISKOP.CLIENT_ROLE_GROUP');
     }
 };

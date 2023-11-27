@@ -3,19 +3,19 @@
 namespace App\Http\Livewire\Page\Admin\Coop;
 
 use App\Models\Address;
-use App\Models\Coop;
-use App\Models\CoopAdmin;
+use App\Models\Client;
+use App\Models\ClientAdmin;
 use App\Models\Ref\RefState;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
 
-class CoopCreate extends Component
+class ClientCreate extends Component
 {
     use WithFileUploads;
 
-    public Coop $coop;
+    public Client $coop;
     public Address $address;
     public User $admin;
     public User $User;
@@ -41,7 +41,7 @@ class CoopCreate extends Component
         'address.address3'  => 'max:255',
         'address.town'      => 'required|max:255',
         'address.postcode'  => 'required|integer|digits:5',
-        'address.def_state_id'=> 'required|integer',
+        'address.state_id'  => 'required|integer',
         'search'            => 'nullable|max:255',
         'logo'              => 'nullable|image|max:5120'             //filesize max 5mb
     ];
@@ -54,7 +54,7 @@ class CoopCreate extends Component
         'address.address2.required'     => 'You must specify Address Line 1 & 2',
         'address.town.required'         => 'You must specify Town',
         'address.postcode.required'     => 'You must specify Postcode',
-        'address.def_state_id.required' => 'You must specify State',
+        'address.state_id.required'     => 'You must specify State',
     ];
     protected $validationAttributes = [
         'coop.name'             => 'Organization Name',
@@ -64,7 +64,7 @@ class CoopCreate extends Component
         'address.address2'      => 'Address line 2',
         'address.town'          => 'Town',
         'address.postcode'      => 'Postcode',
-        'address.def_state_id'  => 'State',
+        'address.state_id'      => 'State',
     ];
 
     public function mount($client_id = NULL)
@@ -72,20 +72,22 @@ class CoopCreate extends Component
         $this->User = User::find(auth()->user()->id);
 
         if ($client_id != NULL){
-            $this->coop     = Coop::find($client_id);
-            $this->address  = $this->coop->address()->firstOrCreate();
+            $this->coop     = Client::find($client_id);
+            $this->address  = $this->coop->address()->firstOrCreate([
+                'address_type_id'   => 1
+            ]);
             $this->page     = "Edit";
             $this->ids      = $this->coop->getids();
             $this->ids      = array_filter($this->ids);
-            $this->users    = CoopAdmin::where('client_id', $this->coop->id)->get();
+            $this->users    = ClientAdmin::where('client_id', $this->coop->id)->get();
         } else {
-            $this->coop    = new Coop;
+            $this->coop    = new Client;
             $this->address = new Address;
 
             $this->coop->created_by = $this->User->name;
             $this->address->created_by = $this->User->name;
         }
-        $this->states = RefState::where('client_id', '1')->get();
+        $this->states = RefState::where('client_id', '1')->where('status', '1')->get();
     }
 
     public function add()
@@ -145,7 +147,7 @@ class CoopCreate extends Component
         }
 
         foreach ($this->ids as $key => $value) {
-            $admin = CoopAdmin::where('client_id', $this->coop->id)->updateOrCreate([
+            $admin = ClientAdmin::where('client_id', $this->coop->id)->updateOrCreate([
                 'user_id'   => $value,
                 'client_id'   => $this->coop->id,
                 'status'    => '1',

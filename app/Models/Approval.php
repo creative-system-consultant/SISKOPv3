@@ -40,7 +40,7 @@ class Approval extends Model implements Auditable
 
     public function rolegroup()
     {
-        return $this->belongsTo(CoopRoleGroup::class,'group_id');
+        return $this->belongsTo(ClientRoleGroup::class,'group_id');
     }
 
     public function user()

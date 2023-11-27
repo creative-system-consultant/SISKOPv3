@@ -3,7 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Approval;
-use App\Models\CoopRoleGroup;
+use App\Models\ClientRoleGroup;
 
 trait HasApprovals
 {
@@ -14,7 +14,7 @@ trait HasApprovals
 
     public function current_approval_role()
     {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
+        return ClientRoleGroup::find($this->current_approval()->group_id);
     }
 
     public function remove_approvals()

@@ -52,7 +52,7 @@ class Financing extends Component
                             //->where('account_status','>','14')
                             ->select('id','uuid','cust_id','apply_step','purchase_price','product_id','created_at','account_status')
                             ->orderBy('created_at','desc')
-                            ->with('customer:id,name,icno')
+                            ->with('customer:id,name,identity_no')
                             //->take(20)
                             ->get();
 

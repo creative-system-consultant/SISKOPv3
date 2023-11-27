@@ -13,21 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('CIF.Address', function (Blueprint $table) {
+        Schema::create('CIF.Addresses', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
             $table->morphs('addressable');
+            $table->bigint('client_id')->nullable();
+            $table->bigint('cif_id')->nullable();
 
             $table->string('address1')->nullable();
             $table->string('address2')->nullable();
             $table->string('address3')->nullable();
             $table->string('postcode',5)->nullable();
             $table->string('town')->nullable();
-            $table->unsignedSmallInteger('def_state_id')->nullable();
-            $table->unsignedSmallInteger('def_country_id')->nullable();
+            $table->unsignedSmallInteger('state_id')->nullable();
+            $table->unsignedSmallInteger('country_id')->nullable();
 
             $table->bigInteger('type')->nullable();
-            $table->string('phone_1',20)->nullable();
+            $table->string('phone',20)->nullable();
             $table->string('phone_2',20)->nullable();
             $table->string('fax',25)->nullable();
             $table->string('email')->nullable();
@@ -41,7 +43,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('CIF.Address',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('CIF.Addresses',RESEED,101)");
     }
 
     /**
@@ -51,6 +53,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CIF.Address');
+        Schema::dropIfExists('CIF.Addresses');
     }
 };

@@ -59,7 +59,7 @@
             wire:model="{{ $name3 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5
             {{ ($errors->has($name3)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
             {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
-            placeholder="Address Line 3"
+            placeholder="Address Line 3 (optional)"
         >
     </div>
     @if($errors->has($name3)) <p class="text-sm text-red-600">{{ $errors->first($name3) }}</p> @endif

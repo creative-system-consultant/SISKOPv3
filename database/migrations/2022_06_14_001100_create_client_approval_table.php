@@ -14,13 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ref.relationships', function (Blueprint $table) {
+        Schema::create('siskop.client_approval', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->string('description_bm')->nullable();
-            $table->string('code',20)->nullable();
-            $table->string('status',1)->default('0');
-            $table->bigInteger('client_id')->nullable();
+
+            $table->bigInteger('client_id');
+            $table->string('approval_type',50)->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by')->nullable()->default('SYSTEM');
@@ -30,7 +28,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('ref.relationships',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.client_approval',RESEED,101)");
     }
 
     /**
@@ -40,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ref.relationships');
+        Schema::dropIfExists('siskop.client_approval');
     }
 };

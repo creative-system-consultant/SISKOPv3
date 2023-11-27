@@ -3,12 +3,14 @@
 namespace App\Http\Livewire\Page\Application\ApplicationList;
 
 use App\Models\ApplyMembership as ApplyMember;
+use App\Models\SiskopCustomer;
 use App\Models\User;
 use Livewire\Component;
 
 class Membership extends Component
 {
     public User $User;
+    public SiskopCustomer $Cust;
     public $memberships;
     public $membership;
 
@@ -20,6 +22,7 @@ class Membership extends Component
     public function showApplication($uuid)
     {
         $this->membership = ApplyMember::where('uuid', $uuid)->with('customer')->first();
+        $this->Cust = $this->membership->customer;
     }
 
     public function remake_approvals()

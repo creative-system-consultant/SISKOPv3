@@ -16,7 +16,6 @@ return new class extends Migration
     {
         Schema::create('SISKOP.SYS_ROLE', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('client_id')->nullable();
 
             $table->string('name',50);
             $table->string('description')->nullable();

@@ -5,11 +5,12 @@ namespace App\Http\Livewire\Page\Application\Membership;
 use App\Models\User;
 use App\Models\Address;
 use App\Models\ApplyMembership;
-use App\Models\Coop;
-use App\Models\Customer;
-use App\Models\CustEmployer;
-use App\Models\CustFamily;
-use App\Models\Membership;
+use App\Models\Client as Coop;
+use App\Models\Customer as FMSCustomer;
+use App\Models\SiskopCustomer as Customer;
+use App\Models\SiskopEmployer as CustEmployer;
+use App\Models\SiskopFamily as CustFamily;
+//use App\Models\Membership;
 use App\Models\MembershipDocument;
 use App\Models\MembershipField;
 use App\Models\Ref\RefCustTitle;
@@ -22,23 +23,23 @@ use App\Models\Ref\RefState;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
+use Str;
 
 class NewMembership extends Component
 {
     use WithFileUploads;
 
     public User $User;
-    public Membership $Member;
+    //public Membership $Member;
     public ApplyMembership $applymember;
     public Coop $Coop;
     public Customer $Cust;
-    public Customer $CustFamily;
-    public Customer $CustIntroducer;
+    public CustFamily $CustFamily;
+    public FMSCustomer $CustIntroducer;
     public CustEmployer $Employer;
-    public CustFamily $Family;
     public Address $CustAddress;
     public Address $EmployAddress;
-    public Address $FamilyAddress;
+    //public Address $FamilyAddress;
 
     public $Introducer;
     public $field;
@@ -51,7 +52,7 @@ class NewMembership extends Component
     public $race_id;
     public $state_id;
     public $name;
-    public $icno;
+    public $identity_no;
     public $email;
     public $mobile_num;
     public $numpage = 1;
@@ -70,8 +71,8 @@ class NewMembership extends Component
 
     protected $rule1 = [
         'Cust.name'                          => 'required',
-        'Cust.icno'                          => 'required',
-        'Cust.mobile_num'                    => 'required',
+        'Cust.identity_no'                   => 'required',
+        'Cust.phone'                         => 'required',
         'Cust.birthdate'                     => 'required',
         'Cust.race_id'                       => 'required',
         'Cust.gender_id'                     => 'required',
@@ -85,23 +86,29 @@ class NewMembership extends Component
         'CustAddress.address1'               => 'required',
         'CustAddress.address2'               => 'required',
         'CustAddress.address3'               => 'nullable',
-        'CustAddress.postcode'               => 'required',
+        'CustAddress.postcode'               => 'required|digits:5',
         'CustAddress.town'                   => 'required',
-        'CustAddress.def_state_id'           => 'required',
+        'CustAddress.state_id'               => 'required',
+        'EmployAddress.address1'             => 'required',
+        'EmployAddress.address2'             => 'required',
+        'EmployAddress.address3'             => 'nullable',
+        'EmployAddress.postcode'             => 'required|digits:5',
+        'EmployAddress.town'                 => 'required',
+        'EmployAddress.state_id'             => 'required',
     ];
 
     protected $rule3 = [
-        'FamilyAddress.address1'             => 'required',
-        'FamilyAddress.address2'             => 'required',
-        'FamilyAddress.address3'             => 'nullable',
-        'FamilyAddress.postcode'             => 'required',
-        'FamilyAddress.town'                 => 'required',
-        'FamilyAddress.def_state_id'         => 'required',
-        'Family.relationship_id'             => 'required',
+        //'FamilyAddress.address1'             => 'required',
+        //'FamilyAddress.address2'             => 'required',
+        //'FamilyAddress.address3'             => 'nullable',
+        //'FamilyAddress.postcode'             => 'required',
+        //'FamilyAddress.town'                 => 'required',
+        //'FamilyAddress.state_id'             => 'required',
         'CustFamily.name'                    => 'required',
-        'CustFamily.icno'                    => 'required',
-        'CustFamily.email'                   => 'required',
-        'CustFamily.mobile_num'              => 'required',
+        'CustFamily.identity_no'             => 'required',
+        'CustFamily.email'                   => 'nullable',
+        'CustFamily.phone_no'                => 'required',
+        'CustFamily.relation_id'             => 'required',
     ];
 
     protected $rule4 = [
@@ -111,12 +118,6 @@ class NewMembership extends Component
         'Employer.office_num'                => 'required',
         'Employer.salary'                    => 'required',
         'Employer.worker_num'                => 'required',
-        'EmployAddress.address1'             => 'required',
-        'EmployAddress.address2'             => 'required',
-        'EmployAddress.address3'             => 'nullable',
-        'EmployAddress.postcode'             => 'required',
-        'EmployAddress.town'                 => 'required',
-        'EmployAddress.def_state_id'         => 'required',
     ];
 
     protected $rule5 = [
@@ -131,13 +132,14 @@ class NewMembership extends Component
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
+        'applymember.share_monthly'          => 'required|gte:50|numeric',
         'applymember.total_fee'              => 'required|numeric',
     ];
 
     protected $rules = [
         'Cust.name'                          => 'required',
-        'Cust.icno'                          => 'required',
-        'Cust.mobile_num'                    => 'required',
+        'Cust.identity_no'                   => 'required',
+        'Cust.phone'                         => 'required',
         'Cust.birthdate'                     => 'required',
         'Cust.race_id'                       => 'required',
         'Cust.gender_id'                     => 'required',
@@ -150,7 +152,7 @@ class NewMembership extends Component
         'CustAddress.address3'               => 'nullable',
         'CustAddress.postcode'               => 'required',
         'CustAddress.town'                   => 'required',
-        'CustAddress.def_state_id'           => 'required',
+        'CustAddress.state_id'               => 'required',
         'Employer.name'                      => 'required',
         'Employer.department'                => 'required',
         'Employer.position'                  => 'required',
@@ -162,18 +164,19 @@ class NewMembership extends Component
         'EmployAddress.address3'             => 'nullable',
         'EmployAddress.postcode'             => 'required',
         'EmployAddress.town'                 => 'required',
-        'EmployAddress.def_state_id'         => 'required',
-        'FamilyAddress.address1'             => 'required',
-        'FamilyAddress.address2'             => 'required',
-        'FamilyAddress.address3'             => 'nullable',
-        'FamilyAddress.postcode'             => 'required',
-        'FamilyAddress.town'                 => 'required',
-        'FamilyAddress.def_state_id'         => 'required',
-        'Family.relationship_id'             => 'required',
+        'EmployAddress.state_id'             => 'required',
+        //'FamilyAddress.address1'             => 'required',
+        //'FamilyAddress.address2'             => 'required',
+        //'FamilyAddress.address3'             => 'nullable',
+        //'FamilyAddress.postcode'             => 'required',
+        //'FamilyAddress.town'                 => 'required',
+        //'FamilyAddress.state_id'             => 'required',
+        //'Family.relationship_id'             => 'required',
         'CustFamily.name'                    => 'required',
-        'CustFamily.icno'                    => 'required',
-        //'CustFamily.email'                   => 'required',
-        'CustFamily.mobile_num'              => 'required',
+        'CustFamily.identity_no'             => 'required',
+        'CustFamily.email'                   => 'nullable',
+        'CustFamily.phone_no'                => 'required',
+        'CustFamily.relation_id'             => 'required',
         'CustIntroducer.name'                => 'required',
         'CustIntroducer.icno'                => 'nullable',
         'CustIntroducer.email'               => 'nullable',
@@ -182,6 +185,7 @@ class NewMembership extends Component
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
+        'applymember.share_monthly'          => 'required|gte:50|numeric',
         'applymember.total_fee'              => 'required|numeric',
     ];
 
@@ -220,9 +224,10 @@ class NewMembership extends Component
                     break;
                 case 3:
                     $this->validate($this->rule3);
+                    $this->CustFamily->name = Str::upper($this->CustFamily->name);
                     $this->CustFamily->save();
-                    $this->Family->save();
-                    $this->FamilyAddress->save();
+                    //$this->Family->save();
+                    //$this->FamilyAddress->save();
                     $this->tab4 = 1;
                     break;
                 case 4:
@@ -279,9 +284,9 @@ class NewMembership extends Component
                     break;
                 case 3:
                     $this->validate($this->rule3);
-                    $this->CustFamily->save();
-                    $this->Family->save();
-                    $this->FamilyAddress->save();
+                    //$this->CustFamily->save();
+                    //$this->Family->save();
+                    //$this->FamilyAddress->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
                     break;
                 case 4:
@@ -321,7 +326,18 @@ class NewMembership extends Component
     public function searchUser()
     {
         if (strlen($this->search) == 12) {
-            $this->CustIntroducer = Customer::where('icno', $this->search)->first();
+            $result = FMSCustomer::where('identity_no', $this->search)->first();
+            if ($result == NULL){
+                $this->dispatchBrowserEvent('swal',[
+                    'title' => 'warning!',
+                    'text'  => 'No User with this IC',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 10000,
+                ]);
+            } else {
+                $this->CustIntroducer = $result;
+            }
         }
     }
 
@@ -332,7 +348,7 @@ class NewMembership extends Component
 
     public function birthdate()
     {
-        $tempIC     = substr($this->Cust->icno, 0, 6);   //yymmdd
+        $tempIC     = substr($this->Cust->identity_no, 0, 6);   //yymmdd
         $tempyear   = substr($tempIC, 0, 2);             //yy
         $tempmonth  = substr($tempIC, 2, 2);             //mm
         $tempday    = substr($tempIC, 4, 2);             //dd
@@ -349,7 +365,7 @@ class NewMembership extends Component
 
     public function gender()
     {
-        $tempGender  = substr($this->Cust->icno, 0, 12);
+        $tempGender  = substr($this->Cust->identity_no, 0, 12);
         $this->Cust->gender_id;
 
         if ($tempGender % 2 == 0) {
@@ -360,6 +376,7 @@ class NewMembership extends Component
         return $this->Cust->gender_id;
     }
 
+    /*
     public function load_family()
     {
         //$this->CustFamily = new Customer;
@@ -387,18 +404,20 @@ class NewMembership extends Component
                 $this->FamilyAddress->save();
             }
         }
-    }
+    }*/
 
     public function mount()
     {
         $this->User = auth()->user();
         $this->Coop = Coop::find($this->User->client_id);
         $this->Cust = Customer::firstOrCreate([
-            'icno'      => $this->User->icno,
+            'identity_no'=> $this->User->icno,
             'client_id' => $this->Coop->id
         ], [
             'name'      => $this->User->name,
+            'phone'     => $this->User->phone_no,
         ]);
+
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL) {
             session()->flash('message', 'You are already a member of ' . $this->Coop->name);
@@ -408,33 +427,50 @@ class NewMembership extends Component
 
             return redirect()->route('home');
         }
+
         $this->Cust->birthdate   = $this->birthdate();
         $this->Cust->gender_id   = $this->gender();
         $this->CustAddress       = $this->Cust->Address()->firstOrCreate();
 
-        $this->Family            = new CustFamily;
-        $this->CustFamily        = new Customer;
+        $this->CustFamily  = CustFamily::firstOrCreate([
+            'cif_id'        => $this->Cust->id,
+            'client_id'     => $this->User->client_id,
+        ],[
+            
+        ]);
+
+        //where(, )->
+        /*
         $this->FamilyAddress     = new Address;
 
-        $family = CustFamily::where('cust_id', $this->Cust->id)->first();
+        $family = 
         if ($family != NULL) {
             $this->Family = $family;
             $this->CustFamily = Customer::find($family->family_id);
             $this->FamilyAddress = $this->CustFamily->Address()->firstOrCreate();
         }
+        */
 
-        $this->Member            = Membership::where('client_id', $this->User->client_id)->first();
+        /*
+        $this->Member            = Membership::firstOrCreate(
+                                    [
+                                        'cust_id'   => $this->User->id,
+                                        'client_id' => $this->User->client_id,
+                                    ],[
+                                        'created_by' => $this->User->name,
+                                    ]);
         $this->field             = MembershipField::where('membership_id', $this->Member->id)->get();
         $this->document          = MembershipDocument::where('membership_id', $this->Member->id)->get();
-        $this->CustIntroducer    = new Customer;
+        */
+        $this->CustIntroducer    = new FMSCustomer;
         $this->Introducer        = $this->Cust->introducer()->firstOrCreate([], [
             'client_id' => $this->User->client_id,
         ]);
         if ($this->Introducer != NULL) {
-            $this->CustIntroducer = Customer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
-            $this->search        = $this->CustIntroducer->icno;
+            $this->CustIntroducer = FMSCustomer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
+            $this->search        = $this->CustIntroducer->identity_no;
         }
-        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], []);
+        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id', $this->User->id]);
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = 50;
         $this->applymember->contribution_fee = 50;
@@ -454,7 +490,7 @@ class NewMembership extends Component
 
     public function fileupload()
     {
-        $customers = Customer::where('icno', $this->User->icno)->first();
+        $customers = Customer::where('identity_no', $this->User->identity_no)->first();
 
         if ($this->online_file) {
             $filepath = 'Files/' . $customers->id . '/membership/IC_Photo' . '.' . $this->online_file->extension();
@@ -540,13 +576,14 @@ class NewMembership extends Component
 
     public function submitto()
     {
-        $customers = Customer::where('icno', $this->User->icno)->first();
+        $customers = Customer::where('identity_no', $this->User->identity_no)->first();
 
         $this->validate();
         $this->fileupload();
 
         $this->Cust->save();
         $this->Employer->save();
+        /*
         if ($this->CustFamily->id != NULL) {
             $this->CustFamily->save();
             $this->Family->address()->save($this->FamilyAddress);
@@ -571,10 +608,10 @@ class NewMembership extends Component
                 $this->Family->save();
                 $this->Family->address()->save($this->FamilyAddress);
             }
-        }
+        }*/
 
         $this->Cust->address()->save($this->CustAddress);
-        $this->Employer->address()->save($this->EmployAddress);
+        //$this->Employer->address()->save($this->EmployAddress);
         $this->applymember->introducers()->firstOrCreate([
             'intro_cust_id' => $this->introducer->id,
             'client_id'       => $this->User->client_id,
@@ -632,12 +669,12 @@ class NewMembership extends Component
             'applymember' => $this->applymember,
             'customer'    => $this->Cust,
             'custfamily'  => $this->CustFamily,
-            'family'      => $this->Family,
+            //'family'      => $this->Family,
             'employer'    => $this->Employer,
             'address'     => $this->CustAddress,
-            'emp address' => $this->EmployAddress,
+            //'emp address' => $this->EmployAddress,
             'fam address' => $this->FamilyAddress,
-            'address fams' => $this->CustFamily->address()->firstOrCreate(),
+            //'address fams' => $this->CustFamily->address()->firstOrCreate(),
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Page\Executive\Approval\Membership;
 use App\Models\ApplyMembership;
 use App\Models\Approval;
 use App\Models\User;
+use DB;
 use Livewire\Component;
 
 class Approver extends Component
@@ -40,6 +41,11 @@ class Approver extends Component
             //$this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by COMMITTEE');
         }
 
+        $ret = DB::table('ref.user_has_clients')->insert([
+            'user_id'   => $this->Approver->user_id,
+            'client_id' => $this->User->client_id,
+        ]);
+
         // put event to Stored Proc
         // put event here
     }
@@ -53,11 +59,12 @@ class Approver extends Component
         //else, check if all votes are casted
         else if ($this->Approver->approvals()->where('type','like','vote%')->whereNull('vote')->count() < 1){
             if($this->Approver->approval_vote_yes() > $this->Approver->approval_vote_no()){
-                $this->Approver->account_status = 20;
+                $this->Approver->flag = 20;
                 $num = $this->User->id;
                 $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
-                $this->Approver->Customer->ref_no = $newnum;
+                //$this->Approver->Customer->ref_no = $newnum;
                 $this->Approver->Customer->save();
+                $this->Approver->mbr_no = $newnum;
                 $this->message = 'Application Approved';
             } else {
                 $this->Approver->account_status = 24;

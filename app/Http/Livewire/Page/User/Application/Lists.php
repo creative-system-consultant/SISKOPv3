@@ -29,7 +29,7 @@ class Lists extends Component
     public function mount()
     {
         $this->User      = auth()->user();
-        $this->Customer  = Customer::where([['client_id', $this->User->client_id],['icno',$this->User->icno]])->firstOrFail();
+        $this->Customer  = Customer::where([['client_id', $this->User->client_id],['identity_no',$this->User->icno]])->firstOrFail();
         $this->banks     = RefBank::where('client_id', $this->User->client_id)->get();
 
         $this->financings   = AccountApplication::where([['client_id', $this->User->client_id],['cust_id', $this->Customer->id]])->get();

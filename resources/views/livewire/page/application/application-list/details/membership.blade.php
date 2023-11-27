@@ -103,7 +103,7 @@
             </div>
 
             <!-- Personal Detail -->
-            <div x-show="active == 0">
+            <div x-show="active == 7">
                 <div class="py-4 mt-4">
                     <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Customer Details</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
@@ -116,7 +116,6 @@
                                 mandatory=""
                                 disable="true"
                                 default="yes"
-                                wire:model="Cust.title_id"
                             >
                                 {{-- @foreach ($title_id as $list)
                                     <option value="{{ $list->id }}"> {{ $list->description }}</option>
@@ -127,22 +126,20 @@
                             <x-form.input
                                 label="Full Name"
                                 name="Cust.name"
-                                value=""
+                                value="{{ $Cust->name }}"
                                 mandatory=""
                                 disable="true"
                                 type="text"
-                                wire:model="Cust.name"
                             />
                         </div>
                         <div>
                             <x-form.input
                                 label="IC Number"
                                 name="Cust.icno"
-                                value=""
+                                value="{{ $Cust->identity_no }}"
                                 mandatory=""
                                 disable="true"
                                 type="text"
-                                wire:model="Cust.icno"
                             />
                         </div>
                         <div>
@@ -153,7 +150,6 @@
                                 mandatory=""
                                 disable="true"
                                 type="text"
-                                wire:model="Cust.birthdate"
                             />
                         </div>
                         <div>
@@ -296,7 +292,7 @@
                                 name3="CustAddress.address3"
                                 name4="CustAddress.town"
                                 name5="CustAddress.postcode"
-                                name6="CustAddress.def_state_id"
+                                name6="CustAddress.state_id"
                                 {{-- :state="$state_id" --}}
                                 condition="state"
                                 mailFlag="true"
@@ -314,7 +310,7 @@
                                 name3="EmployAddress.address3"
                                 name4="EmployAddress.town"
                                 name5="EmployAddress.postcode"
-                                name6="EmployAddress.def_state_id"
+                                name6="EmployAddress.state_id"
                                 {{-- :state="$state_id" --}}
                                 condition="state"
                                 mailFlag="true"
@@ -414,7 +410,7 @@
                                 name3="FamilyAddress.address3"
                                 name4="FamilyAddress.town"
                                 name5="FamilyAddress.postcode"
-                                name6="FamilyAddress.def_state_id"
+                                name6="FamilyAddress.state_id"
                                 {{-- :state="$state_id" --}}
                                 condition="state"
                                 mailFlag="true"
@@ -970,7 +966,7 @@
             </div>
 
             <!-- Approval -->
-            <div x-show="active == 7">
+            <div>
                 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
                 <x-table.table>
                     <x-slot name="thead">
@@ -1004,11 +1000,11 @@
 
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
             <div class="flex items-center justify-center space-x-2">
-                @if($membership->flag == 1)
+                
                     <button wire:click="remake_approvals" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 border-2 rounded-md focus:outline-non">
                         RESET APPROVALS
                     </button>
-                @endif
+                
                 <button @click="openModal = false" wire:click="clearApplication" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 border-2 rounded-md focus:outline-non">
                     Close
                 </button>

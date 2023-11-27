@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class CoopApproval extends Model implements Auditable
+class ClientApproval extends Model implements Auditable
 {
     use HasCoop;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = 'siskop.coop_approval';
+    protected $table   = 'siskop.client_approval';
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -24,8 +24,8 @@ class CoopApproval extends Model implements Auditable
     public function approvals($product = NULL)
     {
         if ($product != NULL){
-            return $this->hasMany(CoopApprovalRole::class,'approval_id')->where('product_id', $product);
-        } else return $this->hasMany(CoopApprovalRole::class,'approval_id');
+            return $this->hasMany(ClientApprovalRole::class,'approval_id')->where('product_id', $product);
+        } else return $this->hasMany(ClientApprovalRole::class,'approval_id');
     }
 
     public function getids()

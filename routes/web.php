@@ -13,8 +13,8 @@ use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Page\Admin\Approval\ApprovalAdmin;
 use App\Http\Livewire\Page\Admin\Approval\Financing as ApprovalFinancing;
-use App\Http\Livewire\Page\Admin\coop\coopAdmin;
-use App\Http\Livewire\Page\Admin\Coop\CoopCreate;
+use App\Http\Livewire\Page\Admin\coop\ClientAdmin;
+use App\Http\Livewire\Page\Admin\Coop\ClientCreate;
 use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
@@ -234,9 +234,9 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
                 Route::get('edit/{uuid}', CreateSpecialAid::class)->name('special_aid.edit');
             });
             Route::prefix('coop')->group(function(){
-                Route::get('/', CoopAdmin::class)->name('coop.list');
-                Route::get('create', CoopCreate::class)->name('coop.create');
-                Route::get('edit/{client_id}', CoopCreate::class)->name('coop.edit');
+                Route::get('/', ClientAdmin::class)->name('coop.list');
+                Route::get('create', ClientCreate::class)->name('coop.create');
+                Route::get('edit/{client_id}', ClientCreate::class)->name('coop.edit');
             });
             Route::prefix('CustCoop')->group(function(){
                 Route::get('/', CustomerCoop::class)->name('coop.cust');

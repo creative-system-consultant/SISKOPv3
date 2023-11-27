@@ -88,7 +88,18 @@
                     @click="profile=!profile" @keydown.escape="profile=false" aria-haspopup="true">
                     <div class="flex items-center w-24 space-x-2 lg:w-full">
                         <img class="w-10 h-10 border-2 rounded-full border-primary-600" src="{{ asset('img/defaultUser.png') }}" alt="Rounded avatar">
-                        <p class="text-sm uppercase truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-sm uppercase truncate">
+                            {{ auth()->user()->name }}
+                            (
+                                @if(auth()->user()->user_type == 2)
+                                    CLIENT ADMIN
+                                @elseif(auth()->user()->user_type == 3)
+                                    CLIENT STAFF
+                                @elseif(auth()->user()->user_type == 4)
+                                    CLIENT MEMBER
+                                @endif
+                            )
+                        </p>
                     </div>
                 </button>
                 <div x-show="profile" x-cloak>
@@ -114,6 +125,13 @@
                                 href="{{ route('profile') }}">
                                 <x-heroicon-o-user-circle class="w-5 h-5 mr-2" />
                                 <span>Profile</span>
+                            </a>
+                        </li>
+                        <li class="flex">
+                            <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold text-gray-500 transition-colors duration-150 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
+                                href="{{ route('dash.guest') }}">
+                                <x-heroicon-o-arrow-up-circle class="w-5 h-5 mr-2" />
+                                <span>Change Client</span>
                             </a>
                         </li>
                         <li class="flex">

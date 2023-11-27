@@ -125,7 +125,7 @@
                         name3="address.address3"
                         name4="address.town"
                         name5="address.postcode"
-                        name6="address.def_state_id"
+                        name6="address.state_id"
                         :state="$states"
                         condition="state"
                     />

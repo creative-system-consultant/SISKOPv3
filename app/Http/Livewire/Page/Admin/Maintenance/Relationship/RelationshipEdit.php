@@ -26,7 +26,7 @@ class RelationshipEdit extends Component
             'code'        => trim(strtoupper($this->relationship_code)),
             'status'      => $this->relationship_status == true ? '1' : '0',
             'updated_at'  => now(),
-            'updated_by'  => Auth()->user()->name,
+            'updated_by'  => Auth()->id(),
         ]);
 
         session()->flash('message', 'Relationship Edited');

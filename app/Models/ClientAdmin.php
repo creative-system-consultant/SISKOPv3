@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class CoopAdmin extends Model implements Auditable
+class ClientAdmin extends Model implements Auditable
 {
     use HasCoop;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "SISKOP.Coop_admin";
+    protected $table   = "SISKOP.Client_admin";
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',

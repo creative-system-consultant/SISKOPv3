@@ -26,7 +26,7 @@ class RaceEdit extends Component
             'code'        => trim(strtoupper($this->race_code)),
             'status'      => $this->race_status == true ? '1' : '0',
             'updated_at'  => now(),
-            'updated_by'  => Auth()->user()->name,
+            'updated_by'  => Auth()->id(),
         ]);
 
         session()->flash('message', 'Race Edited');

@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Page\Admin\Approval;
 
-use App\Models\CoopApproval;
-use App\Models\CoopApprovalRole;
+use App\Models\ClientApproval;
+use App\Models\ClientApprovalRole;
 use App\Models\User;
-use App\Models\CoopRoleGroup;
+use App\Models\ClientRoleGroup;
 use Livewire\Component;
 
 class ApprovalAdmin extends Component
@@ -51,11 +51,11 @@ class ApprovalAdmin extends Component
         $this->page      = $type;
         $this->User      = User::find(Auth()->user()->id);
 
-        $this->approval  = CoopApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => $type]);
+        $this->approval  = ClientApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => $type]);
 
         $this->loadList();
 
-        $this->coopGroup = CoopRoleGroup::where('client_id', $this->User->client_id)->get();
+        $this->coopGroup = ClientRoleGroup::where('client_id', $this->User->client_id)->get();
     }
 
     public function loadList()
@@ -112,7 +112,7 @@ class ApprovalAdmin extends Component
 
     public function rem($id)
     {
-        $rem   = CoopApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
+        $rem   = ClientApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
         $rem->delete();
         $this->lists    = $this->approval->approvals()->orderBy('order')->get();
         foreach($this->lists as $key=>$list){

@@ -9,7 +9,7 @@ class RefMarital extends Model
 {
     use SoftDeletes;
 
-    protected $table   = 'ref.marital';
+    protected $table   = 'ref.maritals';
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',

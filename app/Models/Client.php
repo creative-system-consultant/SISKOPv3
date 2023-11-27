@@ -9,34 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Coop extends Model implements Auditable
+class Client extends Model implements Auditable
 {
     use HasFiles;
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "SISKOP.Coop";
+    protected $table   = "ref.CLIENT";
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
     ];
-
-    protected static function boot(){
-        parent::boot();
-
-        static::creating(function ($model){
-            $model->created_by  = Auth()->user()->name ?? 'SYSTEM';
-        });
-        static::updating(function ($model){
-            $model->updated_by  = Auth()->user()->name ?? 'SYSTEM';
-        });
-        static::deleting(function ($model){
-            $model->deleted_by  = Auth()->user()->name ?? 'SYSTEM';
-        });
-    }
 
     public function customers()
     {
@@ -55,7 +41,7 @@ class Coop extends Model implements Auditable
 
     public function type()
     {
-        return $this->hasOne(RefCoopType::class,'id','type_id');
+        return $this->hasOne(RefClientType::class,'id','type_id');
     }
 
     public function status()
@@ -71,7 +57,7 @@ class Coop extends Model implements Auditable
 
     public function rules()
     {
-        return $this->morphMany(CoopRules::class, 'ruleable');
+        return $this->morphMany(ClientRules::class, 'ruleable');
     }
 
     public function admins()
