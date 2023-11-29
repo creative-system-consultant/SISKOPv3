@@ -9,7 +9,6 @@ class RefClientType extends Model
 {
     use SoftDeletes;
 
-    protected $connection = 'sqlsrv_fms';
     protected $table   = 'ref.client_types';
     protected $guarded = [];
     protected $casts   = [

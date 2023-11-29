@@ -327,8 +327,8 @@ class NewMembership extends Component
     {
         if (strlen($this->search) == 12) {
             $result = FMSCustomer::where('identity_no', $this->search)->first();
-            if ($result == NULL){
-                $this->dispatchBrowserEvent('swal',[
+            if ($result == NULL) {
+                $this->dispatchBrowserEvent('swal', [
                     'title' => 'warning!',
                     'text'  => 'No User with this IC',
                     'icon'  => 'warning',
@@ -411,7 +411,7 @@ class NewMembership extends Component
         $this->User = auth()->user();
         $this->Coop = Coop::find($this->User->client_id);
         $this->Cust = Customer::firstOrCreate([
-            'identity_no'=> $this->User->icno,
+            'identity_no' => $this->User->icno,
             'client_id' => $this->Coop->id
         ], [
             'name'      => $this->User->name,
@@ -435,9 +435,7 @@ class NewMembership extends Component
         $this->CustFamily  = CustFamily::firstOrCreate([
             'cif_id'        => $this->Cust->id,
             'client_id'     => $this->User->client_id,
-        ],[
-            
-        ]);
+        ], []);
 
         //where(, )->
         /*
@@ -470,7 +468,7 @@ class NewMembership extends Component
             $this->CustIntroducer = FMSCustomer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
             $this->search        = $this->CustIntroducer->identity_no;
         }
-        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id', $this->User->id]);
+        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id' => $this->User->id]);
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = 50;
         $this->applymember->contribution_fee = 50;

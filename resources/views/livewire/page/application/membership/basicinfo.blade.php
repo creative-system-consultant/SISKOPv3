@@ -278,7 +278,7 @@
                     />
                 </div>
             </div>
-            <div class="grid grid-cols-1 mt-4  gap-2">
+            {{-- <div class="grid grid-cols-1 mt-4  gap-2">
                 <div>
                     <x-form.address class="mt-2"
                         label="Home Address"
@@ -295,7 +295,7 @@
                         mailFlag="true"
                     />
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

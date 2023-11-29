@@ -17,17 +17,19 @@ class Guest extends Component
     public $clients;
     public $userclientid;
 
-    public function mount(){
+    public function mount()
+    {
         $this->User = User::find(auth()->User()->id);
         $this->userclient = $this->User->user_client;
-        $this->userclientid = explode(',',DB::connection('sqlsrv_fms')->table('ref.USER_HAS_CLIENTS')->select('client_id')->where('user_id',$this->User->id)->get()->implode('client_id',','));
-        $this->clients = Client::where('id','>','2')->whereNotIn('id', $this->userclientid)->orderbyRaw("type_id asc, name2 asc")->get();
+        $this->userclientid = explode(',', DB::table('ref.USER_HAS_CLIENTS')->select('client_id')->where('user_id', $this->User->id)->get()->implode('client_id', ','));
+        $this->clients = Client::where('id', '>', '2')->whereNotIn('id', $this->userclientid)->orderbyRaw("type_id asc, name2 asc")->get();
     }
 
-    public function select($uuid) {
+    public function select($uuid)
+    {
         $client = Client::where('uuid', $uuid)->first();
-        if ($client != NULL){
-            $this->dispatchBrowserEvent('swal',[
+        if ($client != NULL) {
+            $this->dispatchBrowserEvent('swal', [
                 'title' => 'Success!',
                 'text'  => 'Success Message',
                 'icon'  => 'success',
@@ -42,10 +44,11 @@ class Guest extends Component
         }
     }
 
-    public function reg($uuid) {
+    public function reg($uuid)
+    {
         $client = Client::where('uuid', $uuid)->first();
-        if ($client != NULL){
-            $this->dispatchBrowserEvent('swal',[
+        if ($client != NULL) {
+            $this->dispatchBrowserEvent('swal', [
                 'title' => 'Success!',
                 'text'  => 'Success Message',
                 'icon'  => 'success',
@@ -61,7 +64,8 @@ class Guest extends Component
         }
     }
 
-    public function deb() {
+    public function deb()
+    {
         dd([
             'User'         => $this->User,
             'Userclients'  => $this->userclient,

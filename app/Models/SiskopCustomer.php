@@ -26,17 +26,17 @@ class SiskopCustomer extends Model implements Auditable
 
     public function family()
     {
-        return $this->hasMany(SiskopFamily::class,'cust_id');
+        return $this->hasMany(SiskopFamily::class, 'cust_id');
     }
 
     public function specialAid()
     {
-        return $this->hasOne(ApplySpecialAid::class,'cust_id','id');
+        return $this->hasOne(ApplySpecialAid::class, 'cust_id', 'id');
     }
 
     public function address()
     {
-        return $this->morphMany(Address::class,'addressable');
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     public function shares()
@@ -46,12 +46,12 @@ class SiskopCustomer extends Model implements Auditable
 
     public function contribution()
     {
-        return $this->hasOne(Contribution::class,'cust_id','id');
+        return $this->hasOne(Contribution::class, 'cust_id', 'id');
     }
 
     public function field()
     {
-        return $this->morphMany(CustCustomField::class,'fieldable');
+        return $this->morphMany(CustCustomField::class, 'fieldable');
     }
 
     public function field_value($name)
@@ -61,22 +61,22 @@ class SiskopCustomer extends Model implements Auditable
 
     public function employer()
     {
-        return $this->hasOne(CustEmployer::class,'cust_id', 'id');
+        return $this->hasOne(CustEmployer::class, 'cust_id', 'id');
     }
 
     public function user()
     {
-        return $this->hasOne(User::class,'icno', 'icno');
+        return $this->hasOne(User::class, 'icno', 'icno');
     }
 
     public function membership()
     {
-        return $this->hasOne(ApplyMembership::class,'cust_id');
+        return $this->hasOne(ApplyMembership::class, 'cust_id');
     }
 
     public function Introducer()
     {
-        return $this->morphMany(introducer::class,'introduce');
+        return $this->morphMany(introducer::class, 'introduce');
     }
 
     public function getIcnoAttribute()
@@ -91,11 +91,10 @@ class SiskopCustomer extends Model implements Auditable
 
     public function status()
     {
-        if($this->cust_status == 'Y'){
+        if ($this->cust_status == 'Y') {
             return "ACTIVE";
         } else {
             return "NOT ACTIVE";
         }
     }
-
 }
