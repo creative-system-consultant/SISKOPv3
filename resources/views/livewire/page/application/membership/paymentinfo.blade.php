@@ -55,7 +55,7 @@
                     wire:model="applymember.share_fee"
                 /> 
             </div>
-            <div>
+            {{-- <div>
                 <x-form.dropdown
                     label="Type of Deduction Payment"
                     value=""
@@ -68,7 +68,7 @@
                 >
                 <option value=""></option>
                 </x-form.dropdown>
-            </div>
+            </div> --}}
             <div>
                 <x-form.input-tag
                     label="Total"
@@ -86,7 +86,8 @@
     </div>
 
     <!-- Payment -->
-    <div  class="px-6 py-4 mt-4">
+    
+    {{-- <div  class="px-6 py-4 mt-4">
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Payment </h2>
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
             <div>
@@ -173,7 +174,7 @@
                 />
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div  class="px-6 py-4 mt-4">
         <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">

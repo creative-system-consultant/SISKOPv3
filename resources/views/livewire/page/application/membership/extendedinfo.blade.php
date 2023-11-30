@@ -22,41 +22,41 @@
                 name="CustIntroducer.name"
                 value=""
                 mandatory=""
-                disable=""
+                disable="readonly"
                 type="text"
                 wire:model="CustIntroducer.name"
-                readonly
+                
             />
             <x-form.input
                 label="INTRODUCER IC NUMBER"
                 name="CustIntroducer.icno"
                 value=""
                 mandatory=""
-                disable=""
+                disable="readonly"
                 type="text"
                 wire:model="CustIntroducer.icno"
-                readonly
+                
             />
             <x-form.input
                 label="INTRODUCER EMAIL"
                 name="CustIntroducer.email"
                 value=""
                 mandatory=""
-                disable=""
+                disable="readonly"
                 type="text"
                 wire:model="CustIntroducer.email"
-                readonly
+                
             />
-            <x-form.input
+            {{-- <x-form.input
                 label="INTRODUCER MEMBERSHIP NUMBER"
                 name="CustIntroducer.mbr_no"
                 value=""
                 mandatory=""
-                disable=""
+                disable="readonly"
                 type="text"
-                wire:model="CustIntroducer.mbr_no"
-                readonly
-            />
+                wire:model="CustIntroducer.fmsMembership.mbr_no"
+                
+            /> --}}
         </div>
 
         <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">

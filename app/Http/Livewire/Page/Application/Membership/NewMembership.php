@@ -41,6 +41,7 @@ class NewMembership extends Component
     public Address $EmployAddress;
     //public Address $FamilyAddress;
 
+    public $apply_id;
     public $Introducer;
     public $field;
     public $document;
@@ -118,6 +119,7 @@ class NewMembership extends Component
         'Employer.office_num'                => 'required',
         'Employer.salary'                    => 'required',
         'Employer.worker_num'                => 'required',
+        'Employer.work_start'                => 'required',
     ];
 
     protected $rule5 = [
@@ -159,6 +161,7 @@ class NewMembership extends Component
         'Employer.office_num'                => 'required',
         'Employer.salary'                    => 'required',
         'Employer.worker_num'                => 'required',
+        'Employer.work_start'                => 'required',
         'EmployAddress.address1'             => 'required',
         'EmployAddress.address2'             => 'required',
         'EmployAddress.address3'             => 'nullable',
@@ -226,6 +229,7 @@ class NewMembership extends Component
                     $this->validate($this->rule3);
                     $this->CustFamily->name = Str::upper($this->CustFamily->name);
                     $this->CustFamily->save();
+                    $this->CustFamily->save();
                     //$this->Family->save();
                     //$this->FamilyAddress->save();
                     $this->tab4 = 1;
@@ -284,7 +288,7 @@ class NewMembership extends Component
                     break;
                 case 3:
                     $this->validate($this->rule3);
-                    //$this->CustFamily->save();
+                    $this->CustFamily->save();
                     //$this->Family->save();
                     //$this->FamilyAddress->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
@@ -325,8 +329,11 @@ class NewMembership extends Component
 
     public function searchUser()
     {
+
         if (strlen($this->search) == 12) {
-            $result = FMSCustomer::where('identity_no', $this->search)->first();
+            $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
+                $query->where('status_id', '<>', 4);
+            })->first();
             if ($result == NULL) {
                 $this->dispatchBrowserEvent('swal', [
                     'title' => 'warning!',
@@ -337,6 +344,7 @@ class NewMembership extends Component
                 ]);
             } else {
                 $this->CustIntroducer = $result;
+                // dump($this->CustIntroducer->fmsMembership->mbr_no);
             }
         }
     }
@@ -408,6 +416,7 @@ class NewMembership extends Component
 
     public function mount()
     {
+
         $this->User = auth()->user();
         $this->Coop = Coop::find($this->User->client_id);
         $this->Cust = Customer::firstOrCreate([
@@ -417,6 +426,16 @@ class NewMembership extends Component
             'name'      => $this->User->name,
             'phone'     => $this->User->phone_no,
         ]);
+
+        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id' => $this->User->id]);
+        $this->applymember->register_fee = 50;
+        $this->applymember->share_fee = 50;
+        $this->applymember->contribution_fee = 50;
+        $this->applymember->save();
+
+        $this->apply_id = $this->applymember->id;
+        $this->Cust->apply_id = $this->apply_id;
+        $this->Cust->save();
 
         $this->Cust->email = $this->Cust->email ?? $this->User->email;
         if ($this->Cust->ref_no != NULL) {
@@ -430,11 +449,12 @@ class NewMembership extends Component
 
         $this->Cust->birthdate   = $this->birthdate();
         $this->Cust->gender_id   = $this->gender();
-        $this->CustAddress       = $this->Cust->Address()->firstOrCreate();
+        $this->CustAddress       = $this->Cust->Address()->firstOrCreate(['cif_id' => $this->Cust->id, 'client_id' => $this->User->client_id, 'apply_id' => $this->apply_id]);
 
         $this->CustFamily  = CustFamily::firstOrCreate([
             'cif_id'        => $this->Cust->id,
             'client_id'     => $this->User->client_id,
+            'apply_id'      => $this->apply_id,
         ], []);
 
         //where(, )->
@@ -460,22 +480,21 @@ class NewMembership extends Component
         $this->field             = MembershipField::where('membership_id', $this->Member->id)->get();
         $this->document          = MembershipDocument::where('membership_id', $this->Member->id)->get();
         */
-        $this->CustIntroducer    = new FMSCustomer;
+        // $this->CustIntroducer    = new FMSCustomer;
         $this->Introducer        = $this->Cust->introducer()->firstOrCreate([], [
             'client_id' => $this->User->client_id,
+            'apply_id' => $this->apply_id,
         ]);
         if ($this->Introducer != NULL) {
             $this->CustIntroducer = FMSCustomer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
             $this->search        = $this->CustIntroducer->identity_no;
         }
-        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id' => $this->User->id]);
-        $this->applymember->register_fee = 50;
-        $this->applymember->share_fee = 50;
-        $this->applymember->contribution_fee = 50;
-        $this->applymember->save();
 
-        $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id],);
-        $this->EmployAddress     = $this->Employer->Address()->firstOrCreate();
+
+
+
+        $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id, 'apply_id' => $this->apply_id]);
+        $this->EmployAddress     = $this->Employer->Address()->firstOrCreate(['cif_id' => $this->Cust->id, 'client_id' => $this->User->client_id, 'apply_id' => $this->apply_id,]);
 
         $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();

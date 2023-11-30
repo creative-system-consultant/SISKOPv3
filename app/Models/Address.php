@@ -11,7 +11,7 @@ class Address extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "CIF.Addresses";
+    protected $table   = "SISKOP.Addresses";
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',

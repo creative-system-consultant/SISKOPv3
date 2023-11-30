@@ -329,7 +329,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-4 gap-2">
-                <div>
+                {{-- <div>
                     <x-form.dropdown
                         label="Sector"
                         value=""
@@ -344,7 +344,7 @@
                         <option value="2">private</option>
                         <option value="3">semi-gov</option>
                     </x-form.dropdown>
-                </div>
+                </div> 
                 <div>
                     <x-form.dropdown
                         label="Work Status"
@@ -378,16 +378,16 @@
                         type="text"
                         wire:model=""
                     /> 
-                </div>
+                </div>--}}
                 <div>
                     <x-form.input
                         label="Start Work Date"
-                        name=""
+                        name="Employer.work_start"
                         value=""
                         mandatory=""
                         disable=""
                         type="date"
-                        wire:model=""
+                        wire:model="Employer.work_start"
                     /> 
                 </div>
                 <div>
@@ -425,18 +425,18 @@
                         wire:model="Employer.salary"
                     /> 
                 </div>
-                <div>
+                {{-- <div>
                     <x-form.input
                         label="Salary No"
-                        name=""
+                        name="Employer.salary_ref"
                         value=""
                         mandatory=""
                         disable=""
                         type="text"
                         wire:model=""
                     /> 
-                </div>
-                <div>
+                </div> --}}
+                {{-- <div>
                     <x-form.input-tag
                         label="Monthly Allowance"
                         name=""
@@ -448,7 +448,7 @@
                         type="text"
                         wire:model=""
                     /> 
-                </div>
+                </div> --}}
                 <div>
                     <x-form.input
                         label="Work Phone"
@@ -460,7 +460,7 @@
                         wire:model="Employer.worker_num"
                     /> 
                 </div>
-                <div>
+                {{--<div>
                     <x-form.input
                         label="Work Email"
                         name=""
@@ -471,7 +471,7 @@
                         wire:model=""
                     /> 
                 </div>
-                <div>
+                 <div>
                     <x-form.input
                         label="Extension"
                         name=""
@@ -503,7 +503,7 @@
                         type="text"
                         wire:model=""
                     /> 
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
