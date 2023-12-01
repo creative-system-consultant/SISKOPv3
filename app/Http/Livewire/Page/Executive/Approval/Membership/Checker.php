@@ -4,25 +4,70 @@ namespace App\Http\Livewire\Page\Executive\Approval\Membership;
 
 use App\Models\ApplyMembership;
 use App\Models\Approval;
+use App\Models\Customer as FMSCustomer;
+use App\Models\SiskopAddress as Address;
+use App\Models\SiskopCustomer as Customer;
+use App\Models\SiskopFamily as Family;
+use App\Models\SiskopEmployer as Employer;
+use App\Models\Introducer;
+use App\Models\Ref\RefEducation;
+use App\Models\Ref\RefGender;
+use App\Models\Ref\RefMarital;
+use App\Models\Ref\RefRace;
+use App\Models\Ref\RefRelationship;
+use App\Models\Ref\RefState;
 use App\Models\User;
 use Livewire\Component;
 
 class Checker extends Component
 {
     public User $User;
+    public Address $CustAddress;
+    public Address $EmployAddress;
+    public Customer $Cust;
+    public Employer $Employer;
+    public Family $CustFamily;
+    public FMSCustomer $CustIntroducer;
+    public Introducer $Introducer;
+    public ApplyMembership $Application;
     public Approval $Approval;
-    public ApplyMembership $Checker;
+
     public $banks;
-    public $forward = false;
+    public $client_id;
+    public $educationlist;
+    public $genderlist;
+    public $maritallist;
+    public $racelist;
+    public $relationshiplist;
+    public $statelist;
+
+    public $forward       = false;
+    public $input_disable = 'readonly';
+    public $input_maker   = 'readonly';
     public $approval_type = 'lulus';
-    public $message = 'Application Pre-Approved';
+    public $message       = 'Application Pre-Approved';
 
     protected $rules = [
-        'Approval.note'           => ['required','max:255'],
-        'Checker.share_fee'       => ['required','gt:0'],
-        'Checker.share_monthly'   => ['required','gt:0'],
-        'Checker.register_fee'    => ['required','gt:0'],
-        'Checker.contribution_fee'=> ['required','gt:0'],
+        'Approval.note'                    => ['required','max:255'],
+        'Application.total_fee'            => ['nullable'],
+        'Application.total_monthly'        => ['nullable'],
+        'Application.share_fee'            => ['required','gt:0'],
+        'Application.share_monthly'        => ['required','gt:0'],
+        'Application.register_fee'         => ['required','gt:0'],
+        'Application.contribution_fee'     => ['required','gt:0'],
+        'Application.contribution_monthly' => ['required','gt:0'],
+        'CustAddress.address1'             => ['nullable'],
+        'CustAddress.address2'             => ['nullable'],
+        'CustAddress.address3'             => ['nullable'],
+        'CustAddress.postcode'             => ['nullable'],
+        'CustAddress.town'                 => ['nullable'],
+        'CustAddress.state_id'             => ['nullable'],
+        'EmployAddress.address1'           => ['nullable'],
+        'EmployAddress.address2'           => ['nullable'],
+        'EmployAddress.address3'           => ['nullable'],
+        'EmployAddress.postcode'           => ['nullable'],
+        'EmployAddress.town'               => ['nullable'],
+        'EmployAddress.state_id'           => ['nullable'],
     ];
 
     public function forward() {
@@ -42,18 +87,18 @@ class Checker extends Component
     public function next()
     {
         $this->validate();
-        $this->Checker->step++;
-        $this->Checker->save();
+        $this->Application->step++;
+        $this->Application->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = $this->approval_type;
         $this->Approval->save();
 
         if ($this->Approval->rule_whatsapp){
-            //$this->Checker->sendWS('SISKOPv3 Membership Application ('.$this->Checker->coop->name.') have been pre-approved by CHECKER');
+            //$this->Application->sendWS('SISKOPv3 Membership Application ('.$this->Application->coop->name.') have been pre-approved by CHECKER');
         }
 
         if ($this->Approval->rule_sms){
-            //$this->Checker->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->Checker->coop->name.') have been pre-approved by CHECKER');
+            //$this->Application->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->Application->coop->name.') have been pre-approved by CHECKER');
         }
 
         session()->flash('message', $this->message);
@@ -66,9 +111,9 @@ class Checker extends Component
 
     public function back()
     {
-        if ($this->Checker->step > 1){
-            $this->Checker->step--;
-            $this->Checker->save();
+        if ($this->Application->step > 1){
+            $this->Application->step--;
+            $this->Application->save();
 
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
@@ -87,6 +132,14 @@ class Checker extends Component
         }
     }
 
+    public function totalfee()
+    {
+        $this->Application->update([
+            'total_fee'     => $this->Application->register_fee  + $this->Application->contribution_fee    + $this->Application->share_fee,
+            'total_monthly' => $this->Application->share_monthly + $this->Application->contribution_monthly,
+        ]);
+    }
+
     public function cancel() {
         
     }
@@ -94,21 +147,53 @@ class Checker extends Component
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->Checker  = ApplyMembership::where('uuid', $uuid)->with('customer')->first();
+        $this->Application  = ApplyMembership::where('uuid', $uuid)->first();
+        $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
+        $this->client_id = $this->User->client_id;
         $this->Approval = Approval::where([
-                            ['approval_id', $this->Checker->id],
-                            ['order', $this->Checker->step],
+                            ['approval_id', $this->Application->id],
+                            ['order', $this->Application->step],
                             ['role_id', '2'],
                             ['approval_type', 'App\Models\ApplyMembership'],
                         ])->firstOrFail();
         $this->forward  = $this->Approval->rule_forward ?? FALSE;
+        $this->CustAddress = Address::where([
+                    ['cif_id', $this->Cust->id ],
+                    ['address_type_id', 2],
+                    ['client_id', $this->client_id],
+                ])->first();
+        $this->EmployAddress = Address::where([
+                    ['cif_id', $this->Cust->id ],
+                    ['address_type_id', 3],
+                    ['client_id', $this->client_id],
+                ])->first();
+        $this->CustFamily = Family::where([
+                    ['cif_id', $this->Cust->id ],
+                    ['client_id', $this->client_id],
+                ])->first();
+        $this->Employer   = Employer::where([
+                    ['cust_id' , $this->Cust->id], 
+                    ['client_id' , $this->client_id],
+                ])->first();
+        $this->Introducer = Introducer::where([
+                    ['client_id' , $this->client_id],
+                    ['introduce_type', 'App\Models\SiskopCustomer'],
+                    ['introduce_id', $this->Cust->id]
+                ])->first();
+        $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
+        $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->relationshiplist = RefRelationship::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->educationlist    = RefEducation::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
     }
 
     public function deb() {
         dd([
-            'approvals' => $this->Checker->approvals,
+            'approvals' => $this->Application->approvals,
             'approval'  => $this->Approval, 
-            'checker'   => $this->Checker,
+            'checker'   => $this->Application,
             'forward'   => $this->forward,
         ]);
     }
