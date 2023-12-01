@@ -24,6 +24,30 @@ class SiskopCustomer extends Model implements Auditable
         'icno'
     ];
 
+    public function education() {
+        return $this->belongsTo(Ref\RefEducation::class,'education_id');
+    }
+
+    public function gender() {
+        return $this->belongsTo(Ref\RefGender::class,'gender_id');
+    }
+
+    public function marital() {
+        return $this->belongsTo(Ref\RefMarital::class,'marital_id');
+    }
+
+    public function race() {
+        return $this->belongsTo(Ref\RefRace::class,'race_id');
+    }
+
+    public function religion() {
+        return $this->belongsTo(Ref\RefReligion::class,'religion_id');
+    }
+
+    public function title() {
+        return $this->belongsTo(Ref\RefCustTitle::class,'title_id');
+    }
+
     public function family()
     {
         return $this->hasMany(SiskopFamily::class, 'cust_id');
@@ -36,7 +60,7 @@ class SiskopCustomer extends Model implements Auditable
 
     public function address()
     {
-        return $this->morphMany(Address::class, 'addressable');
+        return $this->morphMany(SiskopAddress::class, 'addressable');
     }
 
     public function shares()
