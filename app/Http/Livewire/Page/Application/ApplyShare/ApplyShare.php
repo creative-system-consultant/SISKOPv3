@@ -24,6 +24,7 @@ class ApplyShare extends Component
     public $cheque_no;
     public $cheque_date;
     public $banks;
+    public $total_share;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -31,18 +32,17 @@ class ApplyShare extends Component
     protected $rules = [
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
-        'cust.share'      => 'required',
         'share_apply'     => 'required|numeric|not_in:0',
         'pay_method'      => 'required',
-        'online_date'     => 'exclude_if:pay_method,==,cash,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
-                             'required_if:pay_method,==,online|before:first day of january next year|after_or_equal:today',
+        'online_date'     => 'exclude_if:pay_method,==,cash,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
+            'required_if:pay_method,==,online|before:first day of january next year|after_or_equal:today',
         'online_file'     => 'required_if:pay_method,==,online',
-        'cdm_date'        => 'exclude_if:pay_method,==,online,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
-                             'required_if:pay_method,==,cash|before:first day of january next year|after_or_equal:today',
+        'cdm_date'        => 'exclude_if:pay_method,==,online,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
+            'required_if:pay_method,==,cash|before:first day of january next year|after_or_equal:today',
         'cdm_file'        => 'required_if:pay_method,==,cash',
         'cheque_no'       => 'required_if:pay_method,==,cheque',
-        'cheque_date'     => 'exclude_if:pay_method,==,online,&&,pay_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|'.
-                             'required_if:pay_method,==,cheque|before:first day of january next year|after_or_equal:today',
+        'cheque_date'     => 'exclude_if:pay_method,==,online,&&,pay_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|' .
+            'required_if:pay_method,==,cheque|before:first day of january next year|after_or_equal:today',
         'banks'           => 'required',
     ];
 
@@ -90,8 +90,9 @@ class ApplyShare extends Component
     public function submit()
     {
         $user = auth()->user();
-        $customer = Customer::where('icno', $user->icno)->first();
+        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
 
+        // dd($customer);
         if ($this->share_apply == 0) {
             session()->flash('message', 'Application must be more than RM0');
             session()->flash('time', 10000);
@@ -119,9 +120,9 @@ class ApplyShare extends Component
 
         if ($this->pay_method == 'online') {
             // dd('Online Banking');
-            $filepath = 'Files/'.$customer->id.'/share//'.$this->Share->id.'/'.'online_receipt'.'.'.$this->online_file->extension();
+            $filepath = 'Files/' . $customer->id . '/share//' . $this->Share->id . '/' . 'online_receipt' . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/share//'.$this->Share->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/share//' . $this->Share->id . '/', $this->online_file, 'online_receipt' . '.' . $this->online_file->extension());
 
             $this->Share->files()->create([
                 'filename' => 'online_receipt',
@@ -136,12 +137,11 @@ class ApplyShare extends Component
             session()->flash('title');
 
             return redirect()->route('home');
-        }
-        elseif ($this->pay_method == 'cash') {
+        } elseif ($this->pay_method == 'cash') {
             // dd('CDM');
-            $filepath = 'Files/'.$customer->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension();
+            $filepath = 'Files/' . $customer->id . '/' . 'cdm_receipt' . '.' . $this->cdm_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/'.$customer->id. '/share//'.$this->Share->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/share//' . $this->Share->id . '/', $this->cdm_file, 'cdm_receipt' . '.' . $this->cdm_file->extension());
 
             $this->Share->files()->create([
                 'filename' => 'cdm_receipt',
@@ -156,8 +156,7 @@ class ApplyShare extends Component
             session()->flash('title');
 
             return redirect()->route('home');
-        }
-        else {
+        } else {
             // dd('Cheque);
             session()->flash('message', 'Share Application Successfully Send');
             session()->flash('time', 10000);
@@ -171,17 +170,17 @@ class ApplyShare extends Component
     public function mount()
     {
         $user = auth()->user();
-        $this->cust = Customer::where('icno', $user->icno)->first();
+        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $this->banks = RefBank::where('client_id', $user->client_id)->get();
-
+        $this->total_share = $this->cust->fmsMembership->total_share;
         $this->Share = Share::firstOrCreate([
             'cust_id'   => $this->cust->id,
             'client_id' => $this->cust->client_id,
             'flag'      => 0,
             'step'      => 0,
             'direction' => 'buy'
-        ],[
-            'amt_before'  => $this->cust->share,
+        ], [
+            'amt_before'  => $this->cust->fmsMembership->total_share,
             'apply_amt'   => '0.00',
         ]);
 
@@ -192,7 +191,8 @@ class ApplyShare extends Component
         $this->cheque_date = $this->Share?->cheque_date?->format('Y-m-d');
     }
 
-    public function deb(){
+    public function deb()
+    {
         dd([
             'Share' => $this->Share,
         ]);

@@ -25,6 +25,7 @@ class ApplyContribution extends Component
     public $cheque_no;
     public $cheque_date;
     public $banks;
+    public $total_contribution, $monthly_contribution;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -32,22 +33,20 @@ class ApplyContribution extends Component
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.identity_no'                 => 'required',
-        'cust.contribution'         => 'required',
-        'cust.contribution_monthly' => 'required',
         'cont_apply'                => 'required|numeric|not_in:0',
         'cont_type'                 => 'required',
-        'start_contDate'            => 'exclude_if:cont_type,==,pay_once,&&,cont_type,null|required_if:cont_type,==,cont_date'.
-                                       '|before:first day of january next year|after_or_equal:today',
+        'start_contDate'            => 'exclude_if:cont_type,==,pay_once,&&,cont_type,null|required_if:cont_type,==,cont_date' .
+            '|before:first day of january next year|after_or_equal:today',
         'payment_method'            => 'required_if:cont_type,==,pay_once',
-        'online_date'               => 'exclude_if:payment_method,==,cash,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
-                                       'required_if:payment_method,==,online|before:first day of january next year|after_or_equal:today',
+        'online_date'               => 'exclude_if:payment_method,==,cash,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
+            'required_if:payment_method,==,online|before:first day of january next year|after_or_equal:today',
         'online_file'               => 'required_if:payment_method,==,online',
-        'cdm_date'                  => 'exclude_if:payment_method,==,online,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|'.
-                                       'required_if:payment_method,==,cash|before:first day of january next year|after_or_equal:today',
+        'cdm_date'                  => 'exclude_if:payment_method,==,online,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
+            'required_if:payment_method,==,cash|before:first day of january next year|after_or_equal:today',
         'cdm_file'                  => 'required_if:payment_method,==,cash',
         'cheque_no'                 => 'required_if:payment_method,==,cheque',
-        'cheque_date'               => 'exclude_if:payment_method,==,online,&&,payment_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|'.
-                                       'required_if:payment_method,==,cheque|before:first day of january next year|after_or_equal:today',
+        'cheque_date'               => 'exclude_if:payment_method,==,online,&&,payment_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|' .
+            'required_if:payment_method,==,cheque|before:first day of january next year|after_or_equal:today',
         'banks'                     => 'required',
     ];
 
@@ -101,14 +100,13 @@ class ApplyContribution extends Component
 
     public function submit()
     {
-
         $user = auth()->user();
-        $customer = Customer::where('identity_no', $user->identity_no)->first();
+        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
 
         $contribution->update([
             'direction'      => 'buy',
-            'amt_before'     => $this->cust['contribution'] ??= '0',
+            'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
             'start_apply'    => $this->start_contDate ??= NULL,
@@ -126,10 +124,9 @@ class ApplyContribution extends Component
         $contribution->make_approvals();
 
         if ($this->payment_method == 'online') {
-            // dd('Online Banking');
-            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'online_receipt'.'.'.$this->online_file->extension();
+            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online_receipt' . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/'. $customer->id. '/contribution//'.$contribution->id.'/', $this->online_file, 'online_receipt'.'.'.$this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->online_file, 'online_receipt' . '.' . $this->online_file->extension());
 
             $contribution->files()->create([
                 'filename' => 'online_receipt',
@@ -144,12 +141,11 @@ class ApplyContribution extends Component
             session()->flash('title');
 
             return redirect()->route('home');
-        }
-        elseif ($this->payment_method == 'cash') {
+        } elseif ($this->payment_method == 'cash') {
             // dd('CDM');
-            $filepath = 'Files/'.$customer->id.'/contribution//'.$contribution->id.'/'.'cdm_receipt'.'.'.$this->cdm_file->extension();
+            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'cdm_receipt' . '.' . $this->cdm_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/'.$customer->id.'/contribution//'.$contribution->id.'/', $this->cdm_file, 'cdm_receipt'.'.'.$this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->cdm_file, 'cdm_receipt' . '.' . $this->cdm_file->extension());
 
             $contribution->files()->create([
                 'filename' => 'cdm_receipt',
@@ -164,8 +160,7 @@ class ApplyContribution extends Component
             session()->flash('title');
 
             return redirect()->route('home');
-        }
-        else {
+        } else {
             // dd('Cheque');
             session()->flash('message', 'Add Contribution Application Successfully Send');
             session()->flash('time', 10000);
@@ -178,7 +173,7 @@ class ApplyContribution extends Component
 
     public function restrictApply($id)
     {
-        $contribution = Contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
+        $contribution = Contribution::where([['cust_id', $id], ['flag', 1], ['step', 1], ['direction', 'buy']])->first();
 
         if ($contribution != null) {
             session()->flash('message', 'Add contribution application is been processed. If you want to make another application, please wait until the application is processed');
@@ -193,15 +188,18 @@ class ApplyContribution extends Component
     public function mount()
     {
         $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->identity_no)->first();
+        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $this->banks = RefBank::where('client_id', $user->client_id)->get();
+
+        $this->total_contribution = $this->cust->fmsMembership->total_contribution;
+        $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 
         $contribution = Contribution::where('cust_id', $this->cust->id)->firstOrCreate([
             'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
             'direction'   => 'buy',
         ], [
-            'amt_before'  => $this->cust->contribution,
+            'amt_before'  => $this->cust->fmsMembership->total_contribution,
             'flag'        => 0,
             'step'        => 0,
             'apply_amt'   => '0.00',

@@ -32,7 +32,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.share"
+                    wire:model.defer="total_share"
                 />
             </div>
 

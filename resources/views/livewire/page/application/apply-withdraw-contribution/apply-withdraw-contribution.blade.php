@@ -32,7 +32,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.contribution"
+                    wire:model.defer="total_contribution"
                 />
 
                 <x-form.input-tag
@@ -44,7 +44,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.contribution_monthly"
+                    wire:model.defer="monthly_contribution"
                 />
             </div>
 

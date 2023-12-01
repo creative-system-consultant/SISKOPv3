@@ -20,7 +20,7 @@
                     mandatory=""
                     disable="true"
                     type="text"
-                    wire:model.defer="cust.icno"
+                    wire:model.defer="cust.identity_no"
                 />
 
                 <x-form.input-tag
@@ -32,7 +32,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.contribution"
+                    wire:model.defer="total_contribution"
                 />
 
                 <x-form.input-tag
@@ -44,7 +44,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.contribution_monthly"
+                    wire:model.defer="monthly_contribution"
                 />
             </div>
 
@@ -230,7 +230,7 @@
 
                 <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">
-                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                        <button type="submit"  class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                             Submit
                         </button>
                     </div>
