@@ -62,12 +62,14 @@ class Approver extends Component
         'CustAddress.postcode'             => ['nullable'],
         'CustAddress.town'                 => ['nullable'],
         'CustAddress.state_id'             => ['nullable'],
+        'CustAddress.mail_flag'            => ['nullable'],
         'EmployAddress.address1'           => ['nullable'],
         'EmployAddress.address2'           => ['nullable'],
         'EmployAddress.address3'           => ['nullable'],
         'EmployAddress.postcode'           => ['nullable'],
         'EmployAddress.town'               => ['nullable'],
         'EmployAddress.state_id'           => ['nullable'],
+        'EmployAddress.mail_flag'          => ['nullable'],
     ];
 
     public function decline() {
@@ -91,7 +93,6 @@ class Approver extends Component
     }
 
     public function doApproveApplication(){
-        $this->deb();
         $num = $this->User->id;
         $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
 
@@ -110,6 +111,7 @@ class Approver extends Component
     }
 
     public function doRejectApplication(){
+        $this->Application->flag = 24;
         //
     }
 

@@ -13,8 +13,8 @@
                 id=""
                 name=""
                 value=""
-                disable=""
-                wire:model=""
+                disable="{{ $disable }}"
+                wire:model="{{ $name7 }}"
             />
         </div>
         @endif

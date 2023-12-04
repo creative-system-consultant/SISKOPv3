@@ -59,12 +59,14 @@ class Maker extends Component
         'CustAddress.postcode'             => ['nullable'],
         'CustAddress.town'                 => ['nullable'],
         'CustAddress.state_id'             => ['nullable'],
+        'CustAddress.mail_flag'            => ['nullable'],
         'EmployAddress.address1'           => ['nullable'],
         'EmployAddress.address2'           => ['nullable'],
         'EmployAddress.address3'           => ['nullable'],
         'EmployAddress.postcode'           => ['nullable'],
         'EmployAddress.town'               => ['nullable'],
         'EmployAddress.state_id'           => ['nullable'],
+        'EmployAddress.mail_flag'          => ['nullable'],
     ];
 
     public function decline(){
