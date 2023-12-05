@@ -23,6 +23,10 @@ class ApplyMembership extends Model implements Auditable
         'deleted_at'    => 'datetime',
     ];
 
+    public function client() {
+        return $this->belongsTo(Client::class,'client_id');
+    }
+
     public function customer()
     {
         return $this->belongsTo(SiskopCustomer::class,'cust_id','id');

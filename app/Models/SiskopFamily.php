@@ -30,6 +30,14 @@ class SiskopFamily extends Model implements Auditable
 
     public function address()
     {
-        return $this->morphMany(Address::class, 'addressable');
+        return $this->morphMany(SiskopAddress::class, 'addressable');
+    }
+
+    public function relation() {
+        return $this->belongsTo(Ref\RefRelationship::class,'relation_id');
+    }
+
+    public function relationship() {
+        return $this->belongsTo(Ref\RefRelationship::class,'relation_id');
     }
 }
