@@ -130,13 +130,6 @@ class ApplyShare extends Component
                 'filetype' => $this->online_file->extension(),
                 'filepath' => $filepath,
             ]);
-
-            session()->flash('message', 'Share Application Successfully Send');
-            session()->flash('time', 10000);
-            session()->flash('success');
-            session()->flash('title');
-
-            return redirect()->route('home');
         } elseif ($this->pay_method == 'cash') {
             // dd('CDM');
             $filepath = 'Files/' . $customer->id . '/' . 'cdm_receipt' . '.' . $this->cdm_file->extension();
@@ -149,13 +142,6 @@ class ApplyShare extends Component
                 'filetype' => $this->cdm_file->extension(),
                 'filepath' => $filepath,
             ]);
-
-            session()->flash('message', 'Share Application Successfully Send');
-            session()->flash('time', 10000);
-            session()->flash('success');
-            session()->flash('title');
-
-            return redirect()->route('home');
         } else {
             // dd('Cheque);
             session()->flash('message', 'Share Application Successfully Send');
@@ -165,6 +151,13 @@ class ApplyShare extends Component
 
             return redirect()->route('home');
         }
+
+        session()->flash('message', 'Share Application Successfully Send');
+        session()->flash('time', 10000);
+        session()->flash('success');
+        session()->flash('title');
+
+        return redirect()->route('home');
     }
 
     public function mount()

@@ -13,13 +13,14 @@ class Committee extends Component
     public User $User;
     public Approval $Approval;
     public Share $Committee;
-    public $bank;
+    public $banks;
     public $approval_type = 'lulus';
     public $message = 'Application Pre-Approved';
 
     protected $rules = [
         'Approval.note'        => ['required','max:255'],
         'Committee.approved_amt' => 'required',
+        'Committee.bank_code' => 'required',
     ];
 
     public function decline() {
@@ -105,7 +106,7 @@ class Committee extends Component
     {
         $this->User     = User::find(auth()->user()->id);
         $this->Committee = Share::where('uuid', $uuid)->with('customer')->first();
-        $this->bank     = RefBank::where('code', $this->Committee->bank_code)->first()->description;
+        $this->banks    = RefBank::where('client_id', $this->Committee->client_id)->where('status', '1')->orderby('priority','asc')->orderby('description')->get();
         $this->Approval = Approval::where([
             ['approval_id', $this->Committee->id],
             ['order', $this->Committee->step],
