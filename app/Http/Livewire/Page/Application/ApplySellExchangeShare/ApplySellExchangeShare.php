@@ -19,6 +19,7 @@ class ApplySellExchangeShare extends Component
     public $bank_code;
     public $banks;
     public $total_share;
+    public $mbr_name;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -185,7 +186,6 @@ class ApplySellExchangeShare extends Component
     {
         $user = auth()->user();
         $customer = Customer::where('identity_no', $this->mbr_icno)->where('client_id', $user->client_id)->first();
-
         if (strlen($this->mbr_icno) < 12) {
             $this->mbr_name = '';
             return;
@@ -205,17 +205,28 @@ class ApplySellExchangeShare extends Component
                 'timer' => 1500,
             ]);
             $this->mbr_name = '';
-        } elseif ($this->mbr_icno == $user->icno) {
-            $this->dispatchBrowserEvent('swal', [
-                'title' => '',
-                'text'  => 'IC No. Cannot Be Yourself',
-                'icon'  => 'warning',
-                'showConfirmButton' => false,
-                'timer' => 1500,
-            ]);
-            $this->mbr_name = '';
         } else {
-            $this->mbr_name = $customer->name;
+            if ($this->mbr_icno == $user->icno) {
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => '',
+                    'text'  => 'IC No. Cannot Be Yourself',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 1500,
+                ]);
+                $this->mbr_name = '';
+            } elseif ($customer->fmsMembership->mbr_status == 'M') {
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => '',
+                    'text'  => 'You can`t transfer to a dormant member!',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 2500,
+                ]);
+                $this->mbr_name = '';
+            } else {
+                $this->mbr_name = $customer->name;
+            }
         }
     }
 
@@ -224,7 +235,11 @@ class ApplySellExchangeShare extends Component
         $user = auth()->user();
         $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $this->total_share = $this->cust->fmsMembership->total_share;
-        $this->banks = RefBank::where([['client_id', $user->client_id], ['status', 1]])->get();
+
+        $this->banks           = RefBank::where([
+            ['client_id', $user->client_id],
+            ['status', '1'], ['bank_cust', 'Y']
+        ])->orderBy('priority')->orderBy('description')->get();
 
         $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);

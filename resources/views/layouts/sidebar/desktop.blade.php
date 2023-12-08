@@ -43,7 +43,7 @@
                                     <x-heroicon-o-archive-box class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Add Share" href="{{ route('share.apply') }}" uri="applyShare">
+                            <x-sidebar.dropdown-item title="Buy Share" href="{{ route('share.apply') }}" uri="applyShare">
                                 <x-slot name="icon">
                                     <x-heroicon-o-chart-pie class="w-7 h-7" />
                                 </x-slot>

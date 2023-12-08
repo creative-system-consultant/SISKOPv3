@@ -15,12 +15,11 @@ class Dividend extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "FMS.DIVIDEND";
+    protected $table   = "FMS.DIVIDEND_FINAL";
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
     ];
-
 }
