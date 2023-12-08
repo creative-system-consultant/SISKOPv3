@@ -67,6 +67,28 @@
 <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3">
     <div>
         <label class="block text-sm font-semibold leading-5 text-gray-700">
+            Postcode
+            @if( $mandatory ?? '' == "true")
+                <span class="font-semibold text-red-600">*</span>
+            @endif
+        </label>
+        <div class="flex mt-1 mb-2 rounded-md shadow-sm">
+            <input
+                @if( $disable == "true" )
+                    disabled
+                @elseif( $disable == "readonly" )
+                    readonly
+                @endif
+                wire:model="{{ $name5 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5
+                {{ ($errors->has($name5)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
+                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
+                placeholder=""
+            >
+        </div>
+        @if($errors->has($name5)) <p class="text-sm text-red-600">{{ $errors->first($name5) }}</p> @endif
+    </div>
+    <div>
+        <label class="block text-sm font-semibold leading-5 text-gray-700">
             Town
             @if( $mandatory ?? '' == "true")
                 <span class="font-semibold text-red-600">*</span>
@@ -87,28 +109,7 @@
         </div>
         @if($errors->has($name4)) <p class="text-sm text-red-600">{{ $errors->first($name4) }}</p> @endif
     </div>
-    <div>
-        <label class="block text-sm font-semibold leading-5 text-gray-700">
-            Postcode
-            @if( $mandatory ?? '' == "true")
-                <span class="font-semibold text-red-600">*</span>
-            @endif
-        </label>
-        <div class="flex mt-1 mb-2 rounded-md shadow-sm">
-            <input
-                @if( $disable == "true" )
-                    disabled
-                @elseif( $disable == "readonly" )
-                    readonly
-                @endif
-                wire:model="{{ $name5 }}" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5
-                {{ ($errors->has($name5)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
-                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
-                placeholder="88888"
-            >
-        </div>
-        @if($errors->has($name5)) <p class="text-sm text-red-600">{{ $errors->first($name5) }}</p> @endif
-    </div>
+    
     <div>
         <label class="block text-sm font-semibold leading-5 text-gray-700">
             State

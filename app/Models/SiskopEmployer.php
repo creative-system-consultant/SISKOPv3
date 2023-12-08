@@ -15,7 +15,7 @@ class SiskopEmployer extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "SISKOP.cust_employer";
+    protected $table   = "SISKOP.CUSTOMERS_EMPLOYMENT";
     protected $guarded = ['uuid'];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -25,7 +25,6 @@ class SiskopEmployer extends Model implements Auditable
 
     public function address()
     {
-        return $this->morphMany(SiskopAddress::class,'addressable');
+        return $this->morphMany(Address::class, 'addressable');
     }
-
 }

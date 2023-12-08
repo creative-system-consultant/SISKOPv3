@@ -140,6 +140,50 @@
                         @endforeach
                     </x-form.dropdown>
                 </div>
+                <div>
+                    <x-form.dropdown
+                        label="Religion"
+                        value=""
+                        name="Cust.religion_id"
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="Cust.religion_id"
+                    >
+                        @foreach ($religion_id as $list)
+                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
+                </div>
+                <div>
+                    <x-form.dropdown
+                        label="Bank"
+                        value=""
+                        name="Cust.bank_id"
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="Cust.bank_id"
+                    >
+                        @foreach ($bank_id as $list)
+                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
+                </div>
+                <div>
+                    <x-form.input
+                    label="Account Bank No."
+                        name="Cust.bank_acct_no"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:model="Cust.bank_acct_no"
+                    /> 
+                </div>
+       
             </div>
         </div>
     </div>
@@ -147,7 +191,7 @@
     <!-- Address Details -->
     <div  x-show="active == 1">
         <div class="px-6 py-4 mt-4">
-            <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Address Details</h2>
+            <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Address Details {{$this->mail_flag_employer}}</h2>
             <div class="grid grid-cols-1 mt-4  gap-2">
                 <div>
                     <x-form.address class="mt-2"
@@ -160,6 +204,7 @@
                         name4="CustAddress.town"
                         name5="CustAddress.postcode"
                         name6="CustAddress.state_id"
+                        name7="mail_flag"
                         :state="$state_id"
                         condition="state"
                         mailFlag="true"
@@ -177,6 +222,7 @@
                             name4="EmployAddress.town"
                             name5="EmployAddress.postcode"
                             name6="EmployAddress.state_id"
+                            name7="mail_flag_employer"
                             :state="$state_id"
                             condition="state"
                             mailFlag="true"
@@ -251,6 +297,38 @@
                         type="text"
                         wire:model="CustFamily.phone_no"
                     />
+                </div>
+                <div>
+                    <x-form.dropdown
+                        label="Race"
+                        value=""
+                        name="CustFamily.race_id"
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="CustFamily.race_id"
+                    >
+                        @foreach ($race_id as $list)
+                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
+                </div>
+                <div>
+                    <x-form.dropdown
+                        label="Religion"
+                        value=""
+                        name="CustFamily.religion_id"
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="CustFamily.religion_id"
+                    >
+                        @foreach ($religion_id as $list)
+                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
                 </div>
             </div>
             {{-- <div class="grid grid-cols-1 mt-4  gap-2">

@@ -1,15 +1,14 @@
 <div x-show="active == 5">
-    <!-- Deduction -->
     <div  class="px-6 py-4 mt-4">
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Deduction </h2>
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4">
             <div>
                 <x-form.input-tag
-                    label="Member Fee (One-time only)"
+                    label="Registration Fee (One-time only)"
                     name=""
                     value=""
                     mandatory=""
-                    disable=""
+                    disable="true"
                     leftTag="RM"
                     rightTag=""
                     type="text"
@@ -17,9 +16,25 @@
                     wire:keydown="totalfee"
                 /> 
             </div>
+
+
             <div>
                 <x-form.input-tag
-                    label="Contribution (Minimum RM50)"
+                    label="{{ ($pay_type_share=='INST' ? 'Share (Instalment)' : 'Share (One-time only)') }})"
+                    name=""
+                    value=""
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="tot_share"
+                /> 
+            </div>
+
+            <div>
+                <x-form.input-tag
+                    label="Contribution Monthly (Minimum RM{{$this->applymember->contribution_fee}})"
                     name=""
                     value=""
                     mandatory=""
@@ -28,85 +43,202 @@
                     rightTag=""
                     type="text"
                     wire:model="applymember.contribution_fee"
-                    wire:keydown="totalfee"
                 /> 
             </div>
+
+            @if($pay_type_share=='INST')
             <div>
                 <x-form.input-tag
-                    label="Share (Minimum RM50)"
+                    label="Share Monthly"
                     name=""
+                    value="{{$monthly_share}}"
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="monthly_share"
+                /> 
+            </div>
+            @endif
+       
+        </div>
+
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
+            <div>
+                <x-form.dropdown
+                    label="Payment Type (Registration)"
                     value=""
+                    name="pay_type_regist"
+                    id=""
                     mandatory=""
                     disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.share_fee"
-                    wire:keydown="totalfee"
-                /> 
+                    default="yes"
+                    wire:model="pay_type_regist"
+                >
+                    <option value="CASH">Cash/Online Payment</option>
+                    <option value="AUTOPAY">Autopay</option>
+                </x-form.dropdown>
             </div>
-        </div>
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+      
             <div>
-                <x-form.input-tag
-                    label="Total Registration Payment"
-                    name=""
+                <x-form.dropdown
+                    label="Payment Type (Share)"
                     value=""
-                    mandatory=""
-                    disable="readonly"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.total_fee"
-                /> 
-            </div>
-        </div>
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
-            <div>
-                <x-form.input-tag
-                    label="Share Monthly (Minimum RM50)"
-                    name=""
-                    value=""
+                    name="pay_type_share"
+                    id=""
                     mandatory=""
                     disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.share_monthly"
-                    wire:keydown="totalfee"
-                /> 
+                    default="yes"
+                    wire:model="pay_type_share"
+                >
+                    <option value="LMP">Lump sum</option>
+                    <option value="INST">Installment</option>
+                </x-form.dropdown>
             </div>
+            <div></div>
+            <div></div>
+        
+        </div>
+
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
             <div>
-                <x-form.input-tag
-                    label="Contribution Monthly (Minimum RM50)"
-                    name=""
-                    value=""
-                    mandatory=""
-                    disable=""
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.contribution_monthly"
-                    wire:keydown="totalfee"
-                /> 
+                @if($pay_type_regist=="CASH")
+                <div>
+                    <x-form.dropdown
+                        label="Customer's Bank"
+                        value=""
+                        name="cust_bank_id"
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="cust_bank_id"
+                    >
+                        @foreach ($bank_id as $list)
+                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
+                </div>
+                @if($cust_bank_id)
+                <div>
+                    <x-form.input-tag
+                        label="COOP Bank Name"
+                        name=""
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        leftTag=""
+                        rightTag=""
+                        type="text"
+                        wire:model="client_bank_name"
+                        {{-- wire:keydown="totalfee" --}}
+                    /> 
+                </div>
+                <div>
+                    <x-form.input-tag
+                        label="COOP Bank Account Number"
+                        name=""
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        leftTag=""
+                        rightTag=""
+                        type="text"
+                        wire:model="client_bank_acct"
+                        {{-- wire:keydown="totalfee" --}}
+                    /> 
+                </div>
+                @endif
+                
+                    <x-form.input
+                        label="Upload Payment Proof (Registration Fee):"
+                        name="payment_file_regist"
+                        id="payment_file_regist"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        type="file"
+                        accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                        wire:model.defer="payment_file_regist"
+                    />
+                @endif
+                </div>
+      
+            <div>
+                @if($pay_type_share=='LMP')
+                    <div>
+                        <x-form.dropdown
+                            label="Customer's Bank"
+                            value=""
+                            name="cust_bank_id2"
+                            id=""
+                            mandatory=""
+                            disable=""
+                            default="yes"
+                            wire:model="cust_bank_id2"
+                        >
+                            @foreach ($bank_id as $list)
+                                <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                            @endforeach
+                        </x-form.dropdown>
+                    </div>
+                    @if($cust_bank_id2)
+                    <div>
+                        <x-form.input-tag
+                            label="COOP Bank Name"
+                            name=""
+                            value=""
+                            mandatory=""
+                            disable="true"
+                            leftTag=""
+                            rightTag=""
+                            type="text"
+                            wire:model="client_bank_name"
+                            {{-- wire:keydown="totalfee" --}}
+                        /> 
+                    </div>
+                    <div>
+                        <x-form.input-tag
+                            label="COOP Bank Account Number"
+                            name=""
+                            value=""
+                            mandatory=""
+                            disable="true"
+                            leftTag=""
+                            rightTag=""
+                            type="text"
+                            wire:model="client_bank_acct"
+                            {{-- wire:keydown="totalfee" --}}
+                        /> 
+                    </div>
+                    @endif
+
+                    <div>
+                        <x-form.input
+                            label="Upload Payment Proof (Share Fee):"
+                            name="payment_file_share"
+                            id="payment_file_share"
+                            value=""
+                            mandatory=""
+                            disable=""
+                            type="file"
+                            accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                            wire:model.defer="payment_file_share"
+                        />
+                    </div>
+                    
+                @endif
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
-            <div>
-                <x-form.input-tag
-                    label="Total Monthly Payment"
-                    name=""
-                    value=""
-                    mandatory=""
-                    disable="readonly"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="applymember.total_monthly"
-                /> 
-            </div>
-        </div>
+        {{-- <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
+        
+            
+            
+        </div> --}}
     </div>
+
+
 
     <div  class="px-6 py-4 mt-4">
         <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">

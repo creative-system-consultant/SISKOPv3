@@ -15,7 +15,7 @@ class CustEmployer extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "CIF.cust_employer";
+    protected $table   = "CIF.CUSTOMERS_EMPLOYMENT";
     protected $guarded = ['uuid'];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -25,7 +25,6 @@ class CustEmployer extends Model implements Auditable
 
     public function address()
     {
-        return $this->morphMany(Address::class,'addressable');
+        return $this->morphMany(Address::class, 'addressable');
     }
-
 }
