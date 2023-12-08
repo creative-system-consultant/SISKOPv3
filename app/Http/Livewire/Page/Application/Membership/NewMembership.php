@@ -115,10 +115,13 @@ class NewMembership extends Component
         'CustFamily.name'                    => 'required', //make sure all validation meets the required form. EG name has no numbers
         'CustFamily.identity_no'             => 'required',
         'CustFamily.email'                   => 'nullable',
-        'CustFamily.phone_no'                => 'required',
+        'CustFamily.phone_no'                => 'required|numeric|digits:11',
         'CustFamily.relation_id'             => 'required',
         'CustFamily.race_id'                 => 'required',
         'CustFamily.religion_id'             => 'required',
+        'CustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z\-\/@\d,&()]+$/'],
+        'CustFamily.work_post'               => ['required', 'regex:/^[A-Za-z\-\/@\d,&()]+$/'],
+        'CustFamily.salary'                  => 'required',
     ];
 
     protected $rule4 = [
@@ -195,6 +198,9 @@ class NewMembership extends Component
         'CustFamily.relation_id'             => 'required',
         'CustFamily.race_id'                 => 'required',
         'CustFamily.religion_id'             => 'required',
+        'CustFamily.employer_name'           => 'required',
+        'CustFamily.work_post'               => 'required',
+        'CustFamily.salary'                  => 'required',
         'CustIntroducer.name'                => 'required',
         'CustIntroducer.icno'                => 'nullable',
         'CustIntroducer.email'               => 'nullable',

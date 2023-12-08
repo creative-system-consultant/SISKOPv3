@@ -330,6 +330,39 @@
                         @endforeach
                     </x-form.dropdown>
                 </div>
+                <div>
+                    <x-form.input
+                        label="Employer Name"
+                        name="CustFamily.employer_name"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:model="CustFamily.employer_name"
+                    />
+                </div>
+                <div>
+                    <x-form.input
+                        label="Work Position"
+                        name="CustFamily.work_post"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:model="CustFamily.work_post"
+                    />
+                </div>
+                <div>
+                    <x-form.input
+                        label="Salary"
+                        name="CustFamily.salary"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:model="CustFamily.salary"
+                    />
+                </div>
             </div>
             {{-- <div class="grid grid-cols-1 mt-4  gap-2">
                 <div>

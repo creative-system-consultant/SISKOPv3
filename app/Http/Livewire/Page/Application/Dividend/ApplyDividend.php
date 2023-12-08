@@ -22,10 +22,11 @@ class ApplyDividend extends Component
     public $share_amt;
     public $contri_amt;
     public $payout;
+    public $cur_bal_dividend;
 
     protected $rules = [
-        'Dividend.bal_div'  => '',
-        'payout'            => 'lt:Dividend.bal_div|gt:0',
+        'Dividend.bal_dividen'  => '',
+        'payout'            => 'lt:Dividend.bal_dividen|gt:0',
 
         'payout_cash'       => '',
         'payout_share'      => '',
@@ -52,10 +53,9 @@ class ApplyDividend extends Component
     public function submit()
     {
         $this->validate();
-
-        $this->apply->dividend_total = $this->Dividend->total_div;
-        $this->apply->share_before  = $this->Cust->share;
-        $this->apply->contri_before = $this->Cust->contribution;
+        $this->apply->dividend_total = $this->Dividend->bal_dividen;
+        $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
+        $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
         $this->apply->flag = 1;
         $this->apply->save();
 
@@ -88,26 +88,27 @@ class ApplyDividend extends Component
 
     public function mount()
     {
+        $this->cur_bal_dividend = 0;
         $this->User = User::find(auth()->user()->id);
-        $this->Cust = Customer::where([['client_id', $this->User->client_id],['icno', $this->User->icno]])->firstOrFail();
+        $this->Cust = Customer::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->firstOrFail();
 
-        $this->Dividend = Dividend::where([['client_id', $this->User->client_id],['cust_id', $this->Cust->id]])->first();
-        if ($this->Dividend == NULL){
+        $this->Dividend = Dividend::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->first();
+        if ($this->Dividend == NULL) {
             session()->flash('message', 'There are no Dividend Payout for this Customer');
             session()->flash('warning');
             session()->flash('title', 'Warning!');
 
             return redirect()->route('home');
         } else if ($this->Dividend) {
-
+            $this->cur_bal_dividend = $this->Dividend->bal_dividen;
         }
-        $apply = ModelApplydividend::where([['client_id', $this->User->client_id],['cust_id', $this->Cust->id],['div_year', date('Y')]])->first();
+        $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->first();
 
-        if ($apply == NULL){
+        if ($apply == NULL) {
             $this->apply = new ModelApplydividend;
             $this->apply->client_id   = $this->User->client_id;
             $this->apply->cust_id   = $this->Cust->id;
-            $this->apply->mbr_no    = $this->Cust->ref_no;
+            $this->apply->mbr_no    = $this->Cust->fmsMembership->mbr_no;
             $this->apply->div_year  = date('Y');
             $this->apply->save();
         } else if ($apply->flag == 0) {
@@ -123,6 +124,8 @@ class ApplyDividend extends Component
 
     public function render()
     {
+
+        $this->cur_bal_dividend = $this->Dividend->bal_dividen - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply);
         return view('livewire.page.application.dividend.apply-dividend')->extends('layouts.head');
     }
 }
