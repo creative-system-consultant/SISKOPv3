@@ -27,17 +27,17 @@
                         <x-heroicon-o-clipboard-document-list class="w-7 h-7" />
                     </x-sidebar.nav-item>--}}
             @if(auth()->user()->client_id != NULL)
-                @if(auth()->user()->user_type == 4)
+                @if(auth()->user()->user_type == 3 || auth()->user()->user_type == 4)
                     <x-sidebar.dropdown-nav-item active="open" title="APPLICATION" uri="application/*">
                         <x-slot name="icon">
                             <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                         </x-slot>
                         <div class="leading-5">
-                            <x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
+                            {{--<x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
                                 <x-slot name="icon">
                                     <x-heroicon-o-document-plus class="w-7 h-7" />
                                 </x-slot>
-                            </x-sidebar.dropdown-item>
+                            </x-sidebar.dropdown-item>--}}
                             <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
                                 <x-slot name="icon">
                                     <x-heroicon-o-archive-box class="w-7 h-7" />
@@ -78,8 +78,6 @@
                     {{--<x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>--}}
-                @endif
-                @if(auth()->user()->user_type == 3)
                     <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
@@ -147,11 +145,11 @@
                                 <x-heroicon-o-briefcase class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="Admin Membership" href="{{ route('membership.admin') }}" uri="">
+                        {{--<x-sidebar.dropdown-item title="Admin Membership" href="{{ route('membership.admin') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-document-text class="w-7 h-7" />
                             </x-slot>
-                        </x-sidebar.dropdown-item>
+                        </x-sidebar.dropdown-item>--}}
                     </x-sidebar.dropdown-nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="MAINTENANCE" uri="maintenance/*">

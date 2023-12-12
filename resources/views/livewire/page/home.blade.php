@@ -111,9 +111,7 @@
                                         </tr>
                                         <tr>
                                             <x-table.table-body colspan="2" class="text-left">
-                                                <button type="button" wire:click="logout" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                                                    Logout
-                                                </button>
+                                                &nbsp;
                                             </x-table.table-body>
                                         </tr>
                                 </x-slot>

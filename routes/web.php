@@ -132,8 +132,14 @@ use App\Http\Livewire\Page\User\Application\Membership\MembershipStatus;
 
 Route::get('/', [RedirectController::class,'index']);
 
-Route::get('php-info', function(){
+Route::get('res/php-info8', function(){
     phpinfo();
+});
+
+// webhook from CSC-CA to clear cache on roles/user management update
+Route::post('/webhook/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return response('Cache Cleared', 200);
 });
 
 Route::middleware('guest')->group(function () {

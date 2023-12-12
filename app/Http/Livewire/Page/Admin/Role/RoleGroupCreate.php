@@ -43,6 +43,7 @@ class RoleGroupCreate extends Component
             $this->group          = new ClientRoleGroup;
             $this->group->client_id = $this->user->client_id;
             $this->group->created_by = $this->user->name;
+            $this->group->status  = 0;
         }
         $this->user_roles = UserRole::all();
     }

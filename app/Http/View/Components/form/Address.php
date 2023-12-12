@@ -13,6 +13,7 @@ class Address extends Component
     public $name4;
     public $name5;
     public $name6;
+    public $name7;
     public $condition;
     public $state;
     public $mandatory;
@@ -27,6 +28,7 @@ class Address extends Component
         $name4,
         $name5,
         $name6,
+        $name7=NULL,
         $condition,
         $mandatory="false",
         $disable="false",
@@ -40,6 +42,7 @@ class Address extends Component
         $this->name4 = $name4;
         $this->name5 = $name5;
         $this->name6 = $name6;
+        $this->name7 = $name7;
         $this->condition = $condition;
         $this->mandatory = $mandatory;
         $this->disable = $disable;

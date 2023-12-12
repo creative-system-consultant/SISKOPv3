@@ -17,8 +17,7 @@
         "livewire/livewire": "^2.5",
         "owen-it/laravel-auditing": "^13.0",
         "rap2hpoutre/fast-excel": "^5.0",
-        "spatie/laravel-permission": "^6.1",
-        "vildanbina/livewire-wizard": "^1.2"
+        "spatie/laravel-permission": "^6.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
