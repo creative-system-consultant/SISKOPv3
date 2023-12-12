@@ -8,6 +8,7 @@
                     <x-table.table-header class="text-left " value="No Akaun Pembiayaan" sort="" />
                     <x-table.table-header class="text-left" value="Jumlah Pembiayaan" sort="" />
                     <x-table.table-header class="text-right" value="BAKI PEMBIAYAAN" sort="" />
+                    <x-table.table-header class="text-center" value="Tindakan" sort="" />
                 </x-slot>
                 <x-slot name="tbody">
                     <tr>
@@ -20,13 +21,101 @@
                         <x-table.table-body colspan="" class="text-right">
                             test
                         </x-table.table-body>
+                        <x-table.table-body colspan="" class="">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none">
+                                    <x-heroicon-o-cursor-arrow-rays class="w-4 h-4" />
+                                    Pilih
+                                </button>
+                            </div>
+                        </x-table.table-body>
+                    </tr>
+                </x-slot>
+            </x-table.table>
+        </div>
+
+        <div class="mt-10">
+            <x-table.table>
+                <x-slot name="thead">
+                    <tr  class="">
+                        <th  colspan="3" class="px-6 py-3 border bg-primary-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            Senarai Penjamin
+                        </th>
+                        <th  colspan="3" class="px-6 py-3 border bg-primary-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            Penjamin Baru
+                        </th>
+                    </tr>
+                    <tr>
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            No Anggota
+                        </th>
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            No K/P
+                        </th>
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            Penjamin Semasa
+                        </th>
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            No Anggota
+                        </th>
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            No K/P penjamin Baru
+                        </th>
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            Nama Penjamin
+                        </th>
+                    </tr>
+                    
+                </x-slot>
+                <x-slot name="tbody">
+                    <tr>
+                        <x-table.table-body colspan="" class="border text-center text-xs">
+                            02025
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="border text-center text-xs">
+                            971215105423
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="border text-center text-xs">
+                            Suriyawati binti ahmad abu
+                        </x-table.table-body>
+                        
+                        <x-table.table-body colspan="" class="border text-center">
+                            <x-form.input
+                                label=""
+                                name=""
+                                value=""
+                                mandatory=""
+                                disable="readonly"
+                                type="text"
+                            />
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="border">
+                            <x-form.input
+                                label=""
+                                name=""
+                                value=""
+                                mandatory=""
+                                disable=""
+                                type="text"
+                            />
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="border">
+                            <x-form.input
+                                label=""
+                                name=""
+                                value=""
+                                mandatory=""
+                                disable="readonly"
+                                type="text"
+                            />
+                        </x-table.table-body>
                     </tr>
                 </x-slot>
             </x-table.table>
         </div>
 
         <div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
                 <div>
                     <x-form.dropdown
                         label="Sebab Menukar Penjamin"
@@ -58,86 +147,10 @@
                 />
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-4 mt-12">
-
-                <div class="flex items-start p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-                    <x-heroicon-o-information-circle class="flex-shrink-0 inline w-6 h-6 mr-2" />
-                    <span class="sr-only">Info</span>
-                    <div>
-                        <span class="font-bold">Cara Menghantar Permohonan Penukaran Penjamin:</span>
-                        <ol class="list-decimal pl-4 pt-3 space-y-2">
-                            <li class="">
-                                <div class="flex">
-                                    Tekan button Simpan dan<x-heroicon-s-arrow-down-tray class="w-4 h-4 mx-2" />muat turun borang.
-                                </div>
-                            </li>
-                            <li class="">
-                                <div class="flex">
-                                    Setelah selesai memuat turun borang, dapatkan pengesahan SAKSI yang sah sahaja.
-                                </div>
-                            </li>
-                            <li class="">
-                                <div class="flex">
-                                    Setelah mendapatkan pengesahan <span class="pl-1 font-bold"> SAKSI </span>, tekan button<x-heroicon-s-arrow-up-tray class="w-4 h-4 mx-2" />muat naik.
-                                </div>
-                            </li>
-                            <li class="">
-                                <div class="flex">
-                                    Kemudian tekan button hantar.
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div>
-                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 hover:bg-green-600 rounded-md focus:outline-none w-40">
-                            <x-heroicon-o-bookmark class="w-4 h-4 mr-2" />
-                            Simpan
-                        </button>
-                    </div>
-                    <div>
-                        <x-heroicon-o-arrow-right class="w-7 h-7" />
-                    </div>
-                    <div>
-                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none w-40">
-                            <x-heroicon-o-arrow-down-tray class="w-4 h-4 mr-2" />
-                            Muat Turun 
-                        </button>
-                    </div>
-                    <div>
-                        <x-heroicon-o-arrow-right class="w-7 h-7" />
-                    </div>
-                    <div class="flex space-x-2 items-center mt-1">
-                        <x-form.input
-                            label=""
-                            name=""
-                            value=""
-                            mandatory=""
-                            disable=""
-                            type="file"
-                        />
-                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-md focus:outline-none -mt-1 w-32">
-                            <x-heroicon-o-arrow-up-tray class="w-4 h-4 mr-2" />
-                            Muat Naik
-                        </button>
-                    </div>
-                    <div>
-                        <x-heroicon-o-arrow-right class="w-7 h-7" />
-                    </div>
-                    <div>
-                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 hover:bg-green-600 rounded-md focus:outline-none w-40">
-                            <x-heroicon-o-paper-airplane class="w-4 h-4 mr-2" />
-                            Hantar
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
+            <div class="p-4 mt-10 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        Lanjut
+                        Simpan
                     </button>
                 </div>
             </div>
