@@ -7,26 +7,31 @@ use App\Models\Contribution;
 use App\Models\User;
 use Livewire\Component;
 
-class ContributionChecker extends Component
+class Approver extends Component
 {
     public User $User;
     public Approval $Approval;
-    public $checker;
+    public $Approver;
 
     protected $rules = [
-        'Approval.note'     => 'required|max:255',
+        'Approval.note'     => 'required',
     ];
 
     public function next()
     {
         $this->validate();
-        $this->checker->step++;
-        $this->checker->save();
         $this->Approval->user_id = $this->User->id;
-        $this->Approval->type = 'lulus';
+        $this->Approval->vote = 'lulus';
         $this->Approval->save();
+        $mes ='Application VOTED APPROVED' ;
 
-        session()->flash('message', 'Application Pre-Approved');
+        if ($this->Approver->approvals()->where('type','like','vote%')->whereNull('vote')->count() < 1){
+            $this->Approver->flag = 20;
+            $mes = 'Application APPROVED';
+        }
+        $this->Approver->save();
+
+        session()->flash('message', $mes);
         session()->flash('success');
         session()->flash('title', 'Success!');
 
@@ -55,20 +60,41 @@ class ContributionChecker extends Component
         }
     }
 
+    public function refuse()
+    {
+        $this->validate();
+        $this->Approval->user_id = $this->User->id;
+        $this->Approval->vote = 'lulus';
+        $this->Approval->save();
+        $mes ='Application VOTED REFUSE' ;
+
+        if ($this->Approver->approvals()->where('type','like','vote%')->whereNull('vote')->count() < 1){
+            $this->Approver->flag = 23;
+            $mes = 'Application REFUSED';
+        }
+        $this->Approver->save();
+
+        session()->flash('message', $mes);
+        session()->flash('success');
+        session()->flash('title', 'Success!');
+
+        return redirect()->route('application.list',['page' => '4']);
+    }
+
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->checker  = Contribution::where('uuid', $uuid)->with('customer')->first();
+        $this->Approver  = Contribution::where('uuid', $uuid)->with('customer')->first();
         $this->Approval = Approval::where([
-            ['approval_id', $this->checker->id],
-            ['order', $this->checker->step],
-            ['role_id', '2'],
+            ['approval_id', $this->Approver->id],
+            ['order', $this->Approver->step],
+            ['user_id', $this->User->id],
             ['approval_type', 'App\Models\Contribution'],
         ])->firstOrFail();
     }
 
     public function render()
     {
-        return view('livewire.page.executive.approval.contribution.contribution-checker')->extends('layouts.head');
+        return view('livewire.page.executive.approval.contribution.approver')->extends('layouts.head');
     }
 }

@@ -7,21 +7,22 @@ use App\Models\Contribution;
 use App\Models\User;
 use Livewire\Component;
 
-class ContributionMaker extends Component
+class Maker extends Component
 {
     public User $User;
     public Approval $Approval;
-    public $maker;
+    public $Maker;
 
     protected $rules = [
         'Approval.note'     => 'required|max:255',
+        'Maker.approved_amt'=> 'required|gt:0',
     ];
 
     public function next()
     {
         $this->validate();
-        $this->maker->step++;
-        $this->maker->save();
+        $this->Maker->step++;
+        $this->Maker->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = 'lulus';
         $this->Approval->save();
@@ -35,9 +36,9 @@ class ContributionMaker extends Component
 
     public function back()
     {
-        if ($this->maker->step > 1){
-            $this->maker->step--;
-            $this->maker->save();
+        if ($this->Maker->step > 1){
+            $this->Maker->step--;
+            $this->Maker->save();
 
             session()->flash('message', 'Application Backtracked');
             session()->flash('success');
@@ -58,10 +59,10 @@ class ContributionMaker extends Component
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
-        $this->maker    = Contribution::where('uuid', $uuid)->with('customer')->first();
+        $this->Maker    = Contribution::where('uuid', $uuid)->with('customer')->first();
         $this->Approval = Approval::where([
-            ['approval_id', $this->maker->id],
-            ['order', $this->maker->step],
+            ['approval_id', $this->Maker->id],
+            ['order', $this->Maker->step],
             ['role_id', '1'],
             ['approval_type', 'App\Models\Contribution'],
         ])->firstOrFail();
@@ -69,6 +70,6 @@ class ContributionMaker extends Component
 
     public function render()
     {
-        return view('livewire.page.executive.approval.contribution.contribution-maker')->extends('layouts.head');
+        return view('livewire.page.executive.approval.contribution.maker')->extends('layouts.head');
     }
 }

@@ -121,7 +121,7 @@ class ApplyContribution extends Component
             'created_by'     => strtoupper($customer->name),
         ]);
         $contribution->remove_approvals();
-        $contribution->make_approvals();
+        $contribution->make_approvals('Contribution');
 
         if ($this->payment_method == 'online') {
             $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online_receipt' . '.' . $this->online_file->extension();
