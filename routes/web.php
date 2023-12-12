@@ -106,6 +106,8 @@ use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
 use App\Http\Livewire\Page\Application\Dividend\ApplyDividend;
+use App\Http\Livewire\Page\Application\ApplyChangeGuarantor\Index as ApplyChangeGuarantor;
+use App\Http\Livewire\Page\Application\ApplyClosedMembership\Index as ApplyClosedMembership;
 use App\Http\Livewire\Page\Dashboard\Guest;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendApprover;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendMaker;
@@ -209,6 +211,13 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
 
         //Application > Applydividend
         Route::get('/Dividend', ApplyDividend::class)->name('dividend.apply');
+
+
+        //Application > Change Guarantor
+        Route::get('/ChangeGuarantor', ApplyChangeGuarantor::class)->name('changeguarantor.apply');
+
+        //Application > Closed Membership
+        Route::get('/ClosedMembership', ApplyClosedMembership::class)->name('closedmembership.apply');
     });
     //------------------------------- End Applications ---------------------------//
 

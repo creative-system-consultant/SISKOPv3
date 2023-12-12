@@ -73,6 +73,16 @@
                                     <x-heroicon-o-receipt-percent class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Change Guarantor" href="{{ route('changeguarantor.apply') }}" uri="ChangeGuarantor">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-arrows-up-down class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
+                            <x-sidebar.dropdown-item title="Apply Close Membership" href="{{ route('closedmembership.apply') }}" uri="ClosedMembership">
+                                <x-slot name="icon">
+                                    <x-heroicon-o-lock-closed class="w-7 h-7" />
+                                </x-slot>
+                            </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item>
                     {{--<x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
