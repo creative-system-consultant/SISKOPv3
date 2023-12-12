@@ -54,9 +54,9 @@ class Contribution extends Model implements Auditable
         }
     }
 
-    public function make_approvals()
+    public function make_approvals($type = 'Contribution')
     {
-        $ClientApproval = ClientApproval::where([['approval_type', 'Contribution'],['client_id',$this->client_id]])->first();
+        $ClientApproval = ClientApproval::where([['approval_type', $type],['client_id',$this->client_id]])->first();
         if ($ClientApproval != NULL){
             $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
@@ -78,6 +78,7 @@ class Contribution extends Model implements Auditable
                     $approval->vote     = NULL;
                     $approval->save();
                 }
+                $count++;
             } else {
 
                 $approval = $this->approvals()->firstOrCreate(['order' => $count]);

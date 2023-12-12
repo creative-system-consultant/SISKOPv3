@@ -7,7 +7,7 @@
                 <x-form.input
                     label="Name"
                     name="custname"
-                    value="{{ $maker->customer->name ?? '' }}"
+                    value="{{ $Checker->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -15,7 +15,7 @@
                 <x-form.input
                     label="Identity Number"
                     name="custic"
-                    value="{{ $maker->customer->icno ?? '' }}"
+                    value="{{ $Checker->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -25,7 +25,7 @@
                     label="Add Contribution applied"
                     type="text"
                     name="cont_apply"
-                    value="{{ $maker->apply_amt ?? '0.00' }}"
+                    value="{{ $Checker->apply_amt ?? '0.00' }}"
                     placeholder="0.00"
                     leftTag="RM"
                     rightTag=""
@@ -37,12 +37,12 @@
                     label="Add Contribution approved"
                     type="text"
                     name="cont_approved"
-                    value="{{ $maker->apply_amt ?? '0.00' }}"
+                    value="{{ $Checker->approved_amt ?? '' }}"
                     placeholder="0.00"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
-                    disable=""
+                    disable="true"
                 />
             </div>
 
@@ -51,7 +51,7 @@
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
                         label="Date Options"
-                        value="{{ $maker->start_apply == NULL ? 'One Month' : 'Starting Date' }}"
+                        value="{{ $Checker->start_apply == NULL ? 'One Month' : 'Starting Date' }}"
                         name="cont_type"
                         id="cont_type"
                         mandatory=""
@@ -61,11 +61,11 @@
                 </div>
 
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    @if ( $maker->start_apply !== NULL)
+                    @if ( $Checker->start_apply !== NULL)
                         <x-form.input
                             label="Start Date"
                             name="start_contDate"
-                            value="{{ $maker->start_apply == NULL ? '' : $maker->start_apply->format('Y-m-d') }}"
+                            value="{{ $Checker->start_apply == NULL ? '' : $Checker->start_apply->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
@@ -74,13 +74,13 @@
                 </div>
 
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    @if ( $maker->start_apply !== NULL)
+                    @if ( $Checker->start_apply !== NULL)
                         <x-form.input
                             label="Approved Start Date"
                             name="start_approvedDate"
-                            value="{{ $maker->start_approved == NULL ? '' : $maker->start_approved->format('Y-m-d') }}"
+                            value="{{ $Checker->start_approved == NULL ? '' : $Checker->start_approved->format('Y-m-d') }}"
                             mandatory=""
-                            disable=""
+                            disable="true"
                             type="date"
                         />
                     @endif
@@ -96,7 +96,7 @@
                     <x-table.table-header class="text-left" value="Date" sort="" />
                 </x-slot>
                 <x-slot name="tbody">
-                @foreach ($maker->approvals as $item)
+                @foreach ($Checker->approvals as $item)
                 @if((str_contains($item->type,'vote') && $item->vote == NULL) || $item->type == NULL) @continue @endif
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
@@ -142,7 +142,7 @@
                     <x-form.input
                         label=""
                         name="Role"
-                        value="{{ $maker->current_approval_role()->name }}"
+                        value="{{ $Checker->current_approval_role()->name }}"
                         mandatory=""
                         disable="readonly"
                         type="text"
@@ -153,14 +153,17 @@
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <button type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                        Cancel Application
+                        Decline
                     </button>
                     <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Previous
                      </button>
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-                        Next
+                        Approve
                     </button>
+                    @if($forward) <button wire:click="forward" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-orange-500 rounded-md focus:outline-none">
+                        Send To Next Approval
+                     </button>@endif
                 </div>
             </div>
         </div>

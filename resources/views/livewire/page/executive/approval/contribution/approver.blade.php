@@ -7,7 +7,7 @@
                 <x-form.input
                     label="Name"
                     name="custname"
-                    value="{{ $approver->customer->name ?? '' }}"
+                    value="{{ $Approver->customer->name ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -15,7 +15,7 @@
                 <x-form.input
                     label="Identity Number"
                     name="custic"
-                    value="{{ $approver->customer->icno ?? '' }}"
+                    value="{{ $Approver->customer->icno ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
@@ -25,7 +25,7 @@
                     label="Add Contribution applied"
                     type="text"
                     name="cont_apply"
-                    value="{{ $approver->apply_amt ?? '0.00' }}"
+                    value="{{ $Approver->apply_amt ?? '0.00' }}"
                     placeholder="0.00"
                     leftTag="RM"
                     rightTag=""
@@ -34,10 +34,10 @@
                 />
 
                 <x-form.input-tag
-                    label="Add Contribution approverd"
+                    label="Add Contribution Approverd"
                     type="text"
-                    name="cont_approverd"
-                    value="{{ $approver->approverd_amt ?? '' }}"
+                    name="cont_Approverd"
+                    value="{{ $Approver->Approverd_amt ?? '' }}"
                     placeholder="0.00"
                     leftTag="RM"
                     rightTag=""
@@ -51,7 +51,7 @@
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
                         label="Date Options"
-                        value="{{ $approver->start_apply == NULL ? 'One Month' : 'Starting Date' }}"
+                        value="{{ $Approver->start_apply == NULL ? 'One Month' : 'Starting Date' }}"
                         name="cont_type"
                         id="cont_type"
                         mandatory=""
@@ -61,11 +61,11 @@
                 </div>
 
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    @if ( $approver->start_apply !== NULL)
+                    @if ( $Approver->start_apply !== NULL)
                         <x-form.input
                             label="Start Date"
                             name="start_contDate"
-                            value="{{ $approver->start_apply == NULL ? '' : $approver->start_apply->format('Y-m-d') }}"
+                            value="{{ $Approver->start_apply == NULL ? '' : $Approver->start_apply->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
@@ -74,11 +74,11 @@
                 </div>
 
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    @if ( $approver->start_apply !== NULL)
+                    @if ( $Approver->start_apply !== NULL)
                         <x-form.input
-                            label="approverd Start Date"
-                            name="start_approverdDate"
-                            value="{{ $approver->start_approverd == NULL ? '' : $approver->start_approverd->format('Y-m-d') }}"
+                            label="Approverd Start Date"
+                            name="start_ApproverdDate"
+                            value="{{ $Approver->start_approved == NULL ? '' : $Approver->start_approved->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
@@ -97,7 +97,7 @@
                     <x-table.table-header class="text-left" value="Date" sort="" />
                 </x-slot>
                 <x-slot name="tbody">
-                @foreach ($approver->approvals as $item)
+                @foreach ($Approver->approvals as $item)
                 @if((str_contains($item->type,'vote') && $item->vote == NULL) || $item->type == NULL) @continue @endif
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
@@ -143,7 +143,7 @@
                     <x-form.input
                         label=""
                         name="Role"
-                        value="{{ $approver->current_approval_role()->name }}"
+                        value="{{ $Approver->current_approval_role()->name }}"
                         mandatory=""
                         disable="readonly"
                         type="text"
@@ -162,7 +162,7 @@
                         Previous
                      </button>
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        approverd
+                        Approve
                     </button>
                 </div>
             </div>

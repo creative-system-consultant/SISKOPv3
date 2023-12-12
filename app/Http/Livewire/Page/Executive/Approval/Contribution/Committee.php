@@ -7,7 +7,7 @@ use App\Models\Contribution;
 use App\Models\User;
 use Livewire\Component;
 
-class ContributionCommittee extends Component
+class Committee extends Component
 {
     public User $User;
     public Approval $Approval;
@@ -69,6 +69,6 @@ class ContributionCommittee extends Component
 
     public function render()
     {
-        return view('livewire.page.executive.approval.contribution.contribution-committee')->extends('layouts.head');
+        return view('livewire.page.executive.approval.contribution.committee')->extends('layouts.head');
     }
 }

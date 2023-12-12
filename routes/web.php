@@ -76,10 +76,10 @@ use App\Http\Livewire\Page\Application\ApplyContribution\ApplyContribution;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\ApplySellExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\ApplyShare;
 use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\ApplyWithdrawContribution;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionApproval;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionChecker;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionCommittee;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionMaker;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Approver as ContributionApprover;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Checker as ContributionChecker;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Committee as ContributionCommittee;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Maker as ContributionMaker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Maker as MembershipMaker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Checker as MembershipChecker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Committee as MembershipCommittee;
@@ -399,7 +399,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
                 Route::get('maker/{uuid}', ContributionMaker::class)->name('contribution.maker');
                 Route::get('checker/{uuid}', ContributionChecker::class)->name('contribution.checker');
                 Route::get('committee/{uuid}', ContributionCommittee::class)->name('contribution.committee');
-                Route::get('approval/{uuid}', ContributionApproval::class)->name('contribution.approval');
+                Route::get('approval/{uuid}', ContributionApprover::class)->name('contribution.approval');
             });
 
             //Exec > approval > w/d contribution
