@@ -4,13 +4,13 @@ namespace App\Http\Livewire\Page\Admin\Product;
 
 use Livewire\Component;
 use App\Models\AccountProduct;
-use App\Models\Coop;
+use App\Models\Client;
 use App\Models\User;
 
 class ProductList extends Component
 {
 
-    public Coop $Coop;
+    public Client $Coop;
     public User $User;
     public $Product;
     public $max_active;
@@ -23,12 +23,12 @@ class ProductList extends Component
     {
         $this->User = User::find(Auth()->user()->id);
         $client_id = $this->User->client_id;
-        $this->Coop = Coop::find($client_id);
+        $this->Coop = Client::find($client_id);
         $this->Product = AccountProduct::where([['client_id', $client_id]])->get();
         $this->max_active = $this->Coop->rules()->firstOrCreate([
             'name'  => 'max_active'
         ],[
-            'ruleable_name' => 'Coop',
+            'ruleable_name' => 'Client',
             'value'         => '0'
         ]);
     }

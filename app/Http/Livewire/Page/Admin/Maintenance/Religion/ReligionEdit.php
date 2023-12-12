@@ -27,7 +27,7 @@ class ReligionEdit extends Component
             'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
             'updated_at'      => now(),
-            'updated_by'      => Auth()->user()->name,
+            'updated_by'      => Auth()->id(),
         ]);
 
         session()->flash('message', 'Religion Details Updated');
@@ -38,7 +38,7 @@ class ReligionEdit extends Component
         return redirect()->route('religion.list');
     }
 
-    public function  loadUser($id)
+    public function loadUser($id)
     {
         $RefReligion = RefReligion::where('id', $id)->first();
 

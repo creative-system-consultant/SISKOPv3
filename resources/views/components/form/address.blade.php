@@ -1,10 +1,24 @@
 <div {{ $attributes }}>
-    <label class="block text-sm font-semibold leading-5 text-gray-700">
-        {{ $label }}
-        @if( $mandatory ?? '' == "true")
-            <span class="font-semibold text-red-600">*</span>
+    <div class="flex items-center justify-between w-full">
+        <label class="block text-sm font-semibold leading-5 text-gray-700">
+            {{ $label }}
+            @if( $mandatory ?? '' == "true")
+                <span class="font-semibold text-red-600">*</span>
+            @endif
+        </label>
+        @if($mailFlag ?? '' == "true")
+        <div>
+            <x-form.checkbox
+                label="Mailing Flag"
+                id=""
+                name=""
+                value=""
+                disable="{{ $disable }}"
+                wire:model="{{ $name7 }}"
+            />
+        </div>
         @endif
-    </label>
+    </div>
     <div class="flex mt-1 mb-2 rounded-md shadow-sm">
         <input
             @if( $disable == "true" )
@@ -45,12 +59,34 @@
             wire:model="{{ $name3 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5
             {{ ($errors->has($name3)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
             {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
-            placeholder="Address Line 3"
+            placeholder="Address Line 3 (optional)"
         >
     </div>
     @if($errors->has($name3)) <p class="text-sm text-red-600">{{ $errors->first($name3) }}</p> @endif
 </div>
 <div class="grid grid-cols-1 gap-2 mt-3 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3">
+    <div>
+        <label class="block text-sm font-semibold leading-5 text-gray-700">
+            Postcode
+            @if( $mandatory ?? '' == "true")
+                <span class="font-semibold text-red-600">*</span>
+            @endif
+        </label>
+        <div class="flex mt-1 mb-2 rounded-md shadow-sm">
+            <input
+                @if( $disable == "true" )
+                    disabled
+                @elseif( $disable == "readonly" )
+                    readonly
+                @endif
+                wire:model="{{ $name5 }}" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5
+                {{ ($errors->has($name5)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
+                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
+                placeholder=""
+            >
+        </div>
+        @if($errors->has($name5)) <p class="text-sm text-red-600">{{ $errors->first($name5) }}</p> @endif
+    </div>
     <div>
         <label class="block text-sm font-semibold leading-5 text-gray-700">
             Town
@@ -73,28 +109,7 @@
         </div>
         @if($errors->has($name4)) <p class="text-sm text-red-600">{{ $errors->first($name4) }}</p> @endif
     </div>
-    <div>
-        <label class="block text-sm font-semibold leading-5 text-gray-700">
-            Postcode
-            @if( $mandatory ?? '' == "true")
-                <span class="font-semibold text-red-600">*</span>
-            @endif
-        </label>
-        <div class="flex mt-1 mb-2 rounded-md shadow-sm">
-            <input
-                @if( $disable == "true" )
-                    disabled
-                @elseif( $disable == "readonly" )
-                    readonly
-                @endif
-                wire:model="{{ $name5 }}" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5
-                {{ ($errors->has($name5)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
-                {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
-                placeholder="88888"
-            >
-        </div>
-        @if($errors->has($name5)) <p class="text-sm text-red-600">{{ $errors->first($name5) }}</p> @endif
-    </div>
+    
     <div>
         <label class="block text-sm font-semibold leading-5 text-gray-700">
             State

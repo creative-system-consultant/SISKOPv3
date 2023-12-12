@@ -18,16 +18,16 @@ class EducationCreate extends Component
     {
         $this->validate([
             'edu_description' => ['required', 'string'],
-            'edu_code'        => ['required', 'string'],
+            'edu_code'        => ['required', 'string', 'max:3'],
         ]);
 
         $education = RefEducation::create([
             'description' => trim(strtoupper($this->edu_description)),
             'code'        => trim(strtoupper($this->edu_code)),
-            'client_id'     => $this->User->client_id,
+            'client_id'   => $this->User->client_id,
             'status'      => $this->edu_status == true ? '1' : '0',
             'created_at'  => now(),
-            'created_by'  => Auth()->user()->name,
+            'created_by'  => Auth()->id(),
         ]);
 
         session()->flash('message', 'Education Created');

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Ref\RefCoopType;
+use App\Models\Ref\RefClientType;
 use App\Http\Traits\HasFiles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -50,7 +50,7 @@ class Coop extends Model implements Auditable
 
     public function types()
     {
-        return RefCoopType::where('status','1')->get();
+        return RefClientType::where('status','1')->get();
     }
 
     public function type()
@@ -76,7 +76,7 @@ class Coop extends Model implements Auditable
 
     public function admins()
     {
-        return $this->hasMany(CoopAdmin::class,'client_id');
+        return $this->hasMany(ClientAdmin::class,'client_id');
     }
     public function getids()
     {

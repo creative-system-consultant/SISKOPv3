@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Auth;
 
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -31,6 +32,8 @@ class Login extends Component
 
             return;
         }
+
+        User::where('id',Auth()->id())->update(['client_id' => NULL]);
 
         return redirect()->intended(route('home'));
     }

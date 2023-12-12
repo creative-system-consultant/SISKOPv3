@@ -23,26 +23,27 @@
                         <x-heroicon-o-home class="w-7 h-7" />
                     </x-sidebar.nav-item>
 
-                    <x-sidebar.nav-item title="Report" route="{{ route('list-reporting') }}" uri="list-reporting">
+                    {{--<x-sidebar.nav-item title="Report" route="{{ route('list-reporting') }}" uri="list-reporting">
                         <x-heroicon-o-clipboard-document-list class="w-7 h-7" />
-                    </x-sidebar.nav-item>
-
+                    </x-sidebar.nav-item>--}}
+            @if(auth()->user()->client_id != NULL)
+                @if(auth()->user()->user_type == 3 || auth()->user()->user_type == 4)
                     <x-sidebar.dropdown-nav-item active="open" title="APPLICATION" uri="application/*">
                         <x-slot name="icon">
                             <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                         </x-slot>
                         <div class="leading-5">
-                            <x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
+                            {{--<x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
                                 <x-slot name="icon">
                                     <x-heroicon-o-document-plus class="w-7 h-7" />
                                 </x-slot>
-                            </x-sidebar.dropdown-item>
+                            </x-sidebar.dropdown-item>--}}
                             <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
                                 <x-slot name="icon">
                                     <x-heroicon-o-archive-box class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Add Share" href="{{ route('share.apply') }}" uri="applyShare">
+                            <x-sidebar.dropdown-item title="Buy Share" href="{{ route('share.apply') }}" uri="applyShare">
                                 <x-slot name="icon">
                                     <x-heroicon-o-chart-pie class="w-7 h-7" />
                                 </x-slot>
@@ -74,24 +75,26 @@
                             </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item>
-                    <x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
+                    {{--<x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
                         <x-heroicon-o-document-text class="w-7 h-7" />
-                    </x-sidebar.nav-item>
+                    </x-sidebar.nav-item>--}}
                     <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>
-                    <x-sidebar.nav-item title="COOP Membership Status" route="{{ route('user_membership.status') }}" uri="membershipStatus">
+                    {{--<x-sidebar.nav-item title="COOP Membership Status" route="{{ route('user_membership.status') }}" uri="membershipStatus">
                         <x-heroicon-o-document-text class="w-7 h-7" />
-                    </x-sidebar.nav-item>
+                    </x-sidebar.nav-item>--}}
                     <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">
                         <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                     </x-sidebar.nav-item>
+                @endif
+                @if(auth()->user()->user_type == 2)
                     <x-sidebar.nav-item title="Register / Update Product" route="{{ route('product.list') }}" uri="product">
                         <x-heroicon-o-briefcase class="w-7 h-7" />
                     </x-sidebar.nav-item>
-                    <x-sidebar.nav-item title="Membership Maintenance" route="{{ route('membership.admin') }}" uri="membership">
+                    {{--<x-sidebar.nav-item title="Membership Maintenance" route="{{ route('membership.admin') }}" uri="membership">
                         <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
-                    </x-sidebar.nav-item>
+                    </x-sidebar.nav-item>--}}
 
                     <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
                         <x-slot name="icon">
@@ -142,11 +145,11 @@
                                 <x-heroicon-o-briefcase class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="Admin Membership" href="{{ route('membership.admin') }}" uri="">
+                        {{--<x-sidebar.dropdown-item title="Admin Membership" href="{{ route('membership.admin') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-document-text class="w-7 h-7" />
                             </x-slot>
-                        </x-sidebar.dropdown-item>
+                        </x-sidebar.dropdown-item>--}}
                     </x-sidebar.dropdown-nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="MAINTENANCE" uri="maintenance/*">
@@ -234,6 +237,8 @@
                             </div>
                         </x-sidebar.dropdown-nav-item>
                     </x-sidebar.dropdown-nav-item>
+                @endif
+            @endif
                 </ul>
             </div>
         </div>

@@ -1,0 +1,237 @@
+<?php
+
+namespace App\Http\Livewire\Page\Executive\Approval\Membership;
+
+use App\Models\ApplyMembership;
+use App\Models\Approval;
+use App\Models\Customer as FMSCustomer;
+use App\Models\SiskopAddress as Address;
+use App\Models\SiskopCustomer as Customer;
+use App\Models\SiskopFamily as Family;
+use App\Models\SiskopEmployer as Employer;
+use App\Models\Introducer;
+use App\Models\Ref\RefEducation;
+use App\Models\Ref\RefGender;
+use App\Models\Ref\RefMarital;
+use App\Models\Ref\RefRace;
+use App\Models\Ref\RefRelationship;
+use App\Models\Ref\RefState;
+use App\Models\User;
+use DB;
+use Livewire\Component;
+
+class Resolution extends Component
+{
+    public User $User;
+    public Address $CustAddress;
+    public Address $EmployAddress;
+    public Customer $Cust;
+    public Employer $Employer;
+    public Family $CustFamily;
+    public FMSCustomer $CustIntroducer;
+    public Introducer $Introducer;
+    public ApplyMembership $Application;
+    public Approval $Approval;
+
+    public $banks;
+    public $client_id;
+    public $educationlist;
+    public $genderlist;
+    public $maritallist;
+    public $racelist;
+    public $relationshiplist;
+    public $statelist;
+
+    public $input_disable = 'readonly';
+    public $input_maker   = 'readonly';
+    public $approval_type = 'lulus';
+    public $message       = 'Application Pre-Approved';
+
+    protected $rules = [
+        'Approval.note'                    => ['required','max:255'],
+        'Application.total_fee'            => ['nullable'],
+        'Application.total_monthly'        => ['nullable'],
+        'Application.share_fee'            => ['required','gt:0'],
+        'Application.share_monthly'        => ['required','gt:0'],
+        'Application.register_fee'         => ['required','gt:0'],
+        'Application.contribution_fee'     => ['required','gt:0'],
+        'Application.contribution_monthly' => ['required','gt:0'],
+        'CustAddress.address1'             => ['nullable'],
+        'CustAddress.address2'             => ['nullable'],
+        'CustAddress.address3'             => ['nullable'],
+        'CustAddress.postcode'             => ['nullable'],
+        'CustAddress.town'                 => ['nullable'],
+        'CustAddress.state_id'             => ['nullable'],
+        'CustAddress.mail_flag'            => ['nullable'],
+        'EmployAddress.address1'           => ['nullable'],
+        'EmployAddress.address2'           => ['nullable'],
+        'EmployAddress.address3'           => ['nullable'],
+        'EmployAddress.postcode'           => ['nullable'],
+        'EmployAddress.town'               => ['nullable'],
+        'EmployAddress.state_id'           => ['nullable'],
+        'EmployAddress.mail_flag'          => ['nullable'],
+    ];
+
+    public function decline() {
+        $this->validate();
+        $this->approval_type = 'gagal';
+        $this->message       = 'Application is reccomended to declined';
+        $this->next();
+    }
+
+    public function doApproveApplication(){
+        $num = $this->User->id;
+        $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
+
+        $this->Application->flag = 20;
+        $this->Application->approved_date = now();
+
+        $this->Application->Customer->save();
+        $this->Application->mbr_no = $newnum;
+
+        $this->message = 'Application Approved';
+
+        $ret = DB::table('ref.user_has_clients')->insert([
+            'user_id'   => $this->Application->user_id,
+            'client_id' => $this->User->client_id,
+        ]);
+    }
+
+    public function doRejectApplication(){
+        $this->Application->flag = 25;
+        //
+    }
+
+    public function doApproval(){
+        $num = $this->User->id;
+        $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
+
+        $this->Application->flag = 20;
+        $this->Application->approved_date = now();
+
+        $this->Application->Customer->save();
+        $this->Application->mbr_no = $newnum;
+
+        $this->message = 'Application Approved';
+
+        $ret = DB::table('ref.user_has_clients')->insert([
+            'user_id'   => $this->Application->user_id,
+            'client_id' => $this->User->client_id,
+        ]);
+
+        //$this->Resolution->Customer->ref_no = $newnum;
+        $this->Resolution->Customer->save();
+
+        if ($this->Approval->rule_whatsapp){
+            //$this->Account->sendWS('SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by COMMITTEE');
+        }
+
+        if ($this->Approval->rule_sms){
+            //$this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by COMMITTEE');
+        }
+
+        // put event to Stored Proc
+        // put event here
+    }
+
+    public function next()
+    {
+        $this->validate();
+        $this->Resolution->flag = $this->approval_code;
+        $this->Resolution->save();
+        $this->Approval->user_id = $this->User->id;
+        $this->Approval->type = $this->approval_type;
+        $this->Approval->save();
+
+        if ($this->approval_type = 'lulus'){
+            $this->doApproval();
+        }
+
+        session()->flash('message', $this->message);
+        session()->flash('success');
+        session()->flash('title', 'Success!');
+        session()->flash('time', 10000);
+
+        return redirect()->route('application.list',['page' => '1']);
+    }
+
+    public function back()
+    {
+        if ($this->Resolution->step > 1){
+            $this->Resolution->step--;
+            $this->Resolution->save();
+
+            session()->flash('message', 'Application Backtracked');
+            session()->flash('success');
+            session()->flash('title', 'Success!');
+            session()->flash('time', 10000);
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else {
+            $this->dispatchBrowserEvent('swal',[
+                'title' => 'Error!',
+                'text'  => 'No previous step, this is the first Approval step.',
+                'icon'  => 'error',
+                'showConfirmButton' => false,
+                'timer' => 10000,
+            ]);
+        }
+    }
+
+    public function mount($uuid)
+    {
+        $this->User     = User::find(auth()->user()->id);
+        $this->Application  = ApplyMembership::where('uuid', $uuid)->first();
+        $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
+        $this->client_id = $this->User->client_id;
+        $this->Approval = Approval::where([
+                            ['approval_id', $this->Resolution->id],
+                            ['order', $this->Resolution->step],
+                            ['role_id', '5'],
+                            ['approval_type', 'App\Models\ApplyMembership'],
+                        ])->firstOrFail();
+        $this->CustAddress = Address::where([
+            ['cif_id', $this->Cust->id ],
+            ['address_type_id', 2],
+            ['client_id', $this->client_id],
+        ])->first();
+        $this->EmployAddress = Address::where([
+                    ['cif_id', $this->Cust->id ],
+                    ['address_type_id', 3],
+                    ['client_id', $this->client_id],
+                ])->first();
+        $this->CustFamily = Family::where([
+                    ['cif_id', $this->Cust->id ],
+                    ['client_id', $this->client_id],
+                ])->first();
+        $this->Employer   = Employer::where([
+                    ['cust_id' , $this->Cust->id], 
+                    ['client_id' , $this->client_id],
+                ])->first();
+        $this->Introducer = Introducer::where([
+                    ['client_id' , $this->client_id],
+                    ['introduce_type', 'App\Models\SiskopCustomer'],
+                    ['introduce_id', $this->Cust->id]
+                ])->first();
+        $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
+        $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->relationshiplist = RefRelationship::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->educationlist    = RefEducation::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
+    }
+
+    public function deb() {
+        dd([
+            'approvals' => $this->Resolution->approvals,
+            'approval'  => $this->Approval, 
+            'Resolution'=> $this->Resolution,
+        ]);
+    }
+
+    public function render()
+    {
+        return view('livewire.page.executive.approval.membership.resolution')->extends('layouts.head');
+    }
+}

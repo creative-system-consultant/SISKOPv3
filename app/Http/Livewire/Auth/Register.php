@@ -34,12 +34,10 @@ class Register extends Component
         $this->validate([
             'name'      => ['required'],
             'icno'      => ['required'],
-            'phone_no'  => ['required', 'unique:App\Models\User'],
+            'phone_no'  => ['required'],
             'email'     => ['required', 'email', 'unique:App\Models\User'],
             'password'  => ['required', 'min:8', 'same:passwordConfirmation'],
         ]);
-
-        //dd($this->phone_no);
 
         $user = User::create([
             'email'     => $this->email,
@@ -47,14 +45,8 @@ class Register extends Component
             'phone_no'  => $this->phone_no,
             'icno'      => $this->icno,
             'password'  => Hash::make($this->password),
+            'user_type' => 4
         ]);
-
-        // $user = new User;
-        // $user->email     = $this->email;
-        // $user->name      = $this->name;
-        // $user->phone_no  = $this->phone_no;
-        // $user->icno      = $this->icno;
-        // $user->password  = Hash::make($this->password);
 
         $user->save();
 

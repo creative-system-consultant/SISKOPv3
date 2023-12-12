@@ -11,7 +11,7 @@ class GenderList extends Component
 
     public function mount()
     {
-        $this->RefGender = RefGender::all();
+        $this->RefGender = RefGender::where('client_id', auth()->user()->client_id)->get();
     }
 
     public function delete($id)

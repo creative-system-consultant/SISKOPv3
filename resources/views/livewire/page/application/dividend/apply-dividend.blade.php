@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Apply Dividend Payout</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Apply Dividend Withdrawal</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <x-form.basic-form wire:submit.prevent="">
             <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Information</h2>
@@ -39,7 +39,7 @@
                         label="Membership Number"
                         type="text"
                         name="Cust.ref_no"
-                        value="{{ $Cust->ref_no }}"
+                        value="{{ $Cust->fmsMembership->mbr_no }}"
                         mandatory=""
                         disable="true"
                     />
@@ -50,7 +50,7 @@
                     <x-form.input-tag
                         label="Total Share"
                         name=""
-                        value="{{ $Cust->share }}"
+                        value="{{ $Cust->fmsMembership->total_share }}"
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
@@ -62,7 +62,7 @@
                     <x-form.input-tag
                         label="Total Contribution"
                         name=""
-                        value="{{ $Cust->contribution }}"
+                        value="{{ $Cust->fmsMembership->total_contribution }}"
                         leftTag="RM"
                         rightTag=""
                         mandatory=""
@@ -76,7 +76,7 @@
             <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
                     <x-form.input-tag
-                        label="Dividend"
+                        label="Eligible Dividend"
                         name=""
                         value=""
                         leftTag="RM"
@@ -85,12 +85,12 @@
                         disable="true"
                         type="text"
                         placeholder="0.00"
-                        wire:model="Dividend.bal_div"
+                        wire:model="Dividend.bal_dividen"
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
                     <x-form.input-tag
-                        label="Total Payout Applied"
+                        label="Total Dividend Withdrawal "
                         name="payout"
                         value=""
                         leftTag="RM"
@@ -102,9 +102,24 @@
                         wire:model="payout"
                     />
                 </div>
+
+                <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
+                    <x-form.input-tag
+                        label="Current Balance Dividend"
+                        name="payout"
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                        placeholder="0.00"
+                        wire:model="cur_bal_dividend"
+                    />
+                </div>
             </div>
             <br>
-            <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Dividend Payout Application</h2>
+            <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Dividend Withdrawal Application</h2>
             <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-2 xl:col-span-2 mt-4 mb-4">
                     <x-form.checkbox
@@ -119,7 +134,7 @@
                 </div>
                 <div class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-2 xl:col-span-2">
                     <x-form.input-tag
-                        label="Payout Amount"
+                        label="Amount"
                         id="apply.div_cash_apply"
                         name="apply.div_cash_apply"
                         value=""
@@ -147,7 +162,7 @@
                 </div>
                 <div class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-2 xl:col-span-2">
                     <x-form.input-tag
-                        label="Payout Amount"
+                        label="Amount"
                         id="apply.div_share_apply"
                         name="apply.div_share_apply"
                         value=""
@@ -175,7 +190,7 @@
                 </div>
                 <div class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-2 xl:col-span-2">
                     <x-form.input-tag
-                        label="Payout Amount"
+                        label="Amount"
                         id="apply.div_contri_apply"
                         name="apply.div_contri_apply"
                         value=""

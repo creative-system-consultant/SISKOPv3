@@ -19,6 +19,7 @@ class ApplyWithdrawContribution extends Component
     public $bank_account;
     public $bank_code;
     public $banks;
+    public $total_contribution, $monthly_contribution;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -26,9 +27,7 @@ class ApplyWithdrawContribution extends Component
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
-        'cust.contribution'         => 'required',
-        'cust.contribution_monthly' => 'required',
-        'cont_apply'                => 'required|numeric|lte:cust.contribution|gt:0',
+        'cont_apply'                => 'required|numeric',
         'support_file'              => 'required',
         'bank_code'                 => 'required',
         'bank_account'              => 'required',
@@ -36,7 +35,7 @@ class ApplyWithdrawContribution extends Component
 
     protected $messages = [
         'cont_apply.required'         => ':attribute field is required',
-        'cont_apply.lte'              => 'Application must be less than Current Contribution RM:value' ,
+        'cont_apply.lte'              => 'Application must be less than Current Contribution RM:value',
         'cont_apply.gt'               => 'Application must be more than RM0',
         'cont_apply.numeric'          => ':attribute field must be number',
         'support_file.required'       => ':attribute field is required',
@@ -64,13 +63,13 @@ class ApplyWithdrawContribution extends Component
     public function submit()
     {
         $user = auth()->user();
-        $customer = Customer::where('icno', $user->icno)->first();
+        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
 
 
         $contribution->update([
             'direction'      => 'withdraw',
-            'amt_before'     => $this->cust['contribution'] ??= '0',
+            'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
             'bank_code'      => $this->bank_code,
@@ -80,9 +79,9 @@ class ApplyWithdrawContribution extends Component
             'created_by'     => strtoupper($customer->name),
         ]);
 
-        $filepath = 'Files/'.$customer->id.'/'.'support_doc'.'.'.$this->support_file->extension();
+        $filepath = 'Files/' . $customer->id . '/' . 'support_doc' . '.' . $this->support_file->extension();
 
-        Storage::disk('local')->putFileAs('public/Files/' . $customer->id. '/', $this->support_file, 'support_doc'.'.'.$this->support_file->extension());
+        Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/', $this->support_file, 'support_doc' . '.' . $this->support_file->extension());
 
         $contribution->files()->create([
             'filename' => 'support_doc',
@@ -101,7 +100,7 @@ class ApplyWithdrawContribution extends Component
 
     public function restrictApply($id)
     {
-        $contribution = Contribution::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'withdraw']])->first();
+        $contribution = Contribution::where([['cust_id', $id], ['flag', 1], ['step', 1], ['direction', 'withdraw']])->first();
 
         if ($contribution != null) {
             session()->flash('message', 'Withdrawal contribution application is been processed. If you want to make another application, please wait until the application is processed');
@@ -120,7 +119,7 @@ class ApplyWithdrawContribution extends Component
             'cust_id'     => $this->cust->id,
             'direction'   => 'withdraw',
         ], [
-            'amt_before'  => $this->cust->contribution,
+            'amt_before'  => $this->total_contribution,
             'flag'        => 0,
             'step'        => 0,
             'apply_amt'   => '0.00',
@@ -134,8 +133,10 @@ class ApplyWithdrawContribution extends Component
     public function mount()
     {
         $user = auth()->user();
-        $this->cust = Customer::where('icno', $user->icno)->first();
+        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $this->banks = RefBank::where('client_id', $user->client_id)->get();
+        $this->total_contribution = $this->cust->fmsMembership->total_contribution;
+        $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 
         $this->restrictApply($this->cust->id);
         $this->applyCont($this->cust->id);

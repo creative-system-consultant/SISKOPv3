@@ -27,7 +27,7 @@ class StateEdit extends Component
             'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
             'updated_at'      => now(),
-            'updated_by'      => Auth()->user()->name,
+            'updated_by'      => Auth()->id(),
         ]);
 
         session()->flash('message', 'State Details Updated');

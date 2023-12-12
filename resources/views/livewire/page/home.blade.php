@@ -5,20 +5,51 @@
             <div class="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
-                        <p>content 1</p>
+                        <p><span class="font-medium ">content 1</span></p>
                         <div id="pieChart"  wire:ignore></div>
                     </div>
                 </x-general.card>
 
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
-                        <p>content 2</p>
+                        <p><span class="font-medium ">content 2</span></p>
+                        <div id="lineChart" wire:ignore></div>
                     </div>
                 </x-general.card>
 
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
-                        <p>content 3</p>
+                        <p><span class="font-medium ">MEMBER INFO</span></p>
+                        <p><x-table.table>
+                                <x-slot name="thead"></x-slot>
+                                <x-slot name="tbody">
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                CONTRIBUTION
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                RM 3,001
+                                            </x-table.table-body>
+                                        </tr>
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                SHARE
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                RM 50,001
+                                            </x-table.table-body>
+                                        </tr>
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                e-WALLET
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                RM 7,900
+                                            </x-table.table-body>
+                                        </tr>
+                                </x-slot>
+                            </x-table.table>
+                        </p>
                     </div>
                 </x-general.card>
 
@@ -32,12 +63,60 @@
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
                         <p>content 5</p>
+                        <div id="donutChart" wire:ignore></div>
                     </div>
                 </x-general.card>
 
                 <x-general.card class="p-4 bg-white rounded-lg shadow-md">
                     <div>
-                        <p>content 6</p>
+                        <p><span class="font-medium ">{{ $Client->name }}</span></p>
+                        <p>
+                            <x-table.table>
+                                <x-slot name="thead">
+                                    <x-table.table-header class="text-left" value="Title" sort="" />
+                                    <x-table.table-header class="text-left" value="Detail" sort="" />
+                                </x-slot>
+                                <x-slot name="tbody">
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                ID
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                {{ $Client->id }}
+                                            </x-table.table-body>
+                                        </tr>
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                Fullname
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                {{ $Client->name }}
+                                            </x-table.table-body>
+                                        </tr>
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                Shortform
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                {{ $Client->name2 }}
+                                            </x-table.table-body>
+                                        </tr>
+                                        <tr>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                Description
+                                            </x-table.table-body>
+                                            <x-table.table-body colspan="" class="text-left">
+                                                {{ $Client->description }}
+                                            </x-table.table-body>
+                                        </tr>
+                                        <tr>
+                                            <x-table.table-body colspan="2" class="text-left">
+                                                &nbsp;
+                                            </x-table.table-body>
+                                        </tr>
+                                </x-slot>
+                            </x-table.table>
+                        </p>
                     </div>
                 </x-general.card>
             </div>
@@ -51,7 +130,11 @@
                 </x-general.card>
                 <x-general.card class="col-span-12 p-4 bg-white rounded-lg shadow-md sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <div>
-                        <p>content 8</p>
+                        <p class="text-xl mb-2">PROMOSI</p>
+                        <p class="my-2">KELAB GOLF SERI SELANGOR</p>
+                        <p class="my-2"><img class="mx-auto w-auto" src="{{ asset('storage/client/blog/picture 2.png') }}" alt="promo"></p>
+                        <p class="my-2">To obtain further information or assistance, kindly contact us via phone at +603 7806 xxxx / +6019 299 xxxx or email us at  xxxxxxx@seriselangor.com.my</p>
+                        <p class="my-2">Thank you for your interest and we look forward to hearing from you soon.</p>
                     </div>
                 </x-general.card>
 
@@ -171,4 +254,77 @@
             var chart = new ApexCharts(document.getElementById('barChart'), options);
             chart.render();
         </script>
+        <script>
+            var options = {
+                series: [{
+                    name: "Desktops",
+                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                }],
+                    chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                    enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                title: {
+                    text: 'Product Trends by Month',
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                }
+                };
+
+            var chart = new ApexCharts(document.getElementById('lineChart'), options);
+            chart.render();
+        </script>
+        <script>
+        var options = {
+            series: [44, 55, 13, 43, 22],
+            chart: {
+                // width: 510,
+                type: 'donut',
+            },
+            dataLabels: {
+                style: {
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                },
+            },
+            tooltip: {
+                style: {
+                    fontSize: '25px',
+                    colors:'#000000',
+                }
+            },
+            labels: ['label 1', 'label 2','label 3','label 4','label 5',],
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                        chart: {
+                        width: 450
+                    },
+                    legend: {
+                        position: 'bottom',
+                    },
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.getElementById('donutChart'), options);
+        chart.render();
+    </script>
 @endpush

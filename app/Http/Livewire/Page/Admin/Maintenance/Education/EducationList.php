@@ -14,7 +14,7 @@ class EducationList extends Component
 
     public function mount()
     {
-        $this->education = RefEducation::get();
+        $this->education = RefEducation::where('client_id', auth()->user()->client_id)->get();
     }
 
     public function delete($id)

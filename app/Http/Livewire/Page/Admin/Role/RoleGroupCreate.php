@@ -4,13 +4,13 @@ namespace App\Http\Livewire\Page\Admin\Role;
 
 use App\Models\User;
 use App\Models\UserRole;
-use App\Models\CoopRoleGroup;
+use App\Models\ClientRoleGroup;
 use Livewire\Component;
 
 class RoleGroupCreate extends Component
 {
     public $page = 'CREATE';
-    public $roles;
+    public $user_roles;
     public $user;
     public $users = [];
     public $ids   = [];
@@ -18,14 +18,14 @@ class RoleGroupCreate extends Component
     public $search;
     public $searchResult = [];
     public $selected;
-    public CoopRoleGroup $group;
+    public ClientRoleGroup $group;
 
     protected $rules    = [
         'group.name'            => 'required|min:3|max:50',
         'group.description'     => 'max:255',
         'group.role_id'         => 'required',
         'group.status'          => '',
-        'group.client_id'         => 'required',
+        'group.client_id'       => '',
     ];
     protected $messages = [
         'group.name.*'          => 'Please specify NAME (Min 5 character, Max 50 Character)',
@@ -36,15 +36,16 @@ class RoleGroupCreate extends Component
         $this->user = Auth()->user();
         if ($uuid != NULL){
             $this->page  = 'EDIT';
-            $this->group = CoopRoleGroup::where('uuid', $uuid)->firstOrFail();
+            $this->group = ClientRoleGroup::where('uuid', $uuid)->firstOrFail();
             $this->ids   = $this->group->getids();
             $this->users = User::whereIn('id', $this->ids)->get();
         } else {
-            $this->group          = new CoopRoleGroup;
+            $this->group          = new ClientRoleGroup;
             $this->group->client_id = $this->user->client_id;
             $this->group->created_by = $this->user->name;
+            $this->group->status  = 0;
         }
-        $this->roles = UserRole::all();
+        $this->user_roles = UserRole::all();
     }
 
     public function searchUser()
@@ -72,14 +73,15 @@ class RoleGroupCreate extends Component
     public function deb()
     {
         dump([
+            'group' => $this->group,
             'id'    => $this->ids,
-            'user'  => $this->users,
+            'user'  => $this->user,
             'selected' => $this->selected,
             'idrem' => $this->idrem,
             'users' => $this->group->users,
             'errorbag' => $this->getErrorBag(),
-            'count' => $this->users->count(),
-            'rolename' => $this->group->role->name,
+            //'count' => $this->users->count(),
+            //'rolename' => $this->group->role->name,
         ]);
     }
 
@@ -121,9 +123,9 @@ class RoleGroupCreate extends Component
         $this->group->save();
         foreach ($this->ids as $key => $value) {
             $this->group->users()->updateOrCreate([
-                'user_id'   => $value,
-                'client_id'   => $this->user->client_id,
-                'updated_by'=> $this->user->name,
+                'user_id'    => $value,
+                'client_id'  => $this->user->client_id,
+                'updated_by' => $this->user->name,
             ]);
         }
 

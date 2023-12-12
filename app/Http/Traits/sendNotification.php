@@ -2,7 +2,6 @@
 
 namespace App\Http\Traits;
 
-use App\Models\Customer;
 use DB;
 
 trait sendNotification
@@ -43,7 +42,7 @@ trait sendNotification
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOP].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
                 "'896', ".                              // @user_id                     CHAR(5), 
                 "'1001', ".                             // @exec_seq_no                 SMALLINT, 
                 "'".now()."', ".                        // @rpt_date                    DATE,

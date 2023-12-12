@@ -18,6 +18,8 @@ class ApplySellExchangeShare extends Component
     public $bank_account;
     public $bank_code;
     public $banks;
+    public $total_share;
+    public $mbr_name;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -25,8 +27,7 @@ class ApplySellExchangeShare extends Component
     protected $rules = [
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
-        'cust.share'      => 'required',
-        'share_apply'     => 'required|numeric|lte:cust.share|gt:0',
+        'share_apply'     => 'required|numeric',
         'share_type'      => 'required',
         'bank_name'       => 'required_if:share_type,==,coop',
         'bank_account'    => 'required_if:share_type,==,coop',
@@ -39,8 +40,8 @@ class ApplySellExchangeShare extends Component
         'mbr_icno.required_if'       => ':attribute field is required',
         'share_apply.required'       => ':attribute field is required',
         'share_apply.numeric'        => ':attribute field must be a number',
-        'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
-        'share_apply.gt'             => 'Application must be more than RM0',
+        // 'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
+        // 'share_apply.gt'             => 'Application must be more than RM0',
         'share_type.required'        => ':attribute is required',
         'bank_name.required_if'      => ':attribute field is required',
         'bank_code.required_if'      => ':attribute field is required',
@@ -63,14 +64,13 @@ class ApplySellExchangeShare extends Component
     {
         $user = auth()->user();
         $customer = new Customer;
-
-        $cust = $customer->where('icno', $user->icno)->first();
+        $cust = $customer->where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
 
         if ($this->share_type == 'coop') {
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
-
+            // dd($share);
             $share->update([
-                'amt_before'   => $this->cust['share'],
+                'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
                 'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_account,
@@ -78,13 +78,12 @@ class ApplySellExchangeShare extends Component
                 'step'         => '1',
                 'created_by'   => strtoupper($cust->name),
             ]);
-        }
-        elseif ($this->share_type == 'mbr') {
-            $cust_member = $customer->where([['icno', $this->mbr_icno],['icno' ,'<>', $user->icno]])->first();
+        } elseif ($this->share_type == 'mbr') {
+            $cust_member = $customer->where([['identity_no', $this->mbr_icno], ['identity_no', '<>', $user->icno]])->where('client_id', $user->client_id)->first();
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'exchange']])->first();
 
             $share->update([
-                'amt_before'   => $this->cust['share'],
+                'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
                 'bank_code'    => $this->bank_code,
                 'bank_account' => $this->bank_acct,
@@ -103,7 +102,6 @@ class ApplySellExchangeShare extends Component
         session()->flash('title');
 
         return redirect('home');
-
     }
 
     public function alertConfirm()
@@ -114,12 +112,11 @@ class ApplySellExchangeShare extends Component
             'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for share reimbursement?',
         ]);
-
     }
 
     public function restricApplySell($id)
     {
-        $share = Share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'sell']])->first();
+        $share = Share::where([['cust_id', $id], ['flag', 1], ['step', 1], ['direction', 'sell']])->first();
 
         if ($share != null) {
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
@@ -133,7 +130,7 @@ class ApplySellExchangeShare extends Component
 
     public function restricApplyExc($id)
     {
-        $share = Share::where([['cust_id', $id ], ['flag', 1], ['step', 1], ['direction', 'exchange']])->first();
+        $share = Share::where([['cust_id', $id], ['flag', 1], ['step', 1], ['direction', 'exchange']])->first();
 
         if ($share != null) {
             session()->flash('message', 'Share reimbursement application is been processed. If you want to make another application, please wait until the application is processed');
@@ -153,7 +150,7 @@ class ApplySellExchangeShare extends Component
             'cust_id'     => $this->cust->id,
             'direction'   => 'exchange',
         ], [
-            'amt_before'  => $this->cust->share,
+            'amt_before'  => $this->total_share,
             'flag'        => 0,
             'step'        => 0,
             'apply_amt'   => '0.00',
@@ -174,7 +171,7 @@ class ApplySellExchangeShare extends Component
             'cust_id'     => $this->cust->id,
             'direction'   => 'sell',
         ], [
-            'amt_before'  => $this->cust->share,
+            'amt_before'  => $this->total_share,
             'flag'        => 0,
             'step'        => 0,
             'apply_amt'   => '0.00',
@@ -182,14 +179,13 @@ class ApplySellExchangeShare extends Component
 
         $this->share_apply  = $share?->apply_amt;
         $this->bank_account = $share?->bank_account;
-        $this->bank_name    = $share?->bank_code ;
+        $this->bank_name    = $share?->bank_code;
     }
 
     public function updated()
     {
         $user = auth()->user();
-        $customer = Customer::where('icno', $this->mbr_icno)->first();
-
+        $customer = Customer::where('identity_no', $this->mbr_icno)->where('client_id', $user->client_id)->first();
         if (strlen($this->mbr_icno) < 12) {
             $this->mbr_name = '';
             return;
@@ -201,7 +197,7 @@ class ApplySellExchangeShare extends Component
         }
 
         if ($customer == NULL) {
-            $this->dispatchBrowserEvent('swal',[
+            $this->dispatchBrowserEvent('swal', [
                 'title' => '',
                 'text'  => 'Customer Not Found',
                 'icon'  => 'warning',
@@ -209,27 +205,41 @@ class ApplySellExchangeShare extends Component
                 'timer' => 1500,
             ]);
             $this->mbr_name = '';
-        }
-        elseif ($this->mbr_icno == $user->icno) {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => '',
-                'text'  => 'IC No. Cannot Be Yourself',
-                'icon'  => 'warning',
-                'showConfirmButton' => false,
-                'timer' => 1500,
-            ]);
-            $this->mbr_name = '';
-        }
-        else{
-            $this->mbr_name = $customer->name;
+        } else {
+            if ($this->mbr_icno == $user->icno) {
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => '',
+                    'text'  => 'IC No. Cannot Be Yourself',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 1500,
+                ]);
+                $this->mbr_name = '';
+            } elseif ($customer->fmsMembership->mbr_status == 'M') {
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => '',
+                    'text'  => 'You can`t transfer to a dormant member!',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 2500,
+                ]);
+                $this->mbr_name = '';
+            } else {
+                $this->mbr_name = $customer->name;
+            }
         }
     }
 
     public function mount()
     {
         $user = auth()->user();
-        $this->cust = Customer::where('icno', $user->icno)->first();
-        $this->banks = RefBank::where([['client_id', $user->client_id],['status', 1]])->get();
+        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $this->total_share = $this->cust->fmsMembership->total_share;
+
+        $this->banks           = RefBank::where([
+            ['client_id', $user->client_id],
+            ['status', '1'], ['bank_cust', 'Y']
+        ])->orderBy('priority')->orderBy('description')->get();
 
         $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);

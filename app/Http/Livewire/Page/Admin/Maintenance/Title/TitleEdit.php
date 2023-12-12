@@ -26,7 +26,7 @@ class TitleEdit extends Component
             'code'        => trim(strtoupper($this->title_code)),
             'status'      => $this->title_status == true ? '1' : '0',
             'updated_at'  => now(),
-            'updated_by'  => Auth()->user()->name,
+            'updated_by'  => Auth()->id(),
         ]);
 
         session()->flash('message', 'Title Edited');

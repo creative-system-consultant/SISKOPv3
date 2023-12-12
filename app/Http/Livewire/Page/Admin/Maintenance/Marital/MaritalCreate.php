@@ -24,10 +24,10 @@ class MaritalCreate extends Component
         $marital = RefMarital::create([
             'description' => trim(strtoupper($this->marital_description)),
             'code'        => trim(strtoupper($this->marital_code)),
-            'client_id'     => $this->User->client_id,
+            'client_id'   => $this->User->client_id,
             'status'      => $this->marital_status == true ? '1' : '0',
             'created_at'  => now(),
-            'created_by'  => Auth()->user()->name,
+            'created_by'  => Auth()->id(),
         ]);
 
         session()->flash('message', 'Marital Created');

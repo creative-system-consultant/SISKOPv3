@@ -9,7 +9,7 @@ class RefCustTitle extends Model
 {
     use SoftDeletes;
 
-    protected $table   = 'ref.cust_titles';
+    protected $table   = 'ref.titles';
     protected $guarded = [];
     protected $casts   = [
         'created_at'    => 'datetime',

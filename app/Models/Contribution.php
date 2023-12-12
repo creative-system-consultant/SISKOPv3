@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasApprovals;
 use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
@@ -11,6 +12,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Contribution extends Model implements Auditable
 {
+    use HasApprovals;
     use SoftDeletes;
     use HasCoop;
     use HasCustomer;
@@ -29,27 +31,9 @@ class Contribution extends Model implements Auditable
         'deleted_at'    => 'datetime',
     ];
 
-    public function approvals()
-    {
-        return $this->morphMany(Approval::class,'approval');
-    }
-
     public function current_approval()
     {
         return $this->approvals()->where('order', $this->step)->first();
-    }
-
-    public function current_approval_role()
-    {
-        return CoopRoleGroup::find($this->current_approval()->group_id);
-    }
-
-    public function remove_approvals()
-    {
-        $approval = $this->approvals;
-        foreach ($approval as $key => $value) {
-            $value->delete();
-        }
     }
 
     public function clear_approvals($order = NULL)
@@ -70,17 +54,17 @@ class Contribution extends Model implements Auditable
         }
     }
 
-    public function make_approvals()
+    public function make_approvals($type = 'Contribution')
     {
-        $CoopApproval = CoopApproval::where([['approval_type', 'Contribution'],['client_id',$this->client_id]])->first();
-        if ($CoopApproval != NULL){
-            $CoopApprovalRoles = CoopApprovalRole::where([['client_id', $this->client_id],['approval_id', $CoopApproval->id]])->orderBy('order')->get();
+        $ClientApproval = ClientApproval::where([['approval_type', $type],['client_id',$this->client_id]])->first();
+        if ($ClientApproval != NULL){
+            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
             return NULL;
         }
 
         $count = 1;
-        foreach ($CoopApprovalRoles as $key => $value) {
+        foreach ($ClientApprovalRoles as $key => $value) {
 
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
                 foreach ($value->rolegroup->users as $key1 => $value1){
@@ -94,6 +78,7 @@ class Contribution extends Model implements Auditable
                     $approval->vote     = NULL;
                     $approval->save();
                 }
+                $count++;
             } else {
 
                 $approval = $this->approvals()->firstOrCreate(['order' => $count]);

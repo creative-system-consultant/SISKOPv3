@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.Coop_Admin', function (Blueprint $table) {
+        Schema::create('SISKOP.Client_Admin', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
 
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.Coop_Admin',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('SISKOP.Client_Admin',RESEED,101)");
 
     }
 
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.Coop_Admin');
+        Schema::dropIfExists('SISKOP.Client_Admin');
     }
 };

@@ -66,7 +66,7 @@ class ApplyFinancing extends Component
         'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
         'Account.duration'                 => 'required|gte:Product.term_min|lte:Product.term_max',
         'Customer.name'                    => 'required|string',
-        'Customer.icno'                    => 'required',
+        'Customer.identity_no'             => 'required',
         'Customer.birthdate'               => 'required',
         'Customer.mobile_num'              => 'nullable',
         'CustAddress.address1'             => 'required',
@@ -74,7 +74,7 @@ class ApplyFinancing extends Component
         'CustAddress.address3'             => 'nullable',
         'CustAddress.town'                 => 'required',
         'CustAddress.postcode'             => 'required',
-        'CustAddress.def_state_id'         => 'required',
+        'CustAddress.state_id'             => 'required',
         'Customer.email'                   => 'required|email',
         'Customer.title_id'                => 'required',
         'Customer.education_id'            => 'required|numeric',
@@ -91,7 +91,7 @@ class ApplyFinancing extends Component
         'FamilyAddress.address3'           => 'nullable',
         'FamilyAddress.town'               => 'nullable',
         'FamilyAddress.postcode'           => 'nullable',
-        'FamilyAddress.def_state_id'       => 'nullable',
+        'FamilyAddress.state_id'           => 'nullable',
         'Employer.name'                    => 'required|string',
         'Employer.department'              => 'nullable|string',
         'Employer.position'                => 'required|string',
@@ -103,7 +103,7 @@ class ApplyFinancing extends Component
         'EmployerAddress.address3'         => 'nullable',
         'EmployerAddress.town'             => 'required',
         'EmployerAddress.postcode'         => 'required',
-        'EmployerAddress.def_state_id'     => 'required',
+        'EmployerAddress.state_id'         => 'required',
     ];
 
     protected $rule2 = [
@@ -129,7 +129,7 @@ class ApplyFinancing extends Component
         'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
         'Account.duration'                 => 'required|gte:Product.term_min|lte:Product.term_max',
         'Customer.name'                    => 'required|string',
-        'Customer.icno'                    => 'required',
+        'Customer.identity_no'             => 'required',
         'Customer.birthdate'               => 'required',
         'Customer.mobile_num'              => 'required|numeric',
         'Customer.ref_no'                  => 'nullable',
@@ -138,7 +138,7 @@ class ApplyFinancing extends Component
         'CustAddress.address3'             => 'nullable',
         'CustAddress.town'                 => 'required',
         'CustAddress.postcode'             => 'required',
-        'CustAddress.def_state_id'         => 'required',
+        'CustAddress.state_id'             => 'required',
         'Customer.email'                   => 'required|email',
         'Customer.title_id'                => 'nullable',
         'Customer.education_id'            => 'required',
@@ -154,7 +154,7 @@ class ApplyFinancing extends Component
         'FamilyAddress.address3'           => 'nullable',
         'FamilyAddress.town'               => 'nullable',
         'FamilyAddress.postcode'           => 'nullable',
-        'FamilyAddress.def_state_id'       => 'nullable',
+        'FamilyAddress.state_id'           => 'nullable',
         'Employer.name'                    => 'required|string',
         'Employer.department'              => 'nullable|string',
         'Employer.position'                => 'required|string',
@@ -166,7 +166,7 @@ class ApplyFinancing extends Component
         'EmployerAddress.address3'         => 'nullable',
         'EmployerAddress.town'             => 'required',
         'EmployerAddress.postcode'         => 'required',
-        'EmployerAddress.def_state_id'     => 'required',
+        'EmployerAddress.state_id'         => 'required',
         'search_introducer'                => 'required|numeric|digits:12',
         'Introducer.name'                  => 'required',
         'Introducer.icno'                  => 'nullable',
@@ -408,7 +408,7 @@ class ApplyFinancing extends Component
 
         $this->title            = RefCustTitle::all();
         $this->education        = RefEducation::all();
-        $this->gender           = RefGender::all();
+        $this->gender           = RefGender::where('client_id', $this->User->client_id)->get();
         $this->marital          = RefMarital::all();
         $this->race             = RefRace::all();
         $this->state            = RefState::all();

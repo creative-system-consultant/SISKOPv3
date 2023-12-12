@@ -13,8 +13,8 @@ use App\Http\Livewire\Auth\RetrieveAccount;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Page\Admin\Approval\ApprovalAdmin;
 use App\Http\Livewire\Page\Admin\Approval\Financing as ApprovalFinancing;
-use App\Http\Livewire\Page\Admin\coop\coopAdmin;
-use App\Http\Livewire\Page\Admin\Coop\CoopCreate;
+use App\Http\Livewire\Page\Admin\coop\ClientAdmin;
+use App\Http\Livewire\Page\Admin\Coop\ClientCreate;
 use App\Http\Livewire\Page\Admin\Customer\CustomerCoop;
 use App\Http\Livewire\Page\Admin\Maintenance\AddMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\EditMaintenance;
@@ -76,22 +76,24 @@ use App\Http\Livewire\Page\Application\ApplyContribution\ApplyContribution;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\ApplySellExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\ApplyShare;
 use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\ApplyWithdrawContribution;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionApproval;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionChecker;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionCommittee;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\ContributionMaker;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Approver as ContributionApprover;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Checker as ContributionChecker;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Committee as ContributionCommittee;
+use App\Http\Livewire\Page\Executive\Approval\Contribution\Maker as ContributionMaker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Maker as MembershipMaker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Checker as MembershipChecker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Committee as MembershipCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Approver as MembershipApprover;
+use App\Http\Livewire\Page\Executive\Approval\Membership\Resolution as MembershipResolution;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Approver as ShareApprover;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Checker as ShareChecker;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Committee as ShareCommittee;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Maker as ShareMaker;
+use App\Http\Livewire\Page\Executive\Approval\BuyShare\Resolution as ShareResolution;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareApproval;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareChecker;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareCommittee;
 use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareMaker;
-use App\Http\Livewire\Page\Executive\Approval\Share\Approver as ShareApproval;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareChecker;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareCommittee;
-use App\Http\Livewire\Page\Executive\Approval\Share\ShareMaker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidApproval;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidChecker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidCommittee;
@@ -104,6 +106,7 @@ use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
 use App\Http\Livewire\Page\Application\Dividend\ApplyDividend;
+use App\Http\Livewire\Page\Dashboard\Guest;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendApprover;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendMaker;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendChecker;
@@ -129,8 +132,14 @@ use App\Http\Livewire\Page\User\Application\Membership\MembershipStatus;
 
 Route::get('/', [RedirectController::class,'index']);
 
-Route::get('php-info', function(){
+Route::get('res/php-info8', function(){
     phpinfo();
+});
+
+// webhook from CSC-CA to clear cache on roles/user management update
+Route::post('/webhook/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return response('Cache Cleared', 200);
 });
 
 Route::middleware('guest')->group(function () {
@@ -142,20 +151,25 @@ Route::get('password/reset', Email::class)->name('password.request');
 Route::get('password/reset/{token}', Reset::class)->name('password.reset');
 Route::get('retrieve-account', RetrieveAccount::class)->name('retrieve-account');
 
-//----------------------------- page routes -------------------------------//
-Route::middleware('auth')->group(function () {
-    Route::get('home', Home::class)->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('dash/guest', Guest::class)->name('dash.guest');
 
     //------------------------ Auth ------------------------------//
     Route::get('email/verify', Verify::class)->middleware('throttle:6,1')->name('verification.notice');
     Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
     Route::get('password/confirm', Confirm::class)->name('password.confirm');
+
     Route::post('logout', LogoutController::class)->name('logout');
     Route::get('logout', LogoutController::class)->name('logouts');
 
     //profile
     Route::get('profile', Index::class)->name('profile');
     Route::get('Index', Index::class)->name('Index');
+});
+
+//----------------------------- page routes -------------------------------//
+Route::middleware(['auth','mustselectclient'])->group(function () {
+    Route::get('home', Home::class)->name('home');
 
     //User
     Route::prefix('User')->group(function(){
@@ -226,9 +240,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('edit/{uuid}', CreateSpecialAid::class)->name('special_aid.edit');
             });
             Route::prefix('coop')->group(function(){
-                Route::get('/', CoopAdmin::class)->name('coop.list');
-                Route::get('create', CoopCreate::class)->name('coop.create');
-                Route::get('edit/{client_id}', CoopCreate::class)->name('coop.edit');
+                Route::get('/', ClientAdmin::class)->name('coop.list');
+                Route::get('create', ClientCreate::class)->name('coop.create');
+                Route::get('edit/{client_id}', ClientCreate::class)->name('coop.edit');
             });
             Route::prefix('CustCoop')->group(function(){
                 Route::get('/', CustomerCoop::class)->name('coop.cust');
@@ -368,7 +382,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('maker/{uuid}', ShareMaker::class)->name('share.maker');
                 Route::get('checker/{uuid}', ShareChecker::class)->name('share.checker');
                 Route::get('committee/{uuid}', ShareCommittee::class)->name('share.committee');
-                Route::get('approval/{uuid}', ShareApproval::class)->name('share.approval');
+                Route::get('approval/{uuid}', ShareApprover::class)->name('share.approval');
+                Route::get('resolution/{uuid}', ShareResolution::class)->name('share.resolution');
             });
 
             //Exec > approval > sell/exchange share
@@ -384,7 +399,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('maker/{uuid}', ContributionMaker::class)->name('contribution.maker');
                 Route::get('checker/{uuid}', ContributionChecker::class)->name('contribution.checker');
                 Route::get('committee/{uuid}', ContributionCommittee::class)->name('contribution.committee');
-                Route::get('approval/{uuid}', ContributionApproval::class)->name('contribution.approval');
+                Route::get('approval/{uuid}', ContributionApprover::class)->name('contribution.approval');
             });
 
             //Exec > approval > w/d contribution
@@ -418,6 +433,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('checker/{uuid}', MembershipChecker::class)->name('membership.checker');
                 Route::get('committee/{uuid}', MembershipCommittee::class)->name('membership.committee');
                 Route::get('approver/{uuid}', MembershipApprover::class)->name('membership.approver');
+                Route::get('resolution/{uuid}', MembershipResolution::class)->name('membership.resolution');
             });
         });
 

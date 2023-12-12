@@ -12,7 +12,7 @@ class TitleList extends Component
 
     public function mount()
     {
-        $this->title = RefCustTitle::get();
+        $this->title = RefCustTitle::where('client_id', auth()->user()->client_id)->get();
     }
 
     public function delete($id)

@@ -20,7 +20,7 @@
                     mandatory=""
                     disable="true"
                     type="text"
-                    wire:model.defer="cust.icno"
+                    wire:model.defer="cust.identity_no"
                 />
 
                 <x-form.input-tag
@@ -32,7 +32,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.contribution"
+                    wire:model.defer="total_contribution"
                 />
 
                 <x-form.input-tag
@@ -44,7 +44,7 @@
                     rightTag=""
                     mandatory=""
                     disable="true"
-                    wire:model.defer="cust.contribution_monthly"
+                    wire:model.defer="monthly_contribution"
                 />
             </div>
 
@@ -53,7 +53,7 @@
                 <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.input-tag
-                            label="Add Contribution applied"
+                            label="New Contribution Amount"
                             type="text"
                             name="cont_apply"
                             value=""
@@ -82,19 +82,7 @@
                             <option value="cont_date">Change Monthly Contribution From Date</option>
                         </x-form.dropdown>
                     </div>
-                    <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                        <div x-cloak x-show ="select == 'cont_date'">
-                            <x-form.input
-                                label="Start Date"
-                                name="start_contDate"
-                                value=""
-                                mandatory=""
-                                disable=""
-                                type="date"
-                                wire:model="start_contDate"
-                            />
-                        </div>
-                    </div>
+                
                 </div>
 
                 <div x-cloak x-show ="select == 'pay_once'">
@@ -227,10 +215,28 @@
                     </div>
                 </div>
 
+                <div x-cloak x-show ="select == 'cont_date'">
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="col-span-12 mb-6 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                                <x-form.input
+                                    label="Start Date"
+                                    name="start_contDate"
+                                    value=""
+                                    mandatory=""
+                                    disable=""
+                                    type="date"
+                                    wire:model="start_contDate"
+                                />
+                        </div>
+                    </div>
+
+                    
+                </div>
+
 
                 <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">
-                        <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                        <button type="submit"  class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                             Submit
                         </button>
                     </div>

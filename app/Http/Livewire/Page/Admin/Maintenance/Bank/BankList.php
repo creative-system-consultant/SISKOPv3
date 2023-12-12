@@ -11,7 +11,7 @@ class BankList extends Component
 
     public function mount()
     {
-        $this->RefBank = RefBank::all();
+        $this->RefBank = RefBank::where('client_id', Auth()->User()->client_id)->get();
     }
 
     public function delete($id)

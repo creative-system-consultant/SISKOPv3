@@ -11,7 +11,7 @@ class StateList extends Component
 
     public function mount()
     {
-        $this->RefState = RefState::all();
+        $this->RefState = RefState::where('client_id', auth()->user()->client_id)->get();
     }
 
     public function delete($id)

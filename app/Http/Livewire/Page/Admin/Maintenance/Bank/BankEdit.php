@@ -12,6 +12,7 @@ class BankEdit extends Component
         public $code;
         public $status;
         public $RefBank;
+        public $remarks;
 
         public function submit($id)
         {
@@ -27,7 +28,7 @@ class BankEdit extends Component
             'code'            => trim(strtoupper($this->code)),
             'status'          => $this->status == true ? '1' : '0',
             'updated_at'      => now(),
-            'updated_by'      => Auth()->user()->name,
+            'updated_by'      => Auth()->id(),
         ]);
 
         session()->flash('message', 'Bank Details Updated');

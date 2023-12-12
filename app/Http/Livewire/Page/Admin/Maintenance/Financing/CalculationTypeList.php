@@ -11,7 +11,7 @@ class CalculationTypeList extends Component
 
     public function mount()
     {
-        $this->RefCalcType = RefFinCalcType::all();
+        $this->RefCalcType = RefFinCalcType::where('client_id', Auth()->User()->client_id)->get();
     }
 
     public function delete($id)

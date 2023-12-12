@@ -36,6 +36,12 @@ npm install
 npm run dev
 ```
 
+## General Issue
+when using SQLSERVER 2012 and PHP driver for MAC **MSODBCSQL17**, theres a PHP bug in PDO
+[buglink](https://github.com/laravel/framework/issues/47937)
+deleting the line __*PDO::ATTR_STRINGIFY_FETCHES => false,*__ 
+in file *vendor/laravel/framework/src/illuminate/Database/connectors/SqlServerConnector.php* does do the trick.
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

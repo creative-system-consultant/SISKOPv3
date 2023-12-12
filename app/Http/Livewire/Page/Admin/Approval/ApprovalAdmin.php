@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Page\Admin\Approval;
 
-use App\Models\CoopApproval;
-use App\Models\CoopApprovalRole;
+use App\Models\ClientApproval;
+use App\Models\ClientApprovalRole;
 use App\Models\User;
-use App\Models\CoopRoleGroup;
+use App\Models\ClientRoleGroup;
 use Livewire\Component;
 
 class ApprovalAdmin extends Component
@@ -18,6 +18,7 @@ class ApprovalAdmin extends Component
     public $selected;
     public $custom;
     public $page;
+    public $rule_vote_type = 'majority';
     public $firstMaker = false;
     public $isRule = false;
     public $coopGroup   = [];
@@ -27,6 +28,8 @@ class ApprovalAdmin extends Component
         'lists.*.name'          => "nullable|max:50",
         'lists.*.rule_min'      => "numeric",
         'lists.*.rule_max'      => "numeric",
+        'lists.*.rule_vote'     => "nullable",
+        'lists.*.rule_forward'  => "nullable",
         'lists.*.rule_employee' => "nullable",
         'lists.*.rule_whatsapp' => "nullable",
         'lists.*.rule_sms'      => "nullable",
@@ -48,11 +51,11 @@ class ApprovalAdmin extends Component
         $this->page      = $type;
         $this->User      = User::find(Auth()->user()->id);
 
-        $this->approval  = CoopApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => $type]);
+        $this->approval  = ClientApproval::firstOrCreate(['client_id' => $this->User->client_id, 'approval_type' => $type]);
 
         $this->loadList();
 
-        $this->coopGroup = CoopRoleGroup::where('client_id', $this->User->client_id)->get();
+        $this->coopGroup = ClientRoleGroup::where('client_id', $this->User->client_id)->get();
     }
 
     public function loadList()
@@ -109,7 +112,7 @@ class ApprovalAdmin extends Component
 
     public function rem($id)
     {
-        $rem   = CoopApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
+        $rem   = ClientApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
         $rem->delete();
         $this->lists    = $this->approval->approvals()->orderBy('order')->get();
         foreach($this->lists as $key=>$list){
@@ -135,11 +138,17 @@ class ApprovalAdmin extends Component
 
     public function change_rule($id)
     {
-        $this->isRule =! $this->isRule;
+        $this->rule_vote_type = $this->lists[$id-1]->rule_vote_type;
     }
 
     public function saveRule($key)
     {
+        if($this->rule_vote_type == 'majority'){
+            $this->lists[$key]->rule_vote = FALSE;
+        } else {
+            $this->lists[$key]->rule_vote = TRUE;
+        }
+        $this->lists[$key]->rule_vote_type = $this->rule_vote_type;
         $this->lists[$key]->save();
 
     }
