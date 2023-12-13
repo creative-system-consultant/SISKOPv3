@@ -5,7 +5,7 @@
             <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
             <x-table.table-header class="text-right" value="Dividend Payout (RM)" sort="" />
-            <x-table.table-header class="text-right" value="Dividend balance (RN)" sort="" />
+            <x-table.table-header class="text-right" value="Dividend balance (RM)" sort="" />
             <x-table.table-header class="text-right" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
