@@ -4,8 +4,8 @@
             <x-table.table-header class="text-left " value="No" sort="" />
             <x-table.table-header class="text-left " value="Seller" sort="" />
             <x-table.table-header class="text-left" value="Buyer" sort="" />
-            <x-table.table-header class="text-left" value="Apply Amount" sort="" />
-            <x-table.table-header class="text-left" value="Approved Amount" sort="" />
+            <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
+            <x-table.table-header class="text-right" value="Approved Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
@@ -22,14 +22,14 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $item->exc_cust_id == NULL ? 'Co-operative' : $item->buyer->name }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $item->apply_amt }}
+                    <x-table.table-body colspan="" class="text-right uppercase">
+                        {{ $item->apply_amt }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $item->approved_amt == '0.00' ? '0.00' : $item->approved_amt }}
+                    <x-table.table-body colspan="" class="text-right uppercase">
+                        {{ $item->approved_amt == '0.00' ? '0.00' : $item->approved_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->created_at->format("Y-m-d") }}
+                        {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '0') Still being applied

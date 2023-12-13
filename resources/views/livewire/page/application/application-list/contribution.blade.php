@@ -5,7 +5,7 @@
             <x-table.table-header class="text-left " value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
             <x-table.table-header class="text-left" value="Payment Method" sort="" />
-            <x-table.table-header class="text-left" value="Apply Amount" sort="" />
+            <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
@@ -25,11 +25,11 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $item->start_apply != NULL ? 'Starting Date' : 'One Month' }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
+                    <x-table.table-body colspan="" class="text-right uppercase">
+                        {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->created_at->format("Y-m-d") }}
+                        {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '0') Still being applied

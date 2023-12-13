@@ -4,9 +4,9 @@
                 <x-table.table-header class="text-left" value="No." sort="" />
                 <x-table.table-header class="text-left" value="Applicant Name" sort="" />
                 <x-table.table-header class="text-left" value="IC NO." sort="" />
-                <x-table.table-header class="text-left" value="Register Fee" sort="" />
-                <x-table.table-header class="text-left" value="Share Fee" sort="" />
-                <x-table.table-header class="text-left" value="Contribution Fee" sort="" />
+                <x-table.table-header class="text-right" value="Register Fee (RM)" sort="" />
+                <x-table.table-header class="text-right" value="Share Fee (RM)" sort="" />
+                <x-table.table-header class="text-right" value="Contribution Fee (RM)" sort="" />
                 <x-table.table-header class="text-left" value="Apply Date" sort="" />
                 <x-table.table-header class="text-left" value="Application Status" sort="" />
                 <x-table.table-header class="text-left" value="Action" sort="" />
@@ -23,14 +23,14 @@
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->customer->icno }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->register_fee == NULL ? '0.00' : $item->register_fee }}
+                    <x-table.table-body colspan="" class="text-right">
+                        {{ $item->register_fee == NULL ? '0.00' : $item->register_fee }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->share_fee == NULL ? '0.00' : $item->share_fee }}
+                    <x-table.table-body colspan="" class="text-right">
+                        {{ $item->share_fee == NULL ? '0.00' : $item->share_fee }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->contribution_fee == NULL ? '0.00' : $item->contribution_fee }}
+                    <x-table.table-body colspan="" class="text-right">
+                        {{ $item->contribution_fee == NULL ? '0.00' : $item->contribution_fee }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y")  }}

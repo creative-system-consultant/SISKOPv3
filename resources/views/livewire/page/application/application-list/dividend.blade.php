@@ -4,9 +4,9 @@
             <x-table.table-header class="text-left" value="No" sort="" />
             <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
-            <x-table.table-header class="text-left" value="Dividend Payout" sort="" />
-            <x-table.table-header class="text-left" value="Dividend balance" sort="" />
-            <x-table.table-header class="text-left" value="Apply Date" sort="" />
+            <x-table.table-header class="text-right" value="Dividend Payout (RM)" sort="" />
+            <x-table.table-header class="text-right" value="Dividend balance (RN)" sort="" />
+            <x-table.table-header class="text-right" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
@@ -22,11 +22,11 @@
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->customer->icno }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->dividend_total }}
+                    <x-table.table-body colspan="" class="text-right">
+                        {{ $item->dividend_total }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->balance() }}
+                    <x-table.table-body colspan="" class="text-right">
+                        {{ $item->balance() }}
                     </x-table.table-body>
                     {{--<x-table.table-body colspan="" class="text-left">
                         RM {{ $item->div_cash_apply }} / {{ $item->div_cash_approved }}
@@ -38,7 +38,7 @@
                         RM {{ $item->div_contri_apply }} / {{ $item->div_contri_approved }}
                     </x-table.table-body>--}}
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->created_at->format("Y-m-d") }}
+                        {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '0') Still being applied

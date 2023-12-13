@@ -27,7 +27,7 @@
                         @endforeach
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $aid->created_at->format("Y-m-d") }}
+                        {{ $aid->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($aid->flag == '0') Still being applied

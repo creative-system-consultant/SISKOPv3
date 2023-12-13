@@ -4,8 +4,8 @@
             <x-table.table-header class="text-left " value="No" sort="" />
             <x-table.table-header class="text-left " value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
-            <x-table.table-header class="text-left" value="Apply Amount" sort="" />
-            <x-table.table-header class="text-left" value="Total Contribution" sort="" />
+            <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
+            <x-table.table-header class="text-right" value="Total Contribution (RM)" sort="" />
             <x-table.table-header class="text-left" value="Account No." sort="" />
             <x-table.table-header class="text-left" value="Bank Name" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
@@ -24,11 +24,11 @@
                     <x-table.table-body colspan="" class="text-left">
                         {{ $withdraw->customer->icno }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $withdraw->apply_amt == '0.00' ? '0.00' : $withdraw->apply_amt }}
+                    <x-table.table-body colspan="" class="text-right uppercase">
+                        {{ $withdraw->apply_amt == '0.00' ? '0.00' : $withdraw->apply_amt }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        RM {{ $withdraw->amt_before == '0.00' ? '0.00' : $withdraw->amt_before }}
+                    <x-table.table-body colspan="" class="text-right uppercase">
+                        {{ $withdraw->amt_before == '0.00' ? '0.00' : $withdraw->amt_before }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $withdraw->bank_account }}
@@ -40,7 +40,7 @@
                         @endforeach
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $withdraw->created_at->format("Y-m-d") }}
+                        {{ $withdraw->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($withdraw->flag == '0') Still being applied

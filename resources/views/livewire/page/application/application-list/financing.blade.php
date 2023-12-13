@@ -7,7 +7,7 @@
             <x-table.table-header class="text-left" value="IC No." sort="" />
             <x-table.table-header class="text-left" value="Reference Num" sort="" />
             <x-table.table-header class="text-left" value="Product Name" sort="" />
-            <x-table.table-header class="text-left" value="Apply Amount" sort="" />
+            <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
@@ -30,8 +30,8 @@
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->product?->name }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ number_format($item->purchase_price,2) }}
+                    <x-table.table-body colspan="" class="text-right">
+                        {{ number_format($item->purchase_price,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y") }}
