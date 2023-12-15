@@ -30,6 +30,7 @@
                         disable=""
                         type="text"
                         wire:model="Cust.name"
+                        oninput="this.value = this.value.toUpperCase()"
                     />
                 </div>
                 <div>
@@ -247,6 +248,7 @@
                         disable=""
                         type="text"
                         wire:model="CustFamily.name"
+                        oninput="this.value = this.value.toUpperCase()"
                     /> 
                 </div>
                 <div>
@@ -339,6 +341,7 @@
                         disable=""
                         type="text"
                         wire:model="CustFamily.employer_name"
+                        oninput="this.value = this.value.toUpperCase()"
                     />
                 </div>
                 <div>
@@ -350,18 +353,23 @@
                         disable=""
                         type="text"
                         wire:model="CustFamily.work_post"
+                        oninput="this.value = this.value.toUpperCase()"
                     />
                 </div>
                 <div>
-                    <x-form.input
+                 
+                    <x-form.input-tag
                         label="Salary"
                         name="CustFamily.salary"
                         value=""
                         mandatory=""
+                        leftTag="RM"
+                        rightTag=""
                         disable=""
                         type="text"
                         wire:model="CustFamily.salary"
-                    />
+                    /> 
+
                 </div>
             </div>
             {{-- <div class="grid grid-cols-1 mt-4  gap-2">
@@ -489,7 +497,7 @@
                 </div>
                 <div>
                     <x-form.input
-                        label="Office Telephone Number"
+                        label="Office Telephone Number (General Line)"
                         name="Employer.office_num"
                         value=""
                         mandatory=""
@@ -537,7 +545,7 @@
                 </div> --}}
                 <div>
                     <x-form.input
-                        label="Work Phone"
+                        label="Work Phone (Optional)"
                         name="Employer.worker_num"
                         value=""
                         mandatory=""

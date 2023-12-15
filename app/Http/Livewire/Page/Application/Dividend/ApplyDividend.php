@@ -125,7 +125,7 @@ class ApplyDividend extends Component
     public function render()
     {
 
-        $this->cur_bal_dividend = $this->Dividend->bal_dividen - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply);
+        $this->cur_bal_dividend = number_format($this->Dividend->bal_dividen - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
         return view('livewire.page.application.dividend.apply-dividend')->extends('layouts.head');
     }
 }

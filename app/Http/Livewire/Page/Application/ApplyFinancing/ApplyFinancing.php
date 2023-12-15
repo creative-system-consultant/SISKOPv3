@@ -186,13 +186,13 @@ class ApplyFinancing extends Component
     // ];
 
     protected $validationAttributes = [
-            'Introducer.name'    => 'Introducer Name',
-            'Guarantor.name'     => 'Guarantor Name',
+        'Introducer.name'    => 'Introducer Name',
+        'Guarantor.name'     => 'Guarantor Name',
     ];
 
     public function next()
     {
-        if ($this->numpage == 1){
+        if ($this->numpage == 1) {
             $this->validate($this->rule1);
 
             $this->Account->save();
@@ -206,7 +206,7 @@ class ApplyFinancing extends Component
             $this->EmployerAddress->save();
         }
 
-        if ($this->numpage == 2){
+        if ($this->numpage == 2) {
             $this->validate($this->rule2);
             $this->Account->introducers()->firstOrCreate([
                 'intro_cust_id' => $this->Introducer->id,
@@ -218,15 +218,15 @@ class ApplyFinancing extends Component
             ]);
         }
 
-        if ($this->numpage == 3){
-            if($this->online_file){
-                $filepath = 'Files/'.$this->Customer->id.'/Financing//'.$this->Account->id.'/IC_Photo'.'.'.$this->online_file->extension();
-    
-                Storage::disk('local')->putFileAs('public/Files/' . $this->Customer->id. '/Financing//'.$this->Account->id.'//',$this->online_file, 'IC_Photo'.'.'.$this->online_file->extension());
-    
+        if ($this->numpage == 3) {
+            if ($this->online_file) {
+                $filepath = 'Files/' . $this->Customer->id . '/Financing//' . $this->Account->id . '/IC_Photo' . '.' . $this->online_file->extension();
+
+                Storage::disk('local')->putFileAs('public/Files/' . $this->Customer->id . '/Financing//' . $this->Account->id . '//', $this->online_file, 'IC_Photo' . '.' . $this->online_file->extension());
+
                 $this->Account->files()->updateOrCreate([
                     'filename' => 'IC_Photo',
-                ],[
+                ], [
                     'filedesc' => 'IC Photo (Front & Back)',
                     'filetype' => $this->online_file->extension(),
                     'filepath' => $filepath,
@@ -237,24 +237,24 @@ class ApplyFinancing extends Component
         //if ($this->numpage == 4){ $this->validate($this->rule4); }
         //if ($this->numpage == 5){ $this->validate($this->rule5); }
 
-        if($this->numpage < 5 ){
+        if ($this->numpage < 5) {
             $this->numpage++;
         }
     }
 
     public function back()
     {
-        if($this->numpage > 0 ){
+        if ($this->numpage > 0) {
             $this->numpage--;
         }
     }
 
     public function searchIntroducer()
     {
-        if(strlen($this->search_introducer) == 12 ){
+        if (strlen($this->search_introducer) == 12) {
             $Introducer = Customer::where('icno', $this->search_introducer)->first();
-            if ($Introducer == NULL){
-                $this->dispatchBrowserEvent('swal',[
+            if ($Introducer == NULL) {
+                $this->dispatchBrowserEvent('swal', [
                     'title' => 'NO MEMBER',
                     'text'  => 'There are no member with that IC Number, please use another IC Number',
                     'icon'  => 'warning',
@@ -269,10 +269,10 @@ class ApplyFinancing extends Component
 
     public function searchGuarantor()
     {
-        if(strlen($this->search_guarantor) == 12 ){
+        if (strlen($this->search_guarantor) == 12) {
             $Guarantor = Customer::where('icno', $this->search_guarantor)->first();
-            if ($Guarantor == NULL){
-                $this->dispatchBrowserEvent('swal',[
+            if ($Guarantor == NULL) {
+                $this->dispatchBrowserEvent('swal', [
                     'title' => 'NO MEMBER',
                     'text'  => 'There are no member with that IC Number, please use another IC Number',
                     'icon'  => 'warning',
@@ -292,13 +292,12 @@ class ApplyFinancing extends Component
         $tempmonth  = substr($tempIC, 2, 2);             //mm
         $tempday    = substr($tempIC, 4, 2);             //dd
 
-        if ($tempyear > now())
-        {
-            $tempyear = '19'.$tempyear;
+        if ($tempyear > now()) {
+            $tempyear = '19' . $tempyear;
         } else {
-            $tempyear = '20'.$tempyear;
+            $tempyear = '20' . $tempyear;
         }
-        $this->birthdate  = $tempday.'-'.$tempmonth.'-'.$tempyear;
+        $this->birthdate  = $tempday . '-' . $tempmonth . '-' . $tempyear;
         return $this->birthdate;
     }
 
@@ -306,7 +305,7 @@ class ApplyFinancing extends Component
     {
         $tempGender  = substr($this->Customer->icno, 11, 12);
         $this->Customer->gender_id;
-         if ($tempGender % 2 == 0) {
+        if ($tempGender % 2 == 0) {
             $this->Customer->gender_id == '2';
         } else {
             $this->Customer->gender_id == '1';
@@ -319,40 +318,40 @@ class ApplyFinancing extends Component
         $this->User = User::find(Auth()->user()->id);
         $client_id = $this->User->client_id;
 
-        $this->Customer             = Customer::where('icno', $this->User->icno)->first();
+        $this->Customer             = Customer::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->firstOrFail();
         $this->Customer->birthdate  = $this->birthdate();
         $this->Customer->gender_id  = $this->gender();
         $this->Customer->email      = $this->Customer->email ?? $this->User->email;
 
-        $this->Product    = AccountProduct::where('uuid',$product_id)->first();
-        $max_active = CoopRules::where([['ruleable_id', $client_id],['name', 'max_active']])->first();
+        $this->Product    = AccountProduct::where('uuid', $product_id)->first();
+        $max_active = CoopRules::where([['ruleable_id', $client_id], ['name', 'max_active']])->first();
         $this->max_active = $max_active ? $max_active->value : '0';
 
         $Account          = AccountApplication::where([
-            ['cust_id'       , $this->Customer->id],
-            ['client_id'     , $this->User->client_id],
-            ['product_id'    , $this->Product->id],
+            ['cust_id', $this->Customer->id],
+            ['client_id', $this->User->client_id],
+            ['product_id', $this->Product->id],
             ['account_status', 0]
         ])->get();
 
         $AllAccount          = AccountApplication::where([
-            ['cust_id'       , $this->Customer->id],
-            ['client_id'       , $this->User->client_id]
-        ])->whereNotIn('account_status', [3,4,23,24,25])->get();
+            ['cust_id', $this->Customer->id],
+            ['client_id', $this->User->client_id]
+        ])->whereNotIn('account_status', [3, 4, 23, 24, 25])->get();
 
-        if ($Account->count() >= $this->Product->apply_limit){
-            session()->flash('message', 'There can be only '.$this->Product->apply_limit.' Pending Application of product '.$this->Product->name.' exists');
+        if ($Account->count() >= $this->Product->apply_limit) {
+            session()->flash('message', 'There can be only ' . $this->Product->apply_limit . ' Pending Application of product ' . $this->Product->name . ' exists');
             session()->flash('warning');
             session()->flash('time', 10000);
-            session()->flash('title','Warning');
+            session()->flash('title', 'Warning');
 
             return redirect()->route('financing.list');
         }
-        if ($AllAccount->count() >= $this->max_active && $this->max_active != 0 ){
-            session()->flash('message', 'There can be only '.$this->max_active.' Pending Application for all product');
+        if ($AllAccount->count() >= $this->max_active && $this->max_active != 0) {
+            session()->flash('message', 'There can be only ' . $this->max_active . ' Pending Application for all product');
             session()->flash('warning');
             session()->flash('time', 10000);
-            session()->flash('title','Warning');
+            session()->flash('title', 'Warning');
 
             return redirect()->route('financing.list');
         }
@@ -367,9 +366,9 @@ class ApplyFinancing extends Component
 
         $this->CustAddress   = $this->Customer->Address()->firstorCreate();
 
-        if ($this->Customer->marital_id == 2){
+        if ($this->Customer->marital_id == 2) {
             $married = TRUE;
-            if($this->Customer->gender_id == 1 ){
+            if ($this->Customer->gender_id == 1) {
                 $family = 2;
             } else {
                 $family = 1;
@@ -382,7 +381,7 @@ class ApplyFinancing extends Component
         $this->Family           = CustFamily::firstOrCreate(['cust_id' => $this->Customer->id, 'relationship_id' => $family]);
         $this->FamilyAddress    = $this->Family->Address()->firstorCreate();
 
-        if ($this->Family->family_id != NULL){
+        if ($this->Family->family_id != NULL) {
             $this->CustFamily = Customer::find($this->Family->family_id);
         } else {
             $this->CustFamily = new Customer;
@@ -397,12 +396,12 @@ class ApplyFinancing extends Component
         $intro = $this->Account->introducers()->first();
         $guaran = $this->Account->guarantors()->first();
 
-        if($intro != NULL) {
-            $this->Introducer = Customer::where([['icno', $intro->data->icno],['client_id', $this->User->client_id]])->first();
+        if ($intro != NULL) {
+            $this->Introducer = Customer::where([['icno', $intro->data->icno], ['client_id', $this->User->client_id]])->first();
             $this->search_introducer = $this->Introducer->icno;
         }
-        if($guaran != NULL) {
-            $this->Guarantor = Customer::where([['icno', $guaran->data->icno],['client_id', $this->User->client_id]])->first();
+        if ($guaran != NULL) {
+            $this->Guarantor = Customer::where([['icno', $guaran->data->icno], ['client_id', $this->User->client_id]])->first();
             $this->search_guarantor  = $this->Guarantor->icno;
         }
 
@@ -483,13 +482,13 @@ class ApplyFinancing extends Component
     public function alertConfirm()
     {
         $this->validate();
-        $message  = '<b>Name</b> : '.$this->Customer->name."<br>";
-        $message .= '<b>Introducer</b> : '.$this->Introducer->name."<br>";
-        $message .= '<b>Guarantor</b> : '.$this->Guarantor->name."<br>";
-        $message .= '<b>Product Name</b> : '.$this->Product->name."<br>";
-        $message .= '<b>Financing Amount Requested</b> : RM '.$this->Account->purchase_price."<br>";
-        $message .= '<b>Financing Term Requested</b> : '.$this->Account->duration." Year<br>";
-            $this->dispatchBrowserEvent('swal:confirm', [
+        $message  = '<b>Name</b> : ' . $this->Customer->name . "<br>";
+        $message .= '<b>Introducer</b> : ' . $this->Introducer->name . "<br>";
+        $message .= '<b>Guarantor</b> : ' . $this->Guarantor->name . "<br>";
+        $message .= '<b>Product Name</b> : ' . $this->Product->name . "<br>";
+        $message .= '<b>Financing Amount Requested</b> : RM ' . $this->Account->purchase_price . "<br>";
+        $message .= '<b>Financing Term Requested</b> : ' . $this->Account->duration . " Year<br>";
+        $this->dispatchBrowserEvent('swal:confirm', [
             'type'          => 'warning',
             'title'         => 'Are you sure you want to apply financing for this product?',
             'html'          => $message,
@@ -497,7 +496,8 @@ class ApplyFinancing extends Component
         ]);
     }
 
-    public function deb() {
+    public function deb()
+    {
         dd([
             'Account'   => $this->Account,
             'Account Files'   => $this->Account->files,

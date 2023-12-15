@@ -11,4 +11,10 @@ class FmsMembership extends Model
 
     protected $table   = 'FMS.MEMBERSHIP';
     protected $guarded = [];
+
+    public function fmsAcctMaster()
+    {
+        return $this->hasMany(AccountMaster::class, 'mbr_no', 'mbr_no')
+            ->where('client_id', $this->client_id);
+    }
 }

@@ -22,7 +22,9 @@ use App\Models\Ref\RefRelationship;
 use App\Models\Ref\RefReligion;
 use App\Models\Ref\RefState;
 use App\Models\SiskopAddress;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -79,65 +81,65 @@ class NewMembership extends Component
     protected $listeners = ['submit'];
 
     protected $rule1 = [
-        'Cust.name'                          => 'required',
-        'Cust.identity_no'                   => 'required',
-        'Cust.phone'                         => 'required',
+        'Cust.name'                          => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
+        'Cust.identity_no'                   => 'required|numeric|digits:12',
+        'Cust.phone'                         => ['required', 'regex:/^\d{7,11}$/'],
         'Cust.birthdate'                     => 'required',
         'Cust.race_id'                       => 'required',
         'Cust.gender_id'                     => 'required',
         'Cust.education_id'                  => 'required',
         'Cust.marital_id'                    => 'required',
-        'Cust.email'                         => 'required',
+        'Cust.email'                         => 'required|email',
         'Cust.title_id'                      => 'required',
         'Cust.religion_id'                   => 'required',
         'Cust.bank_id'                       => 'required',
-        'Cust.bank_acct_no'                  => 'required',
+        'Cust.bank_acct_no'                  => 'required|regex:/^\d{11}$/',
     ];
 
     protected $rule2 = [
-        'CustAddress.address1'               => 'required',
-        'CustAddress.address2'               => 'required',
+        'CustAddress.address1'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'CustAddress.address2'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'CustAddress.address3'               => 'nullable',
         'CustAddress.postcode'               => 'required|digits:5',
-        'CustAddress.town'                   => 'required',
+        'CustAddress.town'                   => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'CustAddress.state_id'               => 'required',
         'mail_flag'                          => 'nullable',
-        'EmployAddress.address1'             => 'required',
-        'EmployAddress.address2'             => 'required',
+        'EmployAddress.address1'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'EmployAddress.address2'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'EmployAddress.address3'             => 'nullable',
         'EmployAddress.postcode'             => 'required|digits:5',
-        'EmployAddress.town'                 => 'required',
+        'EmployAddress.town'                 => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'EmployAddress.state_id'             => 'required',
         'mail_flag_employer'                 => 'nullable',
     ];
 
     protected $rule3 = [
-        'CustFamily.name'                    => 'required', //make sure all validation meets the required form. EG name has no numbers
-        'CustFamily.identity_no'             => 'required',
-        'CustFamily.email'                   => 'nullable',
-        'CustFamily.phone_no'                => 'required|numeric|digits:11',
+        'CustFamily.name'                    => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
+        'CustFamily.identity_no'             => 'required|numeric|digits:12',
+        'CustFamily.email'                   => 'email',
+        'CustFamily.phone_no'                => ['required', 'regex:/^\d{7,11}$/'],
         'CustFamily.relation_id'             => 'required',
         'CustFamily.race_id'                 => 'required',
         'CustFamily.religion_id'             => 'required',
-        'CustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z\-\/@\d,&()]+$/'],
-        'CustFamily.work_post'               => ['required', 'regex:/^[A-Za-z\-\/@\d,&()]+$/'],
+        'CustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'CustFamily.work_post'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'CustFamily.salary'                  => 'required',
     ];
 
     protected $rule4 = [
-        'Employer.name'                      => 'required',
+        'Employer.name'                      => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
         'Employer.department'                => 'required',
         'Employer.position'                  => 'required',
-        'Employer.office_num'                => 'required',
+        'Employer.office_num'                => ['required', 'regex:/^\d{7,11}$/'],
         'Employer.salary'                    => 'required',
-        'Employer.worker_num'                => 'required',
+        'Employer.worker_num'                => ['nullable', 'regex:/^\d{11}$/'],
         'Employer.work_start'                => 'required',
     ];
 
     protected $rule5 = [
-        'CustIntroducer.name'                    => 'required',
-        'CustIntroducer.icno'                    => 'nullable',
-        'CustIntroducer.email'                   => 'nullable',
+        'CustIntroducer.name'                    => ['required', 'regex:/^[A-Za-z0-9 @\/-]+$/'],
+        'CustIntroducer.icno'                    => 'required|numeric|digits:12',
+        'CustIntroducer.email'                   => 'email',
         'CustIntroducer.mbr_no'                  => 'nullable',
         'search'                                 => 'required|numeric|digits:12',
     ];
@@ -150,9 +152,6 @@ class NewMembership extends Component
         'applymember.total_fee'              => 'required|numeric',
         'pay_type_regist'                    => 'required',
         'pay_type_share'                     => 'required',
-        // 'applymember.cust_bank_id'           => 'required',
-        // 'applymember.client_bank_id'         => 'required',
-        // 'applymember.client_bank_acct_no'    => 'required',
 
     ];
 
@@ -242,8 +241,14 @@ class NewMembership extends Component
                 case 2:
                     $this->validate($this->rule2);
                     if (!($this->mail_flag_employer == 1 && $this->mail_flag == 1) && !($this->mail_flag_employer == 0 && $this->mail_flag == 0)) {
-                        $this->CustAddress->save();
-                        $this->EmployAddress->save();
+                        $custAddress = $this->CustAddress;
+                        $custAddress->address1 = rtrim($custAddress->address1, ',');
+                        $custAddress->address2 = rtrim($custAddress->address2, ',');
+                        $custAddress->save();
+                        $employAddress = $this->EmployAddress;
+                        $employAddress->address1 = rtrim($employAddress->address1, ',');
+                        $employAddress->address2 = rtrim($employAddress->address2, ',');
+                        $employAddress->save();
                         $this->tab3 = 1;
                     } else {
                         $this->dispatchBrowserEvent('swal', [
@@ -394,25 +399,25 @@ class NewMembership extends Component
         }
         $this->EmployAddress->save();
     }
+
     public function searchUser()
     {
 
-        if (strlen($this->search) == 12) {
-            $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
-                $query->where('status_id', '<>', 4)->where('client_id', $this->User->client_id);
-            })->first();
-            if ($result == NULL) {
-                $this->dispatchBrowserEvent('swal', [
-                    'title' => 'warning!',
-                    'text'  => 'No User with this IC',
-                    'icon'  => 'warning',
-                    'showConfirmButton' => false,
-                    'timer' => 10000,
-                ]);
-            } else {
-                $this->CustIntroducer = $result;
-            }
+        // if (strlen($this->search) == 12) {
+        $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
+            $query->where('status_id', '<>', 4)->where('client_id', $this->User->client_id);
+        })->first();
+        // dump('135');
+
+        if ($result == NULL) {
+            $this->addError('search', 'No User with this IC');
+            // dump('1035');
+        } else {
+            $this->CustIntroducer = $result;
+            $this->resetErrorBag('search');
+            // dump('1036');
         }
+        // }
     }
 
     public function updatedCustIcno()
@@ -454,6 +459,17 @@ class NewMembership extends Component
         $sql =  "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->apply_id . ", 10 ";
         // dd($sql);
         DB::statement($sql);
+    }
+
+    public function boot()
+    {
+        Validator::extend('age_difference', function ($attribute, $value, $parameters, $validator) {
+            $dob = Carbon::parse(request('Employer.date_of_birth'));
+            $workStart = Carbon::parse($value);
+            $age = $dob->diffInYears($workStart);
+
+            return $age >= 18;
+        });
     }
 
     public function mount()
@@ -532,6 +548,8 @@ class NewMembership extends Component
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
+
+        // dd($this->Cust->birthdate);
     }
 
     public function fileupload2()

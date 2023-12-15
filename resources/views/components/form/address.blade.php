@@ -30,6 +30,7 @@
             {{ ($errors->has($name1)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
             {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
             placeholder="Address Line 1"
+            oninput="this.value = this.value.toUpperCase()"
         >
     </div>
     @if($errors->has($name1)) <p class="text-sm text-red-600">{{ $errors->first($name1) }}</p> @endif
@@ -45,6 +46,7 @@
             {{ ($errors->has($name2)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
             {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
             placeholder="Address Line 2"
+            oninput="this.value = this.value.toUpperCase()"
         >
     </div>
     @if($errors->has($name2)) <p class="text-sm text-red-600">{{ $errors->first($name2) }}</p> @endif
@@ -60,6 +62,7 @@
             {{ ($errors->has($name3)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
             {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}  "
             placeholder="Address Line 3 (optional)"
+            oninput="this.value = this.value.toUpperCase()"
         >
     </div>
     @if($errors->has($name3)) <p class="text-sm text-red-600">{{ $errors->first($name3) }}</p> @endif
@@ -105,6 +108,7 @@
                 {{ ($errors->has($name4)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}
                 {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}    "
                 placeholder="Town"
+                oninput="this.value = this.value.toUpperCase()"
             >
         </div>
         @if($errors->has($name4)) <p class="text-sm text-red-600">{{ $errors->first($name4) }}</p> @endif

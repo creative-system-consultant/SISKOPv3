@@ -4,18 +4,29 @@
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Introducer Details </h2>
 
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
-            <x-form.input
-                label="SEARCH INTRODUCER (by IC Number)"
-                name="search"
-                value=""
-                mandatory=""
-                disable=""
-                type="text"
-                wire:keyup="searchUser"
-                wire:model.debounce.1000ms="search"
-            />
+            <div class="flex items-center space-x-2">
+                <x-form.input
+                    label="SEARCH INTRODUCER (by IC Number)"
+                    name="search"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="text"
+                    {{-- wire:keyup="searchUser" --}}
+                    wire:model.debounce.1000ms="search"
+                />
+
+                {{-- @error('search')
+                    <p class="text-sm text-red-600">{{ $message }}</p>
+                @enderror --}}
+
+                <button type="button" wire:click="searchUser" class="mt-3 flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    <x-heroicon-o-magnifying-glass class="w-4 h-4" />
+                </button>
+            </div>
         </div>
 
+ 
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 mt-4">
             <x-form.input
                 label="INTRODUCER NAME"
