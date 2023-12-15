@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('SISKOP.CUSTOMERS_EMPLOYMENT', function (Blueprint $table) {
+        Schema::create('CIF.CUSTOMERS_EMPLOYMENT', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default(DB::raw('newid()'));
             $table->bigInteger('cif_id');
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
         });
 
-        DB::statement("DBCC CHECKIDENT ('SISKOP.CUSTOMERS_EMPLOYMENT',RESEED,101)");
+        DB::statement("DBCC CHECKIDENT ('CIF.CUSTOMERS_EMPLOYMENT',RESEED,101)");
     }
 
     /**
@@ -51,6 +51,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('SISKOP.CUSTOMERS_EMPLOYMENT');
+        Schema::dropIfExists('CIF.CUSTOMERS_EMPLOYMENT');
     }
 };
