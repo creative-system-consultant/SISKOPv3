@@ -98,7 +98,7 @@ use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidApproval;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidChecker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidCommittee;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidMaker;
-use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionApproval;
+use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\Approver as WithdrawalContributionApprover;
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionChecker;
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionCommittee;
 use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionMaker;
@@ -109,6 +109,11 @@ use App\Http\Livewire\Page\Application\Dividend\ApplyDividend;
 use App\Http\Livewire\Page\Application\ApplyChangeGuarantor\Index as ApplyChangeGuarantor;
 use App\Http\Livewire\Page\Application\ApplyClosedMembership\Index as ApplyClosedMembership;
 use App\Http\Livewire\Page\Dashboard\Guest;
+use App\Http\Livewire\Page\Executive\Approval\Approval\Maker as AllMaker;
+use App\Http\Livewire\Page\Executive\Approval\Approval\Checker as AllChecker;
+use App\Http\Livewire\Page\Executive\Approval\Approval\Committee as AllCommittee;
+use App\Http\Livewire\Page\Executive\Approval\Approval\Approver as AllApprover;
+use App\Http\Livewire\Page\Executive\Approval\Approval\Resolution as AllResolution;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendApprover;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendMaker;
 use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendChecker;
@@ -377,6 +382,12 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             Route::get('/withdrawContribution/{uuid}', [WithdrawalContribution::class, 'showApplication'])->name('application.withdrawal');
         });
 
+        Route::get('allapproval/{include}/maker/{uuid}', AllMaker::class)->name('allapproval.maker');
+        Route::get('allapproval/{include}/checker/{uuid}', AllChecker::class)->name('allapproval.checker');
+        Route::get('allapproval/{include}/committee/{uuid}', AllCommittee::class)->name('allapproval.committee');
+        Route::get('allapproval/{include}/approver/{uuid}', AllApprover::class)->name('allapproval.approver');
+        Route::get('allapproval/{include}/resolution/{uuid}', AllResolution::class)->name('allapproval.resolution');
+
         Route::prefix('approval')->group(function(){
             //Exec > approval > specialAid
             Route::prefix('specialAid')->group(function(){
@@ -416,7 +427,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
                 Route::get('maker/{uuid}', WithdrawalContributionMaker::class)->name('withdrawal.maker');
                 Route::get('checker/{uuid}', WithdrawalContributionChecker::class)->name('withdrawal.checker');
                 Route::get('committee/{uuid}', WithdrawalContributionCommittee::class)->name('withdrawal.committee');
-                Route::get('approval/{uuid}', WithdrawalContributionApproval::class)->name('withdrawal.approval');
+                Route::get('approval/{uuid}', WithdrawalContributionApprover::class)->name('withdrawal.approval');
             });
 
             //Exec > approval > Financing

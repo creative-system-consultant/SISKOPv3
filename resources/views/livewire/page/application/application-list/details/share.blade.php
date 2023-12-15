@@ -177,7 +177,11 @@
                 @foreach ($share->approvals as $item)
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
-                            @if($item->order < $share->step) ok @elseif($item->order == $share->step) current @endif
+                            @if($item->order < $share->step)
+                                <x-heroicon-o-check-circle class="w-6 h-6"/>
+                            @elseif($item->order == $share->step)
+                                <x-heroicon-o-play-circle class="w-6 h-6"/>
+                            @endif
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
                             {{ $item->user?->name ?? "-" }}

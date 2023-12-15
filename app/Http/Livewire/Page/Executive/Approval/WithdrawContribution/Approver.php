@@ -6,7 +6,7 @@ use App\Models\Ref\RefBank;
 use App\Models\Contribution;
 use Livewire\Component;
 
-class WithdrawalContributionApproval extends Component
+class Approver extends Component
 {
     public $approve;
     public $bank;

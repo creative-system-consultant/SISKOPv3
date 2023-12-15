@@ -54,57 +54,16 @@
                                                 closeBtn="yes"
                                             >
                                                 <div class="p-4">
-                                                    <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Value</h2>
+                                                    <h2 class="mb-4 text-lg font-semibold border-b-2 border-gray-300">Approval Settings</h2>
                                                     @if($list->rolegroup->role_id != 1 || $firstMaker)
-                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                                                        <x-form.input-tag
-                                                            label="Min Financing"
-                                                            name=""
-                                                            id=""
-                                                            value=""
-                                                            leftTag="RM"
-                                                            rightTag=""
-                                                            mandatory=""
-                                                            disable=""
-                                                            type="text"
-                                                            wire:model.defer="lists.{{ $key }}.rule_min"
-                                                        />
-                                                        <x-form.input-tag
-                                                            label="Max Financing"
-                                                            name=""
-                                                            id=""
-                                                            value=""
-                                                            leftTag="RM"
-                                                            rightTag=""
-                                                            mandatory=""
-                                                            disable=""
-                                                            type="text"
-                                                            wire:model.defer="lists.{{ $key }}.rule_max"
-                                                        />
-                                                    </div>
+                                                        <!-- none yet -->
                                                     @else
                                                         @php
                                                             $firstMaker = TRUE;
-                                                            $list->rule_min = 0;
-                                                            $list->rule_max = 0;
-                                                            $list->save();
                                                         @endphp
                                                     @endif
                                                     @if( $list->role == 'MAKER')
-                                                    <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                                                        <x-form.input-tag
-                                                            label="Employer"
-                                                            name=""
-                                                            id=""
-                                                            value=""
-                                                            leftTag=""
-                                                            rightTag=""
-                                                            mandatory=""
-                                                            disable=""
-                                                            type="text"
-                                                            wire:model.defer="lists.{{ $key }}.rule_employee"
-                                                        />
-                                                    </div>
+                                                        <!-- -->
                                                     @elseif( $list->role == 'CHECKER')
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                                                         <x-form.checkbox
@@ -118,14 +77,21 @@
                                                     </div>
                                                     @elseif( $list->role == 'COMMITTEE' || $list->role == 'APPROVER' )
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                                                        <x-form.checkbox
-                                                            label="Votes must be unanimous"
-                                                            id=""
-                                                            name=""
+                                                        <x-form.dropdown
+                                                            label="Vote Type"
                                                             value=""
+                                                            name=""
+                                                            id=""
+                                                            mandatory=""
                                                             disable=""
-                                                            wire:model.defer="lists.{{ $key }}.rule_vote"
-                                                        />
+                                                            default="yes"
+                                                            wire:model="rule_vote_type"
+                                                        >
+                                                            <option value="majority">Majority Vote</option>
+                                                            <option value="unanimous">Unanimous Vote</option>
+                                                            <option value="absolute_approve">Only 1 Approve needed</option>
+                                                            <option value="absolute_decline">Only 1 Decline needed</option>
+                                                        </x-form.dropdown>
                                                     </div>
                                                     @endif
                                                     <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
@@ -169,6 +135,7 @@
                                     </div>
                                 </x-table.table-body>
                             </tr>
+                            @php $list->save(); @endphp
                         @empty
                             <tr>
                                 <x-table.table-body colspan="3" class="text-left">
