@@ -49,11 +49,11 @@ class DividendApprover extends Component
             $this->Apply->save();
 
             if ($this->Approval->rule_whatsapp){
-                $this->Apply->sendWS($mes_ws);
+                //$this->Apply->sendWS($mes_ws);
             }
 
             if ($this->Approval->rule_sms){
-                $this->Apply->sendSMS($mes_sms);
+                //$this->Apply->sendSMS($mes_sms);
             }
         }
         $this->Apply->save();

@@ -9,7 +9,7 @@ use Livewire\Component;
 class WithdrawalContributionMaker extends Component
 {
     public $maker;
-    public $bank;
+    public $banks;
 
     public function next()
     {

@@ -25,7 +25,7 @@ class Share extends Component
     public function remake_approvals()
     {
         $this->share->remove_approvals();
-        $this->share->make_approvals();
+        $this->share->make_approvals('Share');
         $this->share->step = 1;
         $this->share->save();
 

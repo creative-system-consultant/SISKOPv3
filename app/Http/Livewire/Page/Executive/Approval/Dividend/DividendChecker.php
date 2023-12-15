@@ -33,11 +33,11 @@ class DividendChecker extends Component
         $this->Approval->save();
 
         if ($this->Approval->rule_whatsapp){
-            $this->Apply->sendWS('SISKOPv3 Application Dividend Payout have been pre-approved by CHECKER');
+            //$this->Apply->sendWS('SISKOPv3 Application Dividend Payout have been pre-approved by CHECKER');
         }
 
         if ($this->Approval->rule_sms){
-            $this->Apply->sendSMS('RM0 SISKOPv3 Application Dividend Payout have been pre-approved by CHECKER');
+            //$this->Apply->sendSMS('RM0 SISKOPv3 Application Dividend Payout have been pre-approved by CHECKER');
         }
 
         session()->flash('message', 'Application Dividend Payout Pre-Approved');

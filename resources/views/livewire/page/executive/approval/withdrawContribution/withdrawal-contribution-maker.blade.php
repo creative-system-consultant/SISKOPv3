@@ -85,7 +85,7 @@
                         disable="true"
                         default="yes"
                         >
-                        @foreach ($bankName ?? [] as $bank)
+                        @foreach ($banks ?? [] as $bank)
                             <option @if ($bank->code == $maker->bank_code) selected @endif>{{ $bank->description }}</option>
                         @endforeach
                     </x-form.dropdown>

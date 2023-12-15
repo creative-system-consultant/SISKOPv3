@@ -94,7 +94,8 @@ class ApplySellExchangeShare extends Component
             ]);
         }
 
-        $share->make_approvals();
+        $share->remove_approvals();
+        $share->make_approvals('SellShare');
 
         session()->flash('message', 'Share Reimbursement Application Successfully Send');
         session()->flash('time', 10000);
