@@ -10,9 +10,9 @@
 
     <div class="mt-1 rounded-md shadow-sm">
         <select name="{{ $name }}" class="block w-full transition duration-150 ease-in-out form-select sm:text-sm sm:leading-5
-            {{ ($disable == 'true') ? 'bg-gray-100 cursor-not-allowed' : '' }}
+            {{ ($disable == 'true' || $disable == 'readonly') ? 'bg-gray-100 cursor-not-allowed' : '' }}
             {{ ($errors->has($name)) ? 'border-red-300 bg-red-50 text-red-900' : '' }}"
-            {{ $attributes }}  {{ $disable == "true" ? 'disabled' : '' }} >
+            {{ $attributes }} {{ $disable == "true" ? 'disabled' : '' }} {{ $disable == "readonly" ? 'disabled' : '' }} >
             @if($default == 'yes')
                 <option value="">Please Choose </option>
             @endif

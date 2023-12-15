@@ -7,7 +7,7 @@ use App\Models\Share;
 use App\Models\User;
 use Livewire\Component;
 
-class SellExchangeShare extends Component
+class SellShare extends Component
 {
     public User $User;
     public Share $sellShare;
@@ -28,6 +28,6 @@ class SellExchangeShare extends Component
 
     public function render()
     {
-        return view('livewire.page.application.application-list.sell-exchange-share');
+        return view('livewire.page.application.application-list.sellshare');
     }
 }

@@ -78,9 +78,7 @@ class Contribution extends Model implements Auditable
                     $approval->vote     = NULL;
                     $approval->save();
                 }
-                $count++;
             } else {
-
                 $approval = $this->approvals()->firstOrCreate(['order' => $count]);
                 $approval->group_id = $value->role_id;
                 $approval->rules    = $value->rules;
@@ -90,9 +88,8 @@ class Contribution extends Model implements Auditable
                 $approval->note     = NULL;
                 $approval->vote     = NULL;
                 $approval->save();
-
-                $count++;
             }
+            $count++;
         }
 
         return '';
@@ -106,5 +103,13 @@ class Contribution extends Model implements Auditable
     public function approval_unvoted_id($type = 3)
     {
         return explode(',',$this->approvals()->where([['order', $this->step],['vote', NULL],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+    }
+
+    public function approval_vote_yes() {
+        return $this->approvals()->where([['order', $this->step],['vote', 'lulus']])->count();
+    }
+
+    public function approval_vote_no() {
+        return $this->approvals()->where([['order', $this->step],['vote', 'gagal']])->count();
     }
 }

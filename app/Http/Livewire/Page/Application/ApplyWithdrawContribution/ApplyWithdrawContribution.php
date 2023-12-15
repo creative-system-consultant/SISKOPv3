@@ -66,7 +66,6 @@ class ApplyWithdrawContribution extends Component
         $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
 
-
         $contribution->update([
             'direction'      => 'withdraw',
             'amt_before'     => $this->total_contribution ??= '0',
@@ -78,6 +77,8 @@ class ApplyWithdrawContribution extends Component
             'step'           => 1,
             'created_by'     => strtoupper($customer->name),
         ]);
+        $contribution->remove_approvals();
+        $contribution->make_approvals('SellContribution');
 
         $filepath = 'Files/' . $customer->id . '/' . 'support_doc' . '.' . $this->support_file->extension();
 

@@ -58,9 +58,9 @@ class Share extends Model implements Auditable
         }
     }
 
-    public function make_approvals()
+    public function make_approvals($type = 'Share')
     {
-        $ClientApproval = ClientApproval::where([['approval_type', 'Share'],['client_id',$this->client_id]])->first();
+        $ClientApproval = ClientApproval::where([['approval_type', $type],['client_id',$this->client_id]])->first();
         if ($ClientApproval != NULL){
             $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
@@ -82,9 +82,7 @@ class Share extends Model implements Auditable
                     $approval->vote     = NULL;
                     $approval->save();
                 }
-                $count++;
             } else {
-
                 $approval = $this->approvals()->firstOrCreate(['order' => $count]);
                 $approval->group_id = $value->role_id;
                 $approval->rules    = $value->rules;
@@ -94,9 +92,8 @@ class Share extends Model implements Auditable
                 $approval->note     = NULL;
                 $approval->vote     = NULL;
                 $approval->save();
-
-                $count++;
             }
+            $count++;
         }
 
         return '';

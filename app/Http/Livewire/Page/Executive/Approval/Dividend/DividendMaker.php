@@ -40,11 +40,11 @@ class DividendMaker extends Component
         $this->Approval->save();
 
         if ($this->Approval->rule_whatsapp){
-            $this->Apply->sendWS('SISKOPv3 Application Dividend Payout have been pre-approved by MAKER');
+            //$this->Apply->sendWS('SISKOPv3 Application Dividend Payout have been pre-approved by MAKER');
         }
 
         if ($this->Approval->rule_sms){
-            $this->Apply->sendSMS('RM0 SISKOPv3 Application Dividend Payout have been pre-approved by MAKER');
+            //$this->Apply->sendSMS('RM0 SISKOPv3 Application Dividend Payout have been pre-approved by MAKER');
         }
 
         session()->flash('message', 'Application Dividend Payout Pre-Approved');

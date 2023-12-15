@@ -26,7 +26,7 @@
                 <x-tab.title name="3" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-document-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Sell/Exchange Share
+                            Sell Share
                         </div>
                 </x-tab.title>
                 <x-tab.title name="4" livewire="">
@@ -53,6 +53,12 @@
                             Dividend Payout
                         </div>
                 </x-tab.title>
+                <x-tab.title name="8" livewire="">
+                    <div class="flex flex-col items-center lg:flex-row">
+                        <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                            Stop Membership
+                        </div>
+                </x-tab.title>
             </x-general.card>
             <div x-cloak class="pt-4">
                 <x-tab.content name="0">
@@ -65,7 +71,7 @@
                     <livewire:page.application.application-list.share>
                 </x-tab.content>
                 <x-tab.content name="3">
-                    <livewire:page.application.application-list.sell-exchange-share>
+                    <livewire:page.application.application-list.sell-share>
                 </x-tab.content>
                 <x-tab.content name="4">
                     <livewire:page.application.application-list.contribution>
@@ -78,6 +84,9 @@
                 </x-tab.content>
                 <x-tab.content name="7">
                     <livewire:page.application.application-list.dividend>
+                </x-tab.content>
+                <x-tab.content name="8">
+                    <livewire:page.application.application-list.stop-membership>
                 </x-tab.content>
             </div>
         </div>

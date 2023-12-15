@@ -116,7 +116,7 @@ class ApplyShare extends Component
             'created_by'   => strtoupper($customer->name),
         ]);
         $this->Share->remove_approvals();
-        $this->Share->make_approvals();
+        $this->Share->make_approvals('Share');
 
         if ($this->pay_method == 'online') {
             // dd('Online Banking');

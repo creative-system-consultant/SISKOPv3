@@ -21,7 +21,7 @@ class Customer extends Model implements Auditable
         'deleted_at'    => 'datetime',
     ];
     protected $appends = [
-        'icno'
+        'icno','mbr_no'
     ];
 
     public function education() {
@@ -126,5 +126,9 @@ class Customer extends Model implements Auditable
     {
         return $this->hasOne(FmsMembership::class, 'cif_id', 'id')
             ->whereColumn('client_id', 'client_id');
+    }
+
+    public function getMbrNoAttribute(){
+        return $this->fmsMembership?->mbr_no ?? '';
     }
 }

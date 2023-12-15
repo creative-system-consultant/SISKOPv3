@@ -48,7 +48,7 @@
                                     <x-heroicon-o-chart-pie class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Sell / Exchange Share" href="{{ route('share.sell') }}" uri="applySellShare">
+                            <x-sidebar.dropdown-item title="Sell Share" href="{{ route('share.sell') }}" uri="applySellShare">
                                 <x-slot name="icon">
                                     <x-heroicon-o-arrows-right-left class="w-7 h-7" />
                                 </x-slot>
@@ -141,6 +141,11 @@
                             </x-slot>
                         </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="APPROVAL WITHDRAW CONTRIBUTION" href="{{ url('Admin/Approval/SellContribution') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL CLOSE MEMBERSHIP" href="{{ url('Admin/Approval/CloseMembership') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-chart-pie class="w-7 h-7" />
                             </x-slot>

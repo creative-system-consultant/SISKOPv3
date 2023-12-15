@@ -469,7 +469,7 @@
                             name3="CustAddress.address3"
                             name4="CustAddress.town"
                             name5="CustAddress.postcode"
-                            name6="CustAddress.def_state_id"
+                            name6="CustAddress.state_id"
                             {{-- :state="$state" --}}
                             condition="state"
                             mailFlag="true"
@@ -485,7 +485,7 @@
                             name3="EmployerAddress.address3"
                             name4="EmployerAddress.town"
                             name5="EmployerAddress.postcode"
-                            name6="EmployerAddress.def_state_id"
+                            name6="EmployerAddress.state_id"
                             {{-- :state="$state" --}}
                             condition="state"
                             mailFlag="true"
@@ -569,7 +569,7 @@
                             name3="FamilyAddress.address3"
                             name4="FamilyAddress.town"
                             name5="FamilyAddress.postcode"
-                            name6="FamilyAddress.def_state_id"
+                            name6="FamilyAddress.state_id"
                             {{-- :state="$state" --}}
                             condition="state"
                             mailFlag="true"
@@ -1772,7 +1772,11 @@
                     @foreach ($financing->approvals()->orderby('order')->get() as $item)
                         <tr>
                             <x-table.table-body colspan="" class="text-left">
-                                @if($financing->current_approval()->order >= $item->order) <x-heroicon-o-check-circle class="w-5 h-5"/> @endif
+                                @if($item->order < $financing->step)
+                                    <x-heroicon-o-check-circle class="w-6 h-6"/>
+                                @elseif($item->order == $financing->step)
+                                    <x-heroicon-o-play-circle class="w-6 h-6"/>
+                                @endif
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-left">
                                 {{ $item->user?->name ?? "-" }}

@@ -1,25 +1,51 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Approvals > {{ cameltoString($page) }}</h1>
     @if($page == 'Financing')
-    <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Select Product</h2>
-        <div class="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
-            @forelse ($products as $item)
-                <x-form.radio
-                    label="{{ $item->name }}"
-                    value="{{ $item->id }}"
-                    disable=""
-                    wire:model.defer="product.id"
-                    wire:click="setproduct"
-                />
-            @empty
-                no products
-            @endforelse
+    <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
+            <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Select Product</h2>
+                <div class="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
+                    @forelse ($products as $item)
+                        <x-form.radio
+                            label="{{ $item->name }}"
+                            value="{{ $item->id }}"
+                            disable=""
+                            wire:model.defer="product.id"
+                            wire:click="setproduct"
+                        />
+                    @empty
+                        no products
+                    @endforelse
+                </div>
+            </x-general.card>
         </div>
-    </x-general.card>
+        <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
+            <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Select Financing Range</h2>
+                <div class="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
+                    <x-form.radio
+                        name="range"
+                        label="0 - 25,000"
+                        value="0-25000"
+                        disable=""
+                        wire:model.defer="range"
+                    />
+                    <x-form.radio
+                        name="range"
+                        label="25,000 - 50,000"
+                        value="25000-50000"
+                        disable=""
+                        wire:model.defer="range"
+                    />
+                </div>
+            </x-general.card>
+        </div>
+    </div>
     @endif
     @if(($page == 'Financing' && $product != NULL) || $page != 'Financing')
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Select Financing Range</h2>
         <x-form.basic-form wire:submit.prevent="submit" class="p-4">
             <div class="grid grid-cols-12 gap-6 mt-6">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12">
