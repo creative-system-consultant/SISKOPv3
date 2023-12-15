@@ -60,7 +60,7 @@ use App\Http\Livewire\Page\Admin\Role\RoleGroupManagement;
 use App\Http\Livewire\Page\Admin\SpecialAid\CreateSpecialAid;
 use App\Http\Livewire\Page\Admin\SpecialAid\ListSpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\Contribution;
-use App\Http\Livewire\Page\Application\ApplicationList\SellExchangeShare;
+use App\Http\Livewire\Page\Application\ApplicationList\SellShare;
 use App\Http\Livewire\Page\Application\ApplicationList\Share;
 use App\Http\Livewire\Page\Application\ApplicationList\SpecialAid;
 use App\Http\Livewire\Page\Application\ApplicationList\WithdrawalContribution;
@@ -76,32 +76,15 @@ use App\Http\Livewire\Page\Application\ApplyContribution\ApplyContribution;
 use App\Http\Livewire\Page\Application\ApplySellExchangeShare\ApplySellExchangeShare;
 use App\Http\Livewire\Page\Application\ApplyShare\ApplyShare;
 use App\Http\Livewire\Page\Application\ApplyWithdrawContribution\ApplyWithdrawContribution;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\Approver as ContributionApprover;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\Checker as ContributionChecker;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\Committee as ContributionCommittee;
-use App\Http\Livewire\Page\Executive\Approval\Contribution\Maker as ContributionMaker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Maker as MembershipMaker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Checker as MembershipChecker;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Committee as MembershipCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Approver as MembershipApprover;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Resolution as MembershipResolution;
-use App\Http\Livewire\Page\Executive\Approval\BuyShare\Approver as ShareApprover;
-use App\Http\Livewire\Page\Executive\Approval\BuyShare\Checker as ShareChecker;
-use App\Http\Livewire\Page\Executive\Approval\BuyShare\Committee as ShareCommittee;
-use App\Http\Livewire\Page\Executive\Approval\BuyShare\Maker as ShareMaker;
-use App\Http\Livewire\Page\Executive\Approval\BuyShare\Resolution as ShareResolution;
-use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareApproval;
-use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareChecker;
-use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareCommittee;
-use App\Http\Livewire\Page\Executive\Approval\SellShare\SellShareMaker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidApproval;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidChecker;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidCommittee;
 use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidMaker;
-use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\Approver as WithdrawalContributionApprover;
-use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionChecker;
-use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionCommittee;
-use App\Http\Livewire\Page\Executive\Approval\WithdrawContribution\WithdrawalContributionMaker;
 use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
@@ -372,13 +355,9 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             })->name('application.list');
 
             Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
-
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
-
-            Route::get('/sellShare/{uuid}', [SellExchangeShare::class, 'showApplication'])->name('application.sell');
-
+            Route::get('/sellShare/{uuid}', [SellShare::class, 'showApplication'])->name('application.sell');
             Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
-
             Route::get('/withdrawContribution/{uuid}', [WithdrawalContribution::class, 'showApplication'])->name('application.withdrawal');
         });
 
@@ -395,39 +374,6 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
                 Route::get('checker/{uuid}', SpecialAidChecker::class)->name('specialAid.checker');
                 Route::get('committee/{uuid}', SpecialAidCommittee::class)->name('specialAid.committee');
                 Route::get('approval/{uuid}', SpecialAidApproval::class)->name('specialAid.approval');
-            });
-
-            //Exec > approval > share
-            Route::prefix('share')->group(function(){
-                Route::get('maker/{uuid}', ShareMaker::class)->name('share.maker');
-                Route::get('checker/{uuid}', ShareChecker::class)->name('share.checker');
-                Route::get('committee/{uuid}', ShareCommittee::class)->name('share.committee');
-                Route::get('approval/{uuid}', ShareApprover::class)->name('share.approval');
-                Route::get('resolution/{uuid}', ShareResolution::class)->name('share.resolution');
-            });
-
-            //Exec > approval > sell/exchange share
-            Route::prefix('sellShare')->group(function(){
-                Route::get('maker/{uuid}', SellShareMaker::class)->name('sellShare.maker');
-                Route::get('checker/{uuid}', SellShareChecker::class)->name('sellShare.checker');
-                Route::get('committee/{uuid}', SellShareCommittee::class)->name('sellShare.committee');
-                Route::get('approval/{uuid}', SellShareApproval::class)->name('sellShare.approval');
-            });
-
-            //Exec > approval > add contribution
-            Route::prefix('contribution')->group(function(){
-                Route::get('maker/{uuid}', ContributionMaker::class)->name('contribution.maker');
-                Route::get('checker/{uuid}', ContributionChecker::class)->name('contribution.checker');
-                Route::get('committee/{uuid}', ContributionCommittee::class)->name('contribution.committee');
-                Route::get('approval/{uuid}', ContributionApprover::class)->name('contribution.approval');
-            });
-
-            //Exec > approval > w/d contribution
-            Route::prefix('withdrawContribution')->group(function(){
-                Route::get('maker/{uuid}', WithdrawalContributionMaker::class)->name('withdrawal.maker');
-                Route::get('checker/{uuid}', WithdrawalContributionChecker::class)->name('withdrawal.checker');
-                Route::get('committee/{uuid}', WithdrawalContributionCommittee::class)->name('withdrawal.committee');
-                Route::get('approval/{uuid}', WithdrawalContributionApprover::class)->name('withdrawal.approval');
             });
 
             //Exec > approval > Financing
