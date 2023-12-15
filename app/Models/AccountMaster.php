@@ -29,12 +29,12 @@ class AccountMaster extends Model implements Auditable
 
     public function product()
     {
-        return $this->belongsTo(AccountProduct::class,'product_id','id');
+        return $this->belongsTo(AccountProduct::class, 'product_id_ori', 'id');
     }
 
     public function position()
     {
-        return $this->hasMany(AccountPosition::class,'account_no','account_no');
+        return $this->hasMany(AccountPosition::class, 'account_no', 'account_no');
     }
 
     public function introducers()
@@ -49,7 +49,7 @@ class AccountMaster extends Model implements Auditable
 
     public function approvals()
     {
-        return $this->morphMany(Approval::class,'approval');
+        return $this->morphMany(Approval::class, 'approval');
     }
 
     public function current_approval()
@@ -64,7 +64,7 @@ class AccountMaster extends Model implements Auditable
 
     public function status()
     {
-        return $this->belongsTo(RefAccountStatus::class,'account_status');
+        return $this->belongsTo(RefAccountStatus::class, 'account_status');
     }
 
     public function make_ref_num()
@@ -83,15 +83,15 @@ class AccountMaster extends Model implements Auditable
 
     public function clear_approvals($order = NULL)
     {
-        if ($order != NULL){
+        if ($order != NULL) {
             $approval = $this->approvals()->where('order', $order)->get();
         } else {
             $approval = $this->approvals;
         }
 
         foreach ($approval as $key => $value) {
-            if ($value->role_id == 1 || $value->role_id == 2){ 
-                $value->user_id = NULL; 
+            if ($value->role_id == 1 || $value->role_id == 2) {
+                $value->user_id = NULL;
                 $value->type    = NULL;
             }
             $value->note = NULL;
@@ -101,9 +101,9 @@ class AccountMaster extends Model implements Auditable
 
     public function make_approvals()
     {
-        $ClientApproval = ClientApproval::where([['approval_type', 'financing'],['client_id',$this->client_id]])->first();
-        if ($ClientApproval != NULL){
-            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['product_id', $this->product_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
+        $ClientApproval = ClientApproval::where([['approval_type', 'financing'], ['client_id', $this->client_id]])->first();
+        if ($ClientApproval != NULL) {
+            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id], ['product_id', $this->product_id], ['approval_id', $ClientApproval->id]])->orderBy('order')->get();
         } else {
             return NULL;
         }
@@ -111,14 +111,14 @@ class AccountMaster extends Model implements Auditable
         $count = 1;
         foreach ($ClientApprovalRoles as $key => $value) {
 
-            if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
-                foreach ($value->rolegroup->users as $key1 => $value1){
-                    $approval = $this->approvals()->firstOrCreate(['order' => $count,'type' => 'vote'.$key1+1]);
+            if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE') {
+                foreach ($value->rolegroup->users as $key1 => $value1) {
+                    $approval = $this->approvals()->firstOrCreate(['order' => $count, 'type' => 'vote' . $key1 + 1]);
                     $approval->group_id = $value->role_id;
                     $approval->rules    = $value->rules;
                     $approval->user_id  = $value1->user_id;
                     $approval->role_id  = $value->sys_role->id;
-                    $approval->type     = 'vote'.$key1+1;
+                    $approval->type     = 'vote' . $key1 + 1;
                     $approval->note     = NULL;
                     $approval->vote     = NULL;
                     $approval->save();
@@ -145,20 +145,22 @@ class AccountMaster extends Model implements Auditable
 
     public function approval_vote_id($type = 3)
     {
-        return explode(',',$this->approvals()->where([['order', $this->apply_step],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+        return explode(',', $this->approvals()->where([['order', $this->apply_step], ['role_id', $type]])->select('user_id')->get()->implode('user_id', ','));
     }
 
     public function approval_unvoted_id($type = 3)
     {
-        return explode(',',$this->approvals()->where([['order', $this->apply_step],['vote', NULL],['role_id',$type]])->select('user_id')->get()->implode('user_id',','));
+        return explode(',', $this->approvals()->where([['order', $this->apply_step], ['vote', NULL], ['role_id', $type]])->select('user_id')->get()->implode('user_id', ','));
     }
 
-    public function approval_vote_yes() {
-        return $this->approvals()->where([['order', $this->apply_step],['vote', 'lulus']])->count();
+    public function approval_vote_yes()
+    {
+        return $this->approvals()->where([['order', $this->apply_step], ['vote', 'lulus']])->count();
     }
 
-    public function approval_vote_no() {
-        return $this->approvals()->where([['order', $this->apply_step],['vote', 'gagal']])->count();
+    public function approval_vote_no()
+    {
+        return $this->approvals()->where([['order', $this->apply_step], ['vote', 'gagal']])->count();
     }
 
     public function sendWS($msg)
@@ -192,27 +194,27 @@ class AccountMaster extends Model implements Auditable
          * 
          * **/
         $user_id    = "";
-        $cust       = $this->customer()->select("mobile_num","icno","name")->first();
+        $cust       = $this->customer()->select("mobile_num", "icno", "name")->first();
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
-                "'896', ".                              // @user_id                     CHAR(5), 
-                "'1001', ".                             // @exec_seq_no                 SMALLINT, 
-                "'".now()."', ".                        // @rpt_date                    DATE,
-                "'W', ".                                // @msg_type                    CHAR(1),
-                "'L', ".                                // @msg_priority                CHAR(1),
-                "'Financing Application Approved', ".   // @msg_purpose                 VARCHAR(50),
-                "'', ".                                 // @email                       VARCHAR(100),
-                "'".$phone_num."', ".                   // @phone                       VARCHAR(20),
-                "'1', ".                                // @cif_no                      VARCHAR(15),
-                "'".$icno."', ".                        // @generic_key                 VARCHAR(17),
-                "'', ".                                 // @notice_msg_email_subject    VARCHAR(200),
-                "'', ".                                 // @notice_msg_email            VARCHAR(2000),
-                "'".$msg."', ".                         // @notice_msg_wasap            VARCHAR(2000),
-                "'', ".                                 // @notice_msg_sms              VARCHAR(2000),
-                "'".$name."', ".                        // @cust_name                   VARCHAR(100),
-                "'".$icno."'";                          // @cust_id_no                  VARCHAR(20)
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] " .
+            "'896', " .                              // @user_id                     CHAR(5), 
+            "'1001', " .                             // @exec_seq_no                 SMALLINT, 
+            "'" . now() . "', " .                        // @rpt_date                    DATE,
+            "'W', " .                                // @msg_type                    CHAR(1),
+            "'L', " .                                // @msg_priority                CHAR(1),
+            "'Financing Application Approved', " .   // @msg_purpose                 VARCHAR(50),
+            "'', " .                                 // @email                       VARCHAR(100),
+            "'" . $phone_num . "', " .                   // @phone                       VARCHAR(20),
+            "'1', " .                                // @cif_no                      VARCHAR(15),
+            "'" . $icno . "', " .                        // @generic_key                 VARCHAR(17),
+            "'', " .                                 // @notice_msg_email_subject    VARCHAR(200),
+            "'', " .                                 // @notice_msg_email            VARCHAR(2000),
+            "'" . $msg . "', " .                         // @notice_msg_wasap            VARCHAR(2000),
+            "'', " .                                 // @notice_msg_sms              VARCHAR(2000),
+            "'" . $name . "', " .                        // @cust_name                   VARCHAR(100),
+            "'" . $icno . "'";                          // @cust_id_no                  VARCHAR(20)
         DB::select(DB::raw($sql));
     }
 
@@ -247,31 +249,31 @@ class AccountMaster extends Model implements Auditable
          * 
          * **/
         $user_id    = "";
-        $cust       = $this->customer()->select("mobile_num","icno","name")->first();
+        $cust       = $this->customer()->select("mobile_num", "icno", "name")->first();
         $phone_num  = $cust->mobile_num;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
-                "'896', ".                              // @user_id                     CHAR(5), 
-                "'1001', ".                             // @exec_seq_no                 SMALLINT, 
-                "'".now()."', ".                        // @rpt_date                    DATE,
-                "'S', ".                                // @msg_type                    CHAR(1),
-                "'L', ".                                // @msg_priority                CHAR(1),
-                "'Financing Application Approved', ".   // @msg_purpose                 VARCHAR(50),
-                "'', ".                                 // @email                       VARCHAR(100),
-                "'".$phone_num."', ".                   // @phone                       VARCHAR(20),
-                "'1', ".                                // @cif_no                      VARCHAR(15),
-                "'".$icno."', ".                        // @generic_key                 VARCHAR(17),
-                "'', ".                                 // @notice_msg_email_subject    VARCHAR(200),
-                "'', ".                                 // @notice_msg_email            VARCHAR(2000),
-                "'', ".                                 // @notice_msg_wasap            VARCHAR(2000),
-                "'".$msg."', ".                         // @notice_msg_sms              VARCHAR(2000),
-                "'".$name."', ".                        // @cust_name                   VARCHAR(100),
-                "'".$icno."'";                          // @cust_id_no                  VARCHAR(20)
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] " .
+            "'896', " .                              // @user_id                     CHAR(5), 
+            "'1001', " .                             // @exec_seq_no                 SMALLINT, 
+            "'" . now() . "', " .                        // @rpt_date                    DATE,
+            "'S', " .                                // @msg_type                    CHAR(1),
+            "'L', " .                                // @msg_priority                CHAR(1),
+            "'Financing Application Approved', " .   // @msg_purpose                 VARCHAR(50),
+            "'', " .                                 // @email                       VARCHAR(100),
+            "'" . $phone_num . "', " .                   // @phone                       VARCHAR(20),
+            "'1', " .                                // @cif_no                      VARCHAR(15),
+            "'" . $icno . "', " .                        // @generic_key                 VARCHAR(17),
+            "'', " .                                 // @notice_msg_email_subject    VARCHAR(200),
+            "'', " .                                 // @notice_msg_email            VARCHAR(2000),
+            "'', " .                                 // @notice_msg_wasap            VARCHAR(2000),
+            "'" . $msg . "', " .                         // @notice_msg_sms              VARCHAR(2000),
+            "'" . $name . "', " .                        // @cust_name                   VARCHAR(100),
+            "'" . $icno . "'";                          // @cust_id_no                  VARCHAR(20)
         DB::select(DB::raw($sql));
     }
 
-    public function sendEmail($subject,$msg)
+    public function sendEmail($subject, $msg)
     {
         /**
          *  Parameter to program.
@@ -302,28 +304,27 @@ class AccountMaster extends Model implements Auditable
          * 
          * **/
         $user_id    = "";
-        $cust       = $this->customer()->select("email","icno","name")->first();
+        $cust       = $this->customer()->select("email", "icno", "name")->first();
         $email      = $cust->email;
         $icno       = $cust->icno;
         $name       = $cust->name;
-        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] ".
-                "'896', ".                              // @user_id                     CHAR(5), 
-                "'1001', ".                             // @exec_seq_no                 SMALLINT, 
-                "'".now()."', ".                        // @rpt_date                    DATE,
-                "'E', ".                                // @msg_type                    CHAR(1),
-                "'L', ".                                // @msg_priority                CHAR(1),
-                "'Financing Application Approved', ".   // @msg_purpose                 VARCHAR(50),
-                "'".$email."', ".                       // @email                       VARCHAR(100),
-                "'', ".                                 // @phone                       VARCHAR(20),
-                "'1', ".                                // @cif_no                      VARCHAR(15),
-                "'".$icno."', ".                        // @generic_key                 VARCHAR(17),
-                "'".$subject."', ".                     // @notice_msg_email_subject    VARCHAR(200),
-                "'".$msg."', ".                         // @notice_msg_email            VARCHAR(2000),
-                "'', ".                                 // @notice_msg_wasap            VARCHAR(2000),
-                "'', ".                                 // @notice_msg_sms              VARCHAR(2000),
-                "'".$name."', ".                        // @cust_name                   VARCHAR(100),
-                "'".$icno."'";                          // @cust_id_no                  VARCHAR(20)
+        $sql =  "EXEC [SISKOPv3b].[SYSTM].[SP_INSERT_MSG_QUEUE] " .
+            "'896', " .                              // @user_id                     CHAR(5), 
+            "'1001', " .                             // @exec_seq_no                 SMALLINT, 
+            "'" . now() . "', " .                        // @rpt_date                    DATE,
+            "'E', " .                                // @msg_type                    CHAR(1),
+            "'L', " .                                // @msg_priority                CHAR(1),
+            "'Financing Application Approved', " .   // @msg_purpose                 VARCHAR(50),
+            "'" . $email . "', " .                       // @email                       VARCHAR(100),
+            "'', " .                                 // @phone                       VARCHAR(20),
+            "'1', " .                                // @cif_no                      VARCHAR(15),
+            "'" . $icno . "', " .                        // @generic_key                 VARCHAR(17),
+            "'" . $subject . "', " .                     // @notice_msg_email_subject    VARCHAR(200),
+            "'" . $msg . "', " .                         // @notice_msg_email            VARCHAR(2000),
+            "'', " .                                 // @notice_msg_wasap            VARCHAR(2000),
+            "'', " .                                 // @notice_msg_sms              VARCHAR(2000),
+            "'" . $name . "', " .                        // @cust_name                   VARCHAR(100),
+            "'" . $icno . "'";                          // @cust_id_no                  VARCHAR(20)
         DB::select(DB::raw($sql));
     }
-
 }

@@ -263,16 +263,29 @@ class NewMembership extends Component
 
                     break;
                 case 3:
-                    $this->validate($this->rule3);
-                    $this->CustFamily->name = Str::upper($this->CustFamily->name);
-                    $this->CustFamily->save();
-                    $this->CustFamily->save();
-                    $this->tab4 = 1;
+                    if ($this->CustFamily->identity_no === $this->Cust->identity_no) {
+                        $this->addError('CustFamily.identity_no', 'Identity number must not be the same as Cust identity number.');
+                        $mail_flag_checker = 0;
+                    } else {
+                        $this->validate($this->rule3);
+                        $this->CustFamily->name = Str::upper($this->CustFamily->name);
+                        $this->CustFamily->save();
+                        $this->CustFamily->save();
+                        $this->tab4 = 1;
+                    }
                     break;
                 case 4:
-                    $this->validate($this->rule4);
-                    $this->Employer->save();
-                    $this->tab5 = 1;
+                    $dob = Carbon::createFromFormat('Y-m-d', $this->Cust->birthdate);
+                    $workstart = Carbon::createFromFormat('Y-m-d', $this->Employer->work_start);
+                    $age = $dob->diffInYears($workstart);
+                    if ($age < 18) {
+                        $this->addError('Employer.work_start', 'Work start and birthday should be more than 18 years');
+                        $mail_flag_checker = 0;
+                    } else {
+                        $this->validate($this->rule4);
+                        $this->Employer->save();
+                        $this->tab5 = 1;
+                    }
                     break;
                 case 5:
                     $this->validate($this->rule5);
@@ -540,7 +553,8 @@ class NewMembership extends Component
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->gender_id         = RefGender::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->relationship      = RefRelationship::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
+
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
@@ -548,7 +562,7 @@ class NewMembership extends Component
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
-
+        // dd($this->relationship);
         // dd($this->Cust->birthdate);
     }
 

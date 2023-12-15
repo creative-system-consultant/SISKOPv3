@@ -5,35 +5,47 @@
         <div>
             <x-table.table>
                 <x-slot name="thead">
-                    <x-table.table-header class="text-left " value="No Akaun Pembiayaan" sort="" />
-                    <x-table.table-header class="text-left" value="Jumlah Pembiayaan" sort="" />
-                    <x-table.table-header class="text-right" value="BAKI PEMBIAYAAN" sort="" />
-                    <x-table.table-header class="text-center" value="Tindakan" sort="" />
+                    <x-table.table-header class="text-left " value="Account Number" sort="" />
+                    <x-table.table-header class="text-left" value="Product Name" sort="" />
+                    <x-table.table-header class="text-left" value="Financing Amount" sort="" />
+                    <x-table.table-header class="text-right" value="Balance Outstanding" sort="" />
+                    <x-table.table-header class="text-center" value="Action" sort="" />
                 </x-slot>
                 <x-slot name="tbody">
+                    @forelse($acct_position as $item)
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
-                            test
+                            {{$item->account_no}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">
-                            test
+                            {{$item->master->product->name}}
+                        </x-table.table-body>
+                        <x-table.table-body colspan="" class="text-left">
+                            {{number_format($item->master->selling_price,2)}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right">
-                            test
+                            {{number_format($item->bal_outstanding,2)}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="">
                             <div class="flex items-center justify-center space-x-2">
-                                <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none">
+                                <a class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none" wire:click='searchGuarantor("{{$item->account_no}}")'>
                                     <x-heroicon-o-cursor-arrow-rays class="w-4 h-4" />
                                     Pilih
-                                </button>
+                                </a>
                             </div>
                         </x-table.table-body>
                     </tr>
+                    @empty
+                        <tr>
+                            <x-table.table-body colspan="4" class="text-center">
+                                No Data
+                            </x-table.table-body>
+                        </tr>
+                    @endforelse
                 </x-slot>
             </x-table.table>
         </div>
-
+        @if($clicked!=0)
         <div class="mt-10">
             <x-table.table>
                 <x-slot name="thead">
@@ -68,15 +80,17 @@
                     
                 </x-slot>
                 <x-slot name="tbody">
+                    @if($guarantor)
+
                     <tr>
                         <x-table.table-body colspan="" class="border text-center text-xs">
-                            02025
+                            {{$guarantor->fmsMembership->mbr_no}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="border text-center text-xs">
-                            971215105423
+                            {{$guarantor->fmsMembership->fmsCustomer->identity_no}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="border text-center text-xs">
-                            Suriyawati binti ahmad abu
+                            {{$guarantor->fmsMembership->fmsCustomer->name}}
                         </x-table.table-body>
                         
                         <x-table.table-body colspan="" class="border text-center">
@@ -87,6 +101,7 @@
                                 mandatory=""
                                 disable="readonly"
                                 type="text"
+                                wire:model="mbr_no"
                             />
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="border">
@@ -96,6 +111,8 @@
                                 value=""
                                 mandatory=""
                                 disable=""
+                                wire:keyup="searchUser"
+                                wire:model="search"
                                 type="text"
                             />
                         </x-table.table-body>
@@ -107,12 +124,24 @@
                                 mandatory=""
                                 disable="readonly"
                                 type="text"
+                                wire:model="name"
+
                             />
                         </x-table.table-body>
                     </tr>
+                    {{-- @empty
+                        <tr>
+                            <x-table.table-body colspan="6" class="text-center">
+                                No Data
+                            </x-table.table-body>
+                        </tr>
+                    @endforelse --}}
+                    @endif
+
                 </x-slot>
             </x-table.table>
         </div>
+        @endif
 
         <div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
@@ -125,6 +154,7 @@
                         mandatory=""
                         disable=""
                         default="yes"
+                        wire:model="reasonChange"
                     >
                         <option value="">Sila Pilih</option>
                         <option value="Berhenti Ahli"> Berhenti Ahli </option>
@@ -134,7 +164,7 @@
                 </div>
             </div>
 
-
+            @if($reasonChange =="Lain-lain")
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                 <x-form.text-area
                     label="Sebab Lain"
@@ -143,13 +173,15 @@
                     rows=""
                     disable=""
                     mandatory=""
-                    placeholder="Place Holder"
+                    placeholder=""
+                    wire:model="reasonChangeTxt"
                 />
             </div>
+            @endif
 
             <div class="p-4 mt-10 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
-                    <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                    <button wire:click="submit()" type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         Simpan
                     </button>
                 </div>
