@@ -296,11 +296,17 @@ class NewMembership extends Component
                 case 6:
                     $this->totalfee();
                     $this->validate($this->rule6);
-                    // $this->fileupload2();
-
-                    // $this->applymember->cust_bank_id = $this->cust_bank_id;
-                    // $this->applymember->client_bank_id = $this->client_bank_id;
-                    // $this->applymember->client_bank_acct_no = $this->client_bank_acct;
+                    $this->applymember->cust_bank_id = $this->cust_bank_id;
+                    $this->applymember->client_bank_id = $this->client_bank_id;
+                    $this->applymember->client_bank_acct_no = $this->client_bank_acct;
+                    $this->applymember->share_pmt_mode_flag = $this->pay_type_share;
+                    $this->applymember->register_fee_flag = $this->pay_type_regist;
+                    $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
+                    if ($this->pay_type_share == '1') {
+                        $this->applymember->share_lump_sum_amt = $this->tot_share;
+                    } else {
+                        $this->applymember->share_lump_sum_amt = 0;
+                    }
                     $this->applymember->save();
                     $this->tab7 = 1;
                     break;
@@ -374,6 +380,15 @@ class NewMembership extends Component
                     $this->applymember->cust_bank_id = $this->cust_bank_id;
                     $this->applymember->client_bank_id = $this->client_bank_id;
                     $this->applymember->client_bank_acct_no = $this->client_bank_acct;
+                    $this->applymember->share_pmt_mode_flag = $this->pay_type_share;
+                    $this->applymember->register_fee_flag = $this->pay_type_regist;
+                    $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
+
+                    if ($this->pay_type_share == '1') {
+                        $this->applymember->share_lump_sum_amt = $this->tot_share;
+                    } else {
+                        $this->applymember->share_lump_sum_amt = 0;
+                    }
                     $this->applymember->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
 
@@ -657,6 +672,34 @@ class NewMembership extends Component
             ]);
         }
 
+        if ($this->payment_file_regist) {
+            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment' . '.' . $this->payment_file_regist->extension();
+
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment' . '.' . $this->payment_file_regist->extension());
+
+            $this->applymember->files()->updateOrCreate([
+                'filename' => 'RegistrationPayment',
+            ], [
+                'filedesc' => 'Registration Payment Proof',
+                'filetype' => $this->payment_file_regist->extension(),
+                'filepath' => $filepath,
+            ]);
+        }
+
+        if ($this->payment_file_share) {
+            $filepath = 'Files/' . $customers->id . '/membership/SharePayment' . '.' . $this->payment_file_share->extension();
+
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment' . '.' . $this->payment_file_share->extension());
+
+            $this->applymember->files()->updateOrCreate([
+                'filename' => 'SharePayment',
+            ], [
+                'filedesc' => 'Share Payment Proof',
+                'filetype' => $this->payment_file_share->extension(),
+                'filepath' => $filepath,
+            ]);
+        }
+
         $this->render();
     }
 
@@ -750,8 +793,9 @@ class NewMembership extends Component
 
     public function render()
     {
-        if ($this->pay_type_share == 'INST') {
+        if ($this->pay_type_share == '2') {
             $this->tot_share = $this->monthly_share;
+            $this->applymember->share_monthly = $this->monthly_share;
         } else {
             $this->tot_share = $this->applymember->share_fee;
         }
