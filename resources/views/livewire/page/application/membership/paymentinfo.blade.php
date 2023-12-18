@@ -20,7 +20,7 @@
 
             <div>
                 <x-form.input-tag
-                    label="{{ ($pay_type_share=='INST' ? 'Share (Instalment)' : 'Share (One-time only)') }})"
+                    label="{{ ($pay_type_share=='2' ? 'Share (Instalment)' : 'Share (One-time only)') }})"
                     name=""
                     value=""
                     mandatory=""
@@ -46,7 +46,7 @@
                 /> 
             </div>
 
-            @if($pay_type_share=='INST')
+            @if($pay_type_share=='2')
             <div>
                 <x-form.input-tag
                     label="Share Monthly"
@@ -76,8 +76,8 @@
                     default="yes"
                     wire:model="pay_type_regist"
                 >
-                    <option value="CASH">Cash/Online Payment</option>
-                    <option value="AUTOPAY">Autopay</option>
+                    <option value="1">Cash/Online Payment</option>
+                    <option value="2">Autopay</option>
                 </x-form.dropdown>
             </div>
       
@@ -92,8 +92,8 @@
                     default="yes"
                     wire:model="pay_type_share"
                 >
-                    <option value="LMP">Lump sum</option>
-                    <option value="INST">Installment</option>
+                    <option value="1">Lump sum</option>
+                    <option value="2">Installment</option>
                 </x-form.dropdown>
             </div>
             <div></div>
@@ -103,7 +103,7 @@
 
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
             <div>
-                @if($pay_type_regist=="CASH")
+                @if($pay_type_regist=="1")
                 <div>
                     <x-form.dropdown
                         label="Customer's Bank"
@@ -150,23 +150,11 @@
                     /> 
                 </div>
                 @endif
-                
-                    <x-form.input
-                        label="Upload Payment Proof (Registration Fee):"
-                        name="payment_file_regist"
-                        id="payment_file_regist"
-                        value=""
-                        mandatory=""
-                        disable=""
-                        type="file"
-                        accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                        wire:model.defer="payment_file_regist"
-                    />
                 @endif
                 </div>
       
             <div>
-                @if($pay_type_share=='LMP')
+                @if($pay_type_share=='1')
                     <div>
                         <x-form.dropdown
                             label="Customer's Bank"
@@ -213,21 +201,6 @@
                         /> 
                     </div>
                     @endif
-
-                    <div>
-                        <x-form.input
-                            label="Upload Payment Proof (Share Fee):"
-                            name="payment_file_share"
-                            id="payment_file_share"
-                            value=""
-                            mandatory=""
-                            disable=""
-                            type="file"
-                            accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                            wire:model.defer="payment_file_share"
-                        />
-                    </div>
-                    
                 @endif
             </div>
         </div>
