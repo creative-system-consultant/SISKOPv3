@@ -129,7 +129,7 @@ class Maker extends Component
 
     public function mount($uuid)
     {
-        $this->Application    = ApplyMembership::where('uuid', $uuid)->first();
+        $this->Application = ApplyMembership::where('uuid', $uuid)->first();
         $this->User     = User::find(auth()->user()->id);
         $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
         $this->client_id = $this->User->client_id;
@@ -148,19 +148,23 @@ class Maker extends Component
                             ['cif_id', $this->Cust->id ],
                             ['address_type_id', 3],
                             ['client_id', $this->client_id],
+                            ['apply_id' , $this->Application->id],
                         ])->first();
         $this->CustFamily = Family::where([
                             ['cif_id', $this->Cust->id ],
                             ['client_id', $this->client_id],
+                            ['apply_id' , $this->Application->id],
                         ])->first();
         $this->Employer   = Employer::where([
                             ['cust_id' , $this->Cust->id], 
                             ['client_id' , $this->client_id],
-                        ])->first();
+                            ['apply_id' , $this->Application->id],
+                        ])->first(); 
         $this->Introducer = Introducer::where([
                             ['client_id' , $this->client_id],
                             ['introduce_type', 'App\Models\SiskopCustomer'],
-                            ['introduce_id', $this->Cust->id]
+                            ['introduce_id', $this->Cust->id],
+                            ['apply_id' , $this->Application->id],
                         ])->first();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();

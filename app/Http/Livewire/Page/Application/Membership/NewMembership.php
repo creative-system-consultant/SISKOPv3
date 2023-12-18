@@ -49,7 +49,9 @@ class NewMembership extends Component
     public $field;
     public $document;
     public $title_id;
-    public $education_id, $religion_id, $bank_id;
+    public $education_id;
+    public $religion_id;
+    public $bank_id;
     public $gender_id;
     public $marital_id;
     public $relationship;
@@ -59,7 +61,6 @@ class NewMembership extends Component
     public $identity_no;
     public $email;
     public $mobile_num;
-    public $numpage = 1;
     public $online_file;
     public $online_file2;
     public $online_file3;
@@ -72,6 +73,7 @@ class NewMembership extends Component
     public $mbr_no = [];
     public $birthdate;
     public $activeTab = 0;
+    public $numpage = 1;
     public $tab1 = 1, $tab2 = 0, $tab3 = 0, $tab4 = 0, $tab5 = 0, $tab6 = 0, $tab7 = 0, $tab8 = 0;
     public $pay_type_regist, $pay_type_share;
     public $mail_flag, $mail_flag_employer;
@@ -263,16 +265,29 @@ class NewMembership extends Component
 
                     break;
                 case 3:
-                    $this->validate($this->rule3);
-                    $this->CustFamily->name = Str::upper($this->CustFamily->name);
-                    $this->CustFamily->save();
-                    $this->CustFamily->save();
-                    $this->tab4 = 1;
+                    if ($this->CustFamily->identity_no === $this->Cust->identity_no) {
+                        $this->addError('CustFamily.identity_no', 'Identity number must not be the same as Cust identity number.');
+                        $mail_flag_checker = 0;
+                    } else {
+                        $this->validate($this->rule3);
+                        $this->CustFamily->name = Str::upper($this->CustFamily->name);
+                        $this->CustFamily->save();
+                        $this->CustFamily->save();
+                        $this->tab4 = 1;
+                    }
                     break;
                 case 4:
-                    $this->validate($this->rule4);
-                    $this->Employer->save();
-                    $this->tab5 = 1;
+                    $dob = Carbon::createFromFormat('Y-m-d', $this->Cust->birthdate);
+                    $workstart = Carbon::createFromFormat('Y-m-d', $this->Employer->work_start);
+                    $age = $dob->diffInYears($workstart);
+                    if ($age < 18) {
+                        $this->addError('Employer.work_start', 'Work start and birthday should be more than 18 years');
+                        $mail_flag_checker = 0;
+                    } else {
+                        $this->validate($this->rule4);
+                        $this->Employer->save();
+                        $this->tab5 = 1;
+                    }
                     break;
                 case 5:
                     $this->validate($this->rule5);
@@ -283,11 +298,17 @@ class NewMembership extends Component
                 case 6:
                     $this->totalfee();
                     $this->validate($this->rule6);
-                    // $this->fileupload2();
-
-                    // $this->applymember->cust_bank_id = $this->cust_bank_id;
-                    // $this->applymember->client_bank_id = $this->client_bank_id;
-                    // $this->applymember->client_bank_acct_no = $this->client_bank_acct;
+                    $this->applymember->cust_bank_id = $this->cust_bank_id;
+                    $this->applymember->client_bank_id = $this->client_bank_id;
+                    $this->applymember->client_bank_acct_no = $this->client_bank_acct;
+                    $this->applymember->share_pmt_mode_flag = $this->pay_type_share;
+                    $this->applymember->register_fee_flag = $this->pay_type_regist;
+                    $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
+                    if ($this->pay_type_share == '1') {
+                        $this->applymember->share_lump_sum_amt = $this->tot_share;
+                    } else {
+                        $this->applymember->share_lump_sum_amt = 0;
+                    }
                     $this->applymember->save();
                     $this->tab7 = 1;
                     break;
@@ -361,6 +382,15 @@ class NewMembership extends Component
                     $this->applymember->cust_bank_id = $this->cust_bank_id;
                     $this->applymember->client_bank_id = $this->client_bank_id;
                     $this->applymember->client_bank_acct_no = $this->client_bank_acct;
+                    $this->applymember->share_pmt_mode_flag = $this->pay_type_share;
+                    $this->applymember->register_fee_flag = $this->pay_type_regist;
+                    $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
+
+                    if ($this->pay_type_share == '1') {
+                        $this->applymember->share_lump_sum_amt = $this->tot_share;
+                    } else {
+                        $this->applymember->share_lump_sum_amt = 0;
+                    }
                     $this->applymember->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
 
@@ -474,7 +504,6 @@ class NewMembership extends Component
 
     public function mount()
     {
-
         $this->User = auth()->user();
         $this->Coop = Coop::find($this->User->client_id);
         $this->Cust = Customer::firstOrCreate([
@@ -485,7 +514,7 @@ class NewMembership extends Component
             'phone'     => $this->User->phone_no,
         ]);
 
-        $this->applymember       = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id' => $this->User->id]);
+        $this->applymember = ApplyMembership::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id], ['user_id' => $this->User->id]);
         $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = $this->globalParm->MIN_SHARE;
@@ -507,40 +536,55 @@ class NewMembership extends Component
             return redirect()->route('home');
         }
 
-        $this->Cust->birthdate   = $this->birthdate();
-        $this->Cust->gender_id   = $this->gender();
+        $this->Cust->birthdate = $this->birthdate();
+        $this->Cust->gender_id = $this->gender();
 
-        $this->CustAddress       = $this->Cust->Address()->firstOrCreate(['cif_id' => $this->Cust->id, 'client_id' => $this->User->client_id, 'apply_id' => $this->apply_id]);
+        $this->CustAddress = $this->Cust->Address()->firstOrCreate(
+                [
+                    'cif_id' => $this->Cust->id, 
+                    'client_id' => $this->User->client_id, 
+                    'apply_id' => $this->apply_id,
+                    'address_type_id' => '2',
+                ]);
 
-        $this->mail_flag =  $this->CustAddress->mail_flag;
-        $this->CustFamily  = CustFamily::firstOrCreate([
-            'cif_id'        => $this->Cust->id,
-            'client_id'     => $this->User->client_id,
-            'apply_id'      => $this->apply_id,
-        ], []);
+        $this->mail_flag = $this->CustAddress->mail_flag;
+        $this->CustFamily = CustFamily::firstOrCreate([
+                    'cif_id'        => $this->Cust->id,
+                    'client_id'     => $this->User->client_id,
+                    'apply_id'      => $this->apply_id,
+                ], []);
 
-
-        $this->Introducer        = $this->Cust->introducer()->firstOrCreate([], [
+        $this->Introducer = $this->Cust->introducer()->firstOrCreate([], [
             'client_id' => $this->User->client_id,
             'apply_id' => $this->apply_id,
         ]);
+
         if ($this->Introducer != NULL) {
             $this->CustIntroducer = FMSCustomer::where('id', $this->Introducer->intro_cust_id)->firstOrNew();
-            $this->search        = $this->CustIntroducer->identity_no;
+            $this->search = $this->CustIntroducer->identity_no;
         }
 
-
-
-
-        $this->Employer          = CustEmployer::firstOrCreate(['cust_id' => $this->Cust->id, 'client_id' => $this->User->client_id, 'apply_id' => $this->apply_id]);
-        $this->EmployAddress     = $this->Employer->Address()->firstOrCreate(['cif_id' => $this->Cust->id, 'client_id' => $this->User->client_id, 'apply_id' => $this->apply_id,]);
+        $this->Employer = CustEmployer::firstOrCreate(
+                [
+                    'cust_id' => $this->Cust->id, 
+                    'client_id' => $this->User->client_id, 
+                    'apply_id' => $this->apply_id
+                ]);
+        $this->EmployAddress     = $this->Employer->Address()->firstOrCreate(
+                [
+                    'cif_id' => $this->Cust->id, 
+                    'client_id' => $this->User->client_id, 
+                    'apply_id' => $this->apply_id,
+                    'address_type_id' => '3'
+                ]);
         $this->mail_flag_employer = $this->EmployAddress->mail_flag;
 
         $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->gender_id         = RefGender::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->relationship      = RefRelationship::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
+
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
@@ -548,7 +592,7 @@ class NewMembership extends Component
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
-
+        // dd($this->relationship);
         // dd($this->Cust->birthdate);
     }
 
@@ -639,6 +683,34 @@ class NewMembership extends Component
             ], [
                 'filedesc' => 'Last Month Paycheck',
                 'filetype' => $this->online_file4->extension(),
+                'filepath' => $filepath,
+            ]);
+        }
+
+        if ($this->payment_file_regist) {
+            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment' . '.' . $this->payment_file_regist->extension();
+
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment' . '.' . $this->payment_file_regist->extension());
+
+            $this->applymember->files()->updateOrCreate([
+                'filename' => 'RegistrationPayment',
+            ], [
+                'filedesc' => 'Registration Payment Proof',
+                'filetype' => $this->payment_file_regist->extension(),
+                'filepath' => $filepath,
+            ]);
+        }
+
+        if ($this->payment_file_share) {
+            $filepath = 'Files/' . $customers->id . '/membership/SharePayment' . '.' . $this->payment_file_share->extension();
+
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment' . '.' . $this->payment_file_share->extension());
+
+            $this->applymember->files()->updateOrCreate([
+                'filename' => 'SharePayment',
+            ], [
+                'filedesc' => 'Share Payment Proof',
+                'filetype' => $this->payment_file_share->extension(),
                 'filepath' => $filepath,
             ]);
         }
@@ -736,8 +808,9 @@ class NewMembership extends Component
 
     public function render()
     {
-        if ($this->pay_type_share == 'INST') {
+        if ($this->pay_type_share == '2') {
             $this->tot_share = $this->monthly_share;
+            $this->applymember->share_monthly = $this->monthly_share;
         } else {
             $this->tot_share = $this->applymember->share_fee;
         }
@@ -749,14 +822,7 @@ class NewMembership extends Component
             $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
             $this->client_bank_name = $bank_name->description;
             $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
-            // dump($this->client_bank_name);
-            // dump($this->client_bank_acct);
-            // dump($this->globalParm);
         }
-
-
-
-
 
         return view('livewire.page.application.membership.new-membership')->extends('layouts.head');
     }

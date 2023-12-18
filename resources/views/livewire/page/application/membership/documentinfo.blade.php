@@ -54,6 +54,39 @@
                     wire:model.defer="online_file4"
                 />
             </div>
+            @if($pay_type_regist=="1")
+
+            <div>
+                <x-form.input
+                label="Upload Payment Proof (Registration Fee):"
+                name="payment_file_regist"
+                id="payment_file_regist"
+                value=""
+                mandatory=""
+                disable=""
+                type="file"
+                accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                wire:model.defer="payment_file_regist"
+            />
+            </div>
+            @endif
+            @if($pay_type_share=='1')
+
+            <div>
+                <x-form.input
+                    label="Upload Payment Proof (Share Fee):"
+                    name="payment_file_share"
+                    id="payment_file_share"
+                    value=""
+                    mandatory=""
+                    disable=""
+                    type="file"
+                    accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                    wire:model.defer="payment_file_share"
+                />
+            </div>
+            @endif
+            
         </div>
         <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">
             <div class="flex items-center justify-center space-x-2">
