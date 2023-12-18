@@ -208,24 +208,29 @@ class Approver extends Component
                     ['cif_id', $this->Cust->id ],
                     ['address_type_id', 2],
                     ['client_id', $this->client_id],
+                    ['apply_id' , $this->Application->id],
                 ])->first();
         $this->EmployAddress = Address::where([
                     ['cif_id', $this->Cust->id ],
                     ['address_type_id', 3],
                     ['client_id', $this->client_id],
+                    ['apply_id' , $this->Application->id],
                 ])->first();
         $this->CustFamily = Family::where([
                     ['cif_id', $this->Cust->id ],
                     ['client_id', $this->client_id],
+                    ['apply_id' , $this->Application->id],
                 ])->first();
         $this->Employer   = Employer::where([
                     ['cust_id' , $this->Cust->id], 
                     ['client_id' , $this->client_id],
+                    ['apply_id' , $this->Application->id],
                 ])->first();
         $this->Introducer = Introducer::where([
                     ['client_id' , $this->client_id],
                     ['introduce_type', 'App\Models\SiskopCustomer'],
-                    ['introduce_id', $this->Cust->id]
+                    ['introduce_id', $this->Cust->id],
+                    ['apply_id' , $this->Application->id],
                 ])->first();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();

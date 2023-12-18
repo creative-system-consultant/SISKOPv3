@@ -7,57 +7,63 @@
             <x-general.card class="flex items-center w-full mb-2 overflow-x-auto bg-white rounded-md ">
                 <x-tab.title name="0" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-archive-box class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <x-heroicon-o-banknotes class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         Financing
                     </div>
                 </x-tab.title>
                 <x-tab.title name="1" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-chart-pie class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <x-heroicon-o-user-group class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         Membership
                     </div>
                 </x-tab.title>
                 <x-tab.title name="2" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-arrows-right-left class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                        Share
+                        <x-heroicon-o-folder-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Add Share
                     </div>
                 </x-tab.title>
                 <x-tab.title name="3" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-document-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Sell Share
-                        </div>
+                        <x-heroicon-o-folder-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Sell Share
+                    </div>
+                </x-tab.title>
+                <x-tab.title name="9" livewire="">
+                    <div class="flex flex-col items-center lg:flex-row">
+                        <x-heroicon-o-arrows-right-left class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Exchange Share
+                    </div>
                 </x-tab.title>
                 <x-tab.title name="4" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-document-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Add Contribution
-                        </div>
+                        <x-heroicon-o-document-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Add Contribution
+                    </div>
                 </x-tab.title>
                 <x-tab.title name="5" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-credit-card class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Withdrawal Contribution
-                        </div>
+                        <x-heroicon-o-document-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Withdrawal Contribution
+                    </div>
                 </x-tab.title>
                 <x-tab.title name="6" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Special Aid
-                        </div>
+                        <x-heroicon-o-newspaper class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Special Aid
+                    </div>
                 </x-tab.title>
                 <x-tab.title name="7" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Dividend Payout
-                        </div>
+                        <x-heroicon-o-arrow-up-on-square-stack class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Dividend Payout
+                    </div>
                 </x-tab.title>
                 <x-tab.title name="8" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-identification class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                            Stop Membership
-                        </div>
+                        <x-heroicon-o-user-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Stop Membership
+                    </div>
                 </x-tab.title>
             </x-general.card>
             <div x-cloak class="pt-4">

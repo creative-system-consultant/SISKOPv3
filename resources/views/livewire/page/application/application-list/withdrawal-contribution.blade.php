@@ -13,46 +13,46 @@
             <x-table.table-header class="text-left" value="Action" sort="" />
         </x-slot>
         <x-slot name="tbody">
-            @forelse ($withdrawal as $withdraw)
+            @forelse ($withdrawal as $item)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $loop->iteration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $withdraw->customer->name }}
+                        {{ $item->customer->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $withdraw->customer->icno }}
+                        {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right uppercase">
-                        {{ $withdraw->apply_amt == '0.00' ? '0.00' : $withdraw->apply_amt }}
+                        {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right uppercase">
-                        {{ $withdraw->amt_before == '0.00' ? '0.00' : $withdraw->amt_before }}
+                        {{ $item->amt_before == '0.00' ? '0.00' : $item->amt_before }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $withdraw->bank_account }}
+                        {{ $item->bank_account }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @foreach ($banks as $bank)
-                            @if ($bank->code == $withdraw->bank_code) {{ $bank->description }}
+                            @if ($bank->code == $item->bank_code) {{ $bank->description }}
                         @endif
                         @endforeach
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $withdraw->created_at->format("d-m-Y") }}
+                        {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($withdraw->flag == '0') Still being applied
-                        @elseif ($withdraw->flag == '1') Being Processed
-                        @elseif ($withdraw->flag == '3') Failed / Decline
-                        @elseif ($withdraw->flag == '6') Approved
+                        @if ($item->flag == '0') Still being applied
+                        @elseif ($item->flag == '1') Being Processed
+                        @elseif ($item->flag == '3') Failed / Decline
+                        @elseif ($item->flag == '6') Approved
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
                             <button
-                                wire:click="showApplication('{{ $withdraw->uuid }}')"
+                                wire:click="showApplication('{{ $item->uuid }}')"
                                 @click="openModal = true"
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400"
                                 title="Show Application">

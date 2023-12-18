@@ -175,7 +175,7 @@
             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <button type="button" wire:click="decline" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
-                        Decline
+                        Suggest Decline
                     </button>
                     @if($Application->step > 1)
                     <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
@@ -186,7 +186,7 @@
                         Debug
                      </button>--}}
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        Approve
+                        Suggest Approve
                     </button>
                     @if($forward) <button wire:click="forward" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-orange-500 rounded-md focus:outline-none">
                        Send To Next Approval
