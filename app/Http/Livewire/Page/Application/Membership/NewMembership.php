@@ -540,19 +540,20 @@ class NewMembership extends Component
         $this->Cust->gender_id = $this->gender();
 
         $this->CustAddress = $this->Cust->Address()->firstOrCreate(
-                [
-                    'cif_id' => $this->Cust->id, 
-                    'client_id' => $this->User->client_id, 
-                    'apply_id' => $this->apply_id,
-                    'address_type_id' => '2',
-                ]);
+            [
+                'cif_id' => $this->Cust->id,
+                'client_id' => $this->User->client_id,
+                'apply_id' => $this->apply_id,
+                'address_type_id' => '2',
+            ]
+        );
 
         $this->mail_flag = $this->CustAddress->mail_flag;
         $this->CustFamily = CustFamily::firstOrCreate([
-                    'cif_id'        => $this->Cust->id,
-                    'client_id'     => $this->User->client_id,
-                    'apply_id'      => $this->apply_id,
-                ], []);
+            'cif_id'        => $this->Cust->id,
+            'client_id'     => $this->User->client_id,
+            'apply_id'      => $this->apply_id,
+        ], []);
 
         $this->Introducer = $this->Cust->introducer()->firstOrCreate([], [
             'client_id' => $this->User->client_id,
@@ -565,26 +566,28 @@ class NewMembership extends Component
         }
 
         $this->Employer = CustEmployer::firstOrCreate(
-                [
-                    'cust_id' => $this->Cust->id, 
-                    'client_id' => $this->User->client_id, 
-                    'apply_id' => $this->apply_id
-                ]);
+            [
+                'cust_id' => $this->Cust->id,
+                'client_id' => $this->User->client_id,
+                'apply_id' => $this->apply_id
+            ]
+        );
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate(
-                [
-                    'cif_id' => $this->Cust->id, 
-                    'client_id' => $this->User->client_id, 
-                    'apply_id' => $this->apply_id,
-                    'address_type_id' => '3'
-                ]);
+            [
+                'cif_id' => $this->Cust->id,
+                'client_id' => $this->User->client_id,
+                'apply_id' => $this->apply_id,
+                'address_type_id' => '3'
+            ]
+        );
         $this->mail_flag_employer = $this->EmployAddress->mail_flag;
+
+
 
         $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->gender_id         = RefGender::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
-
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
@@ -808,6 +811,12 @@ class NewMembership extends Component
 
     public function render()
     {
+        if (!$this->Cust->gender_id) {
+            $this->relationship      = RefRelationship::where('client_id', $this->User->client_id)->get();
+        } else {
+            $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
+        }
+
         if ($this->pay_type_share == '2') {
             $this->tot_share = $this->monthly_share;
             $this->applymember->share_monthly = $this->monthly_share;
