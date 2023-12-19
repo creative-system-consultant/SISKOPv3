@@ -105,7 +105,7 @@
                         wire:model="Cust.gender_id"
                     >
                         @foreach ($gender_id as $list)
-                                <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                                <option value="{{ $list->code }}"> {{ $list->description }}</option>
                         @endforeach
                     </x-form.dropdown>
                 </div>

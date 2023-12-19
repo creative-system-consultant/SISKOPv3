@@ -474,14 +474,13 @@ class NewMembership extends Component
     public function gender()
     {
         $tempGender  = substr($this->Cust->identity_no, 0, 12);
-        $this->Cust->gender_id;
 
         if ($tempGender % 2 == 0) {
-            $this->Cust->gender_id == '2';
+            $tempGender = 'F';
         } else {
-            $this->Cust->gender_id == '1';
+            $tempGender = 'M';
         }
-        return $this->Cust->gender_id;
+        return $tempGender;
     }
 
     public function callSP()
@@ -596,7 +595,6 @@ class NewMembership extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
         // dd($this->relationship);
-        // dd($this->Cust->birthdate);
     }
 
     public function fileupload2()
@@ -816,6 +814,7 @@ class NewMembership extends Component
         } else {
             $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
         }
+        // dump($this->Cust->gender_id);
 
         if ($this->pay_type_share == '2') {
             $this->tot_share = $this->monthly_share;
