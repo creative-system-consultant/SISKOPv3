@@ -125,7 +125,7 @@ class NewMembership extends Component
         'CustFamily.religion_id'             => 'required',
         'CustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'CustFamily.work_post'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
-        'CustFamily.salary'                  => 'required',
+        'CustFamily.salary'                  =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
     ];
 
     protected $rule4 = [
@@ -133,9 +133,9 @@ class NewMembership extends Component
         'Employer.department'                => 'required',
         'Employer.position'                  => 'required',
         'Employer.office_num'                => ['required', 'regex:/^\d{7,11}$/'],
-        'Employer.salary'                    => 'required',
+        'Employer.salary'                    =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
         'Employer.worker_num'                => ['nullable', 'regex:/^\d{11}$/'],
-        'Employer.work_start'                => 'required',
+        'Employer.work_start'                => 'required|date|before_or_equal:today',
     ];
 
     protected $rule5 = [
@@ -266,7 +266,7 @@ class NewMembership extends Component
                     break;
                 case 3:
                     if ($this->CustFamily->identity_no === $this->Cust->identity_no) {
-                        $this->addError('CustFamily.identity_no', 'Identity number must not be the same as Cust identity number.');
+                        $this->addError('CustFamily.identity_no', 'Identity number must not be the same as Applicant identity number.');
                         $mail_flag_checker = 0;
                     } else {
                         $this->validate($this->rule3);

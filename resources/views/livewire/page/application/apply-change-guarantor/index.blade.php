@@ -82,15 +82,18 @@
                 <x-slot name="tbody">
                     @if($guarantor)
 
+                    
+                        
+                    @foreach ($guarantor as $index => $item)
                     <tr>
                         <x-table.table-body colspan="" class="border text-center text-xs">
-                            {{$guarantor->fmsMembership->mbr_no}}
+                            {{$item->fmsMembership->mbr_no}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="border text-center text-xs">
-                            {{$guarantor->fmsMembership->fmsCustomer->identity_no}}
+                            {{$item->fmsMembership->fmsCustomer->identity_no}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="border text-center text-xs">
-                            {{$guarantor->fmsMembership->fmsCustomer->name}}
+                            {{$item->fmsMembership->fmsCustomer->name}}
                         </x-table.table-body>
                         
                         <x-table.table-body colspan="" class="border text-center">
@@ -101,7 +104,7 @@
                                 mandatory=""
                                 disable="readonly"
                                 type="text"
-                                wire:model="mbr_no"
+                                wire:model="mbrNos.{{ $index }}"
                             />
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="border">
@@ -111,8 +114,8 @@
                                 value=""
                                 mandatory=""
                                 disable=""
-                                wire:keyup="searchUser"
-                                wire:model="search"
+                                wire:keyup="searchUser({{ $index }})"
+                                wire:model="searchNRIC.{{ $index }}"
                                 type="text"
                             />
                         </x-table.table-body>
@@ -124,18 +127,13 @@
                                 mandatory=""
                                 disable="readonly"
                                 type="text"
-                                wire:model="name"
+                                wire:model="names.{{ $index }}"
 
                             />
                         </x-table.table-body>
                     </tr>
-                    {{-- @empty
-                        <tr>
-                            <x-table.table-body colspan="6" class="text-center">
-                                No Data
-                            </x-table.table-body>
-                        </tr>
-                    @endforelse --}}
+
+                    @endforeach
                     @endif
 
                 </x-slot>
