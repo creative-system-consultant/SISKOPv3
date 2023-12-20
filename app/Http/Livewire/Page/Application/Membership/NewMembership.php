@@ -442,6 +442,8 @@ class NewMembership extends Component
         if ($result == NULL) {
             $this->addError('search', 'No User with this IC');
             // dump('1035');
+        } else if ($result->fmsMembership->refMemStat->allow_introducer_flag == "N") {
+            $this->addError('search', 'This user is unable to be an introducer');
         } else {
             $this->CustIntroducer = $result;
             $this->resetErrorBag('search');

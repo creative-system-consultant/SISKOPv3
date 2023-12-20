@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public $siskop_cust, $fms_cust, $user;
+    public $siskop_cust, $fms_cust, $user, $guaranteeFlag = 1;
     public $balance, $jaminan, $num_jaminan, $anggota, $reason, $balance_outstanding, $client_id;
 
     protected $listeners = ['submit'];
@@ -144,6 +144,9 @@ class Index extends Component
                         AND P.bal_outstanding > 0
                         AND C.client_id = '$this->client_id'
                     ");
+        if (!$this->jaminan) {
+            $this->guaranteeFlag = 0;
+        }
 
         $this->num_jaminan = DB::select("
                             SELECT COUNT (D.ACCOUNT_NO) AS NUM_GUARANTEE
