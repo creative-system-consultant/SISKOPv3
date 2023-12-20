@@ -73,17 +73,20 @@ class Index extends Component
         $searchTerm = $this->searchNRIC[$index];
 
         if (strlen($searchTerm) == 12) {
-            $result = Customer::with('fmsMembership')
+            $result = Customer::with(['fmsMembership', 'fmsMembership.refMemStat'])
                 ->where('identity_no', $searchTerm)
                 ->whereHas('fmsMembership', function ($query) {
                     $query->where('client_id', $this->client_id);
                 })->first();
 
+            // dd($result->fmsMembership->refMemStat->allow_guarantor_flag);
             if ($result === null) {
                 $this->addError('searchNRIC.' . $index, 'No User with this IC');
                 $this->mbrNos[$index] = '';
                 $this->names[$index] = '';
                 $this->newNric[$index] = '';
+            } else if ($result->fmsMembership->refMemStat->allow_guarantor_flag == "N") {
+                $this->addError('searchNRIC.' . $index, 'This user is unable to be a guarantor');
             } else {
                 $this->mbrNos[$index] = $result->fmsMembership->mbr_no ?? '';
                 $this->names[$index] = $result->name ?? '';

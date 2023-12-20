@@ -1,13 +1,13 @@
 <div class="p-4">
     <h1 class="text-base font-semibold md:text-2xl">Apply Change Guarantor</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md ">
-        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Sila Isi maklumat</h2>
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Please fill in the information</h2>
         <div>
             <x-table.table>
                 <x-slot name="thead">
                     <x-table.table-header class="text-left " value="Account Number" sort="" />
                     <x-table.table-header class="text-left" value="Product Name" sort="" />
-                    <x-table.table-header class="text-left" value="Financing Amount" sort="" />
+                    <x-table.table-header class="text-right" value="Financing Amount" sort="" />
                     <x-table.table-header class="text-right" value="Balance Outstanding" sort="" />
                     <x-table.table-header class="text-center" value="Action" sort="" />
                 </x-slot>
@@ -20,7 +20,7 @@
                         <x-table.table-body colspan="" class="text-left">
                             {{$item->master->product->name}}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="text-left">
+                        <x-table.table-body colspan="" class="text-right">
                             {{number_format($item->master->selling_price,2)}}
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-right">
@@ -30,7 +30,7 @@
                             <div class="flex items-center justify-center space-x-2">
                                 <a class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none" wire:click='searchGuarantor("{{$item->account_no}}")'>
                                     <x-heroicon-o-cursor-arrow-rays class="w-4 h-4" />
-                                    Pilih
+                                    Please Choose
                                 </a>
                             </div>
                         </x-table.table-body>
@@ -51,30 +51,30 @@
                 <x-slot name="thead">
                     <tr  class="">
                         <th  colspan="3" class="px-6 py-3 border bg-primary-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Senarai Penjamin
+                            List of Guarantors
                         </th>
                         <th  colspan="3" class="px-6 py-3 border bg-primary-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Penjamin Baru
+                            New Guarantor
                         </th>
                     </tr>
                     <tr>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            No Anggota
+                            Membership Number
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            No K/P
+                            NRIC of the Current Guarantor
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Penjamin Semasa
+                            Current Guarantor Name
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            No Anggota
+                            Membership Number
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            No K/P penjamin Baru
+                            NRIC of the New Guarantor
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Nama Penjamin
+                            New Guarantor Name
                         </th>
                     </tr>
                     
@@ -110,7 +110,7 @@
                         <x-table.table-body colspan="" class="border">
                             <x-form.input
                                 label=""
-                                name=""
+                                name="searchNRIC.{{$index}}"
                                 value=""
                                 mandatory=""
                                 disable=""
@@ -145,7 +145,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
                 <div>
                     <x-form.dropdown
-                        label="Sebab Menukar Penjamin"
+                        label="Reason for Changing Guarantor"
                         value=""
                         name=""
                         id=""
@@ -154,10 +154,9 @@
                         default="yes"
                         wire:model="reasonChange"
                     >
-                        <option value="">Sila Pilih</option>
-                        <option value="Berhenti Ahli"> Berhenti Ahli </option>
-                        <option value="Berhenti Kerja"> Berhenti Kerja </option>
-                        <option value="Lain-lain"> Lain-lain (isi tempat kosong) </option>
+                        <option value="Berhenti Ahli"> Resignation of Member </option>
+                        <option value="Berhenti Kerja"> Resignation from Work </option>
+                        <option value="Lain-lain"> Others (please fill the form below) </option>
                     </x-form.dropdown>
                 </div>
             </div>
@@ -165,14 +164,14 @@
             @if($reasonChange =="Lain-lain")
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                 <x-form.text-area
-                    label="Sebab Lain"
+                    label="Other Reasons"
                     value=""
                     name=""
                     rows=""
                     disable=""
                     mandatory=""
                     placeholder=""
-                    wire:model="reasonChangeTxt"
+                    wire:model.lazy="reasonChangeTxt"
                 />
             </div>
             @endif
@@ -180,7 +179,7 @@
             <div class="p-4 mt-10 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
                     <button wire:click="submit()" type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        Simpan
+                        Submit
                     </button>
                 </div>
             </div>
