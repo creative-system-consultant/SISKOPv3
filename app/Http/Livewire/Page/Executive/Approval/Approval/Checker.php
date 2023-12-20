@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Page\Executive\Approval\Approval;
 
+use App\Models\ApplyDividend;
 use App\Models\Approval;
 use App\Models\CloseMembership;
 use App\Models\Contribution;
@@ -37,7 +38,7 @@ class Checker extends Component
     }
 
     protected $custom_rule = [
-                    'share' => [
+                        'share' => [
                             'name' => 'Buy Share',
                             'type' => 'App\Models\Share',
                             'page' => 2,
@@ -48,6 +49,14 @@ class Checker extends Component
                         ],
                     'sellshare' => [
                             'name' => 'Sell Share',
+                            'type' => 'App\Models\Share',
+                            'page' => 3,
+                            'rule' => [
+                                'Application.approved_amt' => 'required|gt:0',
+                            ],
+                        ],
+                    'exchangeshare' => [
+                            'name' => 'Exchange Share',
                             'type' => 'App\Models\Share',
                             'page' => 3,
                             'rule' => [
@@ -70,6 +79,24 @@ class Checker extends Component
                                 'Application.approved_amt' => 'required|gt:0',
                             ],
                         ],
+                    'dividen' => [
+                            'name' => 'Dividend',
+                            'type' => 'App\Models\ApplyDividend',
+                            'page' => 10,
+                            'rule' => [
+                                'Application.div_cash_approved' => 'required|gt:0',
+                                'Application.div_share_approved' => 'required|gt:0',
+                                'Application.div_contri_approved' => 'required|gt:0',
+                            ],
+                        ],
+                    'closemembership' => [
+                            'name' => 'Close Membership',
+                            'type' => 'App\Models\CloseMembership',
+                            'page' => 8,
+                            'rule' => [
+                                //'Application.approved_amt' => 'required|gt:0',
+                            ],
+                        ],
                 ];
 
     public function forward() {
@@ -88,6 +115,7 @@ class Checker extends Component
 
     public function next()
     {
+        $this->validate();
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -158,10 +186,12 @@ class Checker extends Component
 
         if ($this->include == 'contribution' || $this->include == 'sellcontribution'){
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-        } else if($this->include == 'share' || $this->include == 'sellshare') {
+        } else if($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        }  else if($this->include == 'dividend') {
+            $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
             $this->notfound();
             return redirect()->route('application.list',['page' => 1 ]);
@@ -186,5 +216,13 @@ class Checker extends Component
     public function render()
     {
         return view('livewire.page.executive.approval.approval.approval')->extends('layouts.head');
+
+        // @include('livewire.page.executive.approval.approval.contribution')
+        // @include('livewire.page.executive.approval.approval.sellcontribution')
+        // @include('livewire.page.executive.approval.approval.dividend')
+        // @include('livewire.page.executive.approval.approval.share')
+        // @include('livewire.page.executive.approval.approval.sellshare')
+        // @include('livewire.page.executive.approval.approval.exchangeshare')
+        // @include('livewire.page.executive.approval.approval.closemembership')
     }
 }

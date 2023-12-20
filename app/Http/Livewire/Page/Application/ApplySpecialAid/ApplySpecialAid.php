@@ -20,7 +20,7 @@ class ApplySpecialAid extends Component
     {
         $user = auth()->user();
         $specialAids = SpecialAid::where([['uuid', $uuid], ['status', 1]])->first();
-        $customer = Customer::where('icno', $user->icno)->first();
+        $customer = Customer::where('identity_no', $user->icno)->first();
 
         if ($this->customer_name == '') {
             session()->flash('nameError', 'Name is required');
@@ -83,13 +83,13 @@ class ApplySpecialAid extends Component
                 ]);
             }
         }
-
+/*
         $applySpecialAid->notification()->create([
             'title'       => 'Special Aid is being processed',
             'type'        =>  3,
             'description' => 'Your Application has been sent',
             'link'        => url('/applySpecialAid'),
-        ]);
+        ]);*/
 
         session()->flash('message', 'Special Aid Applied');
         session()->flash('time', 10000);

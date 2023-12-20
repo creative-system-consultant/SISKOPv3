@@ -11,13 +11,13 @@ class ChangeGuarantor extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'SISKOP.TUKAR_PENJAMIN';
+    protected $table = 'SISKOP.CHANGE_GUARANTOR';
     protected $guarded = [];
     protected $dates = ['created_at', 'deleted_at', 'updated_at'];
 
     public function customer()
     {
-        return $this->belongsTo('app\Models\Customers', 'cust_id', 'id');
+        return $this->belongsTo('app\Models\Customers', 'cif_id', 'id');
     }
 
     public function account_application()

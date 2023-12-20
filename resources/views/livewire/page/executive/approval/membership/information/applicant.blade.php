@@ -81,4 +81,28 @@
         disable="{{ $input_disable }}"
         type="text"
     />
+    <x-form.input
+        label="Religion"
+        name="religion"
+        value="{{ $Application->customer->religion?->description ?? '' }}"
+        mandatory=""
+        disable="{{ $input_disable }}"
+        type="text"
+    />
+    <x-form.input
+        label="Bank"
+        name="bank"
+        value="{{ $Application->customer->bank?->description ?? '' }}"
+        mandatory=""
+        disable="{{ $input_disable }}"
+        type="text"
+    />
+    <x-form.input
+        label="Bank Account No"
+        name="bank_account"
+        value="{{ $Application->customer->bank_acct_no ?? '' }}"
+        mandatory=""
+        disable="{{ $input_disable }}"
+        type="text"
+    />
 </div>

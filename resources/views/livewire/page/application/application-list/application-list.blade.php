@@ -62,7 +62,13 @@
                 <x-tab.title name="8" livewire="">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-user-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                        Stop Membership
+                        Close Membership
+                    </div>
+                </x-tab.title>
+                <x-tab.title name="10" livewire="">
+                    <div class="flex flex-col items-center lg:flex-row">
+                        <x-heroicon-o-arrows-up-down class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        Change Guarantor
                     </div>
                 </x-tab.title>
             </x-general.card>
@@ -92,7 +98,13 @@
                     <livewire:page.application.application-list.dividend>
                 </x-tab.content>
                 <x-tab.content name="8">
-                    <livewire:page.application.application-list.stop-membership>
+                    <livewire:page.application.application-list.close-membership>
+                </x-tab.content>
+                <x-tab.content name="9">
+                    <livewire:page.application.application-list.exchange-share>
+                </x-tab.content>
+                <x-tab.content name="10">
+                    <livewire:page.application.application-list.change-guarantor>
                 </x-tab.content>
             </div>
         </div>

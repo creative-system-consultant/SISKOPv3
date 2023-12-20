@@ -46,7 +46,7 @@ class User extends Authenticatable implements Auditable
 
     public function customer()
     {
-        return $this->hasMany(Customer::class,'icno','icno');
+        return $this->hasMany(Customer::class,'identity_no','icno');
     }
 
     public function coop_cust($id)
@@ -76,5 +76,15 @@ class User extends Authenticatable implements Auditable
     public function setIdentityNoAttribute($value)
     {
         return $this->icno = $value;
+    }
+
+    public function ismember($client_id = NULL)
+    {
+        $cust = Customer::where([['client_id', $client_id ?? $this->client_id],['identity_no', $this->icno]])->first();
+        if ($cust == NULL){
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
 }
