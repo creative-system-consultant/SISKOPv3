@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-span-12 sm:col-span-12 lg:col-span-2">
                     <x-form.input-tag
-                        label="Loan Balance"
+                        label="Balance Outstanding"
                         type="text"
                         name=""
                         value="{{number_format($balance_outstanding,2)}}"
@@ -52,9 +52,9 @@
                 <x-table.table>
                     <x-slot name="thead">
                         <x-table.table-header class="text-left " value="Loan Account Number" sort="" />
-                        <x-table.table-header class="text-right" value="Loan Balance" sort="" />
+                        <x-table.table-header class="text-left" value="Borrower(s) Name" sort="" />
                         <x-table.table-header class="text-left" value="NRIC" sort="" />
-                        <x-table.table-header class="text-left" value="Guarantee Name" sort="" />
+                        <x-table.table-header class="text-right" value="Balance Outstanding" sort="" />
                     </x-slot>
                     <x-slot name="tbody">
                         @forelse($jaminan as $item)
@@ -62,15 +62,17 @@
                             <x-table.table-body colspan="" class="text-left">
                                 {{$item->account_no}}
                             </x-table.table-body>
-                            <x-table.table-body colspan="" class="text-right">
-                                {{$item->bal_outstanding}}
+                            <x-table.table-body colspan="" class="text-left">
+                                {{$item->guarantee_name}}
                             </x-table.table-body>
                             <x-table.table-body colspan="" class="text-left">
                                 {{$item->guarantee_icno}}
                             </x-table.table-body>
-                            <x-table.table-body colspan="" class="text-left">
-                                {{$item->guarantee_name}}
+                            <x-table.table-body colspan="" class="text-right">
+                                {{$item->bal_outstanding}}
                             </x-table.table-body>
+                           
+                            
                         </tr>
                         @empty
                         <tr>
@@ -86,15 +88,17 @@
             @if($guaranteeFlag!=1)
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-10">
-                <x-form.input
+         
+
+                <x-form.text-area
                     label="Reason for Closure"
+                    value="reason"
                     name="reason"
-                    id="reason"
-                    value=""
-                    mandatory=""
+                    rows=""
                     disable=""
-                    wire:model="reason"
-                    type="text"
+                    mandatory=""
+                    placeholder=""
+                    wire:model.lazy="reason"
                 />
 
                 {{-- <x-form.input

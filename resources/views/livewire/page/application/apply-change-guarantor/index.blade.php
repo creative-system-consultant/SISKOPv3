@@ -50,11 +50,16 @@
             <x-table.table>
                 <x-slot name="thead">
                     <tr  class="">
-                        <th  colspan="3" class="px-6 py-3 border bg-primary-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            List of Guarantors
+                        <th  colspan="6" class="px-6 py-3 border bg-primary-100 text-md leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            List Of Guarantors
                         </th>
-                        <th  colspan="3" class="px-6 py-3 border bg-primary-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            New Guarantor
+                    </tr>
+                    <tr  class="">
+                        <th  colspan="3" class="px-6 py-3 border bg-primary-150 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            Current 
+                        </th>
+                        <th  colspan="3" class="px-6 py-3 border bg-primary-200 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            New 
                         </th>
                     </tr>
                     <tr>
@@ -62,19 +67,19 @@
                             Membership Number
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            NRIC of the Current Guarantor
+                            NRIC
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Current Guarantor Name
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                           Name
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
                             Membership Number
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            NRIC of the New Guarantor
+                            NRIC
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            New Guarantor Name
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                            Name
                         </th>
                     </tr>
                     
@@ -92,7 +97,7 @@
                         <x-table.table-body colspan="" class="border text-center text-xs">
                             {{$item->fmsMembership->fmsCustomer->identity_no}}
                         </x-table.table-body>
-                        <x-table.table-body colspan="" class="border text-center text-xs">
+                        <x-table.table-body colspan="" class="border text-left text-xs">
                             {{$item->fmsMembership->fmsCustomer->name}}
                         </x-table.table-body>
                         
