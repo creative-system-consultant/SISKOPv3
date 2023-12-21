@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/web.config
 /storage/*.key
 /vendor
 .env
@@ -16,3 +17,6 @@ yarn-error.log
 _ide_helper.php
 
 .DS_Store
+
+00_old
+
