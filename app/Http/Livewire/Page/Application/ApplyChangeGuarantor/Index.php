@@ -27,12 +27,13 @@ class Index extends Component
     {
         $this->user = auth()->user();
         $this->client_id = $this->user->client_id;
+        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
 
         $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
 
 
         $changeGuarantor = ChangeGuarantor::where([
-            ['cust_id', $this->siskop_cust->id],
+            ['cif_id', $this->fms_cust->id],
             ['flag', '<>', 3]
         ])->first();
 
@@ -140,7 +141,6 @@ class Index extends Component
 
     public function render()
     {
-        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
 
         $membership             = $this->fms_cust->fmsMembership;
 
