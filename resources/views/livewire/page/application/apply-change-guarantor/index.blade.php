@@ -164,7 +164,7 @@
             @if($reasonChange =="Lain-lain")
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                 <x-form.text-area
-                    label="Other Reasons"
+                    label="Other Reasons : ({{ strlen($reasonChangeTxt) }}/255)"
                     value=""
                     name=""
                     rows=""

@@ -87,22 +87,20 @@ class Approver extends Component
         if ($this->Approval->rule_sms){
             //$this->Account->sendSMS('RM0 SISKOPv3 Application '.$this->Account->product->name.' have been pre-approved by COMMITTEE');
         }
-
-        // put event to Stored Proc
-        // put event here
     }
 
     public function doApproveApplication(){
-        $num = $this->User->id;
-        $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
-
         $this->Application->flag = 20;
         $this->Application->approved_date = now();
 
         $this->Application->Customer->save();
-        $this->Application->mbr_no = $newnum;
 
         $this->message = 'Application Approved';
+
+        // put event to Stored Proc
+        $sql = "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->Application->id . ", ". $this->User->id." ";
+        DB::statement($sql);
+        // put event here
 
         $ret = DB::table('ref.user_has_clients')->insert([
             'user_id'   => $this->Application->user_id,

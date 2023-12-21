@@ -103,7 +103,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4">
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
                     <x-form.text-area
-                        label="Organization Information"
+                        label="Organization Information : ({{ strlen($coop->description) }}/255)"
                         value=""
                         name="coop.description"
                         rows=""
