@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Page\Executive\Approval\Approval;
 
+use App\Models\ApplyDividend;
 use App\Models\Approval;
+use App\Models\CloseMembership;
 use App\Models\Contribution;
 use App\Models\Share;
 use App\Models\Ref\RefBank;
@@ -51,6 +53,14 @@ class Resolution extends Component
                             'type' => 'App\Models\Share',
                             'page' => 3,
                             'rule' => [
+                                'Application.approved_amt' => 'required|gt:0',
+                            ],
+                        ],
+                    'exchangeshare' => [
+                            'name' => 'Exchange Share',
+                            'type' => 'App\Models\Share',
+                            'page' => 3,
+                            'rule' => [
                                 //'Application.approved_amt' => 'required|gt:0',
                             ],
                         ],
@@ -68,6 +78,24 @@ class Resolution extends Component
                             'page' => 5,
                             'rule' => [
                                 'Application.approved_amt' => 'required|gt:0',
+                            ],
+                        ],
+                    'dividen' => [
+                            'name' => 'Dividend',
+                            'type' => 'App\Models\ApplyDividend',
+                            'page' => 10,
+                            'rule' => [
+                                'Application.div_cash_approved' => 'required|gt:0',
+                                'Application.div_share_approved' => 'required|gt:0',
+                                'Application.div_contri_approved' => 'required|gt:0',
+                            ],
+                        ],
+                    'closemembership' => [
+                            'name' => 'Close Membership',
+                            'type' => 'App\Models\CloseMembership',
+                            'page' => 8,
+                            'rule' => [
+                                //'Application.approved_amt' => 'required|gt:0',
                             ],
                         ],
                 ];
@@ -89,6 +117,7 @@ class Resolution extends Component
 
     public function next()
     {
+        $this->validate();
         $this->Application->flag = $this->flag;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -147,7 +176,7 @@ class Resolution extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share','sellshare','contribution','sellcontribution'])){
+        if (!in_array($include, ['share','sellshare','contribution','sellcontribution','closemembership'])){
             $this->notfound();
             return redirect()->route('application.list');
         }
@@ -156,16 +185,18 @@ class Resolution extends Component
         $this->pagename = $this->custom_rule[$this->include]['name'] ?? '';
         $this->pagetype = $this->custom_rule[$this->include]['type'] ?? '';
         $this->User     = User::find(auth()->user()->id);
+
         if ($this->include == 'contribution' || $this->include == 'sellcontribution'){
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-        } else if ($this->include == 'share' || $this->include == 'sellshare'){
+        } else if($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        } else if($this->include == 'closemembership') {
+            $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        }  else if($this->include == 'dividend') {
+            $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
-            // || in_array($this->Application->current_approval()?->group_id,$this->User->role_ids())
-        }
-        if ($this->Application == NULL ){
             $this->notfound();
-            return redirect()->route('application.list',['page' => $this->custom_rule[$this->include]['page']]);
+            return redirect()->route('application.list',['page' => 1 ]);
         }
 
         $this->Approval = Approval::where([
@@ -182,5 +213,13 @@ class Resolution extends Component
     public function render()
     {
         return view('livewire.page.executive.approval.approval.approval')->extends('layouts.head');
+
+        // @include('livewire.page.executive.approval.approval.contribution')
+        // @include('livewire.page.executive.approval.approval.sellcontribution')
+        // @include('livewire.page.executive.approval.approval.dividend')
+        // @include('livewire.page.executive.approval.approval.share')
+        // @include('livewire.page.executive.approval.approval.sellshare')
+        // @include('livewire.page.executive.approval.approval.exchangeshare')
+        // @include('livewire.page.executive.approval.approval.closemembership')
     }
 }

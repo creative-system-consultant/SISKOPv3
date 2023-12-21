@@ -31,7 +31,7 @@ class SiskopCustomer extends Model implements Auditable
 
     public function gender()
     {
-        return $this->belongsTo(Ref\RefGender::class, 'gender_id');
+        return $this->belongsTo(Ref\RefGender::class, 'gender_id','code');
     }
 
     public function marital()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Page\Executive\Approval\Approval;
 
+use App\Models\ApplyDividend;
 use App\Models\Approval;
 use App\Models\CloseMembership;
 use App\Models\Contribution;
@@ -51,6 +52,14 @@ class Maker extends Component
                             'type' => 'App\Models\Share',
                             'page' => 3,
                             'rule' => [
+                                'Application.approved_amt' => 'required|gt:0',
+                            ],
+                        ],
+                    'exchangeshare' => [
+                            'name' => 'Exchange Share',
+                            'type' => 'App\Models\Share',
+                            'page' => 3,
+                            'rule' => [
                                 //'Application.approved_amt' => 'required|gt:0',
                             ],
                         ],
@@ -68,6 +77,16 @@ class Maker extends Component
                             'page' => 5,
                             'rule' => [
                                 'Application.approved_amt' => 'required|gt:0',
+                            ],
+                        ],
+                    'dividen' => [
+                            'name' => 'Dividend',
+                            'type' => 'App\Models\ApplyDividend',
+                            'page' => 10,
+                            'rule' => [
+                                'Application.div_cash_approved' => 'required|gt:0',
+                                'Application.div_share_approved' => 'required|gt:0',
+                                'Application.div_contri_approved' => 'required|gt:0',
                             ],
                         ],
                     'closemembership' => [
@@ -96,6 +115,7 @@ class Maker extends Component
 
     public function next()
     {
+        $this->validate();
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -164,10 +184,12 @@ class Maker extends Component
 
         if ($this->include == 'contribution' || $this->include == 'sellcontribution'){
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-        } else if($this->include == 'share' || $this->include == 'sellshare') {
+        } else if($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        }  else if($this->include == 'dividend') {
+            $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
             $this->notfound();
             return redirect()->route('application.list',['page' => 1 ]);
@@ -190,5 +212,13 @@ class Maker extends Component
     public function render()
     {
         return view('livewire.page.executive.approval.approval.approval')->extends('layouts.head');
+
+        // @include('livewire.page.executive.approval.approval.contribution')
+        // @include('livewire.page.executive.approval.approval.sellcontribution')
+        // @include('livewire.page.executive.approval.approval.dividend')
+        // @include('livewire.page.executive.approval.approval.share')
+        // @include('livewire.page.executive.approval.approval.sellshare')
+        // @include('livewire.page.executive.approval.approval.exchangeshare')
+        // @include('livewire.page.executive.approval.approval.closemembership')
     }
 }

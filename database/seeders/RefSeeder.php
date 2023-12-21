@@ -255,7 +255,7 @@ class RefSeeder extends Seeder
             ['description' => 'SPECIAL AID',           'client_id' => '1', 'code' => 'special_aid'],
             ['description' => 'FINANCING',             'client_id' => '1', 'code' => 'fin_apply'],
             ['description' => 'MEMBERSHIP',            'client_id' => '1', 'code' => 'member_apply'],
-            ['description' => 'STOP MEMBERSHIP',       'client_id' => '1', 'code' => 'member_stop'],
+            ['description' => 'CLOSE MEMBERSHIP',      'client_id' => '1', 'code' => 'member_close'],
             ['description' => 'ADD SHARE',             'client_id' => '1', 'code' => 'share_add'],
             ['description' => 'SELL SHARE',            'client_id' => '1', 'code' => 'share_sell'],
             ['description' => 'ADD CONTIBUTION',       'client_id' => '1', 'code' => 'contri_add'],

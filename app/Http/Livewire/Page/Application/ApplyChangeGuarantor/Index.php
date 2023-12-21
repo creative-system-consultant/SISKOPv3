@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Page\Application\ApplyChangeGuarantor;
 use App\Models\AccountPosition;
 use App\Models\ChangeGuarantor;
 use App\Models\Customer;
+use App\Models\FmsMembership;
 use App\Models\GuarantorList;
 use App\Models\SiskopCustomer;
 use Livewire\Component;
@@ -13,6 +14,14 @@ class Index extends Component
 {
     public $user, $client_id, $siskop_cust, $fms_cust, $acct_master, $acct_position, $guarantor, $clicked = 0, $result, $search, $acct_no, $reasonChange, $reasonChangeTxt;
     public $name, $mbr_no, $mbr_no_old, $identity_no_old, $name_old;
+    public $guarantors = [];
+    public $searchNRIC = [];
+    public $mbrNos = [];
+    public $names = [];
+    public $newNric = [];
+    public $oldName = [];
+    public $oldNric = [];
+    public $oldMbrno = [];
 
     public function mount()
     {
@@ -27,10 +36,12 @@ class Index extends Component
             ['flag', '<>', 3]
         ])->first();
 
+        // dd($changeGuarantor);
+
 
         if ($changeGuarantor != NULL) {
-            if ($this->anggota->flag == '0') {
-                session()->flash('message', 'Close Membership application has been processed. You only need to apply once.');
+            if ($changeGuarantor->flag == '0') {
+                session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
                 session()->flash('time', 10000);
                 session()->flash('info');
                 session()->flash('title');
@@ -52,53 +63,74 @@ class Index extends Component
         $this->name_old = $this->guarantor->fmsMembership->fmsCustomer->name;
     }
 
-    public function searchUser()
+
+    public function searchUser($index)
     {
-        $this->guarantor = GuarantorList::where('account_no', $this->acct_no)->where('client_id', $this->client_id)->first();
+        if (!isset($this->searchNRIC[$index])) {
+            return;
+        }
 
-        if (strlen($this->search) == 12) {
-            $result = Customer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
-                $query->where('client_id', $this->client_id);
-            })->first();
+        $searchTerm = $this->searchNRIC[$index];
 
+        if (strlen($searchTerm) == 12) {
+            $result = Customer::with(['fmsMembership', 'fmsMembership.refMemStat'])
+                ->where('identity_no', $searchTerm)
+                ->whereHas('fmsMembership', function ($query) {
+                    $query->where('client_id', $this->client_id);
+                })->first();
 
-            if ($result == NULL) {
-                $this->addError('search', 'No User with this IC');
-                $this->mbr_no = "";
-                $this->name = "";
+            // dd($result->fmsMembership->refMemStat->allow_guarantor_flag);
+            if ($result === null) {
+                $this->addError('searchNRIC.' . $index, 'No User with this IC');
+                $this->mbrNos[$index] = '';
+                $this->names[$index] = '';
+                $this->newNric[$index] = '';
+            } else if ($result->fmsMembership->refMemStat->allow_guarantor_flag == "N") {
+                $this->addError('searchNRIC.' . $index, 'This user is unable to be a guarantor');
             } else {
-                $this->result = $result;
-                $this->mbr_no = $result->fmsMembership->mbr_no;
-                $this->name = $result->name;
-                $this->resetErrorBag('search');
+                $this->mbrNos[$index] = $result->fmsMembership->mbr_no ?? '';
+                $this->names[$index] = $result->name ?? '';
+                $this->newNric[$index] = $result->identity_no ?? '';
+                $this->resetErrorBag('searchNRIC.' . $index);
             }
         } else {
-            $this->mbr_no = "";
-            $this->name = "";
+            $this->mbrNos[$index] = '';
+            $this->names[$index] = '';
         }
-        // }
     }
 
     public function submit()
     {
-        $close_membership = ChangeGuarantor::create([
-            'cust_id'           => $this->siskop_cust->id,
-            'account_no'        => $this->acct_no,
-            'old_jamin_member1'              => $this->mbr_no_old,
-            'old_jamin_name1'              => $this->name_old,
-            'old_jamin_icno1'              => $this->identity_no_old,
-            'new_jamin_member1'              => $this->mbr_no,
-            'new_jamin_name1'              => $this->name,
-            'new_jamin_icno1'              => $this->result->identity_no,
-            'jamin_reason'              => $this->reasonChange,
-            'jamin_reason_txt'              => $this->reasonChangeTxt,
-            'flag'              => '0',
-            'step'              => '0',
-            'created_by'        => auth()->user()->name,
-            'created_at'        => now()
-        ]);
+        foreach ($this->guarantor as $index => $guarantor) {
+            $mbr_no = $this->mbrNos[$index] ?? null;
+            $name = $this->names[$index] ?? null;
+            $identity_no = $this->newNric[$index] ?? null;
+            $old_guarantor = FmsMembership::where('mbr_no', $guarantor->guarantor_mbr_id)->first();
+            $old_guarantor_customer = $old_guarantor->fmsCustomer;
+            $old_guarantor_mbrNo = $old_guarantor->mbr_no;
+            $old_guarantor_name = $old_guarantor_customer->name;
+            $old_guarantor_nric = $old_guarantor_customer->identity_no;
 
-        session()->flash('message', 'Close Membership Application Successfully Applied');
+
+            ChangeGuarantor::create([
+                'cust_id' => $this->siskop_cust->id,
+                'account_no' => $guarantor->account_no,
+                'old_jamin_member1' => $old_guarantor_mbrNo,
+                'old_jamin_name1' => $old_guarantor_name,
+                'old_jamin_icno1' => $old_guarantor_nric,
+                'new_jamin_member1' => $mbr_no,
+                'new_jamin_name1' => $name,
+                'new_jamin_icno1' => $identity_no,
+                'jamin_reason' => $this->reasonChange,
+                'jamin_reason_txt' => $this->reasonChangeTxt,
+                'flag' => '0',
+                'step' => '0',
+                'created_by' => auth()->user()->name,
+                'created_at' => now()
+            ]);
+        }
+
+        session()->flash('message', 'Change Guarantor Application Successfully Applied');
         session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
@@ -119,15 +151,18 @@ class Index extends Component
             $account_info = $item->account_no;
             $acct_position = AccountPosition::where('account_no', $account_info)
                 ->where('client_id', $this->client_id)
-                // ->where('bal_outstanding', '>', 0)
                 ->first();
             if ($acct_position->bal_outstanding > 0)
                 $this->acct_position[] = $acct_position;
         }
-        // dd($this->acct_position);
 
         if ($this->clicked == 1) {
-            $this->guarantor = GuarantorList::where('account_no', $this->acct_no)->where('client_id', $this->client_id)->first();
+            $this->guarantor = GuarantorList::where('account_no', $this->acct_no)->where('client_id', $this->client_id)->get();
+            foreach ($this->guarantors as $index => $guarantor) {
+                $this->searchNRIC[$index] = '';
+                $this->mbrNos[$index] = '';
+                $this->names[$index] = '';
+            }
         }
         return view('livewire.page.application.apply-change-guarantor.index')->extends('layouts.head');
     }

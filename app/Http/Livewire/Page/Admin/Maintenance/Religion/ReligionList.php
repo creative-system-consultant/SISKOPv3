@@ -4,14 +4,17 @@ namespace App\Http\Livewire\Page\Admin\Maintenance\Religion;
 
 use Livewire\Component;
 use App\Models\Ref\RefReligion;
+use App\Models\User;
 
 class ReligionList extends Component
 {
+    public User $User;
     public $RefReligion;
 
     public function mount()
     {
-        $this->RefReligion = RefReligion::all();
+        $this->User = User::find(auth()->user()->id);
+        $this->RefReligion = RefReligion::where('client_id', $this->User->client_id)->get();
     }
 
     public function delete($id)

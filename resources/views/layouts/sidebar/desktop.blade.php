@@ -27,77 +27,88 @@
                         <x-heroicon-o-clipboard-document-list class="w-7 h-7" />
                     </x-sidebar.nav-item>--}}
             @if(auth()->user()->client_id != NULL)
-                @if(auth()->user()->user_type == 3 || auth()->user()->user_type == 4)
+                @if(!auth()->user()->ismember())
                     <x-sidebar.dropdown-nav-item active="open" title="APPLICATION" uri="application/*">
                         <x-slot name="icon">
                             <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                         </x-slot>
                         <div class="leading-5">
-                            {{--<x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
+                            <x-sidebar.dropdown-item title="Apply Membership" href="{{ route('membership.apply') }}" uri="">
                                 <x-slot name="icon">
                                     <x-heroicon-o-document-plus class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>--}}
-                            <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-archive-box class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Buy Share" href="{{ route('share.apply') }}" uri="applyShare">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-chart-pie class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Sell Share" href="{{ route('share.sell') }}" uri="applySellShare">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-arrows-right-left class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Contribution" href="{{ route('contribution.apply') }}" uri="applyContribution">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-document-plus class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Withdrawal Contribution" href="{{ route('contribution.withdraw') }}" uri="withdrawContribution">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-document-minus class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Financing" href="{{ route('financing.list') }}" uri="financingList">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-scale class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply dividend Payout" href="{{ route('dividend.apply') }}" uri="dividendApply">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-receipt-percent class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Change Guarantor" href="{{ route('changeguarantor.apply') }}" uri="ChangeGuarantor">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-arrows-up-down class="w-7 h-7" />
-                                </x-slot>
-                            </x-sidebar.dropdown-item>
-                            <x-sidebar.dropdown-item title="Apply Close Membership" href="{{ route('closedmembership.apply') }}" uri="ClosedMembership">
-                                <x-slot name="icon">
-                                    <x-heroicon-o-lock-closed class="w-7 h-7" />
                                 </x-slot>
                             </x-sidebar.dropdown-item>
                         </div>
                     </x-sidebar.dropdown-nav-item>
+                @endif
+                @if(auth()->user()->user_type == 3)
+                <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
+                    <x-heroicon-o-document-text class="w-7 h-7" />
+                </x-sidebar.nav-item>
+                <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">
+                    <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
+                </x-sidebar.nav-item>
+                @elseif(auth()->user()->user_type == 4)
+                <x-sidebar.dropdown-nav-item active="open" title="APPLICATION" uri="application/*">
+                    <x-slot name="icon">
+                        <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
+                    </x-slot>
+                    <div class="leading-5">
+                        <x-sidebar.dropdown-item title="Apply Special Aid" href="{{ route('special-aid.apply') }}" uri="applySpecialAid">
+                            <x-slot name="icon">
+                                <x-heroicon-o-archive-box class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Buy Share" href="{{ route('share.apply') }}" uri="applyShare">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Sell Share" href="{{ route('share.sell') }}" uri="applySellShare">
+                            <x-slot name="icon">
+                                <x-heroicon-o-arrows-right-left class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Apply Contribution" href="{{ route('contribution.apply') }}" uri="applyContribution">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-plus class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Apply Withdrawal Contribution" href="{{ route('contribution.withdraw') }}" uri="withdrawContribution">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-minus class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Apply Financing" href="{{ route('financing.list') }}" uri="financingList">
+                            <x-slot name="icon">
+                                <x-heroicon-o-scale class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Apply dividend Payout" href="{{ route('dividend.apply') }}" uri="dividendApply">
+                            <x-slot name="icon">
+                                <x-heroicon-o-receipt-percent class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Apply Change Guarantor" href="{{ route('changeguarantor.apply') }}" uri="ChangeGuarantor">
+                            <x-slot name="icon">
+                                <x-heroicon-o-arrows-up-down class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="Apply Close Membership" href="{{ route('closedmembership.apply') }}" uri="ClosedMembership">
+                            <x-slot name="icon">
+                                <x-heroicon-o-lock-closed class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                    </div>
+                </x-sidebar.dropdown-nav-item>
+                @endif
                     {{--<x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>--}}
-                    <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
-                        <x-heroicon-o-document-text class="w-7 h-7" />
-                    </x-sidebar.nav-item>
+                    
                     {{--<x-sidebar.nav-item title="COOP Membership Status" route="{{ route('user_membership.status') }}" uri="membershipStatus">
                         <x-heroicon-o-document-text class="w-7 h-7" />
                     </x-sidebar.nav-item>--}}
-                    <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">
-                        <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
-                    </x-sidebar.nav-item>
-                @endif
                 @if(auth()->user()->user_type == 2)
                     <x-sidebar.nav-item title="Register / Update Product" route="{{ route('product.list') }}" uri="product">
                         <x-heroicon-o-briefcase class="w-7 h-7" />
@@ -105,7 +116,6 @@
                     {{--<x-sidebar.nav-item title="Membership Maintenance" route="{{ route('membership.admin') }}" uri="membership">
                         <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
                     </x-sidebar.nav-item>--}}
-
                     <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
                         <x-slot name="icon">
                             <x-heroicon-o-user class="w-7 h-7" />

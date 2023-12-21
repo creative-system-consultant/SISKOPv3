@@ -6,6 +6,7 @@ use App\Http\Traits\HasApprovals;
 use App\Http\Traits\HasCoop;
 use App\Http\Traits\HasCustomer;
 use App\Http\Traits\HasFiles;
+use App\Models\Ref\RefBank;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -30,6 +31,11 @@ class Contribution extends Model implements Auditable
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
     ];
+
+    public function bankname()
+    {
+        return RefBank::where('client_id', $this->client_id)->where('code', $this->bank_code)->first()?->description ?? '-';
+    }
 
     public function current_approval()
     {

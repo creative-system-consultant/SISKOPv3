@@ -90,7 +90,7 @@
             @endforelse
         </x-slot>
     </x-table.table>
-    <x-modal.modal modalActive="openModal" title="Stop Membership Application" modalSize="7xl" closeBtn="yes">
+    <x-modal.modal modalActive="openModal" title="Close Membership Application" modalSize="7xl" closeBtn="yes">
         @include('livewire.page.application.application-list.details.closemembership')
     </x-modal.modal>
 </div>

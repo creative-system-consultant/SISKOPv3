@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public $siskop_cust, $fms_cust, $user;
+    public $siskop_cust, $fms_cust, $user, $guaranteeFlag = 1;
     public $balance, $jaminan, $num_jaminan, $anggota, $reason, $balance_outstanding, $client_id;
 
     protected $listeners = ['submit'];
@@ -82,7 +82,7 @@ class Index extends Component
     public function submit()
     {
 
-        if ($this->balance_outstanding != null) {
+        if ($this->balance_outstanding != 0) {
             $this->dispatchBrowserEvent('swal', [
                 'title' => 'Error!',
                 'text'  => 'To close membership, you must have 0 guarantee',
@@ -92,6 +92,7 @@ class Index extends Component
             ]);
         } else {
             $close_membership = CloseMembership::create([
+                'client_id'           => $this->client_id,
                 'cust_id'           => $this->siskop_cust->id,
                 'terminate_reason'  => $this->reason,
                 'icno'              => $this->siskop_cust->identity_no,
@@ -138,11 +139,14 @@ class Index extends Component
                         INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$this->client_id'
                         INNER JOIN FMS.GUARANTOR_LIST G ON M.mbr_no = G.guarantor_mbr_id AND G.client_id = '$this->client_id'
                         INNER JOIN FMS.account_positions P ON P.ACCOUNT_NO = G.ACCOUNT_NO AND P.client_id = '$this->client_id'
-                        WHERE C.identity_no = '$this->user->icno'
-                        --WHERE C.identity_no = '$temp_ic'
+                        --WHERE C.identity_no = '$this->user->icno'
+                        WHERE C.identity_no = '$temp_ic'
                         AND P.bal_outstanding > 0
                         AND C.client_id = '$this->client_id'
                     ");
+        if (!$this->jaminan) {
+            $this->guaranteeFlag = 0;
+        }
 
         $this->num_jaminan = DB::select("
                             SELECT COUNT (D.ACCOUNT_NO) AS NUM_GUARANTEE

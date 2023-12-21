@@ -33,8 +33,10 @@
             @include('livewire.page.executive.approval.approval.'.$include)
             {{-- @include('livewire.page.executive.approval.approval.contribution') --}}
             {{-- @include('livewire.page.executive.approval.approval.sellcontribution') --}}
+            {{-- @include('livewire.page.executive.approval.approval.dividend') --}}
             {{-- @include('livewire.page.executive.approval.approval.share') --}}
             {{-- @include('livewire.page.executive.approval.approval.sellshare') --}}
+            {{-- @include('livewire.page.executive.approval.approval.exchangeshare') --}}
             {{-- @include('livewire.page.executive.approval.approval.closemembership') --}}
 
             <br>

@@ -34,7 +34,7 @@
             <div class="grid grid-cols-12 gap-6 mt-4">
                 <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-8">
                     <x-form.text-area
-                        label="DESCRIPTION"
+                        label="DESCRIPTION : ({{ strlen($group->description) }}/255)"
                         value="group.description"
                         name="group.description"
                         rows=""

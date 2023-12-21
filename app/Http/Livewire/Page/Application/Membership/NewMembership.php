@@ -125,7 +125,7 @@ class NewMembership extends Component
         'CustFamily.religion_id'             => 'required',
         'CustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'CustFamily.work_post'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
-        'CustFamily.salary'                  => 'required',
+        'CustFamily.salary'                  =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
     ];
 
     protected $rule4 = [
@@ -133,9 +133,9 @@ class NewMembership extends Component
         'Employer.department'                => 'required',
         'Employer.position'                  => 'required',
         'Employer.office_num'                => ['required', 'regex:/^\d{7,11}$/'],
-        'Employer.salary'                    => 'required',
+        'Employer.salary'                    =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
         'Employer.worker_num'                => ['nullable', 'regex:/^\d{11}$/'],
-        'Employer.work_start'                => 'required',
+        'Employer.work_start'                => 'required|date|before_or_equal:today',
     ];
 
     protected $rule5 = [
@@ -266,7 +266,7 @@ class NewMembership extends Component
                     break;
                 case 3:
                     if ($this->CustFamily->identity_no === $this->Cust->identity_no) {
-                        $this->addError('CustFamily.identity_no', 'Identity number must not be the same as Cust identity number.');
+                        $this->addError('CustFamily.identity_no', 'Identity number must not be the same as Applicant identity number.');
                         $mail_flag_checker = 0;
                     } else {
                         $this->validate($this->rule3);
@@ -442,6 +442,8 @@ class NewMembership extends Component
         if ($result == NULL) {
             $this->addError('search', 'No User with this IC');
             // dump('1035');
+        } else if ($result->fmsMembership->refMemStat->allow_introducer_flag == "N") {
+            $this->addError('search', 'This user is unable to be an introducer');
         } else {
             $this->CustIntroducer = $result;
             $this->resetErrorBag('search');
@@ -474,14 +476,13 @@ class NewMembership extends Component
     public function gender()
     {
         $tempGender  = substr($this->Cust->identity_no, 0, 12);
-        $this->Cust->gender_id;
 
         if ($tempGender % 2 == 0) {
-            $this->Cust->gender_id == '2';
+            $tempGender = 'F';
         } else {
-            $this->Cust->gender_id == '1';
+            $tempGender = 'M';
         }
-        return $this->Cust->gender_id;
+        return $tempGender;
     }
 
     public function callSP()
@@ -540,19 +541,20 @@ class NewMembership extends Component
         $this->Cust->gender_id = $this->gender();
 
         $this->CustAddress = $this->Cust->Address()->firstOrCreate(
-                [
-                    'cif_id' => $this->Cust->id, 
-                    'client_id' => $this->User->client_id, 
-                    'apply_id' => $this->apply_id,
-                    'address_type_id' => '2',
-                ]);
+            [
+                'cif_id' => $this->Cust->id,
+                'client_id' => $this->User->client_id,
+                'apply_id' => $this->apply_id,
+                'address_type_id' => '2',
+            ]
+        );
 
         $this->mail_flag = $this->CustAddress->mail_flag;
         $this->CustFamily = CustFamily::firstOrCreate([
-                    'cif_id'        => $this->Cust->id,
-                    'client_id'     => $this->User->client_id,
-                    'apply_id'      => $this->apply_id,
-                ], []);
+            'cif_id'        => $this->Cust->id,
+            'client_id'     => $this->User->client_id,
+            'apply_id'      => $this->apply_id,
+        ], []);
 
         $this->Introducer = $this->Cust->introducer()->firstOrCreate([], [
             'client_id' => $this->User->client_id,
@@ -565,26 +567,28 @@ class NewMembership extends Component
         }
 
         $this->Employer = CustEmployer::firstOrCreate(
-                [
-                    'cust_id' => $this->Cust->id, 
-                    'client_id' => $this->User->client_id, 
-                    'apply_id' => $this->apply_id
-                ]);
+            [
+                'cust_id' => $this->Cust->id,
+                'client_id' => $this->User->client_id,
+                'apply_id' => $this->apply_id
+            ]
+        );
         $this->EmployAddress     = $this->Employer->Address()->firstOrCreate(
-                [
-                    'cif_id' => $this->Cust->id, 
-                    'client_id' => $this->User->client_id, 
-                    'apply_id' => $this->apply_id,
-                    'address_type_id' => '3'
-                ]);
+            [
+                'cif_id' => $this->Cust->id,
+                'client_id' => $this->User->client_id,
+                'apply_id' => $this->apply_id,
+                'address_type_id' => '3'
+            ]
+        );
         $this->mail_flag_employer = $this->EmployAddress->mail_flag;
+
+
 
         $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->gender_id         = RefGender::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
-
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
@@ -593,7 +597,6 @@ class NewMembership extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
         // dd($this->relationship);
-        // dd($this->Cust->birthdate);
     }
 
     public function fileupload2()
@@ -808,6 +811,13 @@ class NewMembership extends Component
 
     public function render()
     {
+        if (!$this->Cust->gender_id) {
+            $this->relationship      = RefRelationship::where('client_id', $this->User->client_id)->get();
+        } else {
+            $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
+        }
+        // dump($this->Cust->gender_id);
+
         if ($this->pay_type_share == '2') {
             $this->tot_share = $this->monthly_share;
             $this->applymember->share_monthly = $this->monthly_share;

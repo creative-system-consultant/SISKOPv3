@@ -12,8 +12,8 @@ class ApplyDividend extends Component
 {
     public User $User;
     public Customer $Cust;
-    public Dividend $Dividend;
     public ModelApplydividend $apply;
+    public $Dividend;
 
     public $payout_cash   = false;
     public $payout_share  = false;
