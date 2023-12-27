@@ -84,9 +84,9 @@ class Approver extends Component
                             'type' => 'App\Models\ApplyDividend',
                             'page' => 10,
                             'rule' => [
-                                'Application.div_cash_approved' => 'required|gt:0',
-                                'Application.div_share_approved' => 'required|gt:0',
-                                'Application.div_contri_approved' => 'required|gt:0',
+                                'Application.div_cash_approved' => 'nullable|gt:0',
+                                'Application.div_share_approved' => 'nullable|gt:0',
+                                'Application.div_contri_approved' => 'nullable|gt:0',
                             ],
                         ],
                     'closemembership' => [
@@ -132,7 +132,7 @@ class Approver extends Component
         //checks if vote majority is true
         else if ($this->Application->current_approval()->rule_vote_type == 'majority' 
               && $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            if ($this->Application->approval_vote_yes > $this->Application->approval_vote_yes ){
+            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_yes() ){
                 $this->Application->flag = 20;
             } else {
                 $this->Application->flag = 21;
@@ -141,7 +141,7 @@ class Approver extends Component
 
         //else, check if all votes are casted
         else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            if ($this->Application->approval_vote_yes > $this->Application->approval_vote_yes ){
+            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_yes() ){
                 $this->Application->flag = 20;
             } else {
                 $this->Application->flag = 21;

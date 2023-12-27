@@ -32,7 +32,7 @@ class ApplyContribution extends Component
 
     protected $rules = [
         'cust.name'                 => 'required',
-        'cust.identity_no'                 => 'required',
+        'cust.identity_no'          => 'required',
         'cont_apply'                => 'required|numeric|not_in:0',
         'cont_type'                 => 'required',
         'start_contDate'            => 'exclude_if:cont_type,==,pay_once,&&,cont_type,null|required_if:cont_type,==,cont_date' .

@@ -110,7 +110,7 @@ class Approver extends Component
 
     public function doRejectApplication(){
         $this->Application->flag = 24;
-        //
+        $this->message = 'Application is Rejected';
     }
 
     public function countVote(){
@@ -132,7 +132,11 @@ class Approver extends Component
         //checks if vote majority is true
         else if ($this->Application->current_approval()->rule_vote_type == 'majority' 
               && $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            $this->doApproveApplication();
+            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+                $this->doApproveApplication();
+            } else {
+                $this->doRejectApplication();
+            }
         }
 
         //else, check if all votes are casted

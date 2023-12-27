@@ -169,7 +169,7 @@
                     disable=""
                     mandatory=""
                     placeholder=""
-                    wire:model.lazy="reasonChangeTxt"
+                    wire:model="reasonChangeTxt"
                 />
             </div>
             @endif

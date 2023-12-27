@@ -198,6 +198,7 @@ class Checker extends Component
 
     public function deb() {
         dd([
+            'cust'      => $this->Cust,
             'approvals' => $this->Application->approvals,
             'approval'  => $this->Approval, 
             'checker'   => $this->Application,

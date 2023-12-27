@@ -4,7 +4,7 @@
         <div class="pb-4 px-2"  x-data="{ active:0 }">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1">
                 <div class="p-4 mt-4 bg-white dark:bg-gray-700 rounded-md shadow-md">
-                    <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Applicant Information </h2>
+                    <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Applicant Information - ({{ $membership->id }})</h2>
                     <div class="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5">
                         <x-form.input
                             label="Name"
@@ -984,7 +984,7 @@
                     @foreach ($membership->approvals as $item)
                         <tr>
                             <x-table.table-body colspan="" class="text-left">
-                                @if($item->order < $membership->step)
+                                @if($item->order < $membership->step || $membership->flag > 1)
                                     <x-heroicon-o-check-circle class="w-6 h-6"/>
                                 @elseif($item->order == $membership->step)
                                     <x-heroicon-o-play-circle class="w-6 h-6"/>
