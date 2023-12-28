@@ -254,7 +254,7 @@
                 <div>
                     <x-form.input
                         label="Email"
-                        name=""
+                        name="CustFamily.email"
                         value=""
                         mandatory=""
                         disable=""

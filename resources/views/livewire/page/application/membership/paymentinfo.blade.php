@@ -1,7 +1,7 @@
 <div x-show="active == 5">
     <div  class="px-6 py-4 mt-4">
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Deduction </h2>
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
             <div>
                 <x-form.input-tag
                     label="Registration Fee (One-time only)"
@@ -34,7 +34,7 @@
 
             <div>
                 <x-form.input-tag
-                    label="Contribution Monthly (Minimum RM{{$this->applymember->contribution_fee}})"
+                    label="Contribution Monthly (Minimum RM{{$this->min_contribution_fee}})"
                     name=""
                     value=""
                     mandatory=""
@@ -58,6 +58,23 @@
                     rightTag=""
                     type="text"
                     wire:model="monthly_share"
+                /> 
+            </div>
+            @endif
+
+
+            @if($pay_type_share=='2'||$pay_type_regist=='2')
+            <div>
+                <x-form.input-tag
+                    label="Total Deduction Monthly"
+                    name=""
+                    value="{{$total_deduction}}"
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="total_deduction"
                 /> 
             </div>
             @endif
@@ -153,7 +170,7 @@
                 @endif
                 </div>
       
-            <div>
+            {{-- <div>
                 @if($pay_type_share=='1')
                     <div>
                         <x-form.dropdown
@@ -183,7 +200,6 @@
                             rightTag=""
                             type="text"
                             wire:model="client_bank_name"
-                            {{-- wire:keydown="totalfee" --}}
                         /> 
                     </div>
                     <div>
@@ -197,12 +213,11 @@
                             rightTag=""
                             type="text"
                             wire:model="client_bank_acct"
-                            {{-- wire:keydown="totalfee" --}}
                         /> 
                     </div>
                     @endif
                 @endif
-            </div>
+            </div> --}}
         </div>
         {{-- <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
         
