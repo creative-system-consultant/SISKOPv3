@@ -100,6 +100,7 @@ class Approver extends Component
         // put event to Stored Proc
         $sql = "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->Application->id . ", ". $this->User->id." ";
         DB::statement($sql);
+
         // put event here
 
         $ret = DB::table('ref.user_has_clients')->insert([

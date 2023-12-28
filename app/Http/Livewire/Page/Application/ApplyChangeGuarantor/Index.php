@@ -31,14 +31,11 @@ class Index extends Component
 
         $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
 
-
         $changeGuarantor = ChangeGuarantor::where([
             ['cif_id', $this->fms_cust->id],
-            ['flag', '<>', 3]
+            ['flag', 0],
+            ['step', 0]
         ])->first();
-
-        // dd($changeGuarantor);
-
 
         if ($changeGuarantor != NULL) {
             if ($changeGuarantor->flag == '0') {
@@ -49,9 +46,6 @@ class Index extends Component
             }
             return redirect()->route('home');
         }
-
-        // $this->acct_position    = $this->acct_master->position;
-        // dump($this->acct_position);
     }
 
     public function searchGuarantor($acct_no)

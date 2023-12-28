@@ -38,7 +38,7 @@ class ApplySpecialAid extends Component
         else{
             $applySpecialAid = ModelApplySpecialAid::create([
                 'name'              => $this->customer_name,
-                'client_id'           => $customer->client_id,
+                'client_id'         => $customer->client_id,
                 'cust_id'           => $customer->id,
                 'special_aid_id'    => $this->type_specialAid,
                 'step'              => 1,
