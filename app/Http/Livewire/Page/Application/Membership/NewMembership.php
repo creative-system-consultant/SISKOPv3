@@ -70,6 +70,8 @@ class NewMembership extends Component
     public $payment_file_share;
     public $monthly_share;
     public $total_deduction;
+    public $Ftotal_deduction;
+    public $Mtotal_deduction;
     public $min_contribution_fee;
     public $search;
     public $mbr_no = [];
@@ -821,9 +823,17 @@ class NewMembership extends Component
         $message  = '<b>Name</b> : ' . $this->Cust->name . "<br>";
         $message .= '<b>Introducer</b> : ' . $this->CustIntroducer->name . "<br>";
         $message .= '<b>Register Fee</b> : RM' . $this->applymember->register_fee . "<br>";
-        $message .= '<b>Share Fee</b> : RM' . $this->applymember->share_fee . "<br>";
+        if ($this->pay_type_share == '2') {
+            $message .= '<b>Share Fee (Instalment)</b> : RM' . $this->monthly_share . "<br>";
+        } else {
+            $message .= '<b>Share Fee </b> : RM' . $this->applymember->share_fee . "<br>";
+        }
         $message .= '<b>Contribution Fee</b> : RM' . $this->applymember->contribution_fee . "<br>";
-        $message .= '<b>Total Fee</b> : RM' . $this->applymember->total_fee . "<br>";
+        if ($this->pay_type_share == '2') {
+            $message .= '<b>Total Fee</b> : RM' . $this->Ftotal_deduction . "<br>";
+        } else {
+            $message .= '<b>Total Fee</b> : RM' . $this->applymember->total_fee . "<br>";
+        }
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'          => 'warning',
@@ -863,11 +873,15 @@ class NewMembership extends Component
             // $this->tot_share = $this->monthly_share;
             $this->applymember->share_monthly = $this->monthly_share;
             $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
         } else {
             $this->tot_share = $this->applymember->share_fee;
+            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
+
             // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
         }
-
         if ($this->cust_bank_id || $this->cust_bank_id2) {
             $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 
