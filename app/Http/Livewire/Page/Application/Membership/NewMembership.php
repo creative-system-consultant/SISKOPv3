@@ -21,6 +21,7 @@ use App\Models\Ref\RefRelationship;
 use App\Models\Ref\RefReligion;
 use App\Models\Ref\RefState;
 use App\Models\SiskopAddress;
+use App\Models\SysOptions;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -100,31 +101,6 @@ class NewMembership extends Component
 
     ];
 
-    public function getSpecialRules()
-    {
-        return [
-            'Cust.bank_acct_no' => [
-                'required',
-                'numeric',
-                function ($attribute, $value, $fail) {
-                    if (!$this->Cust->bank_id) {
-                        return $fail("The bank ID is not selected.");
-                    }
-
-                    $bankAccountLength = RefBank::where('id', $this->Cust->bank_id)->value('bank_acc_len');
-
-                    if (!$bankAccountLength) {
-                        return $fail("Unable to determine the bank account length.");
-                    }
-
-                    if (strlen((string) $value) != $bankAccountLength) {
-                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
-                    }
-                },
-            ],
-        ];
-    }
-
     protected $rule2 = [
         'CustAddress.address1'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.address2'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
@@ -166,11 +142,8 @@ class NewMembership extends Component
     ];
 
     protected $rule5 = [
-        'CustIntroducer.name'                    => ['required', 'regex:/^[A-Za-z0-9 @\/-]+$/'],
-        'CustIntroducer.icno'                    => 'required|numeric|digits:12',
-        'CustIntroducer.email'                   => 'email',
         'CustIntroducer.mbr_no'                  => 'nullable',
-        'search'                                 => 'required|numeric|digits:12',
+        'CustIntroducer.icno'                    => 'nullable|numeric|digits:12',
     ];
 
     protected $rule6 = [
@@ -234,7 +207,7 @@ class NewMembership extends Component
         'CustIntroducer.email'               => 'nullable',
         'CustIntroducer.mbr_no'              => 'nullable',
         'pay_type'                           => 'nullable',
-        'search'                             => 'required|numeric|digits:12',
+        'search'                             => 'nullable',
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
@@ -245,6 +218,50 @@ class NewMembership extends Component
         'applymember.client_bank_acct_no'       => 'required',
     ];
 
+    public function getSpecialRules()
+    {
+        return [
+            'Cust.bank_acct_no' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (!$this->Cust->bank_id) {
+                        return $fail("The bank ID is not selected.");
+                    }
+
+                    $bankAccountLength = RefBank::where('id', $this->Cust->bank_id)->value('bank_acc_len');
+
+                    if (!$bankAccountLength) {
+                        return $fail("Unable to determine the bank account length.");
+                    }
+
+                    if (strlen((string) $value) != $bankAccountLength) {
+                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
+                    }
+                },
+            ],
+        ];
+    }
+
+    public function getIntroducerRules()
+    {
+
+        $rules = [
+            'search' => [
+                'nullable',
+            ],
+        ];
+
+        $optionFlag = SysOptions::where('client_id', $this->User->client_id)->where('option_code', 106)->value('option_flag');
+        if ($optionFlag == 'Y') {
+            $rules['search'][] = ['required', 'numeric', 'digits:12'];
+            $rules['CustIntroducer.name'][] = ['required', 'regex:/^[A-Za-z0-9 @\/-]+$/'];
+            $rules['CustIntroducer.icno'][] = ['required', 'numeric', 'digits:12'];
+            $rules['CustIntroducer.email'][] = 'email';
+        }
+
+        return $rules;
+    }
 
     public function previous()
     {
@@ -319,6 +336,7 @@ class NewMembership extends Component
                     break;
                 case 5:
                     $this->validate($this->rule5);
+                    $this->validate($this->getIntroducerRules());
                     $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
                     $this->Introducer->save();
                     $this->tab6 = 1;
@@ -366,6 +384,7 @@ class NewMembership extends Component
             switch ($curPage) {
                 case 1:
                     $this->validate($this->rule1);
+                    $this->validate($this->getSpecialRules());
                     $this->birthdate();
                     $this->Cust->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
@@ -400,6 +419,7 @@ class NewMembership extends Component
                     break;
                 case 5:
                     $this->validate($this->rule5);
+                    $this->validate($this->getIntroducerRules());
                     $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
                     $this->Introducer->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
