@@ -20,7 +20,7 @@
 
             <div>
                 <x-form.input-tag
-                    label="{{ ($pay_type_share=='2' ? 'Share (Instalment)' : 'Share (One-time only)') }})"
+                    label="{{ ($pay_type_share=='2' ? 'Share (Instalment)' : 'Share (One-time only)') }}"
                     name=""
                     value=""
                     mandatory=""
@@ -49,7 +49,7 @@
             @if($pay_type_share=='2')
             <div>
                 <x-form.input-tag
-                    label="Share Monthly"
+                    label="Share Monthly (Instalment)"
                     name=""
                     value="{{$monthly_share}}"
                     mandatory=""
@@ -63,25 +63,26 @@
             @endif
 
 
-            @if($pay_type_share=='2'||$pay_type_regist=='2')
+            @if($pay_type_share=='2')
             <div>
                 <x-form.input-tag
-                    label="Total Deduction Monthly"
+                    label="Total Deduction Upon Registration"
                     name=""
-                    value="{{$total_deduction}}"
+                    value="{{$Ftotal_deduction}}"
                     mandatory=""
                     disable="true"
                     leftTag="RM"
                     rightTag=""
                     type="text"
-                    wire:model="total_deduction"
+                    wire:model="Ftotal_deduction"
                 /> 
             </div>
             @endif
+           
        
         </div>
 
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
             <div>
                 <x-form.dropdown
                     label="Payment Type (Registration)"
@@ -115,10 +116,26 @@
             </div>
             <div></div>
             <div></div>
+            {{-- @if($pay_type_regist=='2'||$pay_type_share=='2') --}}
+            @if($pay_type_share=='2')
+            <div>
+                <x-form.input-tag
+                    label="Total Deduction Monthly (For the first 5 Month)"
+                    name=""
+                    value="{{$total_deduction}}"
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="total_deduction"
+                /> 
+            </div>
+            @endif
         
         </div>
 
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
             <div>
                 @if($pay_type_regist=="1")
                 <div>
@@ -168,7 +185,27 @@
                 </div>
                 @endif
                 @endif
-                </div>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+            @if($pay_type_share=='2')
+            <div>
+                <x-form.input-tag
+                    label="Total Deduction After 5 Months"
+                    name=""
+                    value="{{$Mtotal_deduction}}"
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="Mtotal_deduction"
+                /> 
+            </div>
+            @endif
+
+              
       
             {{-- <div>
                 @if($pay_type_share=='1')
@@ -218,6 +255,7 @@
                     @endif
                 @endif
             </div> --}}
+            
         </div>
         {{-- <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
         
