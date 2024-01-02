@@ -18,6 +18,7 @@ use App\Models\Ref\RefRelationship;
 use App\Models\Ref\RefState;
 use App\Models\User;
 use DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Resolution extends Component
@@ -103,7 +104,6 @@ class Resolution extends Component
     }
 
     public function doApproval(){
-        $num = $this->User->id;
 
         $this->Application->flag = 20;
         $this->Application->approved_date = now();
@@ -113,18 +113,37 @@ class Resolution extends Component
         $this->message = 'Application Approved';
 
         // put event to Stored Proc
-        $sql = "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->Application->id . ", ". $this->User->id." ";
-        DB::statement($sql);
 
-        // put event here
-
-        $ret = DB::table('ref.user_has_clients')->insert([
-            'user_id'   => $this->Application->user_id,
-            'client_id' => $this->User->client_id,
+        $dbname = env('DB_DATABASE','fmsv2_dev');
+        $spname = $dbname.".SISKOP.up_insert_customer_fms";
+        $result = DB::select("EXEC ".$spname." ?,?,?",[
+            $this->User->client_id,
+            $this->Application->id,
+            $this->User->id,
         ]);
 
-        //$this->Resolution->Customer->ref_no = $newnum;
-        $this->Resolution->Customer->save();
+        if($result != NULL){
+            if($result[0]->SP_RETURN_CODE == 0){
+
+                //check in list of user clients if null adds it.
+                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->User->client_id]]);
+
+                if($check == NULL){
+                    $ret = DB::table('ref.user_has_clients')->insert([
+                        'user_id'   => $this->Application->user_id,
+                        'client_id' => $this->User->client_id,
+                    ]);
+                }
+
+                Log::info("MEMBERSHIP APPROVAL SUCCESS\n SP RETURN = ".json_encode($result));
+            } else {
+                Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership Approver.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+            }
+        } else {
+            Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership Approver.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+        }
+
+        // put event here
 
     }
 
