@@ -28,7 +28,7 @@
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="">
                             <div class="flex items-center justify-center space-x-2">
-                                <a class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none" wire:click='searchGuarantor("{{$item->account_no}}")'>
+                                <a class="cursor-pointer flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none" wire:click='searchGuarantor("{{$item->account_no}}")'>
                                     <x-heroicon-o-cursor-arrow-rays class="w-4 h-4" />
                                     Please Choose
                                 </a>
@@ -50,11 +50,16 @@
             <x-table.table>
                 <x-slot name="thead">
                     <tr  class="">
-                        <th  colspan="3" class="px-6 py-3 border bg-primary-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            List of Guarantors
+                        <th  colspan="6" class="px-6 py-3 border bg-primary-100 text-sm leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            List Of Guarantors
                         </th>
-                        <th  colspan="3" class="px-6 py-3 border bg-primary-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            New Guarantor
+                    </tr>
+                    <tr  class="">
+                        <th  colspan="3" class="px-6 py-3 border bg-white text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            Current 
+                        </th>
+                        <th  colspan="3" class="px-6 py-3 border bg-white text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                            New 
                         </th>
                     </tr>
                     <tr>
@@ -62,80 +67,73 @@
                             Membership Number
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            NRIC of the Current Guarantor
+                            NRIC
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Current Guarantor Name
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                            Name
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
                             Membership Number
                         </th>
                         <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            NRIC of the New Guarantor
+                            NRIC
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            New Guarantor Name
+                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                            Name
                         </th>
                     </tr>
                     
                 </x-slot>
                 <x-slot name="tbody">
                     @if($guarantor)
-
-                    
-                        
-                    @foreach ($guarantor as $index => $item)
-                    <tr>
-                        <x-table.table-body colspan="" class="border text-center text-xs">
-                            {{$item->fmsMembership->mbr_no}}
-                        </x-table.table-body>
-                        <x-table.table-body colspan="" class="border text-center text-xs">
-                            {{$item->fmsMembership->fmsCustomer->identity_no}}
-                        </x-table.table-body>
-                        <x-table.table-body colspan="" class="border text-center text-xs">
-                            {{$item->fmsMembership->fmsCustomer->name}}
-                        </x-table.table-body>
-                        
-                        <x-table.table-body colspan="" class="border text-center">
-                            <x-form.input
-                                label=""
-                                name=""
-                                value=""
-                                mandatory=""
-                                disable="readonly"
-                                type="text"
-                                wire:model="mbrNos.{{ $index }}"
-                            />
-                        </x-table.table-body>
-                        <x-table.table-body colspan="" class="border">
-                            <x-form.input
-                                label=""
-                                name="searchNRIC.{{$index}}"
-                                value=""
-                                mandatory=""
-                                disable=""
-                                wire:keyup="searchUser({{ $index }})"
-                                wire:model="searchNRIC.{{ $index }}"
-                                type="text"
-                            />
-                        </x-table.table-body>
-                        <x-table.table-body colspan="" class="border">
-                            <x-form.input
-                                label=""
-                                name=""
-                                value=""
-                                mandatory=""
-                                disable="readonly"
-                                type="text"
-                                wire:model="names.{{ $index }}"
-
-                            />
-                        </x-table.table-body>
-                    </tr>
-
-                    @endforeach
+                        @foreach ($guarantor as $index => $item)
+                            <tr>
+                                <td  width="5%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                    {{$item->fmsMembership->mbr_no}}
+                                </td>
+                                <td  width="15%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                    {{$item->fmsMembership->fmsCustomer->identity_no}}
+                                </td>
+                                <td  width="30%"  class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-xs text-left">
+                                    {{$item->fmsMembership->fmsCustomer->name}}
+                                </td>
+                                <td  width="5%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                    <x-form.input
+                                        label=""
+                                        name=""
+                                        value=""
+                                        mandatory=""
+                                        disable="readonly"
+                                        type="text"
+                                        wire:model="mbrNos.{{ $index }}"
+                                    />
+                                </td>
+                                <td  width="15%" class="px-6 py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                    <x-form.input
+                                        label=""
+                                        name="searchNRIC.{{$index}}"
+                                        value=""
+                                        mandatory=""
+                                        disable=""
+                                        wire:keyup="searchUser({{ $index }})"
+                                        wire:model="searchNRIC.{{ $index }}"
+                                        type="text"
+                                    />
+                                </td>
+                                <td  width="30%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                    <x-form.input
+                                        label=""
+                                        name=""
+                                        value=""
+                                        mandatory=""
+                                        disable="readonly"
+                                        type="text"
+                                        wire:model="names.{{ $index }}"
+                                    />
+                                </td>
+                            </tr>
+                        @endforeach
                     @endif
-
                 </x-slot>
             </x-table.table>
         </div>
@@ -171,7 +169,7 @@
                     disable=""
                     mandatory=""
                     placeholder=""
-                    wire:model.lazy="reasonChangeTxt"
+                    wire:model="reasonChangeTxt"
                 />
             </div>
             @endif

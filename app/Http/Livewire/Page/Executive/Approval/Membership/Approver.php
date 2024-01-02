@@ -18,6 +18,7 @@ use App\Models\Ref\RefRelationship;
 use App\Models\Ref\RefState;
 use App\Models\User;
 use DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Approver extends Component
@@ -98,19 +99,43 @@ class Approver extends Component
         $this->message = 'Application Approved';
 
         // put event to Stored Proc
-        $sql = "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->Application->id . ", ". $this->User->id." ";
-        DB::statement($sql);
+
+        $dbname = env('DB_DATABASE','fmsv2_dev');
+        $spname = $dbname.".SISKOP.up_insert_customer_fms";
+        $result = DB::select("EXEC ".$spname." ?,?,?",[
+            $this->User->client_id,
+            $this->Application->id,
+            $this->User->id,
+        ]);
+
+        if($result != NULL){
+            if($result[0]->SP_RETURN_CODE == 0){
+
+                //check in list of user clients if null adds it.
+                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->User->client_id]]);
+
+                if($check == NULL){
+                    $ret = DB::table('ref.user_has_clients')->insert([
+                        'user_id'   => $this->Application->user_id,
+                        'client_id' => $this->User->client_id,
+                    ]);
+                }
+
+                Log::info("MEMBERSHIP APPROVAL SUCCESS\n SP RETURN = ".json_encode($result));
+            } else {
+                Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership Approver.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+            }
+        } else {
+            Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership Approver.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+        }
+
         // put event here
 
-        $ret = DB::table('ref.user_has_clients')->insert([
-            'user_id'   => $this->Application->user_id,
-            'client_id' => $this->User->client_id,
-        ]);
     }
 
     public function doRejectApplication(){
         $this->Application->flag = 24;
-        //
+        $this->message = 'Application is Rejected';
     }
 
     public function countVote(){
@@ -132,7 +157,11 @@ class Approver extends Component
         //checks if vote majority is true
         else if ($this->Application->current_approval()->rule_vote_type == 'majority' 
               && $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            $this->doApproveApplication();
+            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+                $this->doApproveApplication();
+            } else {
+                $this->doRejectApplication();
+            }
         }
 
         //else, check if all votes are casted

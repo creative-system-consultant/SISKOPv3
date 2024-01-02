@@ -40,6 +40,7 @@
                         @elseif ($item->flag == '1') Being Processed
                         @elseif ($item->flag == '3') Failed / Decline
                         @elseif ($item->flag == '20') Approved
+                        @elseif ($item->flag > '20') Rejected
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">

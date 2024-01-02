@@ -21,10 +21,10 @@ class ClientApproval extends Model implements Auditable
         'deleted_at'    => 'datetime',
     ];
 
-    public function approvals($product = NULL)
+    public function approvals($product = NULL, $range = NULL)
     {
         if ($product != NULL){
-            return $this->hasMany(ClientApprovalRole::class,'approval_id')->where('product_id', $product);
+            return $this->hasMany(ClientApprovalRole::class,'approval_id')->where('product_id', $product)->where('product_range', $range);
         } else return $this->hasMany(ClientApprovalRole::class,'approval_id');
     }
 

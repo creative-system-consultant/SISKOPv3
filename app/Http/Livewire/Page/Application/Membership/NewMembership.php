@@ -11,7 +11,6 @@ use App\Models\FmsGlobalParm;
 use App\Models\SiskopCustomer as Customer;
 use App\Models\SiskopEmployer as CustEmployer;
 use App\Models\SiskopFamily as CustFamily;
-//use App\Models\Membership;
 use App\Models\Ref\RefBank;
 use App\Models\Ref\RefCustTitle;
 use App\Models\Ref\RefEducation;
@@ -22,6 +21,7 @@ use App\Models\Ref\RefRelationship;
 use App\Models\Ref\RefReligion;
 use App\Models\Ref\RefState;
 use App\Models\SiskopAddress;
+use App\Models\SysOptions;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -69,6 +69,10 @@ class NewMembership extends Component
     public $payment_file_regist;
     public $payment_file_share;
     public $monthly_share;
+    public $total_deduction;
+    public $Ftotal_deduction;
+    public $Mtotal_deduction;
+    public $min_contribution_fee;
     public $search;
     public $mbr_no = [];
     public $birthdate;
@@ -95,22 +99,23 @@ class NewMembership extends Component
         'Cust.title_id'                      => 'required',
         'Cust.religion_id'                   => 'required',
         'Cust.bank_id'                       => 'required',
-        'Cust.bank_acct_no'                  => 'required|regex:/^\d{11}$/',
+        // 'Cust.bank_acct_no'                  => 'required|regex:/^\d{11}$/',
+
     ];
 
     protected $rule2 = [
-        'CustAddress.address1'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
-        'CustAddress.address2'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'CustAddress.address1'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
+        'CustAddress.address2'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.address3'               => 'nullable',
         'CustAddress.postcode'               => 'required|digits:5',
-        'CustAddress.town'                   => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'CustAddress.town'                   => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.state_id'               => 'required',
         'mail_flag'                          => 'nullable',
-        'EmployAddress.address1'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
-        'EmployAddress.address2'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'EmployAddress.address1'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
+        'EmployAddress.address2'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.address3'             => 'nullable',
         'EmployAddress.postcode'             => 'required|digits:5',
-        'EmployAddress.town'                 => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'EmployAddress.town'                 => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.state_id'             => 'required',
         'mail_flag_employer'                 => 'nullable',
     ];
@@ -118,7 +123,7 @@ class NewMembership extends Component
     protected $rule3 = [
         'CustFamily.name'                    => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
         'CustFamily.identity_no'             => 'required|numeric|digits:12',
-        'CustFamily.email'                   => 'email',
+        'CustFamily.email'                   => ['required', 'email:rfc', 'regex:/^[\w\.-]+@[\w\.-]+\.\w+$/'],
         'CustFamily.phone_no'                => ['required', 'regex:/^\d{7,11}$/'],
         'CustFamily.relation_id'             => 'required',
         'CustFamily.race_id'                 => 'required',
@@ -134,16 +139,13 @@ class NewMembership extends Component
         'Employer.position'                  => 'required',
         'Employer.office_num'                => ['required', 'regex:/^\d{7,11}$/'],
         'Employer.salary'                    =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-        'Employer.worker_num'                => ['nullable', 'regex:/^\d{11}$/'],
+        'Employer.worker_num'                => ['nullable', 'regex:/^\d{7,11}$/'],
         'Employer.work_start'                => 'required|date|before_or_equal:today',
     ];
 
     protected $rule5 = [
-        'CustIntroducer.name'                    => ['required', 'regex:/^[A-Za-z0-9 @\/-]+$/'],
-        'CustIntroducer.icno'                    => 'required|numeric|digits:12',
-        'CustIntroducer.email'                   => 'email',
         'CustIntroducer.mbr_no'                  => 'nullable',
-        'search'                                 => 'required|numeric|digits:12',
+        'CustIntroducer.icno'                    => 'nullable|numeric|digits:12',
     ];
 
     protected $rule6 = [
@@ -194,7 +196,7 @@ class NewMembership extends Component
         'EmployAddress.state_id'             => 'required',
         'CustFamily.name'                    => 'required',
         'CustFamily.identity_no'             => 'required',
-        'CustFamily.email'                   => 'nullable',
+        'CustFamily.email'                   => 'required',
         'CustFamily.phone_no'                => 'required',
         'CustFamily.relation_id'             => 'required',
         'CustFamily.race_id'                 => 'required',
@@ -207,7 +209,7 @@ class NewMembership extends Component
         'CustIntroducer.email'               => 'nullable',
         'CustIntroducer.mbr_no'              => 'nullable',
         'pay_type'                           => 'nullable',
-        'search'                             => 'required|numeric|digits:12',
+        'search'                             => 'nullable',
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
@@ -218,6 +220,50 @@ class NewMembership extends Component
         'applymember.client_bank_acct_no'       => 'required',
     ];
 
+    public function getSpecialRules()
+    {
+        return [
+            'Cust.bank_acct_no' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (!$this->Cust->bank_id) {
+                        return $fail("The bank ID is not selected.");
+                    }
+
+                    $bankAccountLength = RefBank::where('id', $this->Cust->bank_id)->value('bank_acc_len');
+
+                    if (!$bankAccountLength) {
+                        return $fail("Unable to determine the bank account length.");
+                    }
+
+                    if (strlen((string) $value) != $bankAccountLength) {
+                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
+                    }
+                },
+            ],
+        ];
+    }
+
+    public function getIntroducerRules()
+    {
+
+        $rules = [
+            'search' => [
+                'nullable',
+            ],
+        ];
+
+        $optionFlag = SysOptions::where('client_id', $this->User->client_id)->where('option_code', 106)->value('option_flag');
+        if ($optionFlag == 'Y') {
+            $rules['search'][] = ['required', 'numeric', 'digits:12'];
+            $rules['CustIntroducer.name'][] = ['required', 'regex:/^[A-Za-z0-9 @\/-]+$/'];
+            $rules['CustIntroducer.icno'][] = ['required', 'numeric', 'digits:12'];
+            $rules['CustIntroducer.email'][] = 'email';
+        }
+
+        return $rules;
+    }
 
     public function previous()
     {
@@ -236,6 +282,7 @@ class NewMembership extends Component
             switch ($this->numpage) {
                 case 1:
                     $this->validate($this->rule1);
+                    $this->validate($this->getSpecialRules());
                     $this->birthdate();
                     $this->Cust->save();
                     $this->tab2 = 1;
@@ -291,6 +338,7 @@ class NewMembership extends Component
                     break;
                 case 5:
                     $this->validate($this->rule5);
+                    $this->validate($this->getIntroducerRules());
                     $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
                     $this->Introducer->save();
                     $this->tab6 = 1;
@@ -313,6 +361,7 @@ class NewMembership extends Component
                     $this->tab7 = 1;
                     break;
                 case 7:
+                    // $this->validate($this->rule7);
                     $this->fileupload();
                     $this->tab8 = 1;
                     break;
@@ -337,6 +386,7 @@ class NewMembership extends Component
             switch ($curPage) {
                 case 1:
                     $this->validate($this->rule1);
+                    $this->validate($this->getSpecialRules());
                     $this->birthdate();
                     $this->Cust->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
@@ -371,6 +421,7 @@ class NewMembership extends Component
                     break;
                 case 5:
                     $this->validate($this->rule5);
+                    $this->validate($this->getIntroducerRules());
                     $this->Introducer->intro_cust_id = $this->CustIntroducer->id;
                     $this->Introducer->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
@@ -396,6 +447,7 @@ class NewMembership extends Component
 
                     break;
                 case 7:
+                    // $this->validate($this->rule7);
                     $this->fileupload();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
 
@@ -492,16 +544,6 @@ class NewMembership extends Component
         DB::statement($sql);
     }
 
-    public function boot()
-    {
-        Validator::extend('age_difference', function ($attribute, $value, $parameters, $validator) {
-            $dob = Carbon::parse(request('Employer.date_of_birth'));
-            $workStart = Carbon::parse($value);
-            $age = $dob->diffInYears($workStart);
-
-            return $age >= 18;
-        });
-    }
 
     public function mount()
     {
@@ -520,6 +562,7 @@ class NewMembership extends Component
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = $this->globalParm->MIN_SHARE;
         $this->applymember->contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
+        $this->min_contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
         $this->monthly_share = $this->globalParm->MIN_SHARE / $this->globalParm->TOT_MTH_SHARE_INSTALMENT;
         $this->applymember->save();
 
@@ -780,9 +823,17 @@ class NewMembership extends Component
         $message  = '<b>Name</b> : ' . $this->Cust->name . "<br>";
         $message .= '<b>Introducer</b> : ' . $this->CustIntroducer->name . "<br>";
         $message .= '<b>Register Fee</b> : RM' . $this->applymember->register_fee . "<br>";
-        $message .= '<b>Share Fee</b> : RM' . $this->applymember->share_fee . "<br>";
+        if ($this->pay_type_share == '2') {
+            $message .= '<b>Share Fee (Instalment)</b> : RM' . $this->monthly_share . "<br>";
+        } else {
+            $message .= '<b>Share Fee </b> : RM' . $this->applymember->share_fee . "<br>";
+        }
         $message .= '<b>Contribution Fee</b> : RM' . $this->applymember->contribution_fee . "<br>";
-        $message .= '<b>Total Fee</b> : RM' . $this->applymember->total_fee . "<br>";
+        if ($this->pay_type_share == '2') {
+            $message .= '<b>Total Fee</b> : RM' . $this->Ftotal_deduction . "<br>";
+        } else {
+            $message .= '<b>Total Fee</b> : RM' . $this->applymember->total_fee . "<br>";
+        }
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'          => 'warning',
@@ -819,12 +870,18 @@ class NewMembership extends Component
         // dump($this->Cust->gender_id);
 
         if ($this->pay_type_share == '2') {
-            $this->tot_share = $this->monthly_share;
+            // $this->tot_share = $this->monthly_share;
             $this->applymember->share_monthly = $this->monthly_share;
+            $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
         } else {
             $this->tot_share = $this->applymember->share_fee;
-        }
+            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
 
+            // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+        }
         if ($this->cust_bank_id || $this->cust_bank_id2) {
             $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 

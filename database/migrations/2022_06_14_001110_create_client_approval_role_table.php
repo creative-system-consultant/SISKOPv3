@@ -21,8 +21,12 @@ return new class extends Migration
             $table->bigInteger('role_id');
             $table->bigInteger('approval_id');
             $table->bigInteger('product_id')->nullable();
+            $table->bigInteger('amount_id')->nullable();
+            $table->string('product_range',100)->nullable();
 
             $table->string('name',50)->nullable();
+            $table->decimal('min',10,2)->nullable()->default('0');
+            $table->decimal('max',10,2)->nullable()->default('0');
             $table->integer('order')->default('1');
             $table->string('status',1)->default('1');
             $table->string('rules')->default('[]');

@@ -27,17 +27,15 @@ class Index extends Component
     {
         $this->user = auth()->user();
         $this->client_id = $this->user->client_id;
+        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
 
         $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
 
-
         $changeGuarantor = ChangeGuarantor::where([
-            ['cust_id', $this->siskop_cust->id],
-            ['flag', '<>', 3]
+            ['cif_id', $this->fms_cust->id],
+            ['flag', 0],
+            ['step', 0]
         ])->first();
-
-        // dd($changeGuarantor);
-
 
         if ($changeGuarantor != NULL) {
             if ($changeGuarantor->flag == '0') {
@@ -48,9 +46,6 @@ class Index extends Component
             }
             return redirect()->route('home');
         }
-
-        // $this->acct_position    = $this->acct_master->position;
-        // dump($this->acct_position);
     }
 
     public function searchGuarantor($acct_no)
@@ -140,7 +135,6 @@ class Index extends Component
 
     public function render()
     {
-        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
 
         $membership             = $this->fms_cust->fmsMembership;
 
