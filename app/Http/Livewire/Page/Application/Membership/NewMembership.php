@@ -81,7 +81,7 @@ class NewMembership extends Component
     public $tab1 = 1, $tab2 = 0, $tab3 = 0, $tab4 = 0, $tab5 = 0, $tab6 = 0, $tab7 = 0, $tab8 = 0;
     public $pay_type_regist, $pay_type_share;
     public $mail_flag, $mail_flag_employer;
-    public $tot_share, $cust_bank_id, $cust_bank_id2, $client_bank_id, $client_bank_acct, $client_bank_name;
+    public $tot_share, $cust_bank_id, $cust_bank_id2, $client_bank_id, $client_bank_acct, $client_bank_name, $bankLength;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -867,7 +867,10 @@ class NewMembership extends Component
         } else {
             $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
         }
-        // dump($this->Cust->gender_id);
+
+        if ($this->Cust->bank_id) {
+            $bank_name = RefBank::select('bank_acc_len')->where('id', $this->Cust->bank_id)->first();
+        }
 
         if ($this->pay_type_share == '2') {
             // $this->tot_share = $this->monthly_share;
@@ -877,7 +880,7 @@ class NewMembership extends Component
             $this->Mtotal_deduction =   $this->applymember->contribution_fee;
         } else {
             $this->tot_share = $this->applymember->share_fee;
-            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
             $this->Mtotal_deduction =   $this->applymember->contribution_fee;
 
             // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;

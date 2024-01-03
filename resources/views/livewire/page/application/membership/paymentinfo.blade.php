@@ -35,7 +35,7 @@
             <div>
                 <x-form.input-tag
                     label="Contribution Monthly (Minimum RM{{$this->min_contribution_fee}})"
-                    name=""
+                    name="applymember.contribution_fee"
                     value=""
                     mandatory=""
                     disable=""
@@ -75,6 +75,33 @@
                     rightTag=""
                     type="text"
                     wire:model="Ftotal_deduction"
+                /> 
+            </div>
+            @else 
+            <div>
+                <x-form.input-tag
+                    label="Total Deduction Upon Registration"
+                    name=""
+                    value="{{$Ftotal_deduction}}"
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="Ftotal_deduction"
+                /> 
+            </div>
+            <div>
+                <x-form.input-tag
+                    label="Total Deduction Monthly "
+                    name=""
+                    value="{{$Mtotal_deduction}}"
+                    mandatory=""
+                    disable="true"
+                    leftTag="RM"
+                    rightTag=""
+                    type="text"
+                    wire:model="Mtotal_deduction"
                 /> 
             </div>
             @endif
@@ -131,6 +158,7 @@
                     wire:model="total_deduction"
                 /> 
             </div>
+            
             @endif
         
         </div>
