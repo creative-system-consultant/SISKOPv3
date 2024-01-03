@@ -59,17 +59,17 @@
                                 <x-heroicon-o-archive-box class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="Buy Share" href="{{ route('share.apply') }}" uri="applyShare">
+                        <x-sidebar.dropdown-item title="Add Share" href="{{ route('share.apply') }}" uri="applyShare">
                             <x-slot name="icon">
                                 <x-heroicon-o-chart-pie class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="Sell Share" href="{{ route('share.sell') }}" uri="applySellShare">
+                        <x-sidebar.dropdown-item title="Sell/Transfer Share" href="{{ route('share.sell') }}" uri="applySellShare">
                             <x-slot name="icon">
                                 <x-heroicon-o-arrows-right-left class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="Apply Contribution" href="{{ route('contribution.apply') }}" uri="applyContribution">
+                        <x-sidebar.dropdown-item title="Apply Add/Change Contribution" href="{{ route('contribution.apply') }}" uri="applyContribution">
                             <x-slot name="icon">
                                 <x-heroicon-o-document-plus class="w-7 h-7" />
                             </x-slot>
@@ -84,7 +84,7 @@
                                 <x-heroicon-o-scale class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
-                        <x-sidebar.dropdown-item title="Apply dividend Payout" href="{{ route('dividend.apply') }}" uri="dividendApply">
+                        <x-sidebar.dropdown-item title="Apply Dividend Withdrawal" href="{{ route('dividend.apply') }}" uri="dividendApply">
                             <x-slot name="icon">
                                 <x-heroicon-o-receipt-percent class="w-7 h-7" />
                             </x-slot>

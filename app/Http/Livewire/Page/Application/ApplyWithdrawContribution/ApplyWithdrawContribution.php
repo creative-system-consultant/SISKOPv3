@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplyWithdrawContribution;
 
 use App\Models\Contribution;
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -20,6 +21,7 @@ class ApplyWithdrawContribution extends Component
     public $bank_code;
     public $banks;
     public $total_contribution, $monthly_contribution;
+    public $User;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -27,7 +29,6 @@ class ApplyWithdrawContribution extends Component
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
-        'cont_apply'                => 'required|numeric',
         'support_file'              => 'required',
         'bank_code'                 => 'required',
         'bank_account'              => 'required',
@@ -60,11 +61,59 @@ class ApplyWithdrawContribution extends Component
         ]);
     }
 
+    public function getSpecialRules()
+    {
+        return [
+            'bank_account' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (!$this->bank_code) {
+                        return $fail("The bank is not selected.");
+                    }
+
+                    $bankAccountLength = RefBank::where('code', $this->bank_code)->where('client_id', $this->User->client_id)->value('bank_acc_len');
+
+                    if (!$bankAccountLength) {
+                        return $fail("Unable to determine the bank account length.");
+                    }
+
+                    if (strlen((string) $value) != $bankAccountLength) {
+                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
+                    }
+                },
+            ],
+        ];
+    }
+
+    public function getContributionRules()
+    {
+        $rules = [
+            'cont_apply' => [
+                'required',
+                'numeric',
+                'min:10',
+            ],
+
+        ];
+
+
+        $rules['cont_apply'][] = 'max:' . $this->total_contribution;
+
+
+        return $rules;
+    }
+
+
+
     public function submit()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $customer = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
+        $this->validate($this->getSpecialRules());
+
+        $this->validate($this->getContributionRules());
+        dd('stop');
 
         $contribution->update([
             'direction'      => 'withdraw',
@@ -133,9 +182,9 @@ class ApplyWithdrawContribution extends Component
 
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
-        $this->banks = RefBank::where('client_id', $user->client_id)->get();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
         $this->total_contribution = $this->cust->fmsMembership->total_contribution;
         $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 

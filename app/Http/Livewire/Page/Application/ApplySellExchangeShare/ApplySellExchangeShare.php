@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Page\Application\ApplySellExchangeShare;
 
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use App\Models\Share;
 use Livewire\Component;
@@ -15,11 +16,11 @@ class ApplySellExchangeShare extends Component
     public $mbr_icno;
     public $bank_name;
     public $bank_acct;
-    public $bank_account;
     public $bank_code;
     public $banks;
     public $total_share;
     public $mbr_name;
+    public $User;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -27,13 +28,11 @@ class ApplySellExchangeShare extends Component
     protected $rules = [
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
-        'share_apply'     => 'required|numeric',
         'share_type'      => 'required',
         'bank_name'       => 'required_if:share_type,==,coop',
-        'bank_account'    => 'required_if:share_type,==,coop',
         'mbr_icno'        => 'required_if:share_type,==,mbr',
         'bank_code'       => 'required_if:share_type,==,mbr',
-        'bank_acct'       => 'required_if:share_type,==,mbr',
+        'bank_acct'       => 'required',
     ];
 
     protected $messages = [
@@ -45,8 +44,7 @@ class ApplySellExchangeShare extends Component
         'share_type.required'        => ':attribute is required',
         'bank_name.required_if'      => ':attribute field is required',
         'bank_code.required_if'      => ':attribute field is required',
-        'bank_account.required_if'   => ':attribute field is required',
-        'bank_acct.required_if'      => ':attribute field is required',
+        'bank_acct.required'      => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
@@ -55,16 +53,56 @@ class ApplySellExchangeShare extends Component
         'share_type'      => 'Types of Share Reimbursement',
         'bank_name'       => 'Bank',
         'bank_code'       => 'Bank',
-        'bank_account'    => 'Account Bank No.',
         'bank_acct'       => 'Account Bank No.'
     ];
 
+    public function getSpecialRules()
+    {
+        return [
+            'bank_acct' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (!$this->bank_name) {
+                        return $fail("The bank is not selected.");
+                    }
+
+                    $bankAccountLength = RefBank::where('code', $this->bank_name)->where('client_id', $this->User->client_id)->value('bank_acc_len');
+
+                    if (!$bankAccountLength) {
+                        return $fail("Unable to determine the bank account length.");
+                    }
+
+                    if (strlen((string) $value) != $bankAccountLength) {
+                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
+                    }
+                },
+            ],
+        ];
+    }
+
+    public function getShareRules()
+    {
+        $rules = [
+            'share_apply' => [
+                'required',
+                'numeric',
+                'min:50'
+            ],
+        ];
+
+        $rules['share_apply'][] = 'max:' . $this->total_share;
+
+
+        return $rules;
+    }
 
     public function submit()
     {
-        $user = auth()->user();
         $customer = new Customer;
-        $cust = $customer->where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $cust = $customer->where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->validate($this->getShareRules());
+        $this->validate($this->getSpecialRules());
 
         if ($this->share_type == 'coop') {
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
@@ -73,13 +111,13 @@ class ApplySellExchangeShare extends Component
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
                 'bank_code'    => $this->bank_name,
-                'bank_account' => $this->bank_account,
+                'bank_account' => $this->bank_acct,
                 'flag'         => '1',
                 'step'         => '1',
                 'created_by'   => strtoupper($cust->name),
             ]);
         } elseif ($this->share_type == 'mbr') {
-            $cust_member = $customer->where([['identity_no', $this->mbr_icno], ['identity_no', '<>', $user->icno]])->where('client_id', $user->client_id)->first();
+            $cust_member = $customer->where([['identity_no', $this->mbr_icno], ['identity_no', '<>', $this->User->icno]])->where('client_id', $this->User->client_id)->first();
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'exchange']])->first();
 
             $share->update([
@@ -179,14 +217,14 @@ class ApplySellExchangeShare extends Component
         ]);
 
         $this->share_apply  = $share?->apply_amt;
-        $this->bank_account = $share?->bank_account;
+        $this->bank_acct = $share?->bank_account;
         $this->bank_name    = $share?->bank_code;
     }
 
     public function updated()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $this->mbr_icno)->where('client_id', $user->client_id)->first();
+        $this->User = auth()->user();
+        $customer = Customer::where('identity_no', $this->mbr_icno)->where('client_id', $this->User->client_id)->first();
         if (strlen($this->mbr_icno) < 12) {
             $this->mbr_name = '';
             return;
@@ -207,7 +245,7 @@ class ApplySellExchangeShare extends Component
             ]);
             $this->mbr_name = '';
         } else {
-            if ($this->mbr_icno == $user->icno) {
+            if ($this->mbr_icno == $this->User->icno) {
                 $this->dispatchBrowserEvent('swal', [
                     'title' => '',
                     'text'  => 'IC No. Cannot Be Yourself',
@@ -231,14 +269,16 @@ class ApplySellExchangeShare extends Component
         }
     }
 
+
+
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $this->total_share = $this->cust->fmsMembership->total_share;
 
         $this->banks           = RefBank::where([
-            ['client_id', $user->client_id],
+            ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
 
