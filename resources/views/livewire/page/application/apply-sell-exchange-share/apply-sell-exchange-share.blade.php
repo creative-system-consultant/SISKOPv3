@@ -156,13 +156,13 @@
                         <div>
                             <x-form.input
                                 label="Bank Account No."
-                                name="bank_account"
-                                id="bank_account"
+                                name="bank_acct"
+                                id="bank_acct"
                                 value=""
                                 mandatory=""
                                 disable=""
                                 type="text"
-                                wire:model.defer="bank_account"
+                                wire:model.defer="bank_acct"
                             />
                         </div>
                     </div>

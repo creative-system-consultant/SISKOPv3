@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplyContribution;
 
 use App\Models\Contribution;
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -26,6 +27,7 @@ class ApplyContribution extends Component
     public $cheque_date;
     public $banks;
     public $total_contribution, $monthly_contribution;
+    public $User;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -33,7 +35,6 @@ class ApplyContribution extends Component
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.identity_no'          => 'required',
-        'cont_apply'                => 'required|numeric|not_in:0',
         'cont_type'                 => 'required',
         'start_contDate'            => 'exclude_if:cont_type,==,pay_once,&&,cont_type,null|required_if:cont_type,==,cont_date' .
             '|before:first day of january next year|after_or_equal:today',
@@ -44,7 +45,7 @@ class ApplyContribution extends Component
         'cdm_date'                  => 'exclude_if:payment_method,==,online,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:payment_method,==,cash|before:first day of january next year|after_or_equal:today',
         'cdm_file'                  => 'required_if:payment_method,==,cash',
-        'cheque_no'                 => 'required_if:payment_method,==,cheque',
+        'cheque_no'                 => 'required_if:payment_method,==,cheque|numeric',
         'cheque_date'               => 'exclude_if:payment_method,==,online,&&,payment_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:payment_method,==,cheque|before:first day of january next year|after_or_equal:today',
         'banks'                     => 'required',
@@ -98,11 +99,31 @@ class ApplyContribution extends Component
         ]);
     }
 
+    public function getContributionRules()
+    {
+        $rules = [
+            'cont_apply' => [
+                'required',
+                'numeric',
+                'not_in:0',
+            ],
+
+        ];
+
+        $globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+        if ($globalParm) {
+            $rules['cont_apply'][] = 'min:' . $globalParm->MIN_CONTRIBUTION;
+        }
+
+        return $rules;
+    }
+
     public function submit()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $customer = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'buy']])->first();
+
+        $this->validate($this->getContributionRules());
 
         $contribution->update([
             'direction'      => 'buy',
@@ -187,9 +208,9 @@ class ApplyContribution extends Component
 
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
-        $this->banks = RefBank::where('client_id', $user->client_id)->get();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
 
         $this->total_contribution = $this->cust->fmsMembership->total_contribution;
         $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;

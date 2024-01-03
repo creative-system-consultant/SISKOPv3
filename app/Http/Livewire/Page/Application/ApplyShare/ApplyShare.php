@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Page\Application\ApplyShare;
 
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use App\Models\Share;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Validator;
 use Storage;
 
 class ApplyShare extends Component
@@ -25,6 +27,8 @@ class ApplyShare extends Component
     public $cheque_date;
     public $banks;
     public $total_share;
+    public $globalParm;
+    public $User;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -32,7 +36,6 @@ class ApplyShare extends Component
     protected $rules = [
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
-        'share_apply'     => 'required|numeric|not_in:0',
         'pay_method'      => 'required',
         'online_date'     => 'exclude_if:pay_method,==,cash,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:pay_method,==,online|before:first day of january next year|after_or_equal:today',
@@ -87,10 +90,30 @@ class ApplyShare extends Component
         ]);
     }
 
+
+    public function getShareRules()
+    {
+        $rules = [
+            'share_apply' => [
+                'required',
+                'numeric',
+            ],
+        ];
+
+        $globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+        if ($globalParm) {
+            $rules['share_apply'][] = 'min:' . $globalParm->MIN_SHARE; // Use the dynamic minimum value from $globalParm->MIN_SHARE
+        }
+
+        return $rules;
+    }
+
+
+
     public function submit()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $customer = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->validate($this->getShareRules());
 
         // dd($customer);
         if ($this->share_apply == 0) {
@@ -162,9 +185,9 @@ class ApplyShare extends Component
 
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
-        $this->banks = RefBank::where('client_id', $user->client_id)->get();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
         $this->total_share = $this->cust->fmsMembership->total_share;
         $this->Share = Share::firstOrCreate([
             'cust_id'   => $this->cust->id,
