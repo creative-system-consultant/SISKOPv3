@@ -29,48 +29,142 @@
                 wire:model="profile_img"
             >
         </div>--}}
+        <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> User Details </h2>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
             <x-form.input
                 label="Full Name"
-                id="User.name"
-                name="User.name"
+                id="FmsCust.name"
+                name="FmsCust.name"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="User.name"
+                wire:model="FmsCust.name"
             />
             <x-form.input
                 label="IC Number"
-                id="User.icno"
-                name="User.icno"
+                id="FmsCust.identity_no"
+                name="FmsCust.identity_no"
                 value=""
                 mandatory="true"
-                disable=""
+                disable="true"
                 type="text"
-                wire:model="User.icno"
+                wire:model="FmsCust.identity_no"
             />
             <x-form.input
                 label="Phone No"
-                id="User.phone_no"
-                name="User.phone_no"
+                id="FmsCust.phone"
+                name="FmsCust.phone"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="User.phone_no"
+                wire:model="FmsCust.phone"
             />
             <x-form.input
                 label="Email"
-                id="User.email"
-                name="User.email"
+                id="FmsCust.email"
+                name="FmsCust.email"
                 value=""
                 mandatory="true"
                 disable=""
                 type="text"
-                wire:model="User.email"
+                wire:model="FmsCust.email"
             />
+        </div>
+
+
+        <h2 class="mb-4 pt-6 text-base font-semibold border-b-2 border-gray-300"> Work Details </h2>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
+            <x-form.input
+                label="Company Name"
+                id="Employer.name"
+                name="Employer.name"
+                value=""
+                mandatory="true"
+                disable=""
+                type="text"
+                wire:model="Employer.name"
+            />
+            <x-form.input
+                label="Name of Department"
+                id="Employer.department"
+                name="Employer.department"
+                value=""
+                mandatory="true"
+                disable=""
+                type="text"
+                wire:model="Employer.department"
+            />
+            <x-form.input
+                label="Position"
+                id="Employer.position"
+                name="Employer.position"
+                value=""
+                mandatory="true"
+                disable=""
+                type="text"
+                wire:model="Employer.position"
+            />
+            <x-form.input
+                label="Office Telephone Number (General Line)"
+                id="Employer.office_num"
+                name="Employer.office_num"
+                value=""
+                mandatory="true"
+                disable=""
+                type="text"
+                wire:model="Employer.office_num"
+            />
+            <x-form.input
+                label="Salary"
+                id="Employer.salary"
+                name="Employer.salary"
+                value=""
+                mandatory="true"
+                disable=""
+                type="text"
+                wire:model="Employer.salary"
+            />
+        </div>
+
+        <h2 class="mb-4 pt-6 text-base font-semibold border-b-2 border-gray-300"> Addresses </h2>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
+            <div>
+                <x-form.address class="mt-2"
+                    label="Home Address"
+                    mandatory=""
+                    disable=""
+                    name1="FmsAddressCust.address1"
+                    name2="FmsAddressCust.address2"
+                    name3="FmsAddressCust.address3"
+                    name4="FmsAddressCust.town"
+                    name5="FmsAddressCust.postcode"
+                    name6="FmsAddressCust.state_id"
+                    name7="mail_flag"
+                    :state="$state_id"
+                    condition="state"
+                    mailFlag="true"
+                />
+            </div>
+            <div>
+                <x-form.address class="mt-2"
+                    label="Office Address"
+                    mandatory=""
+                    disable=""
+                    name1="FmsAddressEmployer.address1"
+                    name2="FmsAddressEmployer.address2"
+                    name3="FmsAddressEmployer.address3"
+                    name4="FmsAddressEmployer.town"
+                    name5="FmsAddressEmployer.postcode"
+                    name6="FmsAddressEmployer.state_id"
+                    name7="mail_flag_employer"
+                    :state="$state_id"
+                    condition="state"
+                    mailFlag="true"
+                /> 
+            </div>
         </div>
 
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
