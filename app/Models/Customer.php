@@ -24,6 +24,10 @@ class Customer extends Model implements Auditable
         'icno','mbr_no'
     ];
 
+    public function bank() {
+        return $this->belongsTo(Ref\RefBank::class,'bank_id');
+    }
+
     public function education() {
         return $this->belongsTo(Ref\RefEducation::class,'education_id');
     }
@@ -50,7 +54,7 @@ class Customer extends Model implements Auditable
 
     public function family()
     {
-        return $this->hasMany(CustFamily::class, 'cust_id');
+        return $this->hasMany(CustFamily::class, 'cif_id');
     }
 
     public function specialAid()

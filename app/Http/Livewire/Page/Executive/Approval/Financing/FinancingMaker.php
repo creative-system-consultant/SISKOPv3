@@ -110,7 +110,7 @@ class FinancingMaker extends Component
         $this->User     = User::find(auth()->user()->id);
         $this->Account  = AccountApplication::where('uuid', $uuid)->firstOrFail();
         $this->Deduction= $this->Account->deduction()->firstOrCreate();
-        $this->Approval = Approval::where([['approval_id', $this->Account->id],['approval_type','App\Models\AccountApplication'],['order', $this->Account->apply_step]])->firstOrFail();
+        //$this->Approval = Approval::where([['approval_id', $this->Account->id],['approval_type','App\Models\AccountApplication'],['order', $this->Account->apply_step]])->firstOrFail();
         $this->Customer = Customer::find($this->Account->cust_id);
     }
 

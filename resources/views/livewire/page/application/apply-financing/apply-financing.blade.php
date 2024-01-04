@@ -129,12 +129,10 @@
 
         <x-form.basic-form wire:submit.prevent="alertConfirm">
             
+            @include('livewire.page.application.apply-financing.product')
             @include('livewire.page.application.apply-financing.personal')
-
             @include('livewire.page.application.apply-financing.extended')
-
             @include('livewire.page.application.apply-financing.document')
-
             @include('livewire.page.application.apply-financing.checklist')
         </x-form.basic-form>
     </x-general.card>

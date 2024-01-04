@@ -37,7 +37,7 @@
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->status?->description }}
+                        {{-- $item->status?->description --}}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">
@@ -47,6 +47,12 @@
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
+
+                            <a href="{{ route('financing.maker', $item->uuid) }}"
+                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                                title="Approval Process">
+                                 <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                             </a>
 
                             @if ($item->account_status == 1 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->rolegroup->role_id == 1)
                                 <a href="{{ route('financing.maker', $item->uuid) }}"

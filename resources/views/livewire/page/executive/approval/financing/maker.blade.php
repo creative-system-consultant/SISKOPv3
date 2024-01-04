@@ -186,7 +186,7 @@
                 wire:model="Deduction.insurance"
             />
         </div>
-        @if($Approval->order != 1)
+        @if($Approval?->order != 1)
         <br>
         <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Previous Approvals</h2>
         <x-table.table>
@@ -223,7 +223,7 @@
         <div class="grid grid-cols-12 gap-6 mt-8">
             <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                 <x-form.text-area
-                    label="Note / Comment : ({{ strlen($Approval->note) }}/255)"
+                    label="Note / Comment : ({{ strlen($Approval?->note) }}/255)"
                     value=""
                     name="Approval.note"
                     rows=""
@@ -243,7 +243,7 @@
                 <x-form.input
                     label=""
                     name="Role"
-                    value="{{ $Account->current_approval_role()->name }}"
+                    value="{{-- $Account->current_approval_role()->name --}}"
                     mandatory=""
                     disable="readonly"
                     type="text"

@@ -470,6 +470,7 @@
                             name4="CustAddress.town"
                             name5="CustAddress.postcode"
                             name6="CustAddress.state_id"
+                            name7=""
                             {{-- :state="$state" --}}
                             condition="state"
                             mailFlag="true"
@@ -486,6 +487,7 @@
                             name4="EmployerAddress.town"
                             name5="EmployerAddress.postcode"
                             name6="EmployerAddress.state_id"
+                            name7=""
                             {{-- :state="$state" --}}
                             condition="state"
                             mailFlag="true"
@@ -570,6 +572,7 @@
                             name4="FamilyAddress.town"
                             name5="FamilyAddress.postcode"
                             name6="FamilyAddress.state_id"
+                            name7=""
                             {{-- :state="$state" --}}
                             condition="state"
                             mailFlag="true"
@@ -826,6 +829,7 @@
                             name4=""
                             name5=""
                             name6=""
+                            name7=""
                             {{-- :state="" --}}
                             condition="state"
                         /> 
@@ -905,6 +909,7 @@
                             name4=""
                             name5=""
                             name6=""
+                            name7=""
                             {{-- :state="" --}}
                             condition="state"
                         /> 

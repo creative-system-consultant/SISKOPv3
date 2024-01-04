@@ -15,7 +15,7 @@ class CustFamily extends Model implements Auditable
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table   = "CIF.cust_family";
+    protected $table   = "CIF.families";
     protected $guarded = ['uuid'];
     protected $casts   = [
         'created_at'    => 'datetime',
@@ -30,7 +30,7 @@ class CustFamily extends Model implements Auditable
 
     public function cust()
     {
-        return $this->belongsTo(Customer::class,'cust_id','id');
+        return $this->belongsTo(Customer::class,'cif_id','id');
     }
 
     public function address()

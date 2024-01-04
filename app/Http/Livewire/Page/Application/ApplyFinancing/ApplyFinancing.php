@@ -7,7 +7,7 @@ use Livewire\Component;
 use App\Models\AccountApplication;
 use App\Models\AccountProduct;
 use App\Models\Address;
-use App\Models\CoopRules;
+use App\Models\ClientRules as CoopRules;
 use App\Models\Customer;
 use App\Models\CustFamily;
 use App\Models\CustEmployer;
@@ -61,6 +61,13 @@ class ApplyFinancing extends Component
     protected $listeners = ['submit'];
 
     protected $rule1 = [
+        'Product.name'                     => 'required',
+        'Product.profit_rate'              => 'required',
+        'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
+        'Account.duration'                 => 'required|gte:Product.term_min|lte:Product.term_max',
+    ];
+
+    protected $rule2a = [
         'Product.name'                     => 'required',
         'Product.profit_rate'              => 'required',
         'Account.purchase_price'           => 'required|numeric|gte:Product.amt_min|lte:Product.amt_max',
@@ -193,6 +200,12 @@ class ApplyFinancing extends Component
     public function next()
     {
         if ($this->numpage == 1) {
+            $this->validate($this->rule1);
+
+            $this->Account->save();
+        }
+
+        if ($this->numpage == 9) {
             $this->validate($this->rule1);
 
             $this->Account->save();
@@ -331,7 +344,8 @@ class ApplyFinancing extends Component
             ['cust_id', $this->Customer->id],
             ['client_id', $this->User->client_id],
             ['product_id', $this->Product->id],
-            ['account_status', 0]
+            ['account_status', 0],
+            ['apply_step', 1]
         ])->get();
 
         $AllAccount          = AccountApplication::where([
@@ -378,7 +392,7 @@ class ApplyFinancing extends Component
             $family = 5;
         }
 
-        $this->Family           = CustFamily::firstOrCreate(['cust_id' => $this->Customer->id, 'relationship_id' => $family]);
+        /*$this->Family           = CustFamily::firstOrCreate(['cif_id' => $this->Customer->id, 'relation_id' => $family]);
         $this->FamilyAddress    = $this->Family->Address()->firstorCreate();
 
         if ($this->Family->family_id != NULL) {
@@ -390,7 +404,12 @@ class ApplyFinancing extends Component
         $this->Family->family_id = $this->CustFamily->id;
         $this->CustFamily->client_id = $this->User->client_id;
 
-        $this->Employer         = CustEmployer::firstorCreate(['cust_id' => $this->Customer->id]);
+        */
+
+        $this->Employer         = CustEmployer::firstorCreate([
+            'cif_id'    => $this->Customer->id,
+            'client_id' => $this->Customer->client_id,
+        ]);
         $this->EmployerAddress  = $this->Employer->Address()->firstorCreate();
 
         $intro = $this->Account->introducers()->first();

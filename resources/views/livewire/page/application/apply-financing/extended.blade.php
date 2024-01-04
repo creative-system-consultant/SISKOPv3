@@ -84,6 +84,7 @@
                 name4=""
                 name5=""
                 name6=""
+                name7=""
                 {{-- :state="" --}}
                 condition="state"
             /> 
@@ -175,6 +176,7 @@
                 name4=""
                 name5=""
                 name6=""
+                name7=""
                 {{-- :state="" --}}
                 condition="state"
             /> 

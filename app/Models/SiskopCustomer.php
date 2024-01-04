@@ -24,6 +24,11 @@ class SiskopCustomer extends Model implements Auditable
         'icno'
     ];
 
+    public function bank()
+    {
+        return $this->belongsTo(Ref\RefBank::class, 'bank_id');
+    }
+
     public function education()
     {
         return $this->belongsTo(Ref\RefEducation::class, 'education_id');
