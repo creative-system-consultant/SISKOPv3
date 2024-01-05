@@ -8,7 +8,7 @@
                 <x-table.table-header class="text-left" value="" sort="" />
             </x-slot>
 
-            <x-slot name="tbody">
+            <x-slot name="tbody" wire:poll.5s>
                 @foreach($applymember->files as $file)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
@@ -25,7 +25,7 @@
             </x-slot>
         </x-table.table>
 
-        <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">
+        <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-800">
             <div class="flex items-center justify-center space-x-2">
                 <button type="button" wire:click="previous" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                     Previous

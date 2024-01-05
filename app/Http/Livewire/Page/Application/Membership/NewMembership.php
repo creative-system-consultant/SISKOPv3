@@ -487,7 +487,7 @@ class NewMembership extends Component
 
         // if (strlen($this->search) == 12) {
         $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
-            $query->where('status_id', '<>', 4)->where('client_id', $this->User->client_id);
+            $query->where('mbr_status', 'A')->where('client_id', $this->User->client_id);
         })->first();
         // dump('135');
 
@@ -766,9 +766,11 @@ class NewMembership extends Component
 
     public function totalfee()
     {
-        $this->applymember->update([
-            'total_fee' => $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee,
-        ]);
+        if (is_numeric($this->applymember->contribution_fee)) {
+            $this->applymember->update([
+                'total_fee' => $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee,
+            ]);
+        }
     }
 
     public function submit()
@@ -871,7 +873,7 @@ class NewMembership extends Component
         if ($this->Cust->bank_id) {
             $bank_name = RefBank::select('bank_acc_len')->where('id', $this->Cust->bank_id)->first();
         }
-
+if (is_numeric($this->applymember->contribution_fee)) {
         if ($this->pay_type_share == '2') {
             // $this->tot_share = $this->monthly_share;
             $this->applymember->share_monthly = $this->monthly_share;
@@ -885,6 +887,7 @@ class NewMembership extends Component
 
             // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
         }
+    }
         if ($this->cust_bank_id || $this->cust_bank_id2) {
             $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 

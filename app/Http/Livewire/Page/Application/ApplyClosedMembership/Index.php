@@ -35,7 +35,7 @@ class Index extends Component
 
         $this->balance = DB::select("
                         SELECT SUM(p.bal_outstanding) AS total_bal_outstanding
-                        FROM siskop.CUSTOMERS u 
+                        FROM siskop.CUSTOMERS u
                         INNER JOIN CIF.CUSTOMERS c ON u.identity_no = c.identity_no AND c.client_id = '$this->client_id'
                         INNER JOIN FMS.MEMBERSHIP cm ON c.id = cm.cif_id AND cm.client_id = '$this->client_id'
                         INNER JOIN FMS.ACCOUNT_MASTERS m ON cm.mbr_no = m.mbr_no AND m.client_id = '$this->client_id'
@@ -116,31 +116,31 @@ class Index extends Component
         $temp_ic = '700110106285';
 
         $this->jaminan = DB::select("
-                        SELECT 
+                        SELECT
                             C.name,
                             C.identity_no,
                             G.account_no,
                             P.bal_outstanding,
                             (
-                                SELECT TOP 1 C.name FROM CIF.customers C 
+                                SELECT TOP 1 C.name FROM CIF.customers C
                                 INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$this->client_id'
                                 INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_id AND GSub.client_id = '$this->client_id'
                                 WHERE P.account_no = GSub.account_no
                                 AND C.client_id = '$this->client_id'
                             ) AS guarantee_name,
                             (
-                                SELECT TOP 1 C.identity_no FROM CIF.customers C 
+                                SELECT TOP 1 C.identity_no FROM CIF.customers C
                                 INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$this->client_id'
                                 INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_id AND GSub.client_id = '$this->client_id'
                                 WHERE P.account_no = GSub.account_no
                                 AND C.client_id = '$this->client_id'
                             ) AS guarantee_icno
-                        FROM CIF.customers C 
+                        FROM CIF.customers C
                         INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$this->client_id'
                         INNER JOIN FMS.GUARANTOR_LIST G ON M.mbr_no = G.guarantor_mbr_id AND G.client_id = '$this->client_id'
                         INNER JOIN FMS.account_positions P ON P.ACCOUNT_NO = G.ACCOUNT_NO AND P.client_id = '$this->client_id'
-                        --WHERE C.identity_no = '$this->user->icno'
-                        WHERE C.identity_no = '$temp_ic'
+                        WHERE C.identity_no = '$this->user->icno'
+                        --WHERE C.identity_no = '$temp_ic'
                         AND P.bal_outstanding > 0
                         AND C.client_id = '$this->client_id'
                     ");
@@ -150,7 +150,7 @@ class Index extends Component
 
         $this->num_jaminan = DB::select("
                             SELECT COUNT (D.ACCOUNT_NO) AS NUM_GUARANTEE
-                            FROM CIF.customers C 
+                            FROM CIF.customers C
                             INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$this->client_id'
                             INNER JOIN FMS.GUARANTOR_LIST D ON M.mbr_no = D.guarantor_mbr_id AND D.client_id = '$this->client_id'
                             INNER JOIN FMS.account_positions P ON P.ACCOUNT_NO = D.ACCOUNT_NO AND P.client_id = '$this->client_id'
