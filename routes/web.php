@@ -53,7 +53,6 @@ use App\Http\Livewire\Page\Admin\Maintenance\Relationship\RelationshipCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Relationship\RelationshipEdit;
 use App\Http\Livewire\Page\Admin\Membership\MembershipAdmin;
 use App\Http\Livewire\Page\Admin\Product\ProductList;
-use App\Http\Livewire\Page\Admin\Product\ProductCreate;
 use App\Http\Livewire\Page\Admin\Product\ProductEdit;
 use App\Http\Livewire\Page\Admin\Role\RoleGroupCreate;
 use App\Http\Livewire\Page\Admin\Role\RoleGroupManagement;
@@ -249,7 +248,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             //Product > Create/Edit
             Route::prefix('product')->group(function(){
                 Route::get('/', ProductList::class)->name('product.list');
-                Route::get('create', ProductCreate::class)->name('product.create');
+                Route::get('create', ProductEdit::class)->name('product.create');
                 Route::get('edit/{id}', ProductEdit::class)->name('product.edit');
             });
 
