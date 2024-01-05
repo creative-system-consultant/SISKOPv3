@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Financing Application (MAKER)</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Financing Approval (MAKER)</h1>
 
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div class="pb-4 pl-4 pr-4">
@@ -27,11 +27,6 @@
                     </x-tab.title>
                     <x-tab.title name="5" livewire="">
                         <div class="flex items-center">
-                            <x-heroicon-o-credit-card class="w-6 h-6 " />
-                        </div>
-                    </x-tab.title>
-                    <x-tab.title name="6" livewire="">
-                        <div class="flex items-center">
                             <x-heroicon-o-document-text class="w-6 h-6 " />
                         </div>
                     </x-tab.title>
@@ -47,12 +42,9 @@
                         @include('livewire.page.executive.approval.financing.information.financing')
                     </x-tab.content>
                     <x-tab.content name="4">
-                        @include('livewire.page.executive.approval.financing.information.introducer')
+                        @include('livewire.page.executive.approval.financing.information.guarantor')
                     </x-tab.content>
                     <x-tab.content name="5">
-                        @include('livewire.page.executive.approval.financing.information.payment')
-                    </x-tab.content>
-                    <x-tab.content name="6">
                         @include('livewire.page.executive.approval.financing.information.document')
                     </x-tab.content>
                 </div>
