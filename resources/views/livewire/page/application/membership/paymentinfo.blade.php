@@ -14,13 +14,13 @@
                     type="text"
                     wire:model="applymember.register_fee"
                     wire:keydown="totalfee"
-                /> 
+                />
             </div>
 
 
             <div>
                 <x-form.input-tag
-                    label="{{ ($pay_type_share=='2' ? 'Share (Instalment)' : 'Share (One-time only)') }}"
+                    label="Share"
                     name=""
                     value=""
                     mandatory=""
@@ -29,7 +29,7 @@
                     rightTag=""
                     type="text"
                     wire:model="tot_share"
-                /> 
+                />
             </div>
 
             <div>
@@ -43,13 +43,13 @@
                     rightTag=""
                     type="text"
                     wire:model="applymember.contribution_fee"
-                /> 
+                />
             </div>
 
             @if($pay_type_share=='2')
             <div>
                 <x-form.input-tag
-                    label="Share Monthly (Instalment)"
+                    label="Share Monthly (Instalment) x{{ $globalParm->TOT_MTH_SHARE_INSTALMENT }} Month"
                     name=""
                     value="{{$monthly_share}}"
                     mandatory=""
@@ -58,7 +58,7 @@
                     rightTag=""
                     type="text"
                     wire:model="monthly_share"
-                /> 
+                />
             </div>
             @endif
 
@@ -75,7 +75,7 @@
                     rightTag=""
                     type="text"
                     wire:model="Ftotal_deduction"
-                /> 
+                />
             </div>
             @else 
             <div>
@@ -105,8 +105,8 @@
                 /> 
             </div>
             @endif
-           
-       
+
+
         </div>
 
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
@@ -125,7 +125,7 @@
                     <option value="2">Autopay</option>
                 </x-form.dropdown>
             </div>
-      
+
             <div>
                 <x-form.dropdown
                     label="Payment Type (Share)"
@@ -144,10 +144,10 @@
             <div></div>
             <div></div>
             {{-- @if($pay_type_regist=='2'||$pay_type_share=='2') --}}
-            @if($pay_type_share=='2')
+            {{-- @if($pay_type_share=='2')
             <div>
                 <x-form.input-tag
-                    label="Total Deduction Monthly (For the first 5 Month)"
+                    label="Total Deduction Monthly (For the first {{ $globalParm->TOT_MTH_SHARE_INSTALMENT }} Month)"
                     name=""
                     value="{{$total_deduction}}"
                     mandatory=""
@@ -156,11 +156,10 @@
                     rightTag=""
                     type="text"
                     wire:model="total_deduction"
-                /> 
+                />
             </div>
-            
-            @endif
-        
+            @endif --}}
+
         </div>
 
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
@@ -195,7 +194,7 @@
                         type="text"
                         wire:model="client_bank_name"
                         {{-- wire:keydown="totalfee" --}}
-                    /> 
+                    />
                 </div>
                 <div>
                     <x-form.input-tag
@@ -209,7 +208,7 @@
                         type="text"
                         wire:model="client_bank_acct"
                         {{-- wire:keydown="totalfee" --}}
-                    /> 
+                    />
                 </div>
                 @endif
                 @endif
@@ -217,10 +216,10 @@
             <div></div>
             <div></div>
             <div></div>
-            @if($pay_type_share=='2')
+            {{-- @if($pay_type_share=='2')
             <div>
                 <x-form.input-tag
-                    label="Total Deduction After 5 Months"
+                    label="Total Deduction After {{ $globalParm->TOT_MTH_SHARE_INSTALMENT }} Months"
                     name=""
                     value="{{$Mtotal_deduction}}"
                     mandatory=""
@@ -229,12 +228,12 @@
                     rightTag=""
                     type="text"
                     wire:model="Mtotal_deduction"
-                /> 
+                />
             </div>
-            @endif
+            @endif --}}
 
-              
-      
+
+
             {{-- <div>
                 @if($pay_type_share=='1')
                     <div>
@@ -265,7 +264,7 @@
                             rightTag=""
                             type="text"
                             wire:model="client_bank_name"
-                        /> 
+                        />
                     </div>
                     <div>
                         <x-form.input-tag
@@ -278,17 +277,17 @@
                             rightTag=""
                             type="text"
                             wire:model="client_bank_acct"
-                        /> 
+                        />
                     </div>
                     @endif
                 @endif
             </div> --}}
-            
+
         </div>
         {{-- <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
-        
-            
-            
+
+
+
         </div> --}}
     </div>
 

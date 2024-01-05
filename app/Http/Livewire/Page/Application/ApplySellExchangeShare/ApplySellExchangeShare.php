@@ -146,7 +146,8 @@ class ApplySellExchangeShare extends Component
     public function alertConfirm()
     {
         $this->validate();
-
+        $this->validate($this->getShareRules());
+        $this->validate($this->getSpecialRules());
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for share reimbursement?',
