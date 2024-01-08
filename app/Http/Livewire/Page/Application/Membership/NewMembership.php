@@ -528,7 +528,6 @@ class NewMembership extends Component
     public function gender()
     {
         $tempGender  = substr($this->Cust->identity_no, 0, 12);
-
         if ($tempGender % 2 == 0) {
             $tempGender = 'F';
         } else {
@@ -540,7 +539,6 @@ class NewMembership extends Component
     public function callSP()
     {
         $sql =  "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->apply_id . ", 10 ";
-        // dd($sql);
         DB::statement($sql);
     }
 
@@ -873,21 +871,21 @@ class NewMembership extends Component
         if ($this->Cust->bank_id) {
             $bank_name = RefBank::select('bank_acc_len')->where('id', $this->Cust->bank_id)->first();
         }
-if (is_numeric($this->applymember->contribution_fee)) {
-        if ($this->pay_type_share == '2') {
-            // $this->tot_share = $this->monthly_share;
-            $this->applymember->share_monthly = $this->monthly_share;
-            $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
-            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
-            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
-        } else {
-            $this->tot_share = $this->applymember->share_fee;
-            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
-            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
+        if (is_numeric($this->applymember->contribution_fee)) {
+            if ($this->pay_type_share == '2') {
+                // $this->tot_share = $this->monthly_share;
+                $this->applymember->share_monthly = $this->monthly_share;
+                $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
+                $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+                $this->Mtotal_deduction =   $this->applymember->contribution_fee;
+            } else {
+                $this->tot_share = $this->applymember->share_fee;
+                $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+                $this->Mtotal_deduction =   $this->applymember->contribution_fee;
 
-            // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+                // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+            }
         }
-    }
         if ($this->cust_bank_id || $this->cust_bank_id2) {
             $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 

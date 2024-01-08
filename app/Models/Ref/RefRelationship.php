@@ -30,6 +30,16 @@ class RefRelationship extends Model
                 ->where('client_id', $client_id)
                 ->where('status', 1)
                 ->get();
+        } elseif ($genderId == '1') {
+            return self::whereNotIn('description', ['HUSBAND'])
+                ->where('client_id', $client_id)
+                ->where('status', 1)
+                ->get();
+        } elseif ($genderId == '2') {
+            return self::whereNotIn('description', ['WIFE'])
+                ->where('client_id', $client_id)
+                ->where('status', 1)
+                ->get();
         }
     }
 }
