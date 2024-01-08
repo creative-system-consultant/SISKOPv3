@@ -27,25 +27,6 @@ class Index extends Component
     {
         $this->user = auth()->user();
         $this->client_id = $this->user->client_id;
-        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
-
-        $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
-
-        $changeGuarantor = ChangeGuarantor::where([
-            ['cif_id', $this->fms_cust->id],
-            ['flag', 0],
-            ['step', 0]
-        ])->first();
-
-        if ($changeGuarantor != NULL) {
-            if ($changeGuarantor->flag == '0') {
-                session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
-                session()->flash('time', 10000);
-                session()->flash('info');
-                session()->flash('title');
-            }
-            return redirect()->route('home');
-        }
     }
 
     public function searchGuarantor($acct_no)
@@ -135,6 +116,26 @@ class Index extends Component
 
     public function render()
     {
+
+        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
+
+        $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
+
+        $changeGuarantor = ChangeGuarantor::where([
+            ['cif_id', $this->fms_cust->id],
+            ['flag', 0],
+            ['step', 0]
+        ])->first();
+
+        if ($changeGuarantor != NULL) {
+            if ($changeGuarantor->flag == '0') {
+                session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
+                session()->flash('time', 10000);
+                session()->flash('info');
+                session()->flash('title');
+            }
+            return redirect()->route('home');
+        }
 
         $membership             = $this->fms_cust->fmsMembership;
 
