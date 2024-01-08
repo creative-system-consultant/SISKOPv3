@@ -119,9 +119,9 @@ use App\Http\Livewire\Page\User\Application\Membership\MembershipStatus;
 |
 */
 
-Route::get('/', [RedirectController::class,'index']);
+Route::get('/', [RedirectController::class, 'index']);
 
-Route::get('res/php-info8', function(){
+Route::get('res/php-info8', function () {
     phpinfo();
 });
 
@@ -153,16 +153,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('logout', LogoutController::class)->name('logouts');
 
     //profile
-    Route::get('profile', Index::class)->name('profile');
+    Route::get('profile', Index::class)->name('profile')->middleware('check.profile');
     Route::get('Index', Index::class)->name('Index');
 });
 
 //----------------------------- page routes -------------------------------//
-Route::middleware(['auth','mustselectclient'])->group(function () {
+Route::middleware(['auth', 'mustselectclient'])->group(function () {
     Route::get('home', Home::class)->name('home');
 
     //User
-    Route::prefix('User')->group(function(){
+    Route::prefix('User')->group(function () {
         Route::get('Application/List', Lists::class)->name('user_application.list');
         Route::get('Application/Membership/Status', MembershipStatus::class)->name('user_membership.status');
     });
@@ -173,7 +173,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
 
 
     //------------------------------- Applications -------------------------------//
-    Route::prefix('apply')->group(function(){
+    Route::prefix('apply')->group(function () {
         //Applications > Special Aid
         Route::get('/SpecialAid', ApplySpecialAid::class)->name('special-aid.apply');
 
@@ -211,42 +211,42 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
 
 
     //------------------------ admin ------------------------------//
-    Route::prefix('Admin')->group(function(){
+    Route::prefix('Admin')->group(function () {
         //Admin > User
-        Route::prefix('User')->group(function(){
+        Route::prefix('User')->group(function () {
             Route::get('RoleGroup', RoleGroupManagement::class)->name('user.rolegroup');
             Route::get('CreateGroup', RoleGroupCreate::class)->name('user.creategroup');
             Route::get('EditGroup/{uuid}', RoleGroupCreate::class)->name('user.editgroup');
         });
-        Route::prefix('Membership')->group(function(){
+        Route::prefix('Membership')->group(function () {
             Route::get('/', MembershipAdmin::class)->name('membership.admin');
         });
 
-        Route::prefix('Approval')->group(function(){
+        Route::prefix('Approval')->group(function () {
             //Route::get('admin', ApprovalAdmin::class)->name('admin.approval.admin');
             Route::get('/Financing', ApprovalFinancing::class);
             Route::get('/Financing/{product}', ApprovalFinancing::class);
             Route::get('/{type}', ApprovalAdmin::class);
         });
 
-        Route::prefix('maintenance')->group(function(){
+        Route::prefix('maintenance')->group(function () {
             //Admin > Maintenance > Special Aid
-            Route::prefix('specialAid')->group(function(){
+            Route::prefix('specialAid')->group(function () {
                 Route::get('/', ListSpecialAid::class)->name('special_aid.list');
                 Route::get('create', CreateSpecialAid::class)->name('special_aid.create');
                 Route::get('edit/{uuid}', CreateSpecialAid::class)->name('special_aid.edit');
             });
-            Route::prefix('coop')->group(function(){
+            Route::prefix('coop')->group(function () {
                 Route::get('/', ClientAdmin::class)->name('coop.list');
                 Route::get('create', ClientCreate::class)->name('coop.create');
                 Route::get('edit/{client_id}', ClientCreate::class)->name('coop.edit');
             });
-            Route::prefix('CustCoop')->group(function(){
+            Route::prefix('CustCoop')->group(function () {
                 Route::get('/', CustomerCoop::class)->name('coop.cust');
             });
 
             //Product > Create/Edit
-            Route::prefix('product')->group(function(){
+            Route::prefix('product')->group(function () {
                 Route::get('/', ProductList::class)->name('product.list');
                 Route::get('create', ProductEdit::class)->name('product.create');
                 Route::get('edit/{id}', ProductEdit::class)->name('product.edit');
@@ -258,82 +258,81 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             Route::get('edit-maintenance/{id}', EditMaintenance::class)->name('edit-maintenance');
 
             //Admin > Maintenance > Bank
-            Route::prefix('bank')->group(function(){
+            Route::prefix('bank')->group(function () {
                 Route::get('/', BankList::class)->name('bank.list');
                 Route::get('create', BankCreate::class)->name('bank.create');
                 Route::get('edit/{id}', BankEdit::class)->name('bank.edit');
             });
 
             //Admin > Maintenance > Education
-            Route::prefix('education')->group(function(){
+            Route::prefix('education')->group(function () {
                 Route::get('/', EducationList::class)->name('education.list');
                 Route::get('create', EducationCreate::class)->name('education.create');
                 Route::get('edit/{id}', EducationEdit::class)->name('education.edit');
             });
 
             //Admin > Maintenance > Financing Calculation Type
-            Route::prefix('calculationType')->group(function(){
+            Route::prefix('calculationType')->group(function () {
                 Route::get('/', CalculationTypeList::class)->name('calculationType.list');
                 Route::get('create', CalculationTypeCreate::class)->name('calculationType.create');
                 Route::get('edit/{id}', CalculationTypeCreate::class)->name('calculationType.edit');
             });
 
             //Admin > Maintenance > Country
-            Route::prefix('country')->group(function(){
+            Route::prefix('country')->group(function () {
                 Route::get('/', CountryList::class)->name('country.list');
                 Route::get('create', CountryCreate::class)->name('country.create');
                 Route::get('edit/{id}', CountryEdit::class)->name('country.edit');
             });
 
             //Admin > Maintenance >  cust_title
-            Route::prefix('title')->group(function(){
+            Route::prefix('title')->group(function () {
                 Route::get('/', TitleList::class)->name('title.list');
                 Route::get('create', TitleCreate::class)->name('title.create');
                 Route::get('edit/{id}', TitleEdit::class)->name('title.edit');
             });
 
             //Admin > Maintenance > race
-            Route::prefix('race')->group(function(){
+            Route::prefix('race')->group(function () {
                 Route::get('/', RaceList::class)->name('race.list');
                 Route::get('create', RaceCreate::class)->name('race.create');
                 Route::get('edit/{id}', RaceEdit::class)->name('race.edit');
             });
 
             //Admin > Maintenance > Religion
-            Route::prefix('religion')->group(function(){
+            Route::prefix('religion')->group(function () {
                 Route::get('/', ReligionList::class)->name('religion.list');
                 Route::get('create', ReligionCreate::class)->name('religion.create');
                 Route::get('edit/{id}', ReligionEdit::class)->name('religion.edit');
             });
 
             //Admin > Maintenance > State
-            Route::prefix('state')->group(function(){
+            Route::prefix('state')->group(function () {
                 Route::get('/', StateList::class)->name('state.list');
                 Route::get('create', StateCreate::class)->name('state.create');
                 Route::get('edit/{id}', StateEdit::class)->name('state.edit');
             });
 
             //Admin > Maintenance > Gender
-            Route::prefix('gender')->group(function(){
+            Route::prefix('gender')->group(function () {
                 Route::get('/', GenderList::class)->name('gender.list');
                 Route::get('create', GenderCreate::class)->name('gender.create');
                 Route::get('edit/{id}', GenderEdit::class)->name('gender.edit');
             });
 
             //Admin > Maintenance > Relationship
-            Route::prefix('relationship')->group(function(){
+            Route::prefix('relationship')->group(function () {
                 Route::get('/', RelationshipList::class)->name('relationship.list');
                 Route::get('create', RelationshipCreate::class)->name('relationship.create');
                 Route::get('edit/{id}', RelationshipEdit::class)->name('relationship.edit');
             });
 
             //Admin > Maintenance > Marital
-            Route::prefix('marital')->group(function(){
+            Route::prefix('marital')->group(function () {
                 Route::get('/', MaritalList::class)->name('marital.list');
                 Route::get('create', MaritalCreate::class)->name('marital.create');
                 Route::get('edit/{id}', MaritalEdit::class)->name('marital.edit');
             });
-
         });
     });
     //----------------------- end Admin -------------------------------------//
@@ -341,16 +340,16 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
 
 
     //----------------------- Executive -------------------------------------//
-    Route::prefix('exec')->group(function(){
+    Route::prefix('exec')->group(function () {
         //Exec > edit customer
-        Route::prefix('/editcustomer')->group(function(){
+        Route::prefix('/editcustomer')->group(function () {
             Route::get('search', SearchCustomer::class)->name('customer.search');
             Route::get('edit/{uuid}', EditCustomer::class)->name('customer.edit');
         });
 
         //Exec > Application List
-        Route::prefix('applicationList')->group(function(){
-            Route::get('/', function(){
+        Route::prefix('applicationList')->group(function () {
+            Route::get('/', function () {
                 return view('livewire.page.application.application-list.application-list');
             })->name('application.list');
 
@@ -367,9 +366,9 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
         Route::get('allapproval/{include}/approver/{uuid}', AllApprover::class)->name('allapproval.approver');
         Route::get('allapproval/{include}/resolution/{uuid}', AllResolution::class)->name('allapproval.resolution');
 
-        Route::prefix('approval')->group(function(){
+        Route::prefix('approval')->group(function () {
             //Exec > approval > specialAid
-            Route::prefix('specialAid')->group(function(){
+            Route::prefix('specialAid')->group(function () {
                 Route::get('maker/{uuid}', SpecialAidMaker::class)->name('specialAid.maker');
                 Route::get('checker/{uuid}', SpecialAidChecker::class)->name('specialAid.checker');
                 Route::get('committee/{uuid}', SpecialAidCommittee::class)->name('specialAid.committee');
@@ -377,7 +376,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             });
 
             //Exec > approval > Financing
-            Route::prefix('financing')->group(function(){
+            Route::prefix('financing')->group(function () {
                 Route::get('maker/{uuid}', FinancingMaker::class)->name('financing.maker');
                 Route::get('checker/{uuid}', FinancingChecker::class)->name('financing.checker');
                 Route::get('committee/{uuid}', FinancingCommittee::class)->name('financing.committee');
@@ -386,7 +385,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             });
 
             //Exec > approval > Dividend
-            Route::prefix('dividend')->group(function(){
+            Route::prefix('dividend')->group(function () {
                 Route::get('maker/{uuid}', DividendMaker::class)->name('dividend.maker');
                 Route::get('checker/{uuid}', DividendChecker::class)->name('dividend.checker');
                 Route::get('committee/{uuid}', DividendCommittee::class)->name('dividend.committee');
@@ -394,7 +393,7 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
             });
 
             //Exec > approval > Membership
-            Route::prefix('member')->group(function(){
+            Route::prefix('member')->group(function () {
                 Route::get('maker/{uuid}', MembershipMaker::class)->name('membership.maker');
                 Route::get('checker/{uuid}', MembershipChecker::class)->name('membership.checker');
                 Route::get('committee/{uuid}', MembershipCommittee::class)->name('membership.committee');
@@ -402,7 +401,6 @@ Route::middleware(['auth','mustselectclient'])->group(function () {
                 Route::get('resolution/{uuid}', MembershipResolution::class)->name('membership.resolution');
             });
         });
-
     });
     //----------------------- End Executive --------------------------------//
 

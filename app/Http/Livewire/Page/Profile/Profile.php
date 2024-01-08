@@ -3,8 +3,12 @@
 namespace App\Http\Livewire\Page\Profile;
 
 use App\Models\CustEmployer;
+use App\Models\CustFamily;
 use App\Models\Customer;
 use App\Models\FmsAddress;
+use App\Models\Ref\RefRace;
+use App\Models\Ref\RefRelationship;
+use App\Models\Ref\RefReligion;
 use App\Models\Ref\RefState;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,8 +20,9 @@ class Profile extends Component
     public $profile_img = null;
 
     public User $User;
-    public $Employer, $FmsCust, $FmsCustC10, $FmsAddressCust, $FmsAddressEmployer, $state_id;
+    public $Employer, $FmsCust, $FmsCustC10, $FmsAddressCust, $FmsAddressEmployer, $FmsCustFamily, $state_id;
     public $mail_flag, $mail_flag_employer;
+    public $race_id, $religion_id, $relationship;
 
     protected $rules = [
         'FmsCust.name'     => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
@@ -52,6 +57,19 @@ class Profile extends Component
         'FmsAddressEmployer.postcode'    => 'required|digits:5',
         'FmsAddressEmployer.state_id'    => 'required',
 
+
+        'FmsCustFamily.name'                    => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
+        'FmsCustFamily.identity_no'             => 'required|numeric|digits:12',
+        'FmsCustFamily.email'                   => ['required', 'email:rfc', 'regex:/^[\w\.-]+@[\w\.-]+\.\w+$/'],
+        'FmsCustFamily.phone_no'                => ['required', 'regex:/^\d{7,11}$/'],
+        'FmsCustFamily.relation_id'             => 'required',
+        'FmsCustFamily.race_id'                 => 'required',
+        'FmsCustFamily.religion_id'             => 'required',
+        'FmsCustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'FmsCustFamily.work_post'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
+        'FmsCustFamily.salary'                  =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
+
+
     ];
 
     public function submit()
@@ -75,6 +93,7 @@ class Profile extends Component
             }
             $this->FmsAddressCust->save();
             $this->FmsAddressEmployer->save();
+            $this->FmsCustFamily->save();
 
             session()->flash('message', 'Profile Details Updated');
             session()->flash('time', 10000);
@@ -98,10 +117,21 @@ class Profile extends Component
         $this->User = User::find(auth()->user()->id);
         $this->FmsCust = Customer::where('client_id', $this->User->client_id)->where('identity_no', $this->User->icno)->first();
         $this->FmsCustC10 = Customer::where('client_id', 10)->where('identity_no', $this->User->icno)->first();
+
+
+
         $this->Employer  = CustEmployer::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->first();
         $this->FmsAddressCust = FmsAddress::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 2)->first();
         $this->FmsAddressEmployer = FmsAddress::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 3)->first();
+        $this->FmsCustFamily = CustFamily::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->first();
+        // dd($this->FmsCustFamily);
+
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+
+        $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
+
+
         $this->mail_flag = $this->FmsAddressCust->mail_flag;
         $this->mail_flag_employer = $this->FmsAddressEmployer->mail_flag;
     }
@@ -125,6 +155,11 @@ class Profile extends Component
 
     public function render()
     {
+        if (!$this->FmsCust->gender_code) {
+            $this->relationship      = RefRelationship::where('client_id', $this->User->client_id)->get();
+        } else {
+            $this->relationship      = RefRelationship::GenderSpecificList($this->FmsCust->gender_code, $this->User->client_id);
+        }
         return view('livewire.page.profile.profile')->extends('layouts.head');
     }
 }

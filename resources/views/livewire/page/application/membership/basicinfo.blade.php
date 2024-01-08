@@ -372,25 +372,7 @@
 
                 </div>
             </div>
-            {{-- <div class="grid grid-cols-1 mt-4  gap-2">
-                <div>
-                    <x-form.address class="mt-2"
-                        label="Home Address"
-                        mandatory=""
-                        disable=""
-                        name1="FamilyAddress.address1"
-                        name2="FamilyAddress.address2"
-                        name3="FamilyAddress.address3"
-                        name4="FamilyAddress.town"
-                        name5="FamilyAddress.postcode"
-                        name6="FamilyAddress.state_id"
-                        name7=""
-                        :state="$state_id"
-                        condition="state"
-                        mailFlag="true"
-                    />
-                </div>
-            </div> --}}
+ 
         </div>
     </div>
 

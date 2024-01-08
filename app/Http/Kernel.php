@@ -73,5 +73,7 @@ class Kernel extends HttpKernel
         // Custom Middleware
         'mustselectclient' => \App\Http\Middleware\MustSelectClient::class,
 
+        // Check Profile
+        'check.profile' => \App\Http\Middleware\CheckProfileCompletion::class,
     ];
 }
