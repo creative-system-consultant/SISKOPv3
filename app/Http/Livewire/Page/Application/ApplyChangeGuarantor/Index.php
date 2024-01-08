@@ -89,7 +89,7 @@ class Index extends Component
 
 
             ChangeGuarantor::create([
-                'cust_id' => $this->siskop_cust->id,
+                'cif_id' => $this->siskop_cust->id,
                 'account_no' => $guarantor->account_no,
                 'old_jamin_member1' => $old_guarantor_mbrNo,
                 'old_jamin_name1' => $old_guarantor_name,
