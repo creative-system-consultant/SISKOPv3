@@ -204,7 +204,22 @@ class Resolution extends Component
             ['order', $this->Application->step],
             ['role_id', '2'],
             ['approval_type', $this->pagetype ],
-        ])->whereNull('type')->firstOrFail();
+        ])->whereNull('type')
+        ->where(function ($query){
+            $query->where('user_id', NULL)
+            ->orWhere('user_id', $this->User->id);
+        })->first();
+
+        if ($this->Approval == NULL){
+            session()->flash('message', 'Application is being processed by another staff');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else {
+            $this->Approval->user_id = $this->User->id;
+            $this->Approval->save();
+        }
 
         //$this->forward = $this->Approval->rule_forward ?? FALSE;
         $this->banks = RefBank::where('client_id', $this->Application->client_id)->where('status', '1')->orderby('priority','asc')->orderby('description')->get();

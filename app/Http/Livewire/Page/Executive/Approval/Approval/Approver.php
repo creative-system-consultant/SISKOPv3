@@ -238,7 +238,20 @@ class Approver extends Component
             ['role_id', '4'],
             ['user_id', $this->User->id ],
             ['approval_type', $this->pagetype ],
-        ])->firstOrFail();
+        ])->first();
+        if($this->Approval == NULL){
+            session()->flash('message', 'Application is being processed by another staff');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else if ($this->Approval->vote != NULL){
+            session()->flash('message', 'Application is have been processed by you');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+
+            return redirect()->route('application.list',['page' => '1']);
+        }
         $this->forward = $this->Approval->rule_forward ?? FALSE;
         $this->banks = RefBank::where('client_id', $this->Application->client_id)->where('status', '1')->orderby('priority','asc')->orderby('description')->get();
     }

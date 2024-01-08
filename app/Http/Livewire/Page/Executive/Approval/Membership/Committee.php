@@ -172,7 +172,20 @@ class Committee extends Component
                             ['order', $this->Application->step],
                             ['role_id', '3'],
                             ['user_id', $this->User->id ],
-                        ])->firstOrFail();
+                        ])->first();
+        if($this->Approval == NULL){
+            session()->flash('message', 'Application is being processed by another staff');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else if ($this->Approval->vote != NULL){
+            session()->flash('message', 'Application is have been processed by you');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+
+            return redirect()->route('application.list',['page' => '1']);
+        }
         $this->CustAddress = Address::where([
                     ['cif_id', $this->Cust->id ],
                     ['address_type_id', 2],
