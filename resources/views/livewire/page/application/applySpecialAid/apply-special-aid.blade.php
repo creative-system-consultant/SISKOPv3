@@ -62,7 +62,39 @@
                                     @endif
                                 </div>
 
-                                @foreach ($listField->field as $key => $list)
+                                <div>
+                                    <x-form.input-tag
+                                        label="Event Date"
+                                        type="date"
+                                        name="event_date.{{ $index }}"
+                                        value=""
+                                        leftTag=""
+                                        rightTag=""
+                                        mandatory=""
+                                        disable="{{ $isDisabled }}"
+                                        wire:model.lazy='event_date.{{ $index }}'
+                                    />
+
+                                    @if (session('errors'))
+                                        <p class="mt-2 text-sm text-red-600">{{ session('errors') }}</p>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <x-form.input
+                                        label="Upload Supporting Document:(uploaded only: jpg/png/jpeg/pdf)"
+                                        name="online_file"
+                                        id="online_file"
+                                        value=""
+                                        mandatory=""
+                                        disable=""
+                                        type="file"
+                                        accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                                        wire:model="online_file"
+                                    />
+                                </div>
+                                
+                                {{-- @foreach ($listField->field as $key => $list)
                                     <div @if ($list->status == 0) style="display: none" @endif>
                                         <div>
                                             <x-form.input
@@ -81,7 +113,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
                             </div>
                             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                                 <div class="flex items-center justify-center space-x-2">
