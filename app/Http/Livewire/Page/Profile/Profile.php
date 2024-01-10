@@ -170,10 +170,10 @@ class Profile extends Component
         $this->FmsAddressEmployer = FmsAddress::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 3)->first();
         $this->FmsCustFamily = CustFamily::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->first();
 
-        $this->EmployerC10  = CustEmployer::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->first();
-        $this->FmsAddressCustC10 = FmsAddress::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 2)->first();
-        $this->FmsAddressEmployerC10 = FmsAddress::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 3)->first();
-        $this->FmsCustFamilyC10 = CustFamily::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->first();
+        $this->EmployerC10  = CustEmployer::where('client_id', 10)->where('cif_id', $this->FmsCustC10->id)->first();
+        $this->FmsAddressCustC10 = FmsAddress::where('client_id', 10)->where('cif_id', $this->FmsCustC10->id)->where('address_type_id', 2)->first();
+        $this->FmsAddressEmployerC10 = FmsAddress::where('client_id', 10)->where('cif_id', $this->FmsCustC10->id)->where('address_type_id', 3)->first();
+        $this->FmsCustFamilyC10 = CustFamily::where('client_id', 10)->where('cif_id', $this->FmsCustC10->id)->first();
 
 
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
