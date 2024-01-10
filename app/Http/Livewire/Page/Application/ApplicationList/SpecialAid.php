@@ -8,9 +8,9 @@ use Livewire\Component;
 
 class SpecialAid extends Component
 {
-    public $specialAid;
+    public $specialAid, $User;
     public $specialAid_type;
-    public $custApply,$type;
+    public $custApply, $type;
 
     public function showApplication($uuid)
     {
@@ -20,11 +20,8 @@ class SpecialAid extends Component
 
     public function mount()
     {
-        $this->specialAid = ApplySpecialAid::orderBy('created_at','desc')->with('customer')->get();
-
-        foreach ($this->specialAid as $type) {
-            $this->specialAid_type = SpecialAidType::where('id', $type->special_aid_id)->get();
-        }
+        $this->User = auth()->user();
+        $this->specialAid = ApplySpecialAid::orderBy('created_at', 'desc')->with('customer')->with('specialAidType')->get();
     }
 
     public function render()

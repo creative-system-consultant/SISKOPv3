@@ -91,6 +91,8 @@
                     disable=""
                     mandatory=""
                     placeholder=""
+                    wire:model="Approval.note"
+
                 />
             </div>
         </div>

@@ -22,9 +22,7 @@
                         {{ $aid->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @foreach ($specialAid_type as $type)
-                            {{ $type->name }}
-                        @endforeach
+                        {{$aid->specialAidType->name}}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $aid->created_at->format("d-m-Y") }}
@@ -44,9 +42,49 @@
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
-                            <a href="{{ route('specialAid.maker', $aid->uuid) }}" class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400" title="Approval Process">
+
+                
+
+                            @if ($aid->flag > 0 && in_array($aid->current_approval()?->group_id,$User->role_ids()) && $aid->current_approval()?->role_id == 1)
+                            <a href="{{ route('allapproval.maker',['include' => 'specialaid','uuid' => $aid->uuid]) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
                                 <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
                             </a>
+                        @endif
+
+                        @if ($aid->flag > 0 && in_array($aid->current_approval()?->group_id,$User->role_ids()) && $aid->current_approval()?->role_id == 2)
+                            <a href="{{ route('allapproval.checker',['include' => 'specialaid', 'uuid' => $aid->uuid]) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($aid->flag > 0 && in_array($User->id,$aid->approval_unvoted_id(3)))
+                            <a href="{{ route('allapproval.committee',['include' => 'specialaid', 'uuid' => $aid->uuid]) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($aid->flag > 0 && in_array($User->id,$aid->approval_unvoted_id(4)))
+                            <a href="{{ route('allapproval.approver',['include' => 'specialaid', 'uuid' => $aid->uuid]) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($aid->flag > 0 && in_array($aid->current_approval()?->group_id,$User->role_ids()) && $aid->current_approval()?->role_id == 5)
+                            <a href="{{ route('allapproval.approver',['include' => 'specialaid','uuid' => $aid->uuid]) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                            </a>
+                        @endif
+
                         </div>
                     </x-table.table-body>
                 </tr>
