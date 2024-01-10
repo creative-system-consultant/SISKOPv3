@@ -95,7 +95,7 @@
                 @foreach ($Contribution->approvals as $item)
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
-                            @if($item->order < $Contribution->step)
+                            @if($item->order < $Contribution->step || $item->flag > 19)
                                 <x-heroicon-o-check-circle class="w-6 h-6"/>
                             @elseif($item->order == $Contribution->step)
                                 <x-heroicon-o-play-circle class="w-6 h-6"/>

@@ -100,40 +100,6 @@
                     </div>
                 </div>
 
-                <div  x-cloak x-show="types == 'mbr' ? selected = true : selected = false">
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                        <div>
-                            <x-form.dropdown
-                                label="Bank"
-                                value=""
-                                name="bank_code"
-                                id="bank_code"
-                                mandatory=""
-                                disable=""
-                                default="yes"
-                                wire:model.defer="bank_code"
-                            >
-                            @foreach ($banks as $bank)
-                                <option value="{{ $bank->code }}">{{ $bank->description }}</option>
-                            @endforeach
-                        </x-form.dropdown>
-                        </div>
-
-                        <div>
-                            <x-form.input
-                                label="Bank Account No."
-                                name="bank_acct"
-                                id="bank_acct"
-                                value=""
-                                mandatory=""
-                                disable=""
-                                type="text"
-                                wire:model.defer="bank_acct"
-                            />
-                        </div>
-                    </div>
-                </div>
-
                 <div  x-cloak x-show="types == 'coop' ? selected = true : selected = false">
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                         <div>

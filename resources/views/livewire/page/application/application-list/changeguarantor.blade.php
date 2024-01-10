@@ -1,12 +1,9 @@
 <div x-data="{ openModal: false }" wire:poll.30000ms>
     <x-table.table>
         <x-slot name="thead">
-            <x-table.table-header class="text-left " value="No" sort="" />
-            <x-table.table-header class="text-left " value="Applicant Name" sort="" />
+            <x-table.table-header class="text-left" value="No" sort="" />
+            <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
-            <x-table.table-header class="text-left" value="Payment Method" sort="" />
-            <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
-            <x-table.table-header class="text-right" value="Approved Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
@@ -22,17 +19,6 @@
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->customer->icno }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($item->step == 1 && $item->flag == 1)
-                            {{ $item->method }}
-                        @endif
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-right uppercase">
-                        {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-right uppercase">
-                        {{ $item->approved_amt }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y") }}

@@ -23,8 +23,10 @@ class ClientApproval extends Model implements Auditable
 
     public function approvals($product = NULL, $range = NULL)
     {
-        if ($product != NULL){
+        if ($product != NULL && $range != NULL){
             return $this->hasMany(ClientApprovalRole::class,'approval_id')->where('product_id', $product)->where('product_range', $range);
+        } else if ($product != NULL && $range == NULL){
+            return $this->hasMany(ClientApprovalRole::class,'approval_id')->where('product_id', $product);
         } else return $this->hasMany(ClientApprovalRole::class,'approval_id');
     }
 

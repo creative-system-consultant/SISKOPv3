@@ -356,8 +356,10 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
             Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
             Route::get('/sellShare/{uuid}', [SellShare::class, 'showApplication'])->name('application.sell');
-            Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])->name('application.contribution');
-            Route::get('/withdrawContribution/{uuid}', [WithdrawalContribution::class, 'showApplication'])->name('application.withdrawal');
+            Route::get('/addContribution/{uuid}', [Contribution::class, 'showApplication'])
+                ->name('application.contribution');
+            Route::get('/withdrawContribution/{uuid}', [WithdrawalContribution::class, 'showApplication'])
+                ->name('application.withdrawal');
         });
 
         Route::get('allapproval/{include}/maker/{uuid}', AllMaker::class)->name('allapproval.maker');

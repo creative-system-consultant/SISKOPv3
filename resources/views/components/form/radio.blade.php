@@ -4,7 +4,6 @@
     'disable' => 'false',
     'name' => '',
     'id' => '',
-    
 ])
 <div>
     <div class="flex items-center mt-1 mb-2 ">

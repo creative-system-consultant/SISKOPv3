@@ -32,7 +32,7 @@ class ApplySellExchangeShare extends Component
         'bank_name'       => 'required_if:share_type,==,coop',
         'mbr_icno'        => 'required_if:share_type,==,mbr',
         'bank_code'       => 'required_if:share_type,==,mbr',
-        'bank_acct'       => 'required',
+        'bank_acct'       => 'required_if:share_type,==,coo',
     ];
 
     protected $messages = [

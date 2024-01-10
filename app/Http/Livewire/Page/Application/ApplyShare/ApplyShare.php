@@ -4,11 +4,9 @@ namespace App\Http\Livewire\Page\Application\ApplyShare;
 
 use App\Models\Customer;
 use App\Models\FmsGlobalParm;
-use App\Models\Ref\RefBank;
 use App\Models\Share;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Validator;
 use Storage;
 
 class ApplyShare extends Component
@@ -25,7 +23,6 @@ class ApplyShare extends Component
     public $cdm_file;
     public $cheque_no;
     public $cheque_date;
-    public $banks;
     public $total_share;
     public $globalParm;
     public $User;
@@ -46,7 +43,6 @@ class ApplyShare extends Component
         'cheque_no'       => 'required_if:pay_method,==,cheque',
         'cheque_date'     => 'exclude_if:pay_method,==,online,&&,pay_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:pay_method,==,cheque|before:first day of january next year|after_or_equal:today',
-        'banks'           => 'required',
     ];
 
     protected $messages = [
@@ -65,7 +61,6 @@ class ApplyShare extends Component
         'cheque_date.required_if'     => ':attribute field is required',
         'cheque_date.before'          => 'Please enter date in this year',
         'cheque_date.after_or_equal'  => 'Please enter latest date',
-        'banks.required'              => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
@@ -77,7 +72,6 @@ class ApplyShare extends Component
         'cdm_file'        => 'Upload Cdm Payment Receipt',
         'cheque_no'       => 'Cheque No.',
         'cheque_date'     => 'Cheque Date',
-        'banks'           => 'Bank',
     ];
 
     public function alertConfirm()
@@ -187,7 +181,6 @@ class ApplyShare extends Component
     {
         $this->User = auth()->user();
         $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
-        $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
         $this->total_share = $this->cust->fmsMembership->total_share;
         $this->Share = Share::firstOrCreate([
             'cust_id'   => $this->cust->id,

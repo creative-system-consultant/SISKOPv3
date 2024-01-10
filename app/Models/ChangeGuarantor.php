@@ -22,6 +22,6 @@ class ChangeGuarantor extends Model
 
     public function account_application()
     {
-        return $this->belongsTo('app\Models\AccountApplication', 'account_no', 'FMS_account_no');
+        return $this->belongsTo(AccountApplication::class, 'account_no', 'FMS_account_no');
     }
 }

@@ -162,22 +162,6 @@
                             />
                         </div>
 
-                        <div>
-                            <x-form.dropdown
-                                label="Bank"
-                                value=""
-                                name="banks"
-                                id="banks"
-                                mandatory=""
-                                disable=""
-                                default="yes"
-                                {{-- wire:model.defer="bank_code" --}}
-                                >
-                                @foreach ($banks as $bank)
-                                    <option value="{{ $bank->code }}">{{ $bank->description }}</option>
-                                @endforeach
-                            </x-form.dropdown>
-                        </div>
                     </div>
                 </div>
 

@@ -35,7 +35,7 @@
                         @if ($item->flag == '0') Still being applied
                         @elseif ($item->flag == '1') Being Processed
                         @elseif ($item->flag == '3') Failed / Decline
-                        @elseif ($item->flag == '23') Failed / Decline
+                        @elseif ($item->flag == '21' || $item->flag == '23') Failed / Decline
                         @elseif ($item->flag == '20') Approved
                         @endif
                     </x-table.table-body>
