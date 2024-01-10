@@ -20,7 +20,7 @@ class Profile extends Component
     public $profile_img = null;
 
     public User $User;
-    public $Employer, $FmsCust, $FmsCustC10, $FmsAddressCust, $FmsAddressEmployer, $FmsCustFamily, $state_id;
+    public $Employer, $EmployerC10, $FmsCust, $FmsCustC10, $FmsAddressCust, $FmsAddressCustC10, $FmsAddressEmployer, $FmsAddressEmployerC10, $FmsCustFamily, $FmsCustFamilyC10, $state_id;
     public $mail_flag, $mail_flag_employer;
     public $race_id, $religion_id, $relationship;
 
@@ -77,22 +77,67 @@ class Profile extends Component
         $this->validate();
         if (!($this->mail_flag_employer == 1 && $this->mail_flag == 1) && !($this->mail_flag_employer == 0 && $this->mail_flag == 0)) {
 
-            $this->FmsCust->save();
+            //Update Current Client and Client 10 Customer Data
             $this->FmsCustC10->name = $this->FmsCust->name;
             $this->FmsCustC10->phone = $this->FmsCust->phone;
             $this->FmsCustC10->email = $this->FmsCust->email;
             $this->FmsCustC10->save();
-            $this->Employer->save();
+            $this->FmsCust->save();
+
             if ($this->mail_flag == 1) {
                 $this->FmsAddressCust->mail_flag = 1;
                 $this->FmsAddressEmployer->mail_flag = NULL;
+                $this->FmsAddressCustC10->mail_flag = 1;
+                $this->FmsAddressEmployerC10->mail_flag = NULL;
             }
             if ($this->mail_flag_employer == 1) {
                 $this->FmsAddressEmployer->mail_flag = 1;
                 $this->FmsAddressCust->mail_flag = NULL;
+                $this->FmsAddressEmployerC10->mail_flag = 1;
+                $this->FmsAddressCustC10->mail_flag = NULL;
             }
+
+            //Update Current Client and Client 10 Employer Data
+            $this->EmployerC10->name = $this->Employer->name;
+            $this->EmployerC10->department = $this->Employer->department;
+            $this->EmployerC10->position = $this->Employer->position;
+            $this->EmployerC10->office_num = $this->Employer->office_num;
+            $this->EmployerC10->salary = $this->Employer->salary;
+            $this->EmployerC10->save();
+            $this->Employer->save();
+
+            //Update Current Client and Client 10 Customer Address Data
+            $this->FmsAddressCustC10->address1 = $this->FmsAddressCust->address1;
+            $this->FmsAddressCustC10->address2 = $this->FmsAddressCust->address2;
+            $this->FmsAddressCustC10->address3 = $this->FmsAddressCust->address3;
+            $this->FmsAddressCustC10->town = $this->FmsAddressCust->town;
+            $this->FmsAddressCustC10->postcode = $this->FmsAddressCust->postcode;
+            $this->FmsAddressCustC10->state_id = $this->FmsAddressCust->state_id;
+            $this->FmsAddressCustC10->save();
             $this->FmsAddressCust->save();
+
+            //Update Current Client and Client 10 Employer Address Data
+            $this->FmsAddressEmployerC10->address1 = $this->FmsAddressEmployer->address1;
+            $this->FmsAddressEmployerC10->address2 = $this->FmsAddressEmployer->address2;
+            $this->FmsAddressEmployerC10->address3 = $this->FmsAddressEmployer->address3;
+            $this->FmsAddressEmployerC10->town = $this->FmsAddressEmployer->town;
+            $this->FmsAddressEmployerC10->postcode = $this->FmsAddressEmployer->postcode;
+            $this->FmsAddressEmployerC10->state_id = $this->FmsAddressEmployer->state_id;
+            $this->FmsAddressEmployerC10->save();
             $this->FmsAddressEmployer->save();
+
+            //Update Current Client and Client 10 Customer Family Data
+            $this->FmsCustFamilyC10->name = $this->FmsCustFamily->name;
+            $this->FmsCustFamilyC10->identity_no = $this->FmsCustFamily->identity_no;
+            $this->FmsCustFamilyC10->email = $this->FmsCustFamily->email;
+            $this->FmsCustFamilyC10->phone_no = $this->FmsCustFamily->phone_no;
+            $this->FmsCustFamilyC10->relation_id = $this->FmsCustFamily->relation_id;
+            $this->FmsCustFamilyC10->race_id = $this->FmsCustFamily->race_id;
+            $this->FmsCustFamilyC10->religion_id = $this->FmsCustFamily->religion_id;
+            $this->FmsCustFamilyC10->employer_name = $this->FmsCustFamily->employer_name;
+            $this->FmsCustFamilyC10->work_post = $this->FmsCustFamily->work_post;
+            $this->FmsCustFamilyC10->salary = $this->FmsCustFamily->salary;
+            $this->FmsCustFamilyC10->save();
             $this->FmsCustFamily->save();
 
             session()->flash('message', 'Profile Details Updated');
@@ -124,7 +169,12 @@ class Profile extends Component
         $this->FmsAddressCust = FmsAddress::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 2)->first();
         $this->FmsAddressEmployer = FmsAddress::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 3)->first();
         $this->FmsCustFamily = CustFamily::where('client_id', $this->User->client_id)->where('cif_id', $this->FmsCust->id)->first();
-        // dd($this->FmsCustFamily);
+
+        $this->EmployerC10  = CustEmployer::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->first();
+        $this->FmsAddressCustC10 = FmsAddress::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 2)->first();
+        $this->FmsAddressEmployerC10 = FmsAddress::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->where('address_type_id', 3)->first();
+        $this->FmsCustFamilyC10 = CustFamily::where('client_id', 10)->where('cif_id', $this->FmsCust->id)->first();
+
 
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
 
