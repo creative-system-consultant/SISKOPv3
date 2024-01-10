@@ -93,6 +93,7 @@ class Approver extends Component
     public function doApproveApplication(){
         $this->Application->flag = 20;
         $this->Application->approved_date = now();
+        $this->Application->save();
 
         $this->Application->Customer->save();
 
@@ -136,6 +137,8 @@ class Approver extends Component
     public function doRejectApplication(){
         $this->Application->flag = 24;
         $this->message = 'Application is Rejected';
+
+        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership Approver.");
     }
 
     public function countVote(){

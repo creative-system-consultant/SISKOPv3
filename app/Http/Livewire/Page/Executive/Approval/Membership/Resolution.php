@@ -101,12 +101,14 @@ class Resolution extends Component
     public function doRejectApplication(){
         $this->Application->flag = 25;
         //
+        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership Approver.");
     }
 
     public function doApproval(){
 
         $this->Application->flag = 20;
         $this->Application->approved_date = now();
+        $this->Application->save();
 
         $this->Application->Customer->save();
 

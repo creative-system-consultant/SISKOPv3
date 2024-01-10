@@ -30,7 +30,7 @@ class Maker extends Component
     public FMSCustomer $CustIntroducer;
     public Introducer $Introducer;
     public ApplyMembership $Application;
-    public Approval $Approval;
+    public $Approval;
 
     public $banks;
     public $client_id;
@@ -48,11 +48,11 @@ class Maker extends Component
         'Approval.note'                    => ['required','max:255'],
         'Application.total_fee'            => ['nullable'],
         'Application.total_monthly'        => ['nullable'],
-        'Application.share_fee'            => ['required','gt:0'],
-        'Application.share_monthly'        => ['required','gt:0'],
-        'Application.register_fee'         => ['required','gt:0'],
-        'Application.contribution_fee'     => ['required','gt:0'],
-        'Application.contribution_monthly' => ['required','gt:0'],
+        'Application.share_fee'            => ['required','gte:0'],
+        'Application.share_monthly'        => ['required','gte:0'],
+        'Application.register_fee'         => ['required','gte:0'],
+        'Application.contribution_fee'     => ['required','gte:0'],
+        'Application.contribution_monthly' => ['required','gte:0'],
         'CustAddress.address1'             => ['nullable'],
         'CustAddress.address2'             => ['nullable'],
         'CustAddress.address3'             => ['nullable'],
@@ -138,7 +138,20 @@ class Maker extends Component
                             ['order', $this->Application->step],
                             ['role_id', '1'],
                             ['approval_type', 'App\Models\ApplyMembership'],
-                        ])->firstOrFail();
+                        ])->where(function ($query){
+                            $query->where('user_id', NULL)
+                            ->orWhere('user_id', $this->User->id);
+                        })->first();
+        if ($this->Approval == NULL){
+            session()->flash('message', 'Application is being processed by another staff');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else {
+            $this->Approval->user_id = $this->User->id;
+            $this->Approval->save();
+        }
         $this->CustAddress = Address::where([
                             ['cif_id', $this->Cust->id ],
                             ['address_type_id', 2],
@@ -166,6 +179,7 @@ class Maker extends Component
                             ['introduce_id', $this->Cust->id],
                             ['apply_id' , $this->Application->id],
                         ])->first();
+
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->relationshiplist = RefRelationship::where([['client_id', $this->client_id], ['status', '1']])->get();
@@ -173,6 +187,11 @@ class Maker extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
+
+        if($this->Application->share_fee >= 500){
+            $this->Application->share_monthly = 0;
+            $this->Application->save();
+        }
     }
 
     public function deb() {
