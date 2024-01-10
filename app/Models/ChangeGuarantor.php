@@ -17,7 +17,7 @@ class ChangeGuarantor extends Model
 
     public function customer()
     {
-        return $this->belongsTo('app\Models\Customers', 'cif_id', 'id');
+        return $this->belongsTo(Customer::class, 'cif_id', 'id');
     }
 
     public function account_application()
