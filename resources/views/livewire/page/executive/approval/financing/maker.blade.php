@@ -8,26 +8,41 @@
                     <x-tab.title name="1" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-user-circle class="w-6 h-6 " /> 
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Application Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="2" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-clipboard-document-list class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Details Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="3" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-currency-dollar class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Financing Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="4" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-building-office class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Guarantor Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="5" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-document-text class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Document Info
+                            </span>
                         </div>
                     </x-tab.title>
                 </div>

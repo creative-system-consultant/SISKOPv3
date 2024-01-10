@@ -7,41 +7,65 @@
                     <x-tab.title name="0" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-document-magnifying-glass class="w-6 h-6 " /> 
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Membership Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="1" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-user-circle class="w-6 h-6 " /> 
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Applicant Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="2" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-home class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Address Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="3" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-user-group class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Beneficiary Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="4" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-briefcase class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Employment Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="5" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-building-office class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Introducer Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="6" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-credit-card class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Payment Info
+                            </span>
                         </div>
                     </x-tab.title>
                     <x-tab.title name="7" livewire="">
                         <div class="flex items-center">
                             <x-heroicon-o-document-text class="w-6 h-6 " />
+                            <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                                Document Info
+                            </span>
                         </div>
                     </x-tab.title>
                 </div>
