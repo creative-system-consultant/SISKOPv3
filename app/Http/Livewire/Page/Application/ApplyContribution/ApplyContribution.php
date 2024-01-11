@@ -45,7 +45,6 @@ class ApplyContribution extends Component
         'cdm_date'                  => 'exclude_if:payment_method,==,online,&&,payment_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:payment_method,==,cash|before:first day of january next year|after_or_equal:today',
         'cdm_file'                  => 'required_if:payment_method,==,cash',
-        'cheque_no'                 => 'required_if:payment_method,==,cheque|numeric',
         'cheque_date'               => 'exclude_if:payment_method,==,online,&&,payment_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:payment_method,==,cheque|before:first day of january next year|after_or_equal:today',
         'banks'                     => 'required',
@@ -111,8 +110,12 @@ class ApplyContribution extends Component
         ];
 
         $globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+
         if ($globalParm) {
             $rules['cont_apply'][] = 'min:' . $globalParm->MIN_CONTRIBUTION;
+        }
+        if ($this->payment_method == 'cheque') {
+            $rules['cheque_no'][] = 'required|numeric';
         }
 
         return $rules;
@@ -211,30 +214,38 @@ class ApplyContribution extends Component
         $this->User = auth()->user();
         $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
+        $this->restrictApply($this->cust->id);
 
         $this->total_contribution = $this->cust->fmsMembership->total_contribution;
         $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 
-        $contribution = Contribution::where('cust_id', $this->cust->id)->firstOrCreate([
-            'client_id'     => $this->cust->client_id,
-            'cust_id'     => $this->cust->id,
-            'direction'   => 'buy',
-        ], [
-            'amt_before'  => $this->cust->fmsMembership->total_contribution,
-            'flag'        => 0,
-            'step'        => 0,
-            'apply_amt'   => '0.00',
-        ]);
+        $contribution = Contribution::where('cust_id', $this->cust->id)
+            ->where('flag', '<', 1)
+            ->where('step', '<', 1)
+            ->where('direction', 'buy')
+            ->first();
 
-        $this->cont_apply       = $contribution->apply_amt;
-        $this->online_date      = $contribution?->online_date?->format('Y-m-d');
-        $this->cdm_date         = $contribution?->cdm_date?->format('Y-m-d');
-        $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
-        $this->cheque_no        = $contribution?->cheque_no;
-        $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
-        $this->start_contDate   = $contribution?->start_apply?->format('Y-m-d');
 
-        $this->restrictApply($this->cust->id);
+        if ($contribution) {
+            $this->cont_apply       = $contribution->apply_amt;
+            $this->online_date      = $contribution?->online_date?->format('Y-m-d');
+            $this->cdm_date         = $contribution?->cdm_date?->format('Y-m-d');
+            $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
+            $this->cheque_no        = $contribution?->cheque_no;
+            $this->cheque_date      = $contribution?->cheque_date?->format('Y-m-d');
+            $this->start_contDate   = $contribution?->start_apply?->format('Y-m-d');
+        } else {
+
+            $contribution = Contribution::create([
+                'client_id'   => $this->cust->client_id,
+                'cust_id'     => $this->cust->id,
+                'direction'   => 'buy',
+                'amt_before'  => $this->cust->fmsMembership->total_contribution,
+                'flag'        => 0,
+                'step'        => 0,
+                'apply_amt'   => '0.00',
+            ]);
+        }
     }
 
     public function render()
