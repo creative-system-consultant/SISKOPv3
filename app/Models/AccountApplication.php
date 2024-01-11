@@ -86,7 +86,13 @@ class AccountApplication extends Model implements Auditable
     {
         $ClientApproval = ClientApproval::where([['approval_type', 'financing'],['client_id',$this->client_id]])->first();
         if ($ClientApproval != NULL){
-            $ClientApprovalRoles = ClientApprovalRole::where([['client_id', $this->client_id],['product_id', $this->product_id],['approval_id', $ClientApproval->id]])->orderBy('order')->get();
+            $ClientApprovalRoles = ClientApprovalRole::where([
+                ['client_id', $this->client_id],
+                ['product_id', $this->product_id],
+                ['min','>=', $this->purchase_price],
+                ['max','<', $this->purchase_price],
+                ['approval_id', $ClientApproval->id]
+            ])->orderBy('order')->get();
         } else {
             return NULL;
         }
