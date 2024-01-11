@@ -44,6 +44,7 @@ class NewMembership extends Component
     public SiskopAddress $CustAddress;
     public Address $EmployAddress;
 
+    public $applyStatus;
     public $apply_id;
     public $Introducer;
     public $field;
@@ -638,6 +639,7 @@ class NewMembership extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
         // dd($this->relationship);
+        $this->applyStatus = FMSCustomer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
     }
 
     public function fileupload2()

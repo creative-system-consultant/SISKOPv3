@@ -33,7 +33,8 @@
                 {{-- <button type="button" wire:click="callSP" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-yellow-500 rounded-md focus:outline-none">
                     Call SP
                 </button> --}}
-                @if ($applymember->flag!=1)
+                @if (($applymember->flag!=1 && !$applyStatus) || !$applyStatus)
+
                 <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                     Submit
                 </button>
