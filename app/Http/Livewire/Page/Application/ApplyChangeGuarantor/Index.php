@@ -88,8 +88,8 @@ class Index extends Component
             $old_guarantor_nric = $old_guarantor_customer->identity_no;
 
 
-            ChangeGuarantor::create([
-                'cif_id' => $this->siskop_cust->id,
+            $applyChangeGuarantor = ChangeGuarantor::create([
+                'cif_id' => $this->fms_cust->id,
                 'account_no' => $guarantor->account_no,
                 'old_jamin_member1' => $old_guarantor_mbrNo,
                 'old_jamin_name1' => $old_guarantor_name,
@@ -105,6 +105,8 @@ class Index extends Component
                 'created_at' => now()
             ]);
         }
+        $applyChangeGuarantor->remove_approvals();
+        $applyChangeGuarantor->make_approvals('ChangeGuarantor');
 
         session()->flash('message', 'Change Guarantor Application Successfully Applied');
         session()->flash('time', 10000);

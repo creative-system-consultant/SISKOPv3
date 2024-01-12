@@ -24,12 +24,12 @@ class ChangeGuarantor extends Component
 
     public function remake_approvals()
     {
-        $this->share->remove_approvals();
-        $this->share->make_approvals();
-        $this->share->step = 1;
-        $this->share->save();
+        $this->ChangeGuarantors->remove_approvals();
+        $this->ChangeGuarantors->make_approvals();
+        $this->ChangeGuarantors->step = 1;
+        $this->ChangeGuarantors->save();
 
-        $this->dispatchBrowserEvent('swal',[
+        $this->dispatchBrowserEvent('swal', [
             'title' => 'Success!',
             'text'  => 'Approvals have been reset',
             'icon'  => 'success',
@@ -41,7 +41,7 @@ class ChangeGuarantor extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->orderBy('created_at','desc')->with('customer')->get();
+        $this->ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->orderBy('created_at', 'desc')->with('customer')->get();
     }
 
     public function render()
