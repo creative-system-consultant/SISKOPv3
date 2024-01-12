@@ -184,7 +184,7 @@ class Maker extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid'])) {
+        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend'])) {
             $this->notfound();
             return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
         }

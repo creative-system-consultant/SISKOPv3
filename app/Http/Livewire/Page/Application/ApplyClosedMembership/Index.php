@@ -19,7 +19,6 @@ class Index extends Component
         'reason'       => 'required|alpha_num'
     ];
 
-
     protected $validationAttributes = [
         'reason'        => 'Closing Account'
     ];
@@ -44,8 +43,6 @@ class Index extends Component
                         and u.client_id = '$this->client_id'
                     ");
         $this->balance_outstanding = $this->balance[0]->total_bal_outstanding;
-
-
 
         $this->anggota = CloseMembership::where([
             ['cust_id', $this->siskop_cust->id],
@@ -92,8 +89,8 @@ class Index extends Component
             ]);
         } else {
             $close_membership = CloseMembership::create([
-                'client_id'           => $this->client_id,
                 'cust_id'           => $this->fms_cust->id,
+                'client_id'         => $this->client_id,
                 'terminate_reason'  => $this->reason,
                 'icno'              => $this->fms_cust->identity_no,
                 'flag'              => '1',

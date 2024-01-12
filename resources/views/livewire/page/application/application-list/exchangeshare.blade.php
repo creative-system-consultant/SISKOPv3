@@ -2,8 +2,8 @@
     <x-table.table>
         <x-slot name="thead">
             <x-table.table-header class="text-left" value="No" sort="" />
-            <x-table.table-header class="text-left" value="Applicant Name" sort="" />
-            <x-table.table-header class="text-left" value="IC No." sort="" />
+            <x-table.table-header class="text-left" value="Seller" sort="" />
+            <x-table.table-header class="text-left" value="Buyer" sort="" />
             <x-table.table-header class="text-left" value="Payment Method" sort="" />
             <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-right" value="Approved Amount (RM)" sort="" />
@@ -20,8 +20,8 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $item->customer->name }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        {{ $item->customer->icno }}
+                    <x-table.table-body colspan="" class="text-left uppercase">
+                        {{ $item->exc_cust_id == NULL ? '' : $item->buyer->name }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->step == 1 && $item->flag == 1)

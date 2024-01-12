@@ -46,6 +46,6 @@ class ExchangeShare extends Component
 
     public function render()
     {
-        return view('livewire.page.application.application-list.share');
+        return view('livewire.page.application.application-list.exchangeshare');
     }
 }

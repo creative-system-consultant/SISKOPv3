@@ -155,6 +155,16 @@
                                 <x-heroicon-o-chart-pie class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL DIVIDEND" href="{{ url('Admin/Approval/Apply_Dividend') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
+                        <x-sidebar.dropdown-item title="APPROVAL SPECIAL AID" href="{{ url('Admin/Approval/SpecialAid') }}" uri="">
+                            <x-slot name="icon">
+                                <x-heroicon-o-chart-pie class="w-7 h-7" />
+                            </x-slot>
+                        </x-sidebar.dropdown-item>
                         <x-sidebar.dropdown-item title="APPROVAL CLOSE MEMBERSHIP" href="{{ url('Admin/Approval/CloseMembership') }}" uri="">
                             <x-slot name="icon">
                                 <x-heroicon-o-chart-pie class="w-7 h-7" />

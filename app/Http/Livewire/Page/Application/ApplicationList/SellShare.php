@@ -23,7 +23,7 @@ class SellShare extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->sellShares = Share::where('direction', 'sell')->orWhere('direction', 'exchange')->orderBy('created_at','desc')->with('customer')->get();
+        $this->sellShares = Share::where('direction', 'sell')->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()

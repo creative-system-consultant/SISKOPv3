@@ -224,7 +224,7 @@ class Approver extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership'])) {
+        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend'])){
             $this->notfound();
             return redirect()->route('application.list');
         }
