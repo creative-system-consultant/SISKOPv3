@@ -138,43 +138,56 @@ class Approver extends Component
         $this->Application->flag = 24;
         $this->message = 'Application is Rejected';
 
-        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership Approver.");
+        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership Approver.\nApplication ID = ".$this->Application->id." ");
     }
 
     public function countVote(){
-        //checks if vote unanimous is true, and votes are contradictory
-        if ($this->Application->current_approval()->rule_vote_type == 'unanimous' && $this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0){
-            $this->Application->step++;
+        //vote type unanimous
+        if ($this->Application->current_approval()->rule_vote_type == 'unanimous'){
+            // votes are contradictory
+            if ($this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0){
+                $this->Application->step++;
+            // votes are all casted
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                if ($this->Application->approval_vote_yes() > 0){
+                    $this->doApproveApplication();
+                } else {
+                    $this->doRejectApplication();
+                }
+            }
         }
 
-        //checks if vote absolute is true, and votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve' && $this->Application->approval_vote_yes() > 0){
-            $this->doApproveApplication();
-        }
-
-        //checks if vote absolute is true, and votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline' && $this->Application->approval_vote_no() > 0){
-            $this->doRejectApplication();
-        }
-
-        //checks if vote majority is true
-        else if ($this->Application->current_approval()->rule_vote_type == 'majority' 
-              && $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+        //checks if vote absolute is true, and any votes are casted
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve'){
+            if ($this->Application->approval_vote_yes() > 0){
                 $this->doApproveApplication();
-            } else {
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
                 $this->doRejectApplication();
             }
         }
 
-        //else, check if all votes are casted
-        else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            $this->doApproveApplication();
+        //checks if vote absolute is true, and any votes are casted
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline'){
+            if ($this->Application->approval_vote_no() > 0){
+                $this->doRejectApplication();
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                $this->doApproveApplication();
+            }
         }
 
-        //else
+        //checks if vote majority is true
+        else if ($this->Application->current_approval()->rule_vote_type == 'majority'){
+            if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+                    $this->doApproveApplication();
+                } else {
+                    $this->doRejectApplication();
+                }
+            }
+        }
+
         else {
-            //$this->Application->step++;
+            //
         }
     }
 
