@@ -175,6 +175,18 @@
                                 <x-heroicon-o-document-text class="w-7 h-7" />
                             </x-slot>
                         </x-sidebar.dropdown-item>--}}
+                        <x-sidebar.dropdown-nav-item type="2" active="open" title="REFERENCE" uri="reference/*">
+                            <x-slot name="icon">
+                                <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
+                            </x-slot>
+                            <div class="leading-5">
+                                <x-sidebar.dropdown-item title="Product Document" href="{{ route('productdocument.list') }}" uri="bank">
+                                    <x-slot name="icon">
+                                        <x-heroicon-o-building-library class="w-7 h-7" />
+                                    </x-slot>
+                                </x-sidebar.dropdown-item>
+                            </div>
+                        </x-sidebar.dropdown-nav-item>
                     </x-sidebar.dropdown-nav-item>
 
                     <x-sidebar.dropdown-nav-item active="open" title="MAINTENANCE" uri="maintenance/*">

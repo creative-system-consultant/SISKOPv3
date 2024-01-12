@@ -22,6 +22,8 @@ use App\Http\Livewire\Page\Admin\Maintenance\ListMaintenance;
 use App\Http\Livewire\Page\Admin\Maintenance\Bank\BankList;
 use App\Http\Livewire\Page\Admin\Maintenance\Bank\BankCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Bank\BankEdit;
+use App\Http\Livewire\Page\Admin\Maintenance\ProductDocument\ProductDocumentList;
+use App\Http\Livewire\Page\Admin\Maintenance\ProductDocument\ProductDocumentCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryList;
 use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryCreate;
 use App\Http\Livewire\Page\Admin\Maintenance\Country\CountryEdit;
@@ -290,6 +292,13 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
                 Route::get('/', TitleList::class)->name('title.list');
                 Route::get('create', TitleCreate::class)->name('title.create');
                 Route::get('edit/{id}', TitleEdit::class)->name('title.edit');
+            });
+
+            //Admin > Maintenance > productdocument
+            Route::prefix('productdocument')->group(function () {
+                Route::get('/', ProductDocumentList::class)->name('productdocument.list');
+                Route::get('create', ProductDocumentCreate::class)->name('productdocument.create');
+                Route::get('edit/{id}', ProductDocumentCreate::class)->name('productdocument.edit');
             });
 
             //Admin > Maintenance > race
