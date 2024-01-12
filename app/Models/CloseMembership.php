@@ -23,28 +23,6 @@ class CloseMembership extends Model
         return $this->belongsTo(Customer::class, 'cust_id', 'id');
     }
 
-    public function current_approval()
-    {
-        return $this->approvals()->where('order', $this->step)->first();
-    }
-
-    public function clear_approvals($order = NULL)
-    {
-        if ($order != NULL) {
-            $approval = $this->approvals()->where('order', $order)->get();
-        } else {
-            $approval = $this->approvals;
-        }
-
-        foreach ($approval as $key => $value) {
-            if ($value->role_id == 1 || $value->role_id == 2) {
-                $value->user_id = NULL;
-                $value->type    = NULL;
-            }
-            $value->note = NULL;
-            $value->vote = NULL;
-        }
-    }
 
     public function make_approvals($type = 'CloseMembership')
     {

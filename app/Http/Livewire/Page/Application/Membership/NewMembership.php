@@ -648,7 +648,7 @@ class NewMembership extends Component
         $currentDate = now()->format('Y-m-d_His');
 
         if ($this->payment_file_regist) {
-            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment' . '.' . $this->payment_file_regist->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension());
 
@@ -662,7 +662,7 @@ class NewMembership extends Component
         }
 
         if ($this->payment_file_share) {
-            $filepath = 'Files/' . $customers->id . '/membership/SharePayment' . '.' . $this->payment_file_share->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension());
 
@@ -683,7 +683,7 @@ class NewMembership extends Component
         $customers = Customer::where('identity_no', $this->User->identity_no)->first();
 
         if ($this->online_file) {
-            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo' . '.' . $this->online_file->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo-' . $currentDate . '.' . $this->online_file->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file, 'IC_Photo-' . $currentDate . '.' . $this->online_file->extension());
 
@@ -697,7 +697,7 @@ class NewMembership extends Component
         }
 
         if ($this->online_file2) {
-            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard' . '.' . $this->online_file2->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard-' . $currentDate . '.' . $this->online_file2->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file2, 'WorkerCard-' . $currentDate . '.' . $this->online_file2->extension());
 
@@ -711,7 +711,7 @@ class NewMembership extends Component
         }
 
         if ($this->online_file3) {
-            $filepath = 'Files/' . $customers->id . '/membership/Paycheck' . '.' . $this->online_file3->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/Paycheck-' . $currentDate . '.' . $this->online_file3->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file3, 'Paycheck-' . $currentDate . '.' . $this->online_file3->extension());
 
@@ -725,7 +725,7 @@ class NewMembership extends Component
         }
 
         if ($this->online_file4) {
-            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck' . '.' . $this->online_file4->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck-' . $currentDate . '.' . $this->online_file4->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file4, 'LastMonthPaycheck-' . $currentDate . '.' . $this->online_file4->extension());
 
@@ -739,7 +739,7 @@ class NewMembership extends Component
         }
 
         if ($this->payment_file_regist) {
-            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment' . '.' . $this->payment_file_regist->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension());
 
@@ -753,7 +753,7 @@ class NewMembership extends Component
         }
 
         if ($this->payment_file_share) {
-            $filepath = 'Files/' . $customers->id . '/membership/SharePayment' . '.' . $this->payment_file_share->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension();
 
             Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension());
 
