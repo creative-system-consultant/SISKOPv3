@@ -93,14 +93,17 @@ class Index extends Component
         } else {
             $close_membership = CloseMembership::create([
                 'client_id'           => $this->client_id,
-                'cust_id'           => $this->siskop_cust->id,
+                'cust_id'           => $this->fms_cust->id,
                 'terminate_reason'  => $this->reason,
-                'icno'              => $this->siskop_cust->identity_no,
+                'icno'              => $this->fms_cust->identity_no,
                 'flag'              => '1',
                 'step'              => '1',
                 'created_by'        => auth()->user()->name,
                 'created_at'        => now()
             ]);
+
+            $close_membership->remove_approvals();
+            $close_membership->make_approvals('CloseMembership');
 
             session()->flash('message', 'Close Membership Application Successfully Applied');
             session()->flash('time', 10000);
@@ -113,7 +116,6 @@ class Index extends Component
 
     public function render()
     {
-        $temp_ic = '700110106285';
 
         $this->jaminan = DB::select("
                         SELECT
@@ -140,7 +142,6 @@ class Index extends Component
                         INNER JOIN FMS.GUARANTOR_LIST G ON M.mbr_no = G.guarantor_mbr_id AND G.client_id = '$this->client_id'
                         INNER JOIN FMS.account_positions P ON P.ACCOUNT_NO = G.ACCOUNT_NO AND P.client_id = '$this->client_id'
                         WHERE C.identity_no = '$this->user->icno'
-                        --WHERE C.identity_no = '$temp_ic'
                         AND P.bal_outstanding > 0
                         AND C.client_id = '$this->client_id'
                     ");
