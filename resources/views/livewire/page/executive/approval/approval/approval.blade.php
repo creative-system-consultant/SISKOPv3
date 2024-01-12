@@ -16,8 +16,8 @@
                 <x-tab.title name="2" livewire="">
                     <div class="flex items-center">
                         <x-heroicon-o-document-text class="w-6 h-6 " /> 
-                        <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
-                            Special Aid Info
+                        <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14 capitalize">
+                            {{$include}} Info
                         </span>
                     </div>
                 </x-tab.title>
