@@ -44,6 +44,7 @@ class NewMembership extends Component
     public SiskopAddress $CustAddress;
     public Address $EmployAddress;
 
+    public $min_monthly_share;
     public $applyStatus;
     public $apply_id;
     public $Introducer;
@@ -562,6 +563,7 @@ class NewMembership extends Component
         $this->applymember->share_fee = $this->globalParm->MIN_SHARE;
         $this->applymember->contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
         $this->min_contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
+        $this->min_monthly_share = $this->globalParm->MIN_SHARE_MONTHLY;
         $this->monthly_share = $this->globalParm->MIN_SHARE / $this->globalParm->TOT_MTH_SHARE_INSTALMENT;
         $this->applymember->save();
 
@@ -893,14 +895,13 @@ class NewMembership extends Component
                 // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
             }
         }
-        if ($this->cust_bank_id || $this->cust_bank_id2) {
-            $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+        $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 
-            $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
-            $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
-            $this->client_bank_name = $bank_name->description;
-            $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
-        }
+        $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
+        $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
+        $this->client_bank_name = $bank_name->description;
+        $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
+
 
         return view('livewire.page.application.membership.new-membership')->extends('layouts.head');
     }
