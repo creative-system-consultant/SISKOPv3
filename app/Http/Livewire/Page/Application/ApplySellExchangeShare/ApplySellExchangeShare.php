@@ -31,20 +31,20 @@ class ApplySellExchangeShare extends Component
         'share_type'      => 'required',
         'bank_name'       => 'required_if:share_type,==,coop',
         'mbr_icno'        => 'required_if:share_type,==,mbr',
-        'bank_code'       => 'required_if:share_type,==,mbr',
-        'bank_acct'       => 'required_if:share_type,==,coo',
+        // 'bank_code'       => 'required_if:share_type,==,coop',
+        'bank_acct'       => 'required_if:share_type,==,coop',
     ];
 
     protected $messages = [
         'mbr_icno.required_if'       => ':attribute field is required',
         'share_apply.required'       => ':attribute field is required',
         'share_apply.numeric'        => ':attribute field must be a number',
-        // 'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
-        // 'share_apply.gt'             => 'Application must be more than RM0',
+        'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
+        'share_apply.gt'             => 'Application must be more than RM0',
         'share_type.required'        => ':attribute is required',
         'bank_name.required_if'      => ':attribute field is required',
         'bank_code.required_if'      => ':attribute field is required',
-        'bank_acct.required'      => ':attribute field is required',
+        'bank_acct.required_if'      => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
@@ -101,12 +101,14 @@ class ApplySellExchangeShare extends Component
     {
         $customer = new Customer;
         $cust = $customer->where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+
         $this->validate($this->getShareRules());
-        $this->validate($this->getSpecialRules());
 
         if ($this->share_type == 'coop') {
+            $this->validate($this->getSpecialRules());
+
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
-            // dd($share);
+
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
@@ -145,9 +147,13 @@ class ApplySellExchangeShare extends Component
 
     public function alertConfirm()
     {
+
         $this->validate();
         $this->validate($this->getShareRules());
-        $this->validate($this->getSpecialRules());
+        if ($this->share_type == 'coop') {
+            $this->validate($this->getSpecialRules());
+        }
+
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for share reimbursement?',

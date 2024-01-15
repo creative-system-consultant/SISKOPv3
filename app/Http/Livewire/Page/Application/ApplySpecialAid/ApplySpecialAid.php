@@ -27,6 +27,7 @@ class ApplySpecialAid extends Component
     public function submit($uuid, $index)
     {
 
+
         $specialAids = SpecialAid::where([['uuid', $uuid], ['status', 1]])->first();
 
         if ($this->customer_name == '') {
@@ -39,6 +40,12 @@ class ApplySpecialAid extends Component
             return back();
         } elseif ($specialAids->min_apply_amt - 1 >= $this->apply_amt[$index] || $specialAids->max_apply_amt + 1 <= $this->apply_amt[$index]) {
             session()->flash('errors', 'Apply amount must be in between RM ' . $specialAids->min_apply_amt . ' and RM ' . $specialAids->max_apply_amt);
+            return back();
+        } elseif (($this->event_date[$index] ?? NULL) == NULL) {
+            session()->flash('errorDate', 'You must pick the event date');
+            return back();
+        } elseif ($this->online_file == null) {
+            session()->flash('errorFile', 'You must upload a supporting document');
             return back();
         } else {
 

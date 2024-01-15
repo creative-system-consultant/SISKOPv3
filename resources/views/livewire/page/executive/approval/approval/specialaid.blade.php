@@ -1,6 +1,19 @@
 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Special Aid Information</h2>
 <div class="grid grid-cols-12 gap-6">
-    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
+        <x-form.input-tag
+            label="Type of Special Aid"
+            type="text"
+            name=""
+            value="{{ $Application->specialAidType->name  }}"
+            {{-- value="" --}}
+            leftTag=""
+            rightTag=""
+            mandatory=""
+            disable="true"
+        />
+    </div>
+    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
         <x-form.input-tag
             label="Special Aid Amount Applied"
             type="text"
@@ -13,7 +26,7 @@
             disable="true"
         />
     </div>
-    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
         <x-form.input-tag
             label="Special Aid Amount Approved"
             type="text"
@@ -26,10 +39,22 @@
             wire:model="Application.approved_amt"
         />
     </div>
+    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
+        <x-form.input-tag
+            label="Event Date"
+            type="text"
+            name="Application.event_date"
+            value="{{ date('d/m/Y', strtotime($Application->event_date)) }}"
+            leftTag=""
+            rightTag=""
+            mandatory=""
+            disable="{{ $disable }}"
+        />
+    </div>
 </div>
 
-
 <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >
+    
     <div>
         <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
             Show Supporting Document
