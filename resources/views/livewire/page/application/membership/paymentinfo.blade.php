@@ -210,7 +210,6 @@
                     rightTag=""
                     type="text"
                     wire:model="client_bank_name"
-                    {{-- wire:keydown="totalfee" --}}
                 />
             </div>
             <div>
@@ -224,7 +223,6 @@
                     rightTag=""
                     type="text"
                     wire:model="client_bank_acct"
-                    {{-- wire:keydown="totalfee" --}}
                 />
             </div>
             {{-- @endif --}}

@@ -23,11 +23,16 @@ class ApplyContribution extends Component
     public $online_file;
     public $cdm_date;
     public $cdm_file;
+    public $cheque_file;
     public $cheque_no;
     public $cheque_date;
     public $banks;
     public $total_contribution, $monthly_contribution;
     public $User;
+    public $client_bank_id;
+    public $client_bank_name;
+    public $client_bank_acct;
+    public $globalParm;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -109,13 +114,12 @@ class ApplyContribution extends Component
 
         ];
 
-        $globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 
-        if ($globalParm) {
-            $rules['cont_apply'][] = 'min:' . $globalParm->MIN_CONTRIBUTION;
+        if ($this->globalParm) {
+            $rules['cont_apply'][] = 'min:' . $this->globalParm->MIN_CONTRIBUTION;
         }
         if ($this->payment_method == 'cheque') {
-            $rules['cheque_no'][] = 'required|numeric';
+            $rules['cheque_no'][] = ['required', 'numeric'];
         }
 
         return $rules;
@@ -148,13 +152,13 @@ class ApplyContribution extends Component
         $contribution->make_approvals('Contribution');
 
         if ($this->payment_method == 'online') {
-            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online_receipt' . '.' . $this->online_file->extension();
+            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online-CDM_receipt' . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->online_file, 'online_receipt' . '.' . $this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->online_file, 'online-CDM_receipt' . '.' . $this->online_file->extension());
 
             $contribution->files()->create([
-                'filename' => 'online_receipt',
-                'filedesc' => 'Online Payment Receipt',
+                'filename' => 'online-CDM_receipt',
+                'filedesc' => 'Online/CDM Payment Receipt',
                 'filetype' => $this->online_file->extension(),
                 'filepath' => $filepath,
             ]);
@@ -165,26 +169,18 @@ class ApplyContribution extends Component
             session()->flash('title');
 
             return redirect()->route('home');
-        } elseif ($this->payment_method == 'cash') {
-            // dd('CDM');
-            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'cdm_receipt' . '.' . $this->cdm_file->extension();
+        } else {
+            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'cheque' . '.' . $this->cheque_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->cdm_file, 'cdm_receipt' . '.' . $this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->cheque_file, 'cheque' . '.' . $this->cheque_file->extension());
 
             $contribution->files()->create([
-                'filename' => 'cdm_receipt',
-                'filedesc' => 'CDM Payment Receipt',
-                'filetype' => $this->cdm_file->extension(),
+                'filename' => 'cheque',
+                'filedesc' => 'Cheque Receipt',
+                'filetype' => $this->cheque_file->extension(),
                 'filepath' => $filepath,
             ]);
 
-            session()->flash('message', 'Add Contribution Application Successfully Send');
-            session()->flash('time', 10000);
-            session()->flash('success');
-            session()->flash('title');
-
-            return redirect()->route('home');
-        } else {
             // dd('Cheque');
             session()->flash('message', 'Add Contribution Application Successfully Send');
             session()->flash('time', 10000);
@@ -246,6 +242,12 @@ class ApplyContribution extends Component
                 'apply_amt'   => '0.00',
             ]);
         }
+        $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+
+        $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
+        $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
+        $this->client_bank_name = $bank_name->description;
+        $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
     }
 
     public function render()

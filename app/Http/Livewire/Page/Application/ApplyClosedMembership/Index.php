@@ -16,7 +16,7 @@ class Index extends Component
     protected $listeners = ['submit'];
 
     protected $rules = [
-        'reason'       => 'required|alpha_num'
+        'reason'       => 'required|string'
     ];
 
     protected $validationAttributes = [
@@ -78,7 +78,6 @@ class Index extends Component
 
     public function submit()
     {
-
         if ($this->balance_outstanding != 0) {
             $this->dispatchBrowserEvent('swal', [
                 'title' => 'Error!',

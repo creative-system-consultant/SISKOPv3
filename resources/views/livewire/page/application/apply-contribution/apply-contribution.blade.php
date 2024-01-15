@@ -99,8 +99,7 @@
                                 x-model="showing"
                                 wire:model="payment_method"
                                 >
-                                <option value="online">Online Banking</option>
-                                <option value="cash">Cash Payment</option>
+                                <option value="online">Online Banking/Cash Payment</option>
                                 <option value="cheque">By Cheque</option>
                             </x-form.dropdown>
                         </div>
@@ -110,7 +109,7 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                             <div>
                                 <x-form.input
-                                    label="Online Payment Date"
+                                    label="Payment Date"
                                     name="online_date"
                                     value=""
                                     mandatory=""
@@ -123,7 +122,7 @@
 
                             <div>
                                 <x-form.input
-                                    label="Upload Online Payment Receipt:(uploaded only: jpg/png/jpeg/pdf)"
+                                    label="Upload Online/Cash Payment Receipt:(uploaded only: jpg/png/jpeg/pdf)"
                                     name="online_file"
                                     id="online_file"
                                     value=""
@@ -135,9 +134,39 @@
                                 />
                             </div>
                         </div>
+                        <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                            <div>
+                                <x-form.input-tag
+                                label="COOP Bank Name"
+                                name=""
+                                value=""
+                                mandatory=""
+                                disable="true"
+                                leftTag=""
+                                rightTag=""
+                                type="text"
+                                wire:model="client_bank_name"
+                            />
+                            </div>
+
+                            <div>
+                                <x-form.input-tag
+                                label="COOP Bank Account Number"
+                                name=""
+                                value=""
+                                mandatory=""
+                                disable="true"
+                                leftTag=""
+                                rightTag=""
+                                type="text"
+                                wire:model="client_bank_acct"
+                            />
+                            </div>
+                        </div>
                     </div>
 
-                    <div x-cloak x-show="showing == 'cash' ? isSelect = true : isSelect = false">
+
+                    {{-- <div x-cloak x-show="showing == 'cash' ? isSelect = true : isSelect = false">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
 
                             <div>
@@ -167,7 +196,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div x-cloak x-show="showing == 'cheque' ? isSelect = true : isSelect = false">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -197,20 +226,20 @@
                             </div>
 
                             <div>
-                                <x-form.dropdown
-                                    label="Bank"
+                                <x-form.input
+                                    label="Upload Cheque:(uploaded only: jpg/png/jpeg/pdf)"
+                                    name="cheque_file"
+                                    id="cheque_file"
                                     value=""
-                                    name="banks"
-                                    id="banks"
                                     mandatory=""
                                     disable=""
-                                    default="yes"
-                                    >
-                                    @foreach ($banks as $bank)
-                                        <option value="{{ $bank->code }}">{{ $bank->description }}</option>
-                                    @endforeach
-                                </x-form.dropdown>
+                                    type="file"
+                                    accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                                    wire:model="cheque_file"
+                                />
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>

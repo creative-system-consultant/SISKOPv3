@@ -75,8 +75,8 @@
                                         wire:model.lazy='event_date.{{ $index }}'
                                     />
 
-                                    @if (session('errors'))
-                                        <p class="mt-2 text-sm text-red-600">{{ session('errors') }}</p>
+                                    @if (session('errorDate'))
+                                        <p class="mt-2 text-sm text-red-600">{{ session('errorDate') }}</p>
                                     @endif
                                 </div>
 
@@ -92,6 +92,10 @@
                                         accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
                                         wire:model="online_file"
                                     />
+
+                                    @if (session('errorFile'))
+                                        <p class="mt-2 text-sm text-red-600">{{ session('errorFile') }}</p>
+                                    @endif
                                 </div>
                                 
                                 {{-- @foreach ($listField->field as $key => $list)
