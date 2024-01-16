@@ -176,12 +176,30 @@
 
             <div class="p-4 mt-10 rounded-md bg-gray-50 dark:bg-gray-600">
                 <div class="flex items-center justify-center space-x-2">
-                    <button wire:click="submit()" type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                    <button wire:click="alertConfirm" type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         Submit
                     </button>
+               
                 </div>
             </div>
-
         </div>
+        
     </x-general.card>
 </div>
+
+@push('js')
+<script>
+    window.addEventListener('swal:confirm', event => {
+        swal.fire({
+            icon: event.detail.type,
+            title: event.detail.text,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel'
+        }).then(function(result){
+            if(result.isConfirmed){
+                window.Livewire.emit('submit');
+            }
+        });
+    });
+</script>
+@endpush
