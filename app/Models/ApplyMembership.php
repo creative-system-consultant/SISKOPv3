@@ -37,6 +37,10 @@ class ApplyMembership extends Model implements Auditable
         return $this->morphMany(introducer::class,'introduce');
     }
 
+    function sharetype() {
+        if ($this->share_pmt_mode_flag == 1){ return 'LUMP SUM'; } else { return 'INSTALLMENT'; }
+    }
+
     public function approvals()
     {
         return $this->morphMany(Approval::class,'approval');

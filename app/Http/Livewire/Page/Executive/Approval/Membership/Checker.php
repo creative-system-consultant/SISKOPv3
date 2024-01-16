@@ -10,6 +10,7 @@ use App\Models\SiskopCustomer as Customer;
 use App\Models\SiskopFamily as Family;
 use App\Models\SiskopEmployer as Employer;
 use App\Models\Introducer;
+use App\Models\Ref\RefBank;
 use App\Models\Ref\RefEducation;
 use App\Models\Ref\RefGender;
 use App\Models\Ref\RefMarital;
@@ -56,6 +57,11 @@ class Checker extends Component
         'Application.register_fee'         => ['required','gt:0'],
         'Application.contribution_fee'     => ['required','gt:0'],
         'Application.contribution_monthly' => ['required','gt:0'],
+        'Application.share_pmt_mode_flag'  => ['required'],
+        'Application.share_lump_sum_amt'   => ['required'],
+        'Application.payment_type'         => ['required'],
+        'Application.client_bank_id'       => ['required'],
+        'Application.client_bank_acct_no'  => ['required'],
         'CustAddress.address1'             => ['nullable'],
         'CustAddress.address2'             => ['nullable'],
         'CustAddress.address3'             => ['nullable'],
@@ -200,6 +206,7 @@ class Checker extends Component
                     ['introduce_id', $this->Cust->id],
                     ['apply_id' , $this->Application->id],
                 ])->first();
+        $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->relationshiplist = RefRelationship::where([['client_id', $this->client_id], ['status', '1']])->get();
