@@ -27,33 +27,33 @@
             <div class="grid grid-cols-4 gap-2">
                 @foreach($ChangeGuarantorsDetails as $item)
                     <x-form.input
-                        label="Identity Number"
-                        name="custic"
-                        value="{{$item}}"
+                        label="Old Guarantor Name"
+                        name=""
+                        value="{{$item->old_jamin_name}}"
                         mandatory=""
                         disable="true"
                         type="text"
                     />
                     <x-form.input
-                        label="Identity Number"
-                        name="custic"
-                        value="{{$item}}"
+                        label="Old Guarantor Identity Number"
+                        name=""
+                        value="{{$item->old_jamin_icno}}"
                         mandatory=""
                         disable="true"
                         type="text"
                     />
                     <x-form.input
-                        label="Identity Number"
-                        name="custic"
-                        value="{{$item}}"
+                        label="New Guarantor Name"
+                        name=""
+                        value="{{$item->new_jamin_name}}"
                         mandatory=""
                         disable="true"
                         type="text"
                     />
                     <x-form.input
-                        label="Identity Number"
-                        name="custic"
-                        value="{{$item}}"
+                        label="New Guarantor Identity Number"
+                        name=""
+                        value="{{$item->new_jamin_icno}}"
                         mandatory=""
                         disable="true"
                         type="text"
