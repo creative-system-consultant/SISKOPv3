@@ -22,6 +22,11 @@ class ChangeGuarantor extends Model
         return $this->belongsTo(Customer::class, 'cif_id', 'id');
     }
 
+    public function details()
+    {
+        return $this->hasMany(ChangeGuarantorDetails::class, 'apply_id', 'id');
+    }
+
     public function account_application()
     {
         return $this->belongsTo(AccountApplication::class, 'account_no', 'FMS_account_no');
