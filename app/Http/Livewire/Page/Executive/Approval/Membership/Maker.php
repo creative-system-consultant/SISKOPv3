@@ -43,7 +43,7 @@ class Maker extends Component
     public $statelist;
 
     public $input_disable = 'readonly';
-    public $input_maker   = '';
+    public $input_maker = '';
 
     protected $rules = [
         'Approval.note'                    => ['required','max:255'],
@@ -53,6 +53,7 @@ class Maker extends Component
         'Application.share_monthly'        => ['required','gte:0'],
         'Application.register_fee'         => ['required','gte:0'],
         'Application.contribution_monthly' => ['required','gte:0'],
+        'Application.contribution_fee'     => ['required','gte:0'],
         'Application.share_pmt_mode_flag'  => ['required'],
         'Application.share_lump_sum_amt'   => ['required'],
         'Application.payment_type'         => ['required'],
@@ -126,10 +127,18 @@ class Maker extends Component
 
     public function totalfee()
     {
-        $this->Application->update([
-            'total_fee'     => $this->Application->register_fee  + $this->Application->share_fee,
-            'total_monthly' => $this->Application->share_monthly + $this->Application->contribution_monthly,
-        ]);
+        if ($this->Application->share_pmt_mode_flag == 1){
+            $this->Application->share_monthly = 0;
+            $this->Application->share_lump_sum_amt = $this->Application->share_fee;
+        } else {
+            $this->Application->share_monthly = $this->Application->share_fee;
+            $this->Application->share_lump_sum_amt = 0;
+        }
+
+        $this->Application->total_fee = $this->Application->register_fee  + $this->Application->share_lump_sum_amt + $this->Application->contribution_fee;
+        
+        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
+
     }
 
     public function mount($uuid)
@@ -196,6 +205,13 @@ class Maker extends Component
         if($this->Application->share_fee >= 500){
             $this->Application->share_monthly = 0;
             $this->Application->save();
+        }
+        if ($this->Application->share_pmt_mode_flag == 1){
+            $this->Application->share_monthly = 0;
+            $this->Application->share_fee = $this->Application->share_lump_sum_amt;
+        } else {
+            $this->Application->share_fee = $this->Application->share_monthly;
+            $this->Application->share_lump_sum_amt = 0;
         }
     }
 

@@ -9,17 +9,17 @@ use Livewire\Component;
 class ExchangeShare extends Component
 {
     public User $User;
-    public ExchangeShares $share;
+    public ExchangeShares $ExchangeShares;
     public $shares;
 
     public function clearApplication()
     {
-        $this->share = new ExchangeShares;
+        $this->ExchangeShares = new ExchangeShares;
     }
 
     public function showApplication($uuid)
     {
-        $this->share = ExchangeShares::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        $this->ExchangeShares = ExchangeShares::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
     }
 
     public function remake_approvals()

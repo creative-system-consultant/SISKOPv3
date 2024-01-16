@@ -18,9 +18,10 @@
         name="Application.share_pmt_mode_flag"
         id=""
         mandatory=""
-        disable=""
+        disable="{{ $input_maker }}"
         default="no"
         wire:model="Application.share_pmt_mode_flag"
+        wire:change="totalfee"
     >
         <option value="1">LUMP SUM</option>
         <option value="2">MONTHLY</option>
@@ -28,13 +29,14 @@
     <x-form.input-tag
         label="SHARE"
         type="text"
-        name="Application.share_lump_sum_amt"
+        name="Application.share_fee"
         value=""
         leftTag="RM"
         rightTag=""
         mandatory="true"
         disable="{{ $input_maker }}"
-        wire:model="Application.share_lump_sum_amt"
+        wire:model="Application.share_fee"
+        wire:keydown.debounce.1500ms="totalfee"
     />
     <x-form.input-tag
         label="CONTRIBUTION MONTHLY"
@@ -68,7 +70,7 @@
         name="Application.payment_type"
         id=""
         mandatory=""
-        disable=""
+        disable="{{ $input_maker }}"
         default="no"
         wire:model="Application.payment_type"
     >
@@ -82,7 +84,7 @@
         name="Application.client_bank_id"
         id=""
         mandatory=""
-        disable=""
+        disable="{{ $input_maker }}"
         default="yes"
         wire:model="Application.client_bank_id"
     >

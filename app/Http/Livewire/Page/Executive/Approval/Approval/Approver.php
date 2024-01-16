@@ -288,7 +288,7 @@ class Approver extends Component
 
             return redirect()->route('application.list', ['page' => '1']);
         }
-        $this->forward = $this->Approval->rule_forward ?? FALSE;
+        //$this->forward = $this->Approval->rule_forward ?? FALSE;
         $this->banks = RefBank::where('client_id', $this->Application->client_id)->where('status', '1')->orderby('priority', 'asc')->orderby('description')->get();
     }
 

@@ -23,7 +23,7 @@
                 />
 
                 <x-form.input-tag
-                    label="Current Share Capital Amount"
+                    label="Share Capital Amount upon Application"
                     type="text"
                     name="current_share"
                     value="{{ $share->amt_before ?? '' }}"

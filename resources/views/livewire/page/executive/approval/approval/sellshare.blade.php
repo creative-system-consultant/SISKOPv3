@@ -5,7 +5,7 @@
         <x-form.input
             label="Name"
             name=""
-            value=""
+            value="{{ $Application->customer->name }}"
             mandatory=""
             disable="true"
             type="text"
@@ -13,49 +13,23 @@
         <x-form.input
             label="Identity Number"
             name=""
-            value=""
+            value="{{ $Application->customer->identity_no }}"
             mandatory=""
             disable="true"
             type="text"
         />
-        <x-form.dropdown
+        <x-form.input
             label="Bank"
-            value=""
-            name="Application.bank_code"
+            name=""
+            value="{{ $Application->customer->bank?->description }}"
             mandatory=""
-            disable="{{ $disable }}"
-            default="yes"
-            wire:model="Application.bank_code"
-            >
-            @foreach ($banks ?? [] as $bank)
-                <option value="{{ $bank->code }}">{{ $bank->description }}</option>
-            @endforeach
-        </x-form.dropdown>
+            disable="true"
+            type="text"
+        />
         <x-form.input
             label="Account Bank No."
             name=""
-            value=""
-            mandatory=""
-            disable="true"
-            type="text"
-        />
-    </div>
-</div>
-<div>
-    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Buyer Information</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-        <x-form.input
-            label="Member Name"
-            name=""
-            value=""
-            mandatory=""
-            disable="true"
-            type="text"
-        />
-        <x-form.input
-            label="Member Ic No"
-            name=""
-            value=""
+            value="{{ $Application->customer->bank_acct_no }}"
             mandatory=""
             disable="true"
             type="text"
@@ -69,7 +43,7 @@
             label="Reimbursement of Share Capital applied"
             type="text"
             name=""
-            value=""
+            value="{{ $Application->apply_amt }}"
             leftTag="RM"
             rightTag=""
             mandatory=""
@@ -83,19 +57,16 @@
             leftTag="RM"
             rightTag=""
             mandatory=""
-            disable=""
-            wire:model=""
+            disable="{{ $disable }}"
+            wire:model="Application.approved_amt"
         />
-        <x-form.input-tag
+        <x-form.input
             label="Types of Share Reimbursement"
-            type="text"
             name=""
-            value=""
-            leftTag="RM"
-            rightTag=""
+            value="COOP"
             mandatory=""
-            disable=""
-            wire:model=""
+            disable="true"
+            type="text"
         />
     </div>
 </div>

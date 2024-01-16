@@ -9,7 +9,7 @@
                     <div class="flex items-center">
                         <x-heroicon-o-user-circle class="w-6 h-6 " /> 
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
-                            Application Info
+                            Applicant Info
                         </span>
                     </div>
                 </x-tab.title>

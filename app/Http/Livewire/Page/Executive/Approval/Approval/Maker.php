@@ -55,6 +55,7 @@ class Maker extends Component
             'page' => 3,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
+                'Application.bank_code' => 'required',
             ],
         ],
         'exchangeshare' => [
