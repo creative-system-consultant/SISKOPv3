@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Page\Application\ApplicationList;
 
 use App\Models\ChangeGuarantor as ModelsChangeGuarantor;
+use App\Models\ChangeGuarantorDetails;
 use App\Models\User;
 use Livewire\Component;
 
@@ -11,6 +12,7 @@ class ChangeGuarantor extends Component
     public User $User;
     public $Change;
     public $ChangeGuarantors;
+    public $ChangeGuarantorsDetails;
 
     public function clearApplication()
     {
@@ -20,6 +22,7 @@ class ChangeGuarantor extends Component
     public function showApplication($uuid)
     {
         $this->Change = ModelsChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        $this->ChangeGuarantorsDetails = ChangeGuarantorDetails::where('apply_id', $this->Change->id)->where('client_id', $this->User->client_id)->with('customer')->get();
     }
 
     public function remake_approvals()
