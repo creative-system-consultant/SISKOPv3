@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Page\Executive\Approval\Approval;
 use App\Models\ApplyDividend;
 use App\Models\ApplySpecialAid;
 use App\Models\Approval;
+use App\Models\ChangeGuarantor;
 use App\Models\CloseMembership;
 use App\Models\Contribution;
 use App\Models\Share;
@@ -106,6 +107,12 @@ class Approver extends Component
                 'Application.approved_amt' => 'required|gt:0|numeric',
             ],
         ],
+        'changeguarantor' => [
+            'name' => 'Change Guarantor',
+            'type' => 'App\Models\ChangeGuarantor',
+            'page' => 10,
+            'rule' => [],
+        ],
     ];
 
     public function forward()
@@ -127,13 +134,13 @@ class Approver extends Component
     public function countVote()
     {
         //vote type unanimous
-        if ($this->Application->current_approval()->rule_vote_type == 'unanimous'){
+        if ($this->Application->current_approval()->rule_vote_type == 'unanimous') {
             // votes are contradictory
-            if ($this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0){
+            if ($this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0) {
                 $this->Application->step++;
-            // votes are all casted
-            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-                if ($this->Application->approval_vote_yes() > 0){
+                // votes are all casted
+            } else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
+                if ($this->Application->approval_vote_yes() > 0) {
                     $this->Application->flag = 20;
                 } else {
                     $this->Application->flag = 21;
@@ -142,35 +149,33 @@ class Approver extends Component
         }
 
         //checks if vote absolute is true, and any votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve'){
-            if ($this->Application->approval_vote_yes() > 0){
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve') {
+            if ($this->Application->approval_vote_yes() > 0) {
                 $this->Application->flag = 20;
-            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+            } else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
                 $this->Application->flag = 21;
             }
         }
 
         //checks if vote absolute is true, and any votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline'){
-            if ($this->Application->approval_vote_no() > 0){
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline') {
+            if ($this->Application->approval_vote_no() > 0) {
                 $this->Application->flag = 21;
-            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+            } else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
                 $this->Application->flag = 20;
             }
         }
 
         //checks if vote majority is true
-        else if ($this->Application->current_approval()->rule_vote_type == 'majority'){
-            if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-                if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+        else if ($this->Application->current_approval()->rule_vote_type == 'majority') {
+            if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
+                if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()) {
                     $this->Application->flag = 20;
                 } else {
                     $this->Application->flag = 21;
                 }
             }
-        }
-
-        else {
+        } else {
             //
         }
     }
@@ -236,7 +241,7 @@ class Approver extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend'])){
+        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'changeguarantor'])) {
             $this->notfound();
             return redirect()->route('application.list');
         }
@@ -256,6 +261,8 @@ class Approver extends Component
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        } else if ($this->include == 'changeguarantor') {
+            $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
             $this->notfound();
             return redirect()->route('application.list', ['page' => 1]);

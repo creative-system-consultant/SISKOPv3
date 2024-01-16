@@ -103,8 +103,8 @@ class Index extends Component
             'account_no' => $this->acct_no,
             'jamin_reason' => $this->reasonChange,
             'jamin_reason_txt' => $this->reasonChangeTxt,
-            'flag' => '0',
-            'step' => '0',
+            'flag' => '1',
+            'step' => '1',
             'created_by' => auth()->user()->name,
             'created_at' => now()
         ]);

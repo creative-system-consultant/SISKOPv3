@@ -27,7 +27,7 @@
             <div class="grid grid-cols-4 gap-2">
                 @foreach($ChangeGuarantorsDetails as $item)
                     <x-form.input
-                        label="Old Guarantor Name"
+                        label="{{$loop->iteration}}. Old Guarantor Name"
                         name=""
                         value="{{$item->old_jamin_name}}"
                         mandatory=""
@@ -35,7 +35,7 @@
                         type="text"
                     />
                     <x-form.input
-                        label="Old Guarantor Identity Number"
+                        label="{{$loop->iteration}}. Old Guarantor Identity Number"
                         name=""
                         value="{{$item->old_jamin_icno}}"
                         mandatory=""
@@ -43,7 +43,7 @@
                         type="text"
                     />
                     <x-form.input
-                        label="New Guarantor Name"
+                        label="{{$loop->iteration}}. New Guarantor Name"
                         name=""
                         value="{{$item->new_jamin_name}}"
                         mandatory=""
@@ -51,7 +51,7 @@
                         type="text"
                     />
                     <x-form.input
-                        label="New Guarantor Identity Number"
+                        label="{{$loop->iteration}}. New Guarantor Identity Number"
                         name=""
                         value="{{$item->new_jamin_icno}}"
                         mandatory=""
@@ -73,6 +73,8 @@
                 <x-slot name="tbody">
                 @foreach ($Change->approvals as $item)
                     <tr>
+                        
+                     
                         <x-table.table-body colspan="" class="text-left">
                             @if($item->order < $Change->step)
                                 <x-heroicon-o-check-circle class="w-6 h-6"/>

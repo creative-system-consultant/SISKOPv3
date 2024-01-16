@@ -45,7 +45,7 @@
 
                 
 
-                            @if ($aid->flag > 0 && in_array($aid->current_approval()?->group_id,$User->role_ids()) && $aid->current_approval()?->role_id == 1)
+                        @if ($aid->flag > 0 && in_array($aid->current_approval()?->group_id,$User->role_ids()) && $aid->current_approval()?->role_id == 1)
                             <a href="{{ route('allapproval.maker',['include' => 'specialaid','uuid' => $aid->uuid]) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
