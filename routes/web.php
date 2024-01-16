@@ -89,6 +89,7 @@ use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidMaker;
 use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
+use App\Http\Livewire\Page\Application\ApplicationList\ApplicationList;
 use App\Http\Livewire\Page\Application\Dividend\ApplyDividend;
 use App\Http\Livewire\Page\Application\ApplyChangeGuarantor\Index as ApplyChangeGuarantor;
 use App\Http\Livewire\Page\Application\ApplyClosedMembership\Index as ApplyClosedMembership;
@@ -358,10 +359,10 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
 
         //Exec > Application List
         Route::prefix('applicationList')->group(function () {
-            Route::get('/', function () {
-                return view('livewire.page.application.application-list.application-list');
-            })->name('application.list');
-
+            // Route::get('/', function () {
+            //     return view('livewire.page.application.application-list.application-list');
+            // })->name('application.list');
+            Route::get('/', ApplicationList::class)->name('application.list');       
             Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
             Route::get('/sellShare/{uuid}', [SellShare::class, 'showApplication'])->name('application.sell');
