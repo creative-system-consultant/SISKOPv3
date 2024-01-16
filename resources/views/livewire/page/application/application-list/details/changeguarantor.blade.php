@@ -24,22 +24,42 @@
             </div>
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Change Guarantor Information</h2>
-            @foreach($ChangeGuarantorsDetails as $item)
-            <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    {{$item}}
-                </div>
-
-                <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    //
-                </div>
-
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    //
-                </div>
+            <div class="grid grid-cols-4 gap-2">
+                @foreach($ChangeGuarantorsDetails as $item)
+                    <x-form.input
+                        label="Identity Number"
+                        name="custic"
+                        value="{{$item}}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                    <x-form.input
+                        label="Identity Number"
+                        name="custic"
+                        value="{{$item}}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                    <x-form.input
+                        label="Identity Number"
+                        name="custic"
+                        value="{{$item}}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                    <x-form.input
+                        label="Identity Number"
+                        name="custic"
+                        value="{{$item}}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                @endforeach
             </div>
-            @endforeach
-
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
             <x-table.table>
                 <x-slot name="thead">
