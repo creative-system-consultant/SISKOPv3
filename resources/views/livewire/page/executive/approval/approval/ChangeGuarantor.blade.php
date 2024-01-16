@@ -1,5 +1,5 @@
 <div>
-    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Special Aid Information</h2>
+    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Change Guarantor Information</h2>
     @foreach ($Application->details as $item)
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-2 space-y-4 lg:items-end">
             <x-form.input-tag

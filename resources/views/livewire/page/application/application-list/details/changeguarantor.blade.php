@@ -74,12 +74,13 @@
                 @foreach ($Change->approvals as $item)
                     <tr>
                         
-                     
+            
+
                         <x-table.table-body colspan="" class="text-left">
-                            @if($item->order < $Change->step)
-                                <x-heroicon-o-check-circle class="w-6 h-6"/>
+                            @if($item->order < $Change->step || $Change->flag > 1)
+                                <x-heroicon-o-check-circle class="w-6 h-6 text-green-500"/>
                             @elseif($item->order == $Change->step)
-                                <x-heroicon-o-play-circle class="w-6 h-6"/>
+                                <x-heroicon-o-play-circle class="w-6 h-6 text-blue-500"/>
                             @endif
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">

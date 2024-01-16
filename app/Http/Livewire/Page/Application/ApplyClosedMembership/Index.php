@@ -69,7 +69,6 @@ class Index extends Component
     public function alertConfirm()
     {
         $this->validate();
-        // dd('yp');
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
             'text'      => 'Are you sure you want to close your membership?',
