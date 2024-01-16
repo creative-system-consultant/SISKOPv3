@@ -52,7 +52,6 @@ class Maker extends Component
         'Application.share_fee'            => ['required','gte:0'],
         'Application.share_monthly'        => ['required','gte:0'],
         'Application.register_fee'         => ['required','gte:0'],
-        'Application.contribution_fee'     => ['required','gte:0'],
         'Application.contribution_monthly' => ['required','gte:0'],
         'Application.share_pmt_mode_flag'  => ['required'],
         'Application.share_lump_sum_amt'   => ['required'],
@@ -128,7 +127,7 @@ class Maker extends Component
     public function totalfee()
     {
         $this->Application->update([
-            'total_fee'     => $this->Application->register_fee  + $this->Application->contribution_fee    + $this->Application->share_fee,
+            'total_fee'     => $this->Application->register_fee  + $this->Application->share_fee,
             'total_monthly' => $this->Application->share_monthly + $this->Application->contribution_monthly,
         ]);
     }

@@ -2,6 +2,18 @@
 <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
         <x-form.input-tag
+            label="Current Share Capital"
+            type="text"
+            name="share_apply"
+            value="{{ $Application->amt_before }}"
+            leftTag="RM"
+            rightTag=""
+            mandatory=""
+            disable="true"
+        />
+    </div>
+    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+        <x-form.input-tag
             label="Add Share Capital applied"
             type="text"
             name="share_apply"

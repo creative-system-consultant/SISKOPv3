@@ -15,7 +15,7 @@ use Livewire\Component;
 class Approver extends Component
 {
     public User $User;
-    public Approval $Approval;
+    public $Approval;
     public $Application;
 
     public $approval_type = 'lulus';
@@ -40,7 +40,7 @@ class Approver extends Component
 
     protected $custom_rule = [
         'share' => [
-            'name' => 'Buy Share',
+            'name' => 'Add Share',
             'type' => 'App\Models\Share',
             'page' => 2,
             'rule' => [
@@ -126,40 +126,52 @@ class Approver extends Component
 
     public function countVote()
     {
-        //checks if vote unanimous is true, and votes are contradictory
-        if ($this->Application->current_approval()->rule_vote_type == 'unanimous' && $this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0) {
-            $this->Application->step++;
+        //vote type unanimous
+        if ($this->Application->current_approval()->rule_vote_type == 'unanimous'){
+            // votes are contradictory
+            if ($this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0){
+                $this->Application->step++;
+            // votes are all casted
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                if ($this->Application->approval_vote_yes() > 0){
+                    $this->Application->flag = 20;
+                } else {
+                    $this->Application->flag = 21;
+                }
+            }
         }
 
-        //checks if vote absolute is true, and votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve' && $this->Application->approval_vote_yes() > 0) {
-            $this->Application->flag = 20;
+        //checks if vote absolute is true, and any votes are casted
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve'){
+            if ($this->Application->approval_vote_yes() > 0){
+                $this->Application->flag = 20;
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                $this->Application->flag = 21;
+            }
         }
 
-        //checks if vote absolute is true, and votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline' && $this->Application->approval_vote_no() > 0) {
-            $this->Application->flag = 21;
+        //checks if vote absolute is true, and any votes are casted
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline'){
+            if ($this->Application->approval_vote_no() > 0){
+                $this->Application->flag = 21;
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                $this->Application->flag = 20;
+            }
         }
 
         //checks if vote majority is true
-        else if (
-            $this->Application->current_approval()->rule_vote_type == 'majority'
-            && $this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0
-        ) {
-            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()) {
-                $this->Application->flag = 20;
-            } else {
-                $this->Application->flag = 21;
+        else if ($this->Application->current_approval()->rule_vote_type == 'majority'){
+            if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+                    $this->Application->flag = 20;
+                } else {
+                    $this->Application->flag = 21;
+                }
             }
         }
 
-        //else, check if all votes are casted
-        else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
-            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()) {
-                $this->Application->flag = 20;
-            } else {
-                $this->Application->flag = 21;
-            }
+        else {
+            //
         }
     }
 

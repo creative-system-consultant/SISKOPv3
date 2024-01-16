@@ -125,7 +125,6 @@ class ApplyShare extends Component
             'cdm_date'     => $this->cdm_date ??= NULL,
             'cheque_date'  => $this->cheque_date ??= NULL,
             'cheque_no'    => $this->cheque_no ??= NULL,
-            'amt_before'   => $this->cust['share'] ??= '0',
             'apply_amt'    => $this->share_apply,
             'approved_amt' => NULL,
             'flag'         => 1,

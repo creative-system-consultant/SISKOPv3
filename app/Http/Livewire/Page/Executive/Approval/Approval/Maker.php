@@ -15,7 +15,7 @@ use Livewire\Component;
 class Maker extends Component
 {
     public User $User;
-    public Approval $Approval;
+    public $Approval;
     public $Application;
 
     public $approval_type = 'lulus';
@@ -40,7 +40,7 @@ class Maker extends Component
 
     protected $custom_rule = [
         'share' => [
-            'name' => 'Buy Share',
+            'name' => 'Add Share',
             'type' => 'App\Models\Share',
             'page' => 2,
             'rule' => [
