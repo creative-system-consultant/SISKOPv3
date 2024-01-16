@@ -12,14 +12,19 @@
         wire:model="Application.register_fee"
         wire:keydown="totalfee"
     />
-    <x-form.input
-        label="Share Type"
-        name=""
-        value="{{ $Application->sharetype() }}"
+    <x-form.dropdown
+        label="SHARE TYPE"
+        value=""
+        name="Application.share_pmt_mode_flag"
+        id=""
         mandatory=""
-        disable="{{ $input_disable }}"
-        type="text"
-    />
+        disable=""
+        default="no"
+        wire:model="Application.share_pmt_mode_flag"
+    >
+        <option value="1">LUMP SUM</option>
+        <option value="2">MONTHLY</option>
+    </x-form.dropdown>
     <x-form.input-tag
         label="SHARE"
         type="text"
@@ -28,7 +33,7 @@
         leftTag="RM"
         rightTag=""
         mandatory="true"
-        disable="{{ $input_disable }}"
+        disable="{{ $input_maker }}"
         wire:model="Application.share_lump_sum_amt"
     />
     <x-form.input-tag

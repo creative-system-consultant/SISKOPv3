@@ -754,20 +754,6 @@ class NewMembership extends Component
             ]);
         }
 
-        if ($this->payment_file_share) {
-            $filepath = 'Files/' . $customers->id . '/membership/SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension();
-
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension());
-
-            $this->applymember->files()->updateOrCreate([
-                'filename' => 'SharePayment',
-            ], [
-                'filedesc' => 'Share Payment Proof',
-                'filetype' => $this->payment_file_share->extension(),
-                'filepath' => $filepath,
-            ]);
-        }
-
         $this->render();
     }
 
