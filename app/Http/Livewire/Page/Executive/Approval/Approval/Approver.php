@@ -107,7 +107,7 @@ class Approver extends Component
                 'Application.approved_amt' => 'required|gt:0|numeric',
             ],
         ],
-        'changeguarantor' => [
+        'ChangeGuarantor' => [
             'name' => 'Change Guarantor',
             'type' => 'App\Models\ChangeGuarantor',
             'page' => 10,
@@ -241,7 +241,7 @@ class Approver extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'changeguarantor'])) {
+        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'ChangeGuarantor'])) {
             $this->notfound();
             return redirect()->route('application.list');
         }
@@ -261,7 +261,7 @@ class Approver extends Component
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-        } else if ($this->include == 'changeguarantor') {
+        } else if ($this->include == 'ChangeGuarantor') {
             $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
             $this->notfound();

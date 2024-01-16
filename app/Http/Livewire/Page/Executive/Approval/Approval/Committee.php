@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Page\Executive\Approval\Approval;
 use App\Models\ApplyDividend;
 use App\Models\ApplySpecialAid;
 use App\Models\Approval;
+use App\Models\ChangeGuarantor;
 use App\Models\CloseMembership;
 use App\Models\Contribution;
 use App\Models\Share;
@@ -105,6 +106,12 @@ class Committee extends Component
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0|numeric',
             ],
+        ],
+        'ChangeGuarantor' => [
+            'name' => 'Change Guarantor',
+            'type' => 'App\Models\ChangeGuarantor',
+            'page' => 10,
+            'rule' => [],
         ],
     ];
 
@@ -217,7 +224,7 @@ class Committee extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'changeguarantor'])) {
+        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'ChangeGuarantor'])) {
             $this->notfound();
             return redirect()->route('application.list');
         }
@@ -237,6 +244,8 @@ class Committee extends Component
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+        } else if ($this->include == 'ChangeGuarantor') {
+            $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
             $this->notfound();
             return redirect()->route('application.list', ['page' => 1]);
