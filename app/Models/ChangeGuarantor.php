@@ -12,6 +12,7 @@ class ChangeGuarantor extends Model
     use HasFactory;
     use SoftDeletes;
     use HasApprovals;
+
     protected $table = 'SISKOP.CHANGE_GUARANTOR';
     protected $guarded = [];
     protected $dates = ['created_at', 'deleted_at', 'updated_at'];
