@@ -112,6 +112,8 @@ class Profile extends Component
             $this->FmsCustC10->name = $this->FmsCust->name;
             $this->FmsCustC10->phone = $this->FmsCust->phone;
             $this->FmsCustC10->email = $this->FmsCust->email;
+            $this->FmsCustC10->bank_id = $this->FmsCust->bank_id;
+            $this->FmsCustC10->bank_acct_no = $this->FmsCust->bank_acct_no;
             $this->FmsCustC10->save();
             $this->FmsCust->save();
 
