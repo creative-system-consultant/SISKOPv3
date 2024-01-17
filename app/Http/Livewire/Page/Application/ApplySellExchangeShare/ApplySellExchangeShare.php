@@ -32,7 +32,6 @@ class ApplySellExchangeShare extends Component
         'bank_name'       => 'required_if:share_type,==,coop',
         'mbr_icno'        => 'required_if:share_type,==,mbr',
         // 'bank_code'       => 'required_if:share_type,==,coop',
-        'bank_acct'       => 'required_if:share_type,==,coop',
     ];
 
     protected $messages = [
@@ -42,44 +41,13 @@ class ApplySellExchangeShare extends Component
         'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
         'share_apply.gt'             => 'Application must be more than RM0',
         'share_type.required'        => ':attribute is required',
-        'bank_name.required_if'      => ':attribute field is required',
-        'bank_code.required_if'      => ':attribute field is required',
-        'bank_acct.required_if'      => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
         'mbr_icno'        => 'Member IC No.',
         'share_apply'     => 'Reimbursement of Share Capital applied',
         'share_type'      => 'Types of Share Reimbursement',
-        'bank_name'       => 'Bank',
-        'bank_code'       => 'Bank',
-        'bank_acct'       => 'Account Bank No.'
     ];
-
-    public function getSpecialRules()
-    {
-        return [
-            'bank_acct' => [
-                'required',
-                'numeric',
-                function ($attribute, $value, $fail) {
-                    if (!$this->bank_name) {
-                        return $fail("The bank is not selected.");
-                    }
-
-                    $bankAccountLength = RefBank::where('code', $this->bank_name)->where('client_id', $this->User->client_id)->value('bank_acc_len');
-
-                    if (!$bankAccountLength) {
-                        return $fail("Unable to determine the bank account length.");
-                    }
-
-                    if (strlen((string) $value) != $bankAccountLength) {
-                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
-                    }
-                },
-            ],
-        ];
-    }
 
     public function getShareRules()
     {
@@ -105,7 +73,6 @@ class ApplySellExchangeShare extends Component
         $this->validate($this->getShareRules());
 
         if ($this->share_type == 'coop') {
-            $this->validate($this->getSpecialRules());
 
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
 
@@ -150,9 +117,7 @@ class ApplySellExchangeShare extends Component
 
         $this->validate();
         $this->validate($this->getShareRules());
-        if ($this->share_type == 'coop') {
-            $this->validate($this->getSpecialRules());
-        }
+
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
@@ -289,6 +254,9 @@ class ApplySellExchangeShare extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
 
+
+
+
         $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);
 
@@ -298,6 +266,8 @@ class ApplySellExchangeShare extends Component
 
     public function render()
     {
+        $this->bank_name = $this->cust->bank_id;
+        $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-sell-exchange-share.apply-sell-exchange-share')->extends('layouts.head');
     }
 }
