@@ -24,6 +24,21 @@ class Share extends Component
         $this->share = ApplyShare::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
     }
 
+    public function cancelApplication($uuid)
+    {
+        $this->share = ApplyShare::where('uuid', $uuid)->where('client_id', $this->User->client_id)->first();
+        $this->share->flag = 21;
+        $this->share->save();
+
+        $this->dispatchBrowserEvent('swal',[
+            'title' => 'Success!',
+            'text'  => 'Application is cancelled',
+            'icon'  => 'success',
+            'showConfirmButton' => false,
+            'timer' => 360000,
+        ]);
+    }
+
     public function remake_approvals()
     {
         $this->share->remove_approvals();
@@ -43,6 +58,7 @@ class Share extends Component
     public function mount()
     {
         $this->User   = User::find(auth()->user()->id);
+        $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->paginate(5);
     }
 
     public function render()

@@ -1,6 +1,28 @@
 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
     <x-form.input-tag
+        label="Current Monthly Contribution"
+        type="text"
+        name=""
+        value="{{ $Application->customer->fmsMembership->monthly_contribution ?? '0.00' }}"
+        placeholder="0.00"
+        leftTag="RM"
+        rightTag=""
+        mandatory=""
+        disable="true"
+    />
+    <x-form.input-tag
+        label="Total Contribution"
+        type="text"
+        name=""
+        value="{{ $Application->customer->fmsMembership->total_contribution ?? '0.00' }}"
+        placeholder="0.00"
+        leftTag="RM"
+        rightTag=""
+        mandatory=""
+        disable="true"
+    />
+    <x-form.input-tag
         label="Add Contribution applied"
         type="text"
         name="cont_apply"
@@ -24,8 +46,8 @@
         wire:model="Application.approved_amt"
     />
     <x-form.input
-        label="Date Options"
-        value="{{ $Application->start_apply == NULL ? 'One Month' : 'Starting Date' }}"
+        label="Contribution Type"
+        value="{{ $Application->start_apply == NULL ? 'One Month' : 'Change Monthly Contribution' }}"
         name="cont_type"
         id="cont_type"
         mandatory=""
@@ -41,21 +63,19 @@
             disable="true"
             type="date"
         />
-    @endif
-    @if ( $Application->start_apply !== NULL)
         <x-form.input
             label="Approved Start Date"
             name="start_approvedDate"
-            value="{{ $Application->start_approved == NULL ? '' : $Application->start_approved->format('Y-m-d') }}"
+            value=""
             mandatory=""
             disable=""
             type="date"
+            wire:model="Application.start_approved"
         />
     @endif
 </div>
-
+@if ( $Application->start_apply !== NULL)
 <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >
-    
     <div>
         <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
             Show Supporting Document
@@ -70,3 +90,4 @@
         @endforelse
     </div>
 </div>
+@endif

@@ -12,7 +12,6 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input
                     label="Identity Number"
                     name="custic"
@@ -21,7 +20,16 @@
                     disable="true"
                     type="text"
                 />
-
+                <x-form.input-tag
+                    label="Current Share Amount"
+                    type="text"
+                    name="current_share"
+                    value="{{ $ExchangeShares->amt_before ?? '' }}"
+                    leftTag="RM"
+                    rightTag=""
+                    mandatory=""
+                    disable="true"
+                />
                 <x-form.dropdown
                     label="Bank"
                     value=""
@@ -32,53 +40,25 @@
                     default="yes"
                     >
                     @foreach ($banks ?? [] as $bank)
-                        <option @if ($bank->code == $sellShare->bank_code) selected @endif>{{ $bank->description }}</option>
+                        <option @if ($bank->id == $sellShare->customer->bank_id) selected @endif>{{ $bank->description }}</option>
                     @endforeach
                 </x-form.dropdown>
-
                 <x-form.input
                     label="Account Bank No."
                     name="bank_acct"
                     id="bank_acct"
-                    value="{{ $sellShare->bank_account ?? '' }}"
+                    value="{{ $sellShare->customer->bank_acct_no ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
                 />
             </div>
 
-            @if(isset($sellShare->direction) && $sellShare->direction !== 'sell'  )
-            <div>
-                <div>
-                    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Buyer Information</h2>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                        <x-form.input
-                            label="Member Name"
-                            name="buyer_name"
-                            value="{{ isset($sellShare->exc_cust_id) && $sellShare->exc_cust_id == NULL ? '' : $sellShare->buyer->name ?? '' }}"
-                            mandatory=""
-                            disable="true"
-                            type="text"
-                        />
-
-                        <x-form.input
-                            label="Member IC No."
-                            name="buyer_icno"
-                            value="{{ isset($sellShare->exc_cust_id) && $sellShare->exc_cust_id == NULL ? '' : $sellShare->buyer->icno ?? '' }}"
-                            mandatory=""
-                            disable="true"
-                            type="text"
-                        />
-                    </div>
-                </div>
-            </div>
-            @endif
-
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
                     <x-form.input-tag
-                        label="Reimbursement of Share Capital applied"
+                        label="Sell Share applied"
                         type="text"
                         name="share_apply"
                         value="{{ $sellShare->apply_amt ?? '' }}"
@@ -92,7 +72,7 @@
 
                 <div>
                     <x-form.input-tag
-                        label="Reimbursement of Share Capital approved"
+                        label="Sell Share approved"
                         type="text"
                         name="share_approved"
                         value="{{ $sellShare->approved_amt ?? '' }}"
@@ -106,7 +86,7 @@
                 <div>
                     <x-form.input
                         label="Types of Share Reimbursement"
-                        value="{{ isset($sellShare->direction) && $sellShare->direction == 'sell' ? 'Co-operative' : 'Member' }}"
+                        value="COOP"
                         name="share_type"
                         id="share_type"
                         mandatory=""

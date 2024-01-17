@@ -91,6 +91,13 @@
                             </a>
                         @endif
 
+                        <button wire:click="cancelApplication('{{ $item->uuid }}')"
+                            class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-red-500 rounded-full hover:bg-red-400"
+                            title="Cancel Application"
+                            >
+                            <x-heroicon-s-x-circle class="w-5 h-5"/>
+                        </button>
+
                         </div>
                     </x-table.table-body>
                 </tr>

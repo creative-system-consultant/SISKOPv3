@@ -43,12 +43,25 @@
                     disable="true"
                 />
             </div>
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Application Information</h2>
             <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input-tag
+                        label="Current Contribution"
+                        type="text"
+                        name="cont_approved"
+                        value="{{ $Contribution->amt_before ?? '' }}"
+                        placeholder="0.00"
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable="true"
+                    />
+                </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
                         label="Date Options"
-                        value="{{ isset($Contribution->start_apply) == NULL ? 'One Month' : 'Starting Date' }}"
+                        value="{{ isset($Contribution->start_apply) == NULL ? 'Pay Once' : 'Starting Date' }}"
                         name="cont_type"
                         id="cont_type"
                         mandatory=""
@@ -80,6 +93,9 @@
                         />
                     @endif
                 </div>
+            </div>
+            <div class="grid grid-cols-12 gap-6">
+
             </div>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
             <x-table.table>

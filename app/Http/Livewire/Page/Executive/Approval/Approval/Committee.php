@@ -8,6 +8,7 @@ use App\Models\Approval;
 use App\Models\ChangeGuarantor;
 use App\Models\CloseMembership;
 use App\Models\Contribution;
+use App\Models\FmsGlobalParm;
 use App\Models\Share;
 use App\Models\Ref\RefBank;
 use App\Models\User;
@@ -30,10 +31,18 @@ class Committee extends Component
     public $pagetype = '';
     public $vote = 'Vote';
 
+    public $globalParm;
+    public $client_bank_id;
+    public $client_bank_name;
+    public $client_bank_acct;
+
+
     protected function rules()
     {
         $rules = [
             'Approval.note' => 'required|max:255',
+            'client_bank_name' => 'nullable',
+            'client_bank_acct' => 'nullable',
         ];
 
         return array_merge($rules, $this->custom_rule[$this->include]['rule']);
@@ -47,6 +56,7 @@ class Committee extends Component
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
                 'Application.bank_code' => 'required',
+                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after:Application.cheque_date',
             ],
         ],
         'sellshare' => [
@@ -80,6 +90,7 @@ class Committee extends Component
             'page' => 5,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
+                'Application.apply_amt' => 'required|gt:0',
             ],
         ],
         'dividen' => [
@@ -274,6 +285,13 @@ class Committee extends Component
         }
         //$this->forward = $this->Approval->rule_forward ?? FALSE;
         $this->banks = RefBank::where('client_id', $this->Application->client_id)->where('status', '1')->orderby('priority', 'asc')->orderby('description')->get();
+
+        $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+
+        $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
+        $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
+        $this->client_bank_name = $bank_name->description;
+        $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
     }
 
     public function render()

@@ -143,7 +143,7 @@ class Resolution extends Component
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = $this->approval_type;
 
-        if ($this->approval_type = 'lulus'){
+        if ($this->approval_type == 'lulus'){
             $this->doApproval();
         }
         $this->Approval->save();

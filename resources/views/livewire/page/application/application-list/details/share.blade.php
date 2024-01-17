@@ -12,7 +12,6 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input
                     label="Identity Number"
                     name="custic"
@@ -21,9 +20,8 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input-tag
-                    label="Share Capital Amount upon Application"
+                    label="Share Amount upon Application"
                     type="text"
                     name="current_share"
                     value="{{ $share->amt_before ?? '' }}"
@@ -38,7 +36,7 @@
             <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
-                        label="Add Share Capital applied"
+                        label="Add Share applied"
                         type="text"
                         name="share_apply"
                         value="{{ $share->apply_amt ?? '0.00' }}"
@@ -48,10 +46,9 @@
                         disable="true"
                     />
                 </div>
-
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
-                        label="Add Share Capital approved"
+                        label="Add Share approved"
                         type="text"
                         name="share_approved"
                         value="{{ $share->approved_amt ?? '0.00' }}"
@@ -61,7 +58,6 @@
                         disable="true"
                     />
                 </div>
-
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
                         label="Payment Method"
@@ -87,22 +83,6 @@
                             type="date"
                         />
                     </div>
-
-                    <div>
-                        <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
-                            Show Upload Online Payment Receipt
-                        </label>
-                        @if (isset($share->files) != NULL)
-                            @forelse ($share->files as $doc)
-                                <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
-                                    <x-heroicon-o-document class="w-5 h-5 mr-2"/>
-                                    Show
-                                </a>
-                            @empty
-                                <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2>
-                            @endforelse
-                        @endif
-                    </div>
                 </div>
             @endif
 
@@ -117,22 +97,6 @@
                             disable="true"
                             type="date"
                         />
-                    </div>
-
-                    <div>
-                        <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
-                            Show Upload CDM Payment Receipt
-                        </label>
-                        @if (isset($share->files) != NULL)
-                            @forelse ($share->files as $doc)
-                                <a href="{{ asset('storage/'.$doc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
-                                    <x-heroicon-o-document class="w-5 h-5 mr-2"/>
-                                    Show
-                                </a>
-                            @empty
-                                <h2 class="mb-4 ml-4 text-base border-gray-300">No File</h2>
-                            @endforelse
-                        @endif
                     </div>
                 </div>
             @endif
@@ -149,12 +113,21 @@
                             type="text"
                         />
                     </div>
-
                     <div>
                         <x-form.input
                             label="Cheque Date"
                             name="cheque_date"
                             value="{{ isset($share->cheque_date) == NULL ? '' : $share->cheque_date->format('Y-m-d') }}"
+                            mandatory=""
+                            disable="true"
+                            type="date"
+                        />
+                    </div>
+                    <div>
+                        <x-form.input
+                            label="Cheque Clearance Date"
+                            name="cheque_date"
+                            value="{{ isset($share->cheque_cleared) == NULL ? '' : $share->cheque_cleared->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"
