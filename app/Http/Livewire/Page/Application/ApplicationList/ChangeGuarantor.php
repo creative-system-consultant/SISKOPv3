@@ -6,12 +6,13 @@ use App\Models\ChangeGuarantor as ModelsChangeGuarantor;
 use App\Models\ChangeGuarantorDetails;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ChangeGuarantor extends Component
 {
+    use WithPagination;
     public User $User;
     public $Change;
-    public $ChangeGuarantors;
     public $ChangeGuarantorsDetails;
 
     public function clearApplication()
@@ -44,11 +45,13 @@ class ChangeGuarantor extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->orderBy('created_at', 'desc')->with('customer')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.changeguarantor');
+        $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->orderBy('created_at', 'desc')->with('customer')->paginate(5);
+        return view('livewire.page.application.application-list.changeguarantor',[
+            'ChangeGuarantors' => $ChangeGuarantors,
+        ]);
     }
 }

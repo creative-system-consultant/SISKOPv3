@@ -5,11 +5,12 @@ namespace App\Http\Livewire\Page\Application\ApplicationList;
 use App\Models\Contribution as ApplyContribution;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Contribution extends Component
 {
+    use WithPagination;
     public User $User;
-    public $contributions;
     public $Contribution;
 
     public function clearApplication()
@@ -42,11 +43,13 @@ class Contribution extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->contributions = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.contribution');
+        $contributions = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->paginate(5);
+        return view('livewire.page.application.application-list.contribution',[
+            'contributions' => $contributions,
+        ]);
     }
 }

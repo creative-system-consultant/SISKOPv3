@@ -5,10 +5,12 @@ namespace App\Http\Livewire\Page\Application\ApplicationList;
 use App\Models\ApplySpecialAid;
 use App\Models\SpecialAid as SpecialAidType;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class SpecialAid extends Component
 {
-    public $specialAid, $User;
+    use WithPagination;
+    public $User;
     public $specialAid_type;
     public $custApply, $type;
 
@@ -21,11 +23,13 @@ class SpecialAid extends Component
     public function mount()
     {
         $this->User = auth()->user();
-        $this->specialAid = ApplySpecialAid::orderBy('created_at', 'desc')->with('customer')->with('specialAidType')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.special-aid');
+        $specialAid = ApplySpecialAid::orderBy('created_at', 'desc')->with('customer')->with('specialAidType')->paginate(5);
+        return view('livewire.page.application.application-list.special-aid',[
+            'specialAid' => $specialAid,
+        ]);
     }
 }

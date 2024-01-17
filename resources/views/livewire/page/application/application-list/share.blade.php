@@ -101,7 +101,9 @@
             @endforelse
         </x-slot>
     </x-table.table>
-
+    <div class="mt-4">
+        {{ $shares->links('livewire::pagination-links') }}
+    </div>
     <x-modal.modal modalActive="openModal" title="Share Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.share')
     </x-modal.modal>

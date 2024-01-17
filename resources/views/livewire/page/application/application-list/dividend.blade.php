@@ -97,7 +97,9 @@
             @endforelse
         </x-slot>
     </x-table.table>
-
+    <div class="mt-4">
+        {{ $dividends->links('livewire::pagination-links') }}
+    </div>
     <x-modal.modal modalActive="openModal" title="Dividend Payout Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.dividend')
     </x-modal.modal>

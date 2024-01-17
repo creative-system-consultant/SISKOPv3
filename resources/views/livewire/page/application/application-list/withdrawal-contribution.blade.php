@@ -108,6 +108,9 @@
             @endforelse
         </x-slot>
     </x-table.table>
+    <div class="mt-4">
+        {{ $withdrawal->links('livewire::pagination-links') }}
+    </div>
     <x-modal.modal modalActive="openModal" title="Withdrawal Contribution Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.apply_withdraw_contribution')
     </x-modal.modal>

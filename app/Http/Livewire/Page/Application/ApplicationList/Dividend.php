@@ -5,12 +5,13 @@ namespace App\Http\Livewire\Page\Application\ApplicationList;
 use App\Models\ApplyDividend;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Dividend extends Component
 {
+    use WithPagination;
     public User $User;
     public ApplyDividend $dividend;
-    public $dividends;
 
     public function clearApplication()
     {
@@ -25,11 +26,13 @@ class Dividend extends Component
     public function mount()
     {
         $this->User      = User::find(auth()->user()->id);
-        $this->dividends = ApplyDividend::where([['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.dividend');
+        $dividends = ApplyDividend::where([['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->paginate(5);
+        return view('livewire.page.application.application-list.dividend',[
+            'dividends' => $dividends,
+        ]);
     }
 }

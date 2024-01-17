@@ -6,12 +6,14 @@ use App\Models\ApplyMembership as ApplyMember;
 use App\Models\SiskopCustomer;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Membership extends Component
 {
+    use WithPagination;
+
     public User $User;
     public SiskopCustomer $Cust;
-    public $memberships;
     public $membership;
 
     public function clearApplication()
@@ -44,12 +46,15 @@ class Membership extends Component
     public function mount()
     {
         $this->User = auth()->user();
-        $this->memberships = ApplyMember::where('client_id', $this->User->client_id)->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
     {
+        $memberships = ApplyMember::where('client_id', $this->User->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
+
         //dd($this->membership[0]->current_approval());
-        return view('livewire.page.application.application-list.membership');
+        return view('livewire.page.application.application-list.membership',[
+            'memberships' => $memberships,
+        ]);
     }
 }

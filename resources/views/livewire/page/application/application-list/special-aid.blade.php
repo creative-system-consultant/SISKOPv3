@@ -95,6 +95,9 @@
             @endforelse
         </x-slot>
     </x-table.table>
+    <div class="mt-4">
+        {{ $specialAid->links('livewire::pagination-links') }}
+    </div>
     <x-modal.modal modalActive="openModal" title="Special Aid Application" modalSize="7xl" closeBtn="yes">
         @include('livewire.page.application.application-list.apply-special-aid')
     </x-modal.modal>

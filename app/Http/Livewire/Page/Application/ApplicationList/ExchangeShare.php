@@ -5,12 +5,13 @@ namespace App\Http\Livewire\Page\Application\ApplicationList;
 use App\Models\Share as ExchangeShares;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ExchangeShare extends Component
 {
+    use WithPagination;
     public User $User;
     public ExchangeShares $ExchangeShares;
-    public $shares;
 
     public function clearApplication()
     {
@@ -41,11 +42,13 @@ class ExchangeShare extends Component
     public function mount()
     {
         $this->User   = User::find(auth()->user()->id);
-        $this->shares = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.exchangeshare');
+        $shares = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->paginate(5);
+        return view('livewire.page.application.application-list.exchangeshare',[
+            'shares' => $shares,
+        ]);
     }
 }
