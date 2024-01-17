@@ -77,44 +77,6 @@
                     wire:model="applymember.contribution_fee"
                 />
             </div>
-
-
-            {{-- <div>
-                <x-form.input-tag
-                    label="Share"
-                    name=""
-                    value=""
-                    mandatory=""
-                    disable="true"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="tot_share"
-                />
-            </div> --}}
-
-           
-
-            @if($pay_type_share=='2')
-            {{-- <div>
-                <x-form.input-tag
-                    label="Share Monthly (Instalment) x{{ $globalParm->TOT_MTH_SHARE_INSTALMENT }} Month"
-                    name=""
-                    value="{{$monthly_share}}"
-                    mandatory=""
-                    disable="true"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="monthly_share"
-                />
-            </div> --}}
-            @endif
-
-
-            
-
-
         </div>
 
         <h2 class="mb-4 mt-6 text-base font-semibold border-b-2 border-gray-300"> Registration Payment </h2>
@@ -122,7 +84,6 @@
 
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5">
 
-            {{-- @if($pay_type_share=='2') --}}
             <div>
                 <x-form.input-tag
                     label="Total Deduction Upon Registration"
@@ -136,34 +97,7 @@
                     wire:model="Ftotal_deduction"
                 />
             </div>
-            {{-- @else 
-            <div>
-                <x-form.input-tag
-                    label="Total Deduction Upon Registration"
-                    name=""
-                    value="{{$Ftotal_deduction}}"
-                    mandatory=""
-                    disable="true"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="Ftotal_deduction"
-                /> 
-            </div>
-            <div>
-                <x-form.input-tag
-                    label="Total Deduction Monthly "
-                    name=""
-                    value="{{$Mtotal_deduction}}"
-                    mandatory=""
-                    disable="true"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="Mtotal_deduction"
-                /> 
-            </div> --}}
-            {{-- @endif --}}
+            
 
             <div>
                 <x-form.dropdown
@@ -182,23 +116,7 @@
             </div>
 
             @if($pay_type_regist=="1")
-            {{-- <div>
-                <x-form.dropdown
-                    label="Customer's Bank"
-                    value=""
-                    name="cust_bank_id"
-                    id=""
-                    mandatory=""
-                    disable=""
-                    default="yes"
-                    wire:model="cust_bank_id"
-                >
-                    @foreach ($bank_id as $list)
-                        <option value="{{ $list->id }}"> {{ $list->description }}</option>
-                    @endforeach
-                </x-form.dropdown>
-            </div>
-            @if($cust_bank_id) --}}
+            
             <div>
                 <x-form.input-tag
                     label="COOP Bank Name"
@@ -225,43 +143,8 @@
                     wire:model="client_bank_acct"
                 />
             </div>
-            {{-- @endif --}}
+          
             @endif
-
-            {{-- <div>
-                <x-form.dropdown
-                    label="Payment Type (Share)"
-                    value=""
-                    name="pay_type_share"
-                    id=""
-                    mandatory=""
-                    disable=""
-                    default="yes"
-                    wire:model="pay_type_share"
-                >
-                    <option value="1">Lump sum</option>
-                    <option value="2">Installment</option>
-                </x-form.dropdown>
-            </div> --}}
-            {{-- <div></div>
-            <div></div> --}}
-            {{-- @if($pay_type_regist=='2'||$pay_type_share=='2') --}}
-            {{-- @if($pay_type_share=='2')
-            <div>
-                <x-form.input-tag
-                    label="Total Deduction Monthly (For the first {{ $globalParm->TOT_MTH_SHARE_INSTALMENT }} Month)"
-                    name=""
-                    value="{{$total_deduction}}"
-                    mandatory=""
-                    disable="true"
-                    leftTag="RM"
-                    rightTag=""
-                    type="text"
-                    wire:model="total_deduction"
-                />
-            </div>
-            @endif --}}
-
         </div>
 
         <div class="mt-4 text-red-500">
@@ -271,11 +154,6 @@
         <br>
         If online payment is selected, please transfer to the provided coop bank account and upload your proof of payment on the next section.
         </div>
-        {{-- <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4">
-
-
-
-        </div> --}}
     </div>
 
 
