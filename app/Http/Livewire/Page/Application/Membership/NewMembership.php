@@ -108,14 +108,14 @@ class NewMembership extends Component
     protected $rule2 = [
         'CustAddress.address1'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.address2'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
-        'CustAddress.address3'               => 'nullable',
+        'CustAddress.address3'               => ['nullable', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.postcode'               => 'required|digits:5',
         'CustAddress.town'                   => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.state_id'               => 'required',
         'mail_flag'                          => 'nullable',
         'EmployAddress.address1'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.address2'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
-        'EmployAddress.address3'             => 'nullable',
+        'EmployAddress.address3'             => ['nullable', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.postcode'             => 'required|digits:5',
         'EmployAddress.town'                 => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.state_id'             => 'required',
@@ -159,6 +159,15 @@ class NewMembership extends Component
         'pay_type_regist'                    => 'required',
         'pay_type_share'                     => 'required',
 
+    ];
+
+    protected $rule7 = [
+        'online_file' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'online_file2' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'online_file3' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'online_file4' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'payment_file_regist' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'payment_file_share' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
     ];
 
     protected $rules = [
@@ -363,7 +372,7 @@ class NewMembership extends Component
                     $this->tab7 = 1;
                     break;
                 case 7:
-                    // $this->validate($this->rule7);
+                    $this->validate($this->rule7);
                     $this->fileupload();
                     $this->tab8 = 1;
                     break;
@@ -449,7 +458,7 @@ class NewMembership extends Component
 
                     break;
                 case 7:
-                    // $this->validate($this->rule7);
+                    $this->validate($this->rule7);
                     $this->fileupload();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
 
@@ -635,7 +644,7 @@ class NewMembership extends Component
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
+        $this->religion_id       = RefReligion::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->bank_id           = RefBank::where([
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
@@ -644,40 +653,6 @@ class NewMembership extends Component
         $this->applyStatus = FMSCustomer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
     }
 
-    public function fileupload2()
-    {
-
-        $currentDate = now()->format('Y-m-d_His');
-
-        if ($this->payment_file_regist) {
-            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension();
-
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension());
-
-            $this->applymember->files()->updateOrCreate([
-                'filename' => 'RegistrationPayment',
-            ], [
-                'filedesc' => 'Registration Payment Proof',
-                'filetype' => $this->payment_file_regist->extension(),
-                'filepath' => $filepath,
-            ]);
-        }
-
-        if ($this->payment_file_share) {
-            $filepath = 'Files/' . $customers->id . '/membership/SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension();
-
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment-' . $currentDate . '.' . $this->payment_file_share->extension());
-
-            $this->applymember->files()->updateOrCreate([
-                'filename' => 'SharePayment',
-            ], [
-                'filedesc' => 'Share Payment Proof',
-                'filetype' => $this->payment_file_share->extension(),
-                'filepath' => $filepath,
-            ]);
-        }
-        $this->render();
-    }
     public function fileupload()
     {
         $currentDate = now()->format('Y-m-d_His');
