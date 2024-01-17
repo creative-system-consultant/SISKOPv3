@@ -39,15 +39,7 @@
                         </span>
                     </div>
                 </x-tab.title>
-                <x-tab.title name="9" livewire=""  wire:click="setState('4')">
-                    <div class="flex flex-col items-center lg:flex-row">
-                        <x-heroicon-o-arrows-right-left class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
-                        <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
-                            Exchange Share
-                        </span>
-                    </div>
-                </x-tab.title>
-                <x-tab.title name="4" livewire=""  wire:click="setState('5')">
+                <x-tab.title name="4" livewire=""  wire:click="setState('4')">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-document-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
@@ -55,7 +47,7 @@
                         </span>
                     </div>
                 </x-tab.title>
-                <x-tab.title name="5" livewire=""  wire:click="setState('6')">
+                <x-tab.title name="5" livewire=""  wire:click="setState('5')">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-document-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
@@ -63,7 +55,7 @@
                         </span>
                     </div>
                 </x-tab.title>
-                <x-tab.title name="6" livewire=""  wire:click="setState('7')">
+                <x-tab.title name="6" livewire=""  wire:click="setState('6')">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-newspaper class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
@@ -71,7 +63,7 @@
                         </span>
                     </div>
                 </x-tab.title>
-                <x-tab.title name="7" livewire=""  wire:click="setState('8')">
+                <x-tab.title name="7" livewire=""  wire:click="setState('7')">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-arrow-up-on-square-stack class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
@@ -79,11 +71,19 @@
                         </span>
                     </div>
                 </x-tab.title>
-                <x-tab.title name="8" livewire=""  wire:click="setState('9')">
+                <x-tab.title name="8" livewire=""  wire:click="setState('8')">
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-user-minus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
                             Close Membership
+                        </span>
+                    </div>
+                </x-tab.title>
+                <x-tab.title name="9" livewire=""  wire:click="setState('9')">
+                    <div class="flex flex-col items-center lg:flex-row">
+                        <x-heroicon-o-arrows-right-left class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
+                        <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                            Exchange Share
                         </span>
                     </div>
                 </x-tab.title>
@@ -99,73 +99,72 @@
             <div x-cloak class="pt-4">
                 @switch($setIndex)
                     @case('0')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Financing
+                        </h2>
                         <livewire:page.application.application-list.financing>
                         @break
                     @case('1')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Membership
+                        </h2>
                         <livewire:page.application.application-list.membership>
                         @break
                     @case('2')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Add Share
+                        </h2>
                         <livewire:page.application.application-list.share>
                         @break
                     @case('3')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Sell Share
+                        </h2>
                         <livewire:page.application.application-list.sell-share>
                         @break
                     @case('4')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Add Contribution
+                        </h2>
                         <livewire:page.application.application-list.contribution>
                         @break
                     @case('5')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Withdrawal Contribution
+                        </h2>
                         <livewire:page.application.application-list.withdrawal-contribution>
                         @break
                     @case('6')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Special Aid
+                        </h2>
                         <livewire:page.application.application-list.special-aid>
                         @break
                     @case('7')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Dividend Payout
+                        </h2>
                         <livewire:page.application.application-list.dividend>
                         @break
                     @case('8')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Close Membership
+                        </h2>
                         <livewire:page.application.application-list.close-membership>
                         @break
                     @case('9')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Exchange Share
+                        </h2>
                         <livewire:page.application.application-list.exchange-share>
                         @break
                     @case('10')
+                        <h2 class="mb-4 text-base font-semibold ">
+                            Change Guarantor
+                        </h2>
                         <livewire:page.application.application-list.change-guarantor>
                         @break
                 @endswitch
-                    
-                {{-- <x-tab.content name="0">
-                    <livewire:page.application.application-list.financing>
-                </x-tab.content>
-                <x-tab.content name="1">
-                    <livewire:page.application.application-list.membership>
-                </x-tab.content>
-                <x-tab.content name="2">
-                    <livewire:page.application.application-list.share>
-                </x-tab.content>
-                <x-tab.content name="3">
-                    <livewire:page.application.application-list.sell-share>
-                </x-tab.content>
-                <x-tab.content name="4">
-                    <livewire:page.application.application-list.contribution>
-                </x-tab.content>
-                <x-tab.content name="5">
-                    <livewire:page.application.application-list.withdrawal-contribution>
-                </x-tab.content>
-                <x-tab.content name="6">
-                    <livewire:page.application.application-list.special-aid>
-                </x-tab.content>
-                <x-tab.content name="7">
-                    <livewire:page.application.application-list.dividend>
-                </x-tab.content>
-                <x-tab.content name="8">
-                    <livewire:page.application.application-list.close-membership>
-                </x-tab.content>
-                <x-tab.content name="9">
-                    <livewire:page.application.application-list.exchange-share>
-                </x-tab.content>
-                <x-tab.content name="10">
-                    <livewire:page.application.application-list.change-guarantor>
-                </x-tab.content> --}}
             </div>
         </div>
     </x-general.card >
