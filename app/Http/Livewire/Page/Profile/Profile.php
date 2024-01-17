@@ -6,6 +6,7 @@ use App\Models\CustEmployer;
 use App\Models\CustFamily;
 use App\Models\Customer;
 use App\Models\FmsAddress;
+use App\Models\Ref\RefBank;
 use App\Models\Ref\RefRace;
 use App\Models\Ref\RefRelationship;
 use App\Models\Ref\RefReligion;
@@ -22,13 +23,16 @@ class Profile extends Component
     public User $User;
     public $Employer, $EmployerC10, $FmsCust, $FmsCustC10, $FmsAddressCust, $FmsAddressCustC10, $FmsAddressEmployer, $FmsAddressEmployerC10, $FmsCustFamily, $FmsCustFamilyC10, $state_id;
     public $mail_flag, $mail_flag_employer;
-    public $race_id, $religion_id, $relationship;
+    public $race_id, $religion_id, $relationship, $bank_id;
 
     protected $rules = [
         'FmsCust.name'     => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
         'FmsCust.identity_no'     => 'required|numeric|digits:12',
         'FmsCust.phone' => ['required', 'regex:/^\d{7,11}$/'],
         'FmsCust.email'    => 'required|email',
+        'FmsCust.bank_id'                       => 'required',
+        'FmsCust.bank_acct_no'                       => 'required',
+
 
 
 
@@ -72,9 +76,36 @@ class Profile extends Component
 
     ];
 
+    public function getSpecialRules()
+    {
+        return [
+            'FmsCust.bank_acct_no' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if (!$this->FmsCust->bank_id) {
+                        return $fail("The bank ID is not selected.");
+                    }
+
+                    $bankAccountLength = RefBank::where('id', $this->FmsCust->bank_id)->value('bank_acc_len');
+
+                    if (!$bankAccountLength) {
+                        return $fail("Unable to determine the bank account length.");
+                    }
+
+                    if (strlen((string) $value) != $bankAccountLength) {
+                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
+                    }
+                },
+            ],
+        ];
+    }
+
     public function submit()
     {
         $this->validate();
+        $this->validate($this->getSpecialRules());
+
         if (!($this->mail_flag_employer == 1 && $this->mail_flag == 1) && !($this->mail_flag_employer == 0 && $this->mail_flag == 0)) {
 
             //Update Current Client and Client 10 Customer Data
@@ -184,6 +215,11 @@ class Profile extends Component
 
         $this->mail_flag = $this->FmsAddressCust->mail_flag;
         $this->mail_flag_employer = $this->FmsAddressEmployer->mail_flag;
+
+        $this->bank_id           = RefBank::where([
+            ['client_id', $this->User->client_id],
+            ['status', '1'], ['bank_cust', 'Y']
+        ])->orderBy('priority')->orderBy('description')->get();
     }
 
     public function updatingMailFlag()

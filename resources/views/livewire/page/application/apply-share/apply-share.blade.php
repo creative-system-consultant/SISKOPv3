@@ -20,7 +20,7 @@
                     mandatory=""
                     disable="true"
                     type="text"
-                    wire:model.defer="cust.icno"
+                    wire:model.defer="cust.identity_no"
                 />
 
                 <x-form.input-tag
@@ -65,8 +65,7 @@
                             x-model="isSelect"
                             wire:model="pay_method"
                             >
-                            <option value="online">Online Banking</option>
-                            <option value="cash">Cash Payment</option>
+                            <option value="online">Online Banking/Cash Payment</option>
                             <option value="cheque">By Cheque</option>
                         </x-form.dropdown>
                     </div>
@@ -101,39 +100,37 @@
                             />
                         </div>
                     </div>
-                </div>
-
-                <div  x-cloak x-show="isSelect == 'cash' ? show = true : show = false">
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-
+                    <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                         <div>
-                            <x-form.input
-                                label="CDM Payment Date"
-                                name="cdm_date"
-                                value=""
-                                mandatory=""
-                                disable=""
-                                type="date"
-                                wire:model="cdm_date"
-                            />
+                            <x-form.input-tag
+                            label="COOP Bank Name"
+                            name=""
+                            value=""
+                            mandatory=""
+                            disable="true"
+                            leftTag=""
+                            rightTag=""
+                            type="text"
+                            wire:model="client_bank_name"
+                        />
                         </div>
 
                         <div>
-                            <x-form.input
-                                label="Upload CDM Payment Receipt:(uploaded only: jpg/png/jpeg/pdf)"
-                                name="cdm_file"
-                                id="cdm_file"
-                                value=""
-                                mandatory=""
-                                disable=""
-                                type="file"
-                                accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                                wire:model="cdm_file"
-                            />
+                            <x-form.input-tag
+                            label="COOP Bank Account Number"
+                            name=""
+                            value=""
+                            mandatory=""
+                            disable="true"
+                            leftTag=""
+                            rightTag=""
+                            type="text"
+                            wire:model="client_bank_acct"
+                        />
                         </div>
-
                     </div>
                 </div>
+
 
                 <div  x-cloak x-show="isSelect == 'cheque' ? show = true : show = false">
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -159,6 +156,20 @@
                                 disable=""
                                 type="date"
                                 wire:model="cheque_date"
+                            />
+                        </div>
+
+                        <div>
+                            <x-form.input
+                                label="Upload Cheque:(uploaded only: jpg/png/jpeg/pdf)"
+                                name="cheque_file"
+                                id="cheque_file"
+                                value=""
+                                mandatory=""
+                                disable=""
+                                type="file"
+                                accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
+                                wire:model="cheque_file"
                             />
                         </div>
 

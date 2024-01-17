@@ -43,6 +43,31 @@
                 type="text"
                 wire:model="FmsCust.email"
             />
+
+            <x-form.dropdown
+                label="Bank"
+                value=""
+                name="FmsCust.bank_id"
+                id=""
+                mandatory=""
+                disable=""
+                default="yes"
+                wire:model="FmsCust.bank_id"
+            >
+                @foreach ($bank_id as $list)
+                    <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                @endforeach
+            </x-form.dropdown>
+
+            <x-form.input
+                label="Account Bank No."
+                name="FmsCust.bank_acct_no"
+                value=""
+                mandatory=""
+                disable=""
+                type="text"
+                wire:model="FmsCust.bank_acct_no"
+            /> 
         </div>
 
 

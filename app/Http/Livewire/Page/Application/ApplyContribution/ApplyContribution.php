@@ -56,9 +56,6 @@ class ApplyContribution extends Component
     ];
 
     protected $messages = [
-        'cont_apply.required'           => ':attribute field is required',
-        'cont_apply.numeric'            => ':attribute field must be number',
-        'cont_apply.not_in'             => 'Application must be more than RM0',
         'start_contDate.required_if'    => ':attribute is required',
         'start_contDate.before'         => 'Please enter date in this year',
         'start_contDate.after_or_equal' => 'Please enter latest date',
@@ -96,6 +93,7 @@ class ApplyContribution extends Component
     public function alertConfirm()
     {
         $this->validate();
+        $this->validate($this->getContributionRules());
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
@@ -115,8 +113,10 @@ class ApplyContribution extends Component
         ];
 
 
-        if ($this->globalParm) {
-            $rules['cont_apply'][] = 'min:' . $this->globalParm->MIN_CONTRIBUTION;
+        $globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+
+        if ($globalParm) {
+            $rules['cont_apply'][] = 'min:' . $globalParm->MIN_CONTRIBUTION;
         }
         if ($this->payment_method == 'cheque') {
             $rules['cheque_no'][] = ['required', 'numeric'];
@@ -181,7 +181,6 @@ class ApplyContribution extends Component
                 'filepath' => $filepath,
             ]);
 
-            // dd('Cheque');
             session()->flash('message', 'Add Contribution Application Successfully Send');
             session()->flash('time', 10000);
             session()->flash('success');

@@ -165,39 +165,6 @@
                         </div>
                     </div>
 
-
-                    {{-- <div x-cloak x-show="showing == 'cash' ? isSelect = true : isSelect = false">
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-
-                            <div>
-                                <x-form.input
-                                    label="CDM Payment Date"
-                                    name="cdm_date"
-                                    value=""
-                                    mandatory=""
-                                    disable=""
-                                    type="date"
-                                    wire:model="cdm_date"
-                                />
-                            </div>
-
-                            <div>
-                                <x-form.input
-                                    label="Upload CDM Payment Receipt:(uploaded only: jpg/png/jpeg/pdf)"
-                                    name="cdm_file"
-                                    id="cdm_file"
-                                    value=""
-                                    mandatory=""
-                                    disable=""
-                                    type="file"
-                                    accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                                    wire:model="cdm_file"
-                                />
-                            </div>
-
-                        </div>
-                    </div> --}}
-
                     <div x-cloak x-show="showing == 'cheque' ? isSelect = true : isSelect = false">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
 
