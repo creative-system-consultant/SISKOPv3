@@ -21,8 +21,4 @@ class AccountProductDocument extends Model
         return $this->belongsTo(AccountProduct::class,'product_id','id');
     }
 
-    public function document()
-    {
-        return $this->belongsTo(RefProductDocuments::class,'type','code');
-    }
 }

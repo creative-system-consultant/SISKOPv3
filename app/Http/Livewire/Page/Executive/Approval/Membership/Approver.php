@@ -33,7 +33,7 @@ class Approver extends Component
     public FMSCustomer $CustIntroducer;
     public Introducer $Introducer;
     public ApplyMembership $Application;
-    public Approval $Approval;
+    public $Approval;
 
     public $banks;
     public $client_id;
@@ -217,29 +217,6 @@ class Approver extends Component
         return redirect()->route('application.list',['page' => '1']);
     }
 
-    public function back()
-    {
-        if ($this->Application->step > 1){
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
-            session()->flash('time', 10000);
-
-            return redirect()->route('application.list',['page' => '1']);
-        } else {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
-    }
-
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
@@ -302,18 +279,6 @@ class Approver extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
-    }
-
-    public function deb(){
-        dd([
-            'Member' => $this->Application,
-            'Approval' => $this->Approval,
-            'vote rule' => $this->Application->current_approval()->rule_vote_type,
-            'voted'  => $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNotNull('vote')->count(),
-            'unvoted'  => $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count(),
-            'yes'    => $this->Application->approval_vote_yes(),
-            'no'     => $this->Application->approval_vote_no(),
-        ]);
     }
 
     public function render()

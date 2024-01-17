@@ -103,39 +103,17 @@ class Maker extends Component
         return redirect()->route('application.list',['page' => '1']);
     }
 
-    public function back()
-    {
-        if ($this->Application->step > 1){
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
-
-            return redirect()->route('application.list',['page' => '1']);
-        } else {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
-    }
-
     public function totalfee()
     {
         if ($this->Application->share_pmt_mode_flag == 1){
-            $this->Application->share_monthly = 0;
-            $this->Application->share_lump_sum_amt = $this->Application->share_fee;
+            //$this->Application->share_monthly = 0;
+            //$this->Application->share_lump_sum_amt = $this->Application->share_fee;
         } else {
-            $this->Application->share_monthly = $this->Application->share_fee;
-            $this->Application->share_lump_sum_amt = 0;
+            //$this->Application->share_monthly = $this->Application->share_fee;
+            //$this->Application->share_lump_sum_amt = 0;
         }
 
-        $this->Application->total_fee = $this->Application->register_fee  + $this->Application->share_lump_sum_amt + $this->Application->contribution_fee;
+        $this->Application->total_fee = $this->Application->register_fee  + $this->Application->share_fee + $this->Application->contribution_fee;
         
         $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
 
@@ -203,25 +181,16 @@ class Maker extends Component
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
 
         if($this->Application->share_fee >= 500){
-            $this->Application->share_monthly = 0;
-            $this->Application->save();
+            //$this->Application->share_monthly = 0;
+            //$this->Application->save();
         }
         if ($this->Application->share_pmt_mode_flag == 1){
-            $this->Application->share_monthly = 0;
-            $this->Application->share_fee = $this->Application->share_lump_sum_amt;
+            //$this->Application->share_monthly = 0;
+            //$this->Application->share_fee = $this->Application->share_lump_sum_amt;
         } else {
-            $this->Application->share_fee = $this->Application->share_monthly;
-            $this->Application->share_lump_sum_amt = 0;
+            //$this->Application->share_fee = $this->Application->share_monthly;
+            //$this->Application->share_lump_sum_amt = 0;
         }
-    }
-
-    public function deb() {
-        dd([
-            'roles'     => $this->User->role_ids(),
-            'approvals' => $this->Application->approvals,
-            'approval'  => $this->Approval, 
-            'Application' => $this->Application,
-        ]);
     }
 
     public function render()

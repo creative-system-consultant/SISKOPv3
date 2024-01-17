@@ -31,7 +31,7 @@ class Checker extends Component
     public FMSCustomer $CustIntroducer;
     public Introducer $Introducer;
     public ApplyMembership $Application;
-    public Approval $Approval;
+    public $Approval;
 
     public $banks;
     public $client_id;
@@ -117,29 +117,6 @@ class Checker extends Component
         return redirect()->route('application.list',['page' => '1']);
     }
 
-    public function back()
-    {
-        if ($this->Application->step > 1){
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
-            session()->flash('time', 10000);
-
-            return redirect()->route('application.list',['page' => '1']);
-        } else {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
-    }
-
     public function totalfee()
     {
         $this->Application->update([
@@ -214,16 +191,6 @@ class Checker extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
-    }
-
-    public function deb() {
-        dd([
-            'cust'      => $this->Cust,
-            'approvals' => $this->Application->approvals,
-            'approval'  => $this->Approval, 
-            'checker'   => $this->Application,
-            'forward'   => $this->forward,
-        ]);
     }
 
     public function render()

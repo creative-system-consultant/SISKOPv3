@@ -158,8 +158,6 @@ class Resolution extends Component
     public function next()
     {
         $this->validate();
-        $this->Resolution->flag = $this->approval_code;
-        $this->Resolution->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = $this->approval_type;
 
@@ -174,29 +172,6 @@ class Resolution extends Component
         session()->flash('time', 10000);
 
         return redirect()->route('application.list',['page' => '1']);
-    }
-
-    public function back()
-    {
-        if ($this->Resolution->step > 1){
-            $this->Resolution->step--;
-            $this->Resolution->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
-            session()->flash('time', 10000);
-
-            return redirect()->route('application.list',['page' => '1']);
-        } else {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
     }
 
     public function mount($uuid)
@@ -260,14 +235,6 @@ class Resolution extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
-    }
-
-    public function deb() {
-        dd([
-            'approvals' => $this->Resolution->approvals,
-            'approval'  => $this->Approval, 
-            'Resolution'=> $this->Resolution,
-        ]);
     }
 
     public function render()
