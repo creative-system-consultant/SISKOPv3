@@ -47,7 +47,7 @@ class Resolution extends Component
     public $input_disable = 'readonly';
     public $input_maker   = 'readonly';
     public $approval_type = 'lulus';
-    public $message       = 'Application Pre-Approved';
+    public $message       = 'Application Approved';
 
     protected $rules = [
         'Approval.note'                    => ['required','max:255'],
@@ -81,33 +81,15 @@ class Resolution extends Component
 
     public function decline() {
         $this->validate();
+        $this->Application->flag = 21;
+        $this->Application->save();
+
         $this->approval_type = 'gagal';
-        $this->message       = 'Application is reccomended to declined';
+        $this->message       = 'Application is declined';
+
+        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership RESOLUTION.");
+
         $this->next();
-    }
-
-    public function doApproveApplication(){
-        $num = $this->User->id;
-        $newnum = date('y').str_pad($this->User->client_id,3,'0',STR_PAD_LEFT).str_pad($num,6,'0',STR_PAD_LEFT);
-
-        $this->Application->flag = 20;
-        $this->Application->approved_date = now();
-
-        $this->Application->Customer->save();
-        $this->Application->mbr_no = $newnum;
-
-        $this->message = 'Application Approved';
-
-        $ret = DB::table('ref.user_has_clients')->insert([
-            'user_id'   => $this->Application->user_id,
-            'client_id' => $this->User->client_id,
-        ]);
-    }
-
-    public function doRejectApplication(){
-        $this->Application->flag = 25;
-        //
-        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership Approver.");
     }
 
     public function doApproval(){
@@ -145,10 +127,10 @@ class Resolution extends Component
 
                 Log::info("MEMBERSHIP APPROVAL SUCCESS\n SP RETURN = ".json_encode($result));
             } else {
-                Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership Approver.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+                Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
             }
         } else {
-            Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership Approver.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+            Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
         }
 
         // put event here
@@ -193,6 +175,7 @@ class Resolution extends Component
             session()->flash('message', 'Application is being processed by another staff');
             session()->flash('warning');
             session()->flash('title', 'Warning!');
+            session()->flash('time', 10000);
 
             return redirect()->route('application.list',['page' => '1']);
         } else {

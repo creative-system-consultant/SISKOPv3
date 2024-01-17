@@ -148,6 +148,7 @@ class Checker extends Component
             session()->flash('message', 'Application is being processed by another staff');
             session()->flash('warning');
             session()->flash('title', 'Warning!');
+            session()->flash('time', 10000);
 
             return redirect()->route('application.list',['page' => '1']);
         } else {

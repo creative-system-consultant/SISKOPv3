@@ -71,6 +71,7 @@ class Checker extends Component
             'page' => 4,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
+                'Application.start_approved' => 'required',
             ],
         ],
         'sellcontribution' => [

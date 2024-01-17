@@ -52,7 +52,6 @@ class Membership extends Component
     {
         $memberships = ApplyMember::where('client_id', $this->User->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
 
-        //dd($this->membership[0]->current_approval());
         return view('livewire.page.application.application-list.membership',[
             'memberships' => $memberships,
         ]);
