@@ -22,6 +22,7 @@ class ApplySpecialAid extends Component
     public $specialAids;
     public $user;
     public $customer;
+    public $identity_no;
     public $FspecialAid = [''];
 
     public function submit($uuid, $index)
@@ -93,6 +94,7 @@ class ApplySpecialAid extends Component
         $this->customer = Customer::where('identity_no', $this->user->icno)->where('client_id', $this->user->client_id)->first();
 
         $this->customer_name = $this->customer->name;
+        $this->identity_no = $this->customer->identity_no;
 
         foreach ($this->specialAids as $index => $specialAid) {
             $this->apply_amt[$index] = $specialAid->default_apply_amt;

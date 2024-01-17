@@ -34,7 +34,7 @@
                                         name="customer_name"
                                         value=""
                                         mandatory=""
-                                        disable=""
+                                        disable="true"
                                         type="text"
                                         wire:model.defer="customer_name"
                                     />
@@ -42,6 +42,20 @@
                                         <p class="mt-2 text-sm text-red-600">{{ session('nameError') }}</p>
                                     @endif
                                 </div>
+                                <div>
+                                    <x-form.input
+                                        label="Identity Number"
+                                        name="identity_no"
+                                        value=""
+                                        mandatory=""
+                                        disable="true"
+                                        type="text"
+                                        wire:model.defer="identity_no"
+                                    />
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+                               
 
                                 @php if ($listField->apply_amt_enable == 0) {$isDisabled = 'true';} else{$isDisabled = 'false';} @endphp
                                 <div>
@@ -97,27 +111,6 @@
                                         <p class="mt-2 text-sm text-red-600">{{ session('errorFile') }}</p>
                                     @endif
                                 </div>
-                                
-                                {{-- @foreach ($listField->field as $key => $list)
-                                    <div @if ($list->status == 0) style="display: none" @endif>
-                                        <div>
-                                            <x-form.input
-                                                label="{{ ucwords($list->label) }}"
-                                                name="{{ $list->name }}"
-                                                value=""
-                                                mandatory=""
-                                                disable=""
-                                                type="{{ $list->type }}"
-                                                wire:model.lazy='FspecialAid.{{ $key }}'
-                                            />
-                                            @if ($list->required == '1')
-                                                @if (session('warning'))
-                                                    <p class="mt-2 text-sm text-red-600">{{ session('warning') }}</p>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endforeach --}}
                             </div>
                             <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                                 <div class="flex items-center justify-center space-x-2">
