@@ -20,6 +20,8 @@ class ApplyWithdrawContribution extends Component
     public $bank_account;
     public $bank_code;
     public $banks;
+    public $bank_name;
+    public $bank_acct;
     public $total_contribution, $monthly_contribution;
     public $User;
 
@@ -30,8 +32,6 @@ class ApplyWithdrawContribution extends Component
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
         'support_file'              => 'required',
-        'bank_code'                 => 'required',
-        'bank_account'              => 'required',
     ];
 
     protected $messages = [
@@ -63,30 +63,7 @@ class ApplyWithdrawContribution extends Component
         ]);
     }
 
-    public function getSpecialRules()
-    {
-        return [
-            'bank_account' => [
-                'required',
-                'numeric',
-                function ($attribute, $value, $fail) {
-                    if (!$this->bank_code) {
-                        return $fail("The bank is not selected.");
-                    }
 
-                    $bankAccountLength = RefBank::where('code', $this->bank_code)->where('client_id', $this->User->client_id)->value('bank_acc_len');
-
-                    if (!$bankAccountLength) {
-                        return $fail("Unable to determine the bank account length.");
-                    }
-
-                    if (strlen((string) $value) != $bankAccountLength) {
-                        $fail("The Account Number must be exactly {$bankAccountLength} characters.");
-                    }
-                },
-            ],
-        ];
-    }
 
     public function getContributionRules()
     {
@@ -112,7 +89,6 @@ class ApplyWithdrawContribution extends Component
     {
         $customer = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
-        $this->validate($this->getSpecialRules());
 
         $this->validate($this->getContributionRules());
 
@@ -122,8 +98,8 @@ class ApplyWithdrawContribution extends Component
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
-            'bank_code'      => $this->bank_code,
-            'bank_account'   => $this->bank_account,
+            'bank_code'      => $this->bank_name,
+            'bank_account'   => $this->bank_acct,
             'flag'           => 1,
             'step'           => 1,
             'created_by'     => strtoupper($customer->name),
@@ -131,16 +107,6 @@ class ApplyWithdrawContribution extends Component
         $contribution->remove_approvals();
         $contribution->make_approvals('SellContribution');
 
-        $filepath = 'Files/' . $customer->id . '/' . 'support_doc' . '.' . $this->support_file->extension();
-
-        Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/', $this->support_file, 'support_doc' . '.' . $this->support_file->extension());
-
-        $contribution->files()->create([
-            'filename' => 'support_doc',
-            'filedesc' => 'Support Document',
-            'filetype' => $this->support_file->extension(),
-            'filepath' => $filepath,
-        ]);
 
         session()->flash('message', 'Withdrawal Contribution Application Successfully Send');
         session()->flash('time', 10000);
@@ -186,7 +152,10 @@ class ApplyWithdrawContribution extends Component
     {
         $this->User = auth()->user();
         $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
-        $this->banks = RefBank::where('client_id', $this->User->client_id)->get();
+        $this->banks           = RefBank::where([
+            ['client_id', $this->User->client_id],
+            ['status', '1'], ['bank_cust', 'Y']
+        ])->orderBy('priority')->orderBy('description')->get();
         $this->total_contribution = $this->cust->fmsMembership->total_contribution;
         $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 
@@ -196,6 +165,8 @@ class ApplyWithdrawContribution extends Component
 
     public function render()
     {
+        $this->bank_name = $this->cust->bank_id;
+        $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-withdraw-contribution.apply-withdraw-contribution')->extends('layouts.head');
     }
 }

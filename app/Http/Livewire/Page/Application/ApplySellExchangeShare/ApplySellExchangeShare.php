@@ -92,7 +92,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
-                'bank_code'    => $this->bank_code,
+                'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_acct,
                 'exc_cust_id'  => $cust_member->id,
                 'flag'         => '1',
