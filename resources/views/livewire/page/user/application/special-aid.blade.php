@@ -32,8 +32,8 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($aid->flag == '0') Still being applied
                         @elseif ($aid->flag == '1') Being Processed
-                        @elseif ($aid->flag == '3') Failed / Decline
-                        @elseif ($aid->flag == '6') Approved
+                        @elseif ($aid->flag == '21') Failed / Decline
+                        @elseif ($aid->flag == '20') Approved
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
