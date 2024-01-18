@@ -151,7 +151,7 @@ class ApplyContribution extends Component
         $contribution->remove_approvals();
         $contribution->make_approvals('Contribution');
 
-        if ($this->cont_type = 'pay_once') {
+        if ($this->cont_type == 'pay_once') {
             if ($this->payment_method == 'online') {
                 $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online-CDM_receipt' . '.' . $this->online_file->extension();
 
@@ -163,11 +163,6 @@ class ApplyContribution extends Component
                     'filetype' => $this->online_file->extension(),
                     'filepath' => $filepath,
                 ]);
-
-                session()->flash('message', 'Add Contribution Application Successfully Send');
-                session()->flash('time', 10000);
-                session()->flash('success');
-                session()->flash('title');
 
                 return redirect()->route('home');
             } else {
@@ -181,15 +176,14 @@ class ApplyContribution extends Component
                     'filetype' => $this->cheque_file->extension(),
                     'filepath' => $filepath,
                 ]);
-
-                session()->flash('message', 'Add Contribution Application Successfully Send');
-                session()->flash('time', 10000);
-                session()->flash('success');
-                session()->flash('title');
-
-                return redirect()->route('home');
             }
         }
+        session()->flash('message', 'Add Contribution Application Successfully Send');
+        session()->flash('time', 10000);
+        session()->flash('success');
+        session()->flash('title');
+
+        return redirect()->route('home');
     }
 
     public function restrictApply($id)
