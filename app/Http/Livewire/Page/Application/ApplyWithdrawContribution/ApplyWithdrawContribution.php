@@ -20,7 +20,7 @@ class ApplyWithdrawContribution extends Component
     public $bank_account;
     public $bank_code;
     public $banks;
-    public $bank_name;
+    public $bank_id;
     public $bank_acct;
     public $total_contribution, $monthly_contribution;
     public $User;
@@ -31,6 +31,7 @@ class ApplyWithdrawContribution extends Component
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
+        'cust.bank_id'              => 'nullable',
         'support_file'              => 'required',
     ];
 
@@ -98,7 +99,7 @@ class ApplyWithdrawContribution extends Component
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
-            'bank_code'      => $this->bank_name,
+            'bank_code'      => $this->bank_id,
             'bank_account'   => $this->bank_acct,
             'flag'           => 1,
             'step'           => 1,
@@ -152,7 +153,7 @@ class ApplyWithdrawContribution extends Component
     {
         $this->User = auth()->user();
         $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
-        $this->banks           = RefBank::where([
+        $this->bank_id           = RefBank::where([
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
@@ -165,7 +166,6 @@ class ApplyWithdrawContribution extends Component
 
     public function render()
     {
-        $this->bank_name = $this->cust->bank_id;
         $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-withdraw-contribution.apply-withdraw-contribution')->extends('layouts.head');
     }

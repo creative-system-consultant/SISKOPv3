@@ -17,7 +17,7 @@ class ApplySellExchangeShare extends Component
     public $bank_name;
     public $bank_acct;
     public $bank_code;
-    public $banks;
+    public $bank_id;
     public $total_share;
     public $mbr_name;
     public $User;
@@ -28,6 +28,7 @@ class ApplySellExchangeShare extends Component
     protected $rules = [
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
+        'cust.bank_id'    => 'nullable',
         'share_type'      => 'required',
         'bank_name'       => 'required_if:share_type,==,coop',
         'mbr_icno'        => 'required_if:share_type,==,mbr',
@@ -79,7 +80,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
-                'bank_code'    => $this->bank_name,
+                'bank_code'    => $this->bank_id,
                 'bank_account' => $this->bank_acct,
                 'flag'         => '1',
                 'step'         => '1',
@@ -92,7 +93,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
-                'bank_code'    => $this->bank_name,
+                'bank_code'    => $this->bank_id,
                 'bank_account' => $this->bank_acct,
                 'exc_cust_id'  => $cust_member->id,
                 'flag'         => '1',
@@ -249,7 +250,7 @@ class ApplySellExchangeShare extends Component
         $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $this->total_share = $this->cust->fmsMembership->total_share;
 
-        $this->banks           = RefBank::where([
+        $this->bank_id           = RefBank::where([
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
@@ -266,7 +267,7 @@ class ApplySellExchangeShare extends Component
 
     public function render()
     {
-        $this->bank_name = $this->cust->bank_id;
+        // $this->bank_name = $this->cust->bank_id;
         $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-sell-exchange-share.apply-sell-exchange-share')->extends('layouts.head');
     }
