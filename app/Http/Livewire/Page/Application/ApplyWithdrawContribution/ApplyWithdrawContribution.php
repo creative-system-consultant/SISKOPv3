@@ -21,6 +21,7 @@ class ApplyWithdrawContribution extends Component
     public $bank_code;
     public $banks;
     public $bank_id;
+    public $bank_name;
     public $bank_acct;
     public $total_contribution, $monthly_contribution;
     public $User;
@@ -56,9 +57,6 @@ class ApplyWithdrawContribution extends Component
                 'max:' . $this->total_contribution,
             ],
         ];
-
-
-
         return $rules;
     }
 
@@ -80,18 +78,18 @@ class ApplyWithdrawContribution extends Component
 
         $this->validate($this->getContributionRules());
 
-
         $contribution->update([
             'direction'      => 'withdraw',
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
-            'bank_code'      => $this->bank_id,
+            'bank_code'      => $this->bank_name,
             'bank_account'   => $this->bank_acct,
             'flag'           => 1,
             'step'           => 1,
             'created_by'     => strtoupper($customer->name),
         ]);
+
         $contribution->remove_approvals();
         $contribution->make_approvals('SellContribution');
 
@@ -163,6 +161,7 @@ class ApplyWithdrawContribution extends Component
 
     public function render()
     {
+        $this->bank_name = $this->cust->bank_id;
         $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-withdraw-contribution.apply-withdraw-contribution')->extends('layouts.head');
     }
