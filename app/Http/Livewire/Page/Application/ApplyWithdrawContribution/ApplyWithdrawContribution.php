@@ -122,7 +122,10 @@ class ApplyWithdrawContribution extends Component
         $contribution = Contribution::where('cust_id', $cust_id)->firstOrCreate([
             'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
+            'flag'      => 0,
+            'step'      => 0,
             'direction'   => 'withdraw',
+
         ], [
             'amt_before'  => $this->total_contribution,
             'flag'        => 0,
