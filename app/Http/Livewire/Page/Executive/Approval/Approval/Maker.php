@@ -54,7 +54,6 @@ class Maker extends Component
             'page' => 2,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.bank_code' => 'required',
                 'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after:Application.cheque_date',
             ],
         ],
@@ -68,11 +67,11 @@ class Maker extends Component
             ],
         ],
         'exchangeshare' => [
-            'name' => 'Exchange Share',
+            'name' => 'Transfer Share',
             'type' => 'App\Models\Share',
             'page' => 3,
             'rule' => [
-                //'Application.approved_amt' => 'required|gt:0',
+                'Application.approved_amt' => 'required|gt:0',
             ],
         ],
         'contribution' => [
@@ -93,7 +92,7 @@ class Maker extends Component
                 'Application.apply_amt' => 'required|gt:0',
             ],
         ],
-        'dividen' => [
+        'dividend' => [
             'name' => 'Dividend',
             'type' => 'App\Models\ApplyDividend',
             'page' => 10,
@@ -137,7 +136,20 @@ class Maker extends Component
 
     public function decline()
     {
+        //ni solution en nasir. aku taknak argue
+        if ($this->include == 'share'){
+            if($this->Application->method != 'cheque'){
+                $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
+                $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
+            }
+        }
         $this->validate();
+        if ($this->include == 'share'){
+            if($this->Application->method != 'cheque'){
+                $this->Application->cheque_date = NULL;
+                $this->Application->cheque_clear = NULL;
+            }
+        }
         $this->approval_type = 'gagal';
         $this->message       = 'Application is reccomended to declined';
         $this->next();
@@ -145,7 +157,20 @@ class Maker extends Component
 
     public function next()
     {
+        //ni solution en nasir. aku taknak argue
+        if ($this->include == 'share'){
+            if($this->Application->method != 'cheque'){
+                $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
+                $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
+            }
+        }
         $this->validate();
+        if ($this->include == 'share'){
+            if($this->Application->method != 'cheque'){
+                $this->Application->cheque_date = NULL;
+                $this->Application->cheque_clear = NULL;
+            }
+        }
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -203,8 +228,7 @@ class Maker extends Component
 
     public function mount($uuid, $include)
     {
-        // dd($include);
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'ChangeGuarantor'])) {
+        if (!in_array($include, ['share', 'sellshare', 'exchangeshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'ChangeGuarantor'])) {
             $this->notfound();
             return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
         }
@@ -216,8 +240,10 @@ class Maker extends Component
 
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'dividend') {

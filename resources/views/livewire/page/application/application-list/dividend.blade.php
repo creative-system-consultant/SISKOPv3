@@ -28,15 +28,6 @@
                     <x-table.table-body colspan="" class="text-right">
                         {{ $item->balance() }}
                     </x-table.table-body>
-                    {{--<x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->div_cash_apply }} / {{ $item->div_cash_approved }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->div_share_apply }} / {{ $item->div_share_approved }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        RM {{ $item->div_contri_apply }} / {{ $item->div_contri_approved }}
-                    </x-table.table-body>--}}
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
@@ -56,7 +47,7 @@
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
                         @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 1)
-                            <a href="{{ route('dividend.maker', $item->uuid) }}"
+                            <a href="{{ route('allapproval.maker',['include' => 'dividend','uuid' => $item->uuid]) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
                                 <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
@@ -64,7 +55,7 @@
                         @endif
 
                         @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 2)
-                            <a href="{{ route('dividend.checker', $item->uuid) }}"
+                            <a href="{{ route('allapproval.checker',['include' => 'dividend','uuid' => $item->uuid]) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
                                 <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
@@ -72,7 +63,7 @@
                         @endif
 
                         @if ($item->flag > 0 && in_array($User->id,$item->approval_unvoted_id(3)))
-                            <a href="{{ route('dividend.committee', $item->uuid) }}"
+                            <a href="{{ route('allapproval.committee',['include' => 'dividend','uuid' => $item->uuid]) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
                                 <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
@@ -80,7 +71,15 @@
                         @endif
 
                         @if ($item->flag > 0 && in_array($User->id,$item->approval_unvoted_id(4)))
-                            <a href="{{ route('dividend.approver', $item->uuid) }}"
+                            <a href="{{ route('allapproval.approver',['include' => 'dividend','uuid' => $item->uuid]) }}"
+                               class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
+                               title="Approval Process">
+                                <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
+                            </a>
+                        @endif
+
+                        @if ($item->flag > 0 && in_array($item->current_approval()?->group_id,$User->role_ids()) && $item->current_approval()?->role_id == 5)
+                            <a href="{{ route('allapproval.resolution',['include' => 'dividend','uuid' => $item->uuid]) }}"
                                class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-blue-500 rounded-full hover:bg-blue-400"
                                title="Approval Process">
                                 <x-heroicon-s-arrow-right-circle class="w-5 h-5"/>
