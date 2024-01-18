@@ -32,39 +32,19 @@ class ApplyWithdrawContribution extends Component
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
         'cust.bank_id'              => 'nullable',
-        'support_file'              => 'required',
     ];
 
     protected $messages = [
         'cont_apply.required'         => ':attribute field is required',
         'cont_apply.lte'              => 'Application must be less than Current Contribution RM:value',
         'cont_apply.gt'               => 'Application must be more than RM0',
-        'cont_apply.numeric'          => ':attribute field must be number',
+        'cont_apply.numeric'          => 'Contribution must be number',
+        'cont_apply.min'              => 'Application must be more than RM50',
+        'cont_apply.max'              => 'Application must be less than Current Contribution Amount',
         'support_file.required'       => ':attribute field is required',
         'bank_code.required'          => ':attribute field is required',
         'bank_account.required'       => ':attribute field is required',
     ];
-
-    protected $validationAttributes = [
-        'cont_apply'      => 'Add Contribution Applied',
-        'support_file'    => 'Upload Supporting Document',
-        'bank_code'       => 'Bank',
-        'bank_account'    => 'Account Bank No.',
-    ];
-
-    public function alertConfirm()
-    {
-        $this->validate();
-        $this->validate($this->getSpecialRules());
-
-        $this->validate($this->getContributionRules());
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',
-            'text'      => 'Are you sure you want to apply for withdrawal contribution?',
-        ]);
-    }
-
-
 
     public function getContributionRules()
     {
@@ -72,18 +52,25 @@ class ApplyWithdrawContribution extends Component
             'cont_apply' => [
                 'required',
                 'numeric',
-                'min:10',
+                'min:50',
+                'max:' . $this->total_contribution,
             ],
-
         ];
 
-
-        $rules['cont_apply'][] = 'max:' . $this->total_contribution;
 
 
         return $rules;
     }
 
+
+    public function alertConfirm()
+    {
+        $this->validate($this->getContributionRules());
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type'      => 'warning',
+            'text'      => 'Are you sure you want to apply for withdrawal contribution?',
+        ]);
+    }
 
 
     public function submit()
@@ -107,7 +94,6 @@ class ApplyWithdrawContribution extends Component
         ]);
         $contribution->remove_approvals();
         $contribution->make_approvals('SellContribution');
-
 
         session()->flash('message', 'Withdrawal Contribution Application Successfully Send');
         session()->flash('time', 10000);
@@ -158,8 +144,16 @@ class ApplyWithdrawContribution extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
         $this->total_contribution = $this->cust->fmsMembership->total_contribution;
+
         $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 
+        if ($this->total_contribution == 0) {
+            session()->flash('message', 'You are unable to initiate a Contribution Withdrawal as your current Contribution balance stands at zero.');
+            session()->flash('time', 10000);
+            session()->flash('info');
+            session()->flash('title');
+            return redirect()->route('home');
+        }
         $this->restrictApply($this->cust->id);
         $this->applyCont($this->cust->id);
     }
