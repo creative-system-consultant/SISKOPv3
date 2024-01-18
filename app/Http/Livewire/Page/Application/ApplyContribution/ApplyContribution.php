@@ -151,42 +151,44 @@ class ApplyContribution extends Component
         $contribution->remove_approvals();
         $contribution->make_approvals('Contribution');
 
-        if ($this->payment_method == 'online') {
-            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online-CDM_receipt' . '.' . $this->online_file->extension();
+        if ($this->cont_type = 'pay_once') {
+            if ($this->payment_method == 'online') {
+                $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'online-CDM_receipt' . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->online_file, 'online-CDM_receipt' . '.' . $this->online_file->extension());
+                Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->online_file, 'online-CDM_receipt' . '.' . $this->online_file->extension());
 
-            $contribution->files()->create([
-                'filename' => 'online-CDM_receipt',
-                'filedesc' => 'Online/CDM Payment Receipt',
-                'filetype' => $this->online_file->extension(),
-                'filepath' => $filepath,
-            ]);
+                $contribution->files()->create([
+                    'filename' => 'online-CDM_receipt',
+                    'filedesc' => 'Online/CDM Payment Receipt',
+                    'filetype' => $this->online_file->extension(),
+                    'filepath' => $filepath,
+                ]);
 
-            session()->flash('message', 'Add Contribution Application Successfully Send');
-            session()->flash('time', 10000);
-            session()->flash('success');
-            session()->flash('title');
+                session()->flash('message', 'Add Contribution Application Successfully Send');
+                session()->flash('time', 10000);
+                session()->flash('success');
+                session()->flash('title');
 
-            return redirect()->route('home');
-        } else {
-            $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'cheque' . '.' . $this->cheque_file->extension();
+                return redirect()->route('home');
+            } else {
+                $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'cheque' . '.' . $this->cheque_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->cheque_file, 'cheque' . '.' . $this->cheque_file->extension());
+                Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/contribution//' . $contribution->id . '/', $this->cheque_file, 'cheque' . '.' . $this->cheque_file->extension());
 
-            $contribution->files()->create([
-                'filename' => 'cheque',
-                'filedesc' => 'Cheque Receipt',
-                'filetype' => $this->cheque_file->extension(),
-                'filepath' => $filepath,
-            ]);
+                $contribution->files()->create([
+                    'filename' => 'cheque',
+                    'filedesc' => 'Cheque Receipt',
+                    'filetype' => $this->cheque_file->extension(),
+                    'filepath' => $filepath,
+                ]);
 
-            session()->flash('message', 'Add Contribution Application Successfully Send');
-            session()->flash('time', 10000);
-            session()->flash('success');
-            session()->flash('title');
+                session()->flash('message', 'Add Contribution Application Successfully Send');
+                session()->flash('time', 10000);
+                session()->flash('success');
+                session()->flash('title');
 
-            return redirect()->route('home');
+                return redirect()->route('home');
+            }
         }
     }
 
