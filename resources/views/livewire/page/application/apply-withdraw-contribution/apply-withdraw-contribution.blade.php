@@ -87,13 +87,14 @@
                             label="Withdraw Contribution"
                             type="text"
                             name="cont_apply"
+                            id="cont_apply"
                             value=""
                             placeholder="0.00"
                             leftTag="RM"
                             rightTag=""
                             mandatory=""
                             disable=""
-                            wire:model.defer="cont_apply"
+                            wire:model="cont_apply"
                         />
                     </div>
                 </div>
