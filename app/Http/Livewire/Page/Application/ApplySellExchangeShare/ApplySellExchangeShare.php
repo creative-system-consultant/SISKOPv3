@@ -80,7 +80,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
-                'bank_code'    => $this->bank_id,
+                'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_acct,
                 'flag'         => '1',
                 'step'         => '1',
@@ -93,7 +93,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
-                'bank_code'    => $this->bank_id,
+                'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_acct,
                 'exc_cust_id'  => $cust_member->id,
                 'flag'         => '1',
@@ -267,7 +267,7 @@ class ApplySellExchangeShare extends Component
 
     public function render()
     {
-        // $this->bank_name = $this->cust->bank_id;
+        $this->bank_name = $this->cust->bank_id;
         $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-sell-exchange-share.apply-sell-exchange-share')->extends('layouts.head');
     }
