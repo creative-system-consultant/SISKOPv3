@@ -137,6 +137,7 @@ class ApplyContribution extends Component
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
+            'start_type'     => $this->cont_type == 'pay_once' ? '1' : '2',
             'start_apply'    => $this->start_contDate ??= NULL,
             'start_approved' => NULL,
             'method'         => $this->payment_method ?? 'online',

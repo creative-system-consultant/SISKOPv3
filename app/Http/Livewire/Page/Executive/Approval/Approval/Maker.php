@@ -80,7 +80,8 @@ class Maker extends Component
             'page' => 4,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.start_approved' => 'required',
+                'Application.start_approved' => 'after_or_equal:Application.start_apply',
+                'Application.cheque_clear' => 'required|after:Application.cheque_date',
             ],
         ],
         'sellcontribution' => [
@@ -126,30 +127,29 @@ class Maker extends Component
         ],
     ];
 
-    public function forward()
-    {
-        $this->validate();
-        $this->approval_type = 'Send to next level';
-        $this->message       = 'Application send to next level';
-        $this->next();
-    }
-
     public function decline()
     {
         //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share'){
+        if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
+            } else {
+                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
         $this->validate();
-        if ($this->include == 'share'){
+        if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = NULL;
                 $this->Application->cheque_clear = NULL;
+            } else {
+                $this->Application->start_apply = NULL;
+                $this->Application->start_approved = NULL;
             }
         }
+
         $this->approval_type = 'gagal';
         $this->message       = 'Application is reccomended to declined';
         $this->next();
@@ -158,19 +158,26 @@ class Maker extends Component
     public function next()
     {
         //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share'){
+        if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
+            } else {
+                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
         $this->validate();
-        if ($this->include == 'share'){
+        if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = NULL;
                 $this->Application->cheque_clear = NULL;
+            } else {
+                $this->Application->start_apply = NULL;
+                $this->Application->start_approved = NULL;
             }
         }
+
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -183,29 +190,6 @@ class Maker extends Component
         session()->flash('title', 'Success!');
 
         return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
-    }
-
-    public function back()
-    {
-        if ($this->Application->step > 1) {
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('time', 10000);
-            session()->flash('title', 'Success!');
-
-            return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
-        } else {
-            $this->dispatchBrowserEvent('swal', [
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
     }
 
     public function deb()
