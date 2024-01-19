@@ -24,7 +24,7 @@
                 />
 
                 <x-form.input-tag
-                    label="Current Share Capital Amount"
+                    label="Current Share"
                     type="text"
                     name="current_share"
                     value=""
@@ -41,7 +41,7 @@
                 <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.input-tag
-                            label="Add Share Capital applied"
+                            label="Amount Apply"
                             type="text"
                             name="share_apply"
                             value=""

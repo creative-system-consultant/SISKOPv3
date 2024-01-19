@@ -100,7 +100,7 @@
     <div class="mt-4">
         {{ $contributions->links('livewire::pagination-links') }}
     </div>
-    <x-modal.modal modalActive="openModal" title="Add Contribution Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
+    <x-modal.modal modalActive="openModal" title="Add/Change Contribution Approval" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.apply-contribution')
     </x-modal.modal>
 </div>

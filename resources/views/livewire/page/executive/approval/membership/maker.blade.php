@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Membership Application (MAKER)</h1>
+    <h1 class="text-base font-semibold md:text-2xl">Membership Approval (MAKER)</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div class="pb-4 pl-4 pr-4">
             <div x-data="{active : 1}">

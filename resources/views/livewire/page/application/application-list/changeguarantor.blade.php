@@ -92,7 +92,7 @@
     <div class="mt-4">
         {{ $ChangeGuarantors->links('livewire::pagination-links') }}
     </div>
-    <x-modal.modal modalActive="openModal" title="Change Guarantor Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
+    <x-modal.modal modalActive="openModal" title="Change Guarantor Approval" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.ChangeGuarantor')
     </x-modal.modal>
 </div>

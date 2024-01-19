@@ -2,8 +2,8 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{$dividend?->id}}</h2>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.input
                     label="Name"
                     name="custname"
@@ -50,10 +50,10 @@
                 />
             </div>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Dividend {{ $dividend->div_year }} Information</h2>
-            <div class="grid grid-cols-12 gap-6">
+            <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
-                        label="Dividend Payout"
+                        label="Amount Applied"
                         type="text"
                         name="dividend_total"
                         value="{{ $dividend->dividend_total }}"

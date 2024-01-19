@@ -2,8 +2,8 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Seller Information</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $sellShare?->id }}</h2>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
                     name="custname"
@@ -21,7 +21,7 @@
                     type="text"
                 />
                 <x-form.input-tag
-                    label="Current Share Amount"
+                    label="Current Share"
                     type="text"
                     name="current_share"
                     value="{{ $sellShare->amt_before ?? '' }}"
@@ -30,6 +30,8 @@
                     mandatory=""
                     disable="true"
                 />
+            </div>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mt-4">
                 <x-form.input
                     label="Bank"
                     name="bank_acct"
@@ -51,10 +53,10 @@
             </div>
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
                     <x-form.input-tag
-                        label="Sell Share applied"
+                        label="Amount Applied"
                         type="text"
                         name="share_apply"
                         value="{{ $sellShare->apply_amt ?? '' }}"
@@ -68,7 +70,7 @@
 
                 <div>
                     <x-form.input-tag
-                        label="Sell Share approved"
+                        label="Amount Approved"
                         type="text"
                         name="share_approved"
                         value="{{ $sellShare->approved_amt ?? '' }}"
@@ -81,7 +83,7 @@
                 </div>
                 <div>
                     <x-form.input
-                        label="Types of Share Reimbursement"
+                        label="Sell To"
                         value="COOP"
                         name="share_type"
                         id="share_type"

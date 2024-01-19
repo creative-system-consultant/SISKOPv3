@@ -1,7 +1,7 @@
 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Payment Information</h2>
-<div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+<div class="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
     <x-form.input-tag
-        label="REGISTRATION FEE"
+        label="Registration Fee"
         type="text"
         name="Application.register_fee"
         value=""
@@ -12,8 +12,32 @@
         wire:model="Application.register_fee"
         wire:keydown.debounce.1500ms="totalfee"
     />
+    <x-form.input-tag
+        label="Contribution Upfront"
+        type="text"
+        name="Application.contribution_fee"
+        value=""
+        leftTag="RM"
+        rightTag=""
+        mandatory=""
+        disable="{{ $input_maker }}"
+        wire:model="Application.contribution_fee"
+        wire:keydown.debounce.1500ms="totalfee"
+    />
+    <x-form.input-tag
+        label="Contribution Monthly"
+        type="text"
+        name="Application.contribution_monthly"
+        value=""
+        leftTag="RM"
+        rightTag=""
+        mandatory=""
+        disable="{{ $input_maker }}"
+        wire:model="Application.contribution_monthly"
+        wire:keydown.debounce.1500ms="totalfee"
+    />
     <x-form.dropdown
-        label="SHARE TYPE"
+        label="Share Type"
         value=""
         name="Application.share_pmt_mode_flag"
         id=""
@@ -27,7 +51,7 @@
         <option value="2">MONTHLY</option>
     </x-form.dropdown>
     <x-form.input-tag
-        label="SHARE FEE"
+        label="Share Upfront"
         type="text"
         name="Application.share_fee"
         value=""
@@ -39,7 +63,7 @@
         wire:keydown.debounce.1500ms="totalfee"
     />
     <x-form.input-tag
-        label="SHARE MONTHLY"
+        label="Share Monthly"
         type="text"
         name="Application.share_monthly"
         value=""
@@ -50,35 +74,11 @@
         wire:model="Application.share_monthly"
         wire:keydown.debounce.1500ms="totalfee"
     />
-    <x-form.input-tag
-        label="CONTRIBUTION UPFRONT"
-        type="text"
-        name="Application.contribution_fee"
-        value=""
-        leftTag="RM"
-        rightTag=""
-        mandatory=""
-        disable="{{ $input_maker }}"
-        wire:model="Application.contribution_fee"
-        wire:keydown.debounce.1500ms="totalfee"
-    />
-    <x-form.input-tag
-        label="CONTRIBUTION MONTHLY"
-        type="text"
-        name="Application.contribution_monthly"
-        value=""
-        leftTag="RM"
-        rightTag=""
-        mandatory=""
-        disable="{{ $input_maker }}"
-        wire:model="Application.contribution_monthly"
-        wire:keydown.debounce.1500ms="totalfee"
-    />
 </div>
 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Registration Payment</h2>
-<div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+<div class="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
     <x-form.input-tag
-        label="TOTAL FEE PAYABLE"
+        label="Total Fee Payable"
         type="text"
         name=""
         value=""
@@ -89,7 +89,7 @@
         wire:model="Application.total_fee"
     />
     <x-form.input-tag
-        label="TOTAL MONTHLY (start next month)"
+        label="Total Monthly"
         type="text"
         name="Application.total_monthly"
         value=""
@@ -99,8 +99,10 @@
         disable="readonly"
         wire:model="Application.total_monthly"
     />
+</div>
+<div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
     <x-form.dropdown
-        label="REGISTRATION PAYMENT TYPE"
+        label="Registration Payment Type"
         value=""
         name="Application.payment_type"
         id=""
@@ -114,7 +116,7 @@
     </x-form.dropdown>
     @if($Application->payment_type == 1)
     <x-form.dropdown
-        label="COOP BANK"
+        label="Coop Bank"
         value=""
         name="Application.client_bank_id"
         id=""
@@ -128,7 +130,7 @@
     @endforeach
     </x-form.dropdown>
     <x-form.input
-        label="COOP BANK ACC NUM"
+        label="Coop Bank Acc Num"
         name="Application.client_bank_acct_no"
         value=""
         mandatory=""

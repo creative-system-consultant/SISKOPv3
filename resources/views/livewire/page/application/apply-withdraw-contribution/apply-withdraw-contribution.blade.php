@@ -24,7 +24,7 @@
                 />
 
                 <x-form.input-tag
-                    label="Current Contribution Amount"
+                    label="Current Contribution"
                     type="text"
                     name="current_cont"
                     value=""
@@ -84,7 +84,7 @@
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <div>
                         <x-form.input-tag
-                            label="Withdraw Contribution"
+                            label="Amount Apply"
                             type="text"
                             name="cont_apply"
                             id="cont_apply"

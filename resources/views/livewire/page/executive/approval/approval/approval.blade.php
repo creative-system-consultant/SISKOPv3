@@ -24,7 +24,7 @@
             <div class="pb-4 pl-4 pr-4">
                 <x-tab.content name="1">
                     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
-                    <div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                         <x-form.input
                             label="Name"
                             name="custname"
@@ -50,7 +50,7 @@
                             type="text"
                         />
                     </div>
-                    <div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                         <x-form.input
                             label="Bank"
                             name=""

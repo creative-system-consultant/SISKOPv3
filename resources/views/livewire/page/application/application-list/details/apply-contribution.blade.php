@@ -3,7 +3,7 @@
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $Contribution->id }}</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
                     name="custname"
@@ -21,7 +21,30 @@
                     type="text"
                 />
                 <x-form.input-tag
-                    label="Add Contribution applied"
+                    label="Current Contribution"
+                    type="text"
+                    name="cont_approved"
+                    value="{{ $Contribution->amt_before ?? '' }}"
+                    placeholder="0.00"
+                    leftTag="RM"
+                    rightTag=""
+                    mandatory=""
+                    disable="true"
+                />
+            </div>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Application Information</h2>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <x-form.input
+                    label="Contribution Type"
+                    value="{{ isset($Contribution->start_apply) == NULL ? 'Pay Once' : 'Change Monthly' }}"
+                    name="cont_type"
+                    id="cont_type"
+                    mandatory=""
+                    disable="true"
+                    default="yes"
+                />
+                <x-form.input-tag
+                    label="Amount Applied"
                     type="text"
                     name="cont_apply"
                     value="{{ $Contribution->apply_amt ?? '0.00' }}"
@@ -32,7 +55,7 @@
                     disable="true"
                 />
                 <x-form.input-tag
-                    label="Add Contribution approved"
+                    label="Amount Approved"
                     type="text"
                     name="cont_approved"
                     value="{{ $Contribution->approved_amt ?? '' }}"
@@ -102,9 +125,6 @@
                     />
                 </div>
                 @endif
-            </div>
-            <div class="grid grid-cols-12 gap-6">
-
             </div>
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
             <x-table.table>

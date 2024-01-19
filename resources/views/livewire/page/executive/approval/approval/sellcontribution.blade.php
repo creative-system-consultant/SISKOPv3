@@ -12,7 +12,7 @@
         disable="true"
     />
     <x-form.input-tag
-        label="Withdraw Contribution applied"
+        label="Amount Applied"
         type="text"
         name="Application.apply_amt"
         value=""
@@ -24,7 +24,7 @@
         wire:model="Application.apply_amt"
     />
     <x-form.input-tag
-        label="Withdraw Contribution approved"
+        label="Amount Approved"
         type="text"
         name="Application.approved_amt"
         value="{{ $Application->approved_amt ?? '0.00' }}"

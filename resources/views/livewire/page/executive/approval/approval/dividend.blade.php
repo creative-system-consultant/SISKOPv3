@@ -33,7 +33,7 @@
 </div>
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
     <x-form.input-tag
-        label="To Member's Bank applied"
+        label="To Member's Bank Applied"
         type="text"
         name="cont_apply"
         value="{{ $Application->div_cash_apply ?? '0.00' }}"
@@ -44,7 +44,7 @@
         disable="true"
     />
     <x-form.input-tag
-        label="To Member's Share applied"
+        label="To Member's Share Applied"
         type="text"
         name="cont_apply"
         value="{{ $Application->div_share_apply ?? '0.00' }}"
@@ -55,7 +55,7 @@
         disable="true"
     />
     <x-form.input-tag
-        label="To Member's Contribution applied"
+        label="To Member's Contribution Applied"
         type="text"
         name="cont_apply"
         value="{{ $Application->div_contribution_approved ?? '0.00' }}"

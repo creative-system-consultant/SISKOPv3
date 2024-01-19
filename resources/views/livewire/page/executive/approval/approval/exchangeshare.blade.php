@@ -37,31 +37,10 @@
     </div>
 </div>
 <div>
-    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Buyer Information</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-        <x-form.input
-            label="Member Name"
-            name=""
-            value="{{ $Application->buyer->name }}"
-            mandatory=""
-            disable="true"
-            type="text"
-        />
-        <x-form.input
-            label="Member Ic No"
-            name=""
-            value="{{ $Application->buyer->identity_no }}"
-            mandatory=""
-            disable="true"
-            type="text"
-        />
-    </div>
-</div>
-<div>
     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
         <x-form.input-tag
-            label="Transfer Share applied"
+            label="Amount Applied"
             type="text"
             name=""
             value="{{ $Application->apply_amt }}"
@@ -71,7 +50,7 @@
             disable="true"
         />
         <x-form.input-tag
-            label="Transfer Share approved"
+            label="Amount Approved"
             type="text"
             name=""
             value=""
@@ -83,7 +62,7 @@
             wire:model="Application.approved_amt"
         />
         <x-form.input
-            label="Types of Transfer"
+            label="Transfer To"
             name=""
             value="MEMBER"
             mandatory=""
@@ -92,6 +71,28 @@
         />
     </div>
 </div>
+<div>
+    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Buyer Information</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+        <x-form.input
+            label="Member Name"
+            name=""
+            value="{{ $Application->buyer->name }}"
+            mandatory=""
+            disable="true"
+            type="text"
+        />
+        <x-form.input
+            label="Member IC No"
+            name=""
+            value="{{ $Application->buyer->identity_no }}"
+            mandatory=""
+            disable="true"
+            type="text"
+        />
+    </div>
+</div>
+
 
 
 

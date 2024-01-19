@@ -2,7 +2,7 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{$custApply?->id}}</h2>
             <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
@@ -32,7 +32,7 @@
                 />
 
                 <x-form.input
-                    label="Apply Amount"
+                    label="Amount Applied"
                     name="apply_amt"
                     value="{{ $custApply->apply_amt ?? '' }}"
                     mandatory=""

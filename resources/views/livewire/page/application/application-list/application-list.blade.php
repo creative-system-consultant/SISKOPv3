@@ -43,7 +43,7 @@
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-document-plus class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
-                            Add Contribution
+                            Add/Change Contribution
                         </span>
                     </div>
                 </x-tab.title>
@@ -67,7 +67,7 @@
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-arrow-up-on-square-stack class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
-                            Dividend Payout
+                            Dividend Withdrawal
                         </span>
                     </div>
                 </x-tab.title>
@@ -124,7 +124,7 @@
                         @break
                     @case('4')
                         <h2 class="mb-4 text-base font-semibold ">
-                            Add Contribution
+                            Add/Change Contribution
                         </h2>
                         <livewire:page.application.application-list.contribution>
                         @break
@@ -142,7 +142,7 @@
                         @break
                     @case('7')
                         <h2 class="mb-4 text-base font-semibold ">
-                            Dividend Payout
+                            Dividend Withdrawal
                         </h2>
                         <livewire:page.application.application-list.dividend>
                         @break

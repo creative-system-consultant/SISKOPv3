@@ -4,7 +4,7 @@
             <x-table.table-header class="text-left" value="No" sort="" />
             <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
-            <x-table.table-header class="text-right" value="Dividend Payout (RM)" sort="" />
+            <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-right" value="Dividend balance (RM)" sort="" />
             <x-table.table-header class="text-right" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
@@ -99,7 +99,7 @@
     <div class="mt-4">
         {{ $dividends->links('livewire::pagination-links') }}
     </div>
-    <x-modal.modal modalActive="openModal" title="Dividend Payout Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
+    <x-modal.modal modalActive="openModal" title="Dividend Withdrawal Approval" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.dividend')
     </x-modal.modal>
 </div>

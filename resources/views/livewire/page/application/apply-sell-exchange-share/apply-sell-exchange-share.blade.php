@@ -24,7 +24,7 @@
                 />
 
                 <x-form.input-tag
-                    label="Current Share Capital Amount"
+                    label="Current Share"
                     type="text"
                     name="current_share"
                     value=""
@@ -70,7 +70,7 @@
                 <div class="grid grid-cols-12 gap-6" x-cloak x-bind:class="types == 'mbr' ? 'grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mb-4' : ''">
                     <div x-bind:class="types == 'mbr' ? '' : 'col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4'">
                         <x-form.input-tag
-                            label="Share Amount"
+                            label="Amount Apply"
                             type="text"
                             name="share_apply"
                             value=""

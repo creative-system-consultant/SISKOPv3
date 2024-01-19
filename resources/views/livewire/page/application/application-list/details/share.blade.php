@@ -2,8 +2,8 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $share->id }}</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $share?->id }}</h2>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.input
                     label="Name"
                     name="custname"
@@ -21,7 +21,7 @@
                     type="text"
                 />
                 <x-form.input-tag
-                    label="Share Amount upon Application"
+                    label="Current Share"
                     type="text"
                     name="current_share"
                     value="{{ $share->amt_before ?? '' }}"
@@ -33,10 +33,10 @@
             </div>
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
-            <div class="grid grid-cols-12 gap-6">
+            <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
-                        label="Add Share applied"
+                        label="Amount Applied"
                         type="text"
                         name="share_apply"
                         value="{{ $share->apply_amt ?? '0.00' }}"
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input-tag
-                        label="Add Share approved"
+                        label="Amount Approved"
                         type="text"
                         name="share_approved"
                         value="{{ $share->approved_amt ?? '0.00' }}"
@@ -72,7 +72,7 @@
             </div>
 
             @if (isset($share->method) && $share->method == 'online' )
-                <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >
+                <div class="grid grid-cols-1 gap-2 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >
                     <div>
                         <x-form.input
                             label="Online Payment Date"
@@ -87,7 +87,7 @@
             @endif
 
             @if (isset($share->method) && $share->method == 'cash' )
-                <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                <div class="grid grid-cols-1 gap-2 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <div>
                         <x-form.input
                             label="CDM Payment Date"
@@ -102,7 +102,7 @@
             @endif
 
             @if (isset($share->method) && $share->method == 'cheque' )
-                <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                <div class="grid grid-cols-1 gap-2 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <div>
                         <x-form.input
                             label="Cheque No."

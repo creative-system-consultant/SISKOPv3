@@ -3,7 +3,7 @@
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $withdraw->id }}</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
                     name="custname"
@@ -21,7 +21,7 @@
                     type="text"
                 />
                 <x-form.input-tag
-                    label="Current Contribution Amount"
+                    label="Current Contribution"
                     type="text"
                     name="current_cont"
                     value="{{ $withdraw->customer->fmsMembership->total_contribution  ?? '0' }}"
@@ -40,13 +40,31 @@
                     mandatory=""
                     disable="true"
                 />
+                <x-form.input
+                    label="Bank"
+                    name="bank_name"
+                    id="bank_name"
+                    value="{{ $withdraw->bankname() }}"
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                />
+                <x-form.input
+                    label="Account Bank No."
+                    name="bank_account"
+                    id="bank_account"
+                    value="{{ $withdraw->bank_account ?? '' }}"
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                />
             </div>
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
                     <x-form.input-tag
-                        label="Amount applied"
+                        label="Amount Applied"
                         type="text"
                         name="cont_apply"
                         value="{{ $withdraw->apply_amt ?? '0.00' }}"
@@ -59,7 +77,7 @@
                 </div>
                 <div>
                     <x-form.input-tag
-                        label="Amount approved"
+                        label="Amount Approved"
                         type="text"
                         name="cont_approved"
                         value="{{ $withdraw->approved_amt ?? '' }}"
@@ -68,28 +86,6 @@
                         rightTag=""
                         mandatory=""
                         disable="true"
-                    />
-                </div>
-                <div>
-                    <x-form.input
-                        label="Bank"
-                        name="bank_name"
-                        id="bank_name"
-                        value="{{ $withdraw->bankname() }}"
-                        mandatory=""
-                        disable="true"
-                        type="text"
-                    />
-                </div>
-                <div>
-                    <x-form.input
-                        label="Account Bank No."
-                        name="bank_account"
-                        id="bank_account"
-                        value="{{ $withdraw->bank_account ?? '' }}"
-                        mandatory=""
-                        disable="true"
-                        type="text"
                     />
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <x-table.table>
         <x-slot name="thead">
             <x-table.table-header class="text-left" value="No" sort="" />
-            <x-table.table-header class="text-left" value="Seller" sort=""/>
+            <x-table.table-header class="text-left" value="Applicant Name" sort=""/>
             <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-right" value="Approved Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
@@ -95,7 +95,7 @@
     <div class="mt-4">
         {{ $sellShares->links('livewire::pagination-links') }}
     </div>
-    <x-modal.modal modalActive="openModal" title="Share Reimbursement Application" modalSize="7xl" closeBtn="yes">
+    <x-modal.modal modalActive="openModal" title="Sell Share Approval" modalSize="7xl" closeBtn="yes">
         @include('livewire.page.application.application-list.apply-sell-exchange-share')
     </x-modal.modal>
 </div>

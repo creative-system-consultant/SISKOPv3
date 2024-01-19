@@ -1,6 +1,6 @@
 
 <div>
-    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Seller Information</h2>
+    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
         <x-form.input
             label="Name"
@@ -49,8 +49,16 @@
             mandatory=""
             disable="true"
         />
+        <x-form.input
+            label="Sell To"
+            name=""
+            value="COOP"
+            mandatory=""
+            disable="true"
+            type="text"
+        />
         <x-form.input-tag
-            label="Sell Share applied"
+            label="Amount Applied"
             type="text"
             name=""
             value="{{ $Application->apply_amt }}"
@@ -60,7 +68,7 @@
             disable="true"
         />
         <x-form.input-tag
-            label="Sell Share approved"
+            label="Amount Approved"
             type="text"
             name=""
             value=""
@@ -69,14 +77,6 @@
             mandatory=""
             disable="{{ $disable }}"
             wire:model="Application.approved_amt"
-        />
-        <x-form.input
-            label="Types of Selling"
-            name=""
-            value="COOP"
-            mandatory=""
-            disable="true"
-            type="text"
         />
     </div>
 </div>
