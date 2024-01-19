@@ -65,35 +65,8 @@
                     mandatory=""
                     disable="true"
                 />
-            </div>
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Application Information</h2>
-            <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input-tag
-                        label="Current Contribution"
-                        type="text"
-                        name="cont_approved"
-                        value="{{ $Contribution->amt_before ?? '' }}"
-                        placeholder="0.00"
-                        leftTag="RM"
-                        rightTag=""
-                        mandatory=""
-                        disable="true"
-                    />
-                </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    <x-form.input
-                        label="Contribution Type"
-                        value="{{ isset($Contribution->start_apply) == NULL ? 'Pay Once' : 'Change Monthly' }}"
-                        name="cont_type"
-                        id="cont_type"
-                        mandatory=""
-                        disable="true"
-                        default="yes"
-                    />
-                </div>
                 @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <div>
                     <x-form.input
                         label="Start Date"
                         name="start_contDate"
@@ -103,7 +76,7 @@
                         type="date"
                     />
                 </div>
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <div>
                     <x-form.input
                         label="Approved Start Date"
                         name="start_approvedDate"
@@ -114,7 +87,7 @@
                     />
                 </div>
                 @else
-                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                <div>
                     <x-form.input
                         label="Payment Type"
                         name="start_approvedDate"
