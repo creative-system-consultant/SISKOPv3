@@ -1,7 +1,6 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">{{ $pagename }} Application</h1>
+    <h1 class="text-base font-semibold md:text-2xl">{{ $pagename }} Approval</h1>
 
-    
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div x-data="{active : 1}">
             <div class="flex bg-white rounded-md border-b">
@@ -17,7 +16,7 @@
                     <div class="flex items-center">
                         <x-heroicon-o-document-text class="w-6 h-6 " /> 
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14 capitalize">
-                            {{$include}} Info
+                            {{ $pagename }} Info
                         </span>
                     </div>
                 </x-tab.title>
@@ -25,7 +24,7 @@
             <div class="pb-4 pl-4 pr-4">
                 <x-tab.content name="1">
                     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                         <x-form.input
                             label="Name"
                             name="custname"
@@ -46,6 +45,24 @@
                             label="Member Number"
                             name="mbrno"
                             value="{{ $Application->customer->mbr_no ?? '' }}"
+                            mandatory=""
+                            disable="true"
+                            type="text"
+                        />
+                    </div>
+                    <div class="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                        <x-form.input
+                            label="Bank"
+                            name=""
+                            value="{{ $Application->customer->bank?->description }}"
+                            mandatory=""
+                            disable="true"
+                            type="text"
+                        />
+                        <x-form.input
+                            label="Account Bank No."
+                            name=""
+                            value="{{ $Application->customer->bank_acct_no }}"
                             mandatory=""
                             disable="true"
                             type="text"
@@ -162,12 +179,6 @@
                 <div class="flex items-center justify-center space-x-2">
                     <button type="button" wire:click="decline" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                         {{ $vote }} Decline
-                    </button>
-                    <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-                        Previous
-                    </button>
-                    <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                        debug
                     </button>
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         {{ $vote }} Approve

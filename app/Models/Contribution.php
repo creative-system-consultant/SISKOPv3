@@ -34,7 +34,7 @@ class Contribution extends Model implements Auditable
 
     public function bankname()
     {
-        return RefBank::where('client_id', $this->client_id)->where('code', $this->bank_code)->first()?->description ?? '-';
+        return RefBank::where('client_id', $this->client_id)->where('id', $this->bank_code)->first()?->description ?? '-';
     }
 
     public function current_approval()

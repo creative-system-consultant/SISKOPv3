@@ -24,25 +24,21 @@
                     label="Current Share Amount"
                     type="text"
                     name="current_share"
-                    value="{{ $ExchangeShares->amt_before ?? '' }}"
+                    value="{{ $sellShare->amt_before ?? '' }}"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
                     disable="true"
                 />
-                <x-form.dropdown
+                <x-form.input
                     label="Bank"
-                    value=""
-                    name="bank_code"
-                    id="bank_code"
+                    name="bank_acct"
+                    id="bank_acct"
+                    value="{{ $sellShare->customer->bank?->description }}"
                     mandatory=""
                     disable="true"
-                    default="yes"
-                    >
-                    @foreach ($banks ?? [] as $bank)
-                        <option @if ($bank->id == $sellShare->customer->bank_id) selected @endif>{{ $bank->description }}</option>
-                    @endforeach
-                </x-form.dropdown>
+                    type="text"
+                />
                 <x-form.input
                     label="Account Bank No."
                     name="bank_acct"

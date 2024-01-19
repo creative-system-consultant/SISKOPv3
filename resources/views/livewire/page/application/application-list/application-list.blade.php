@@ -5,7 +5,7 @@
     </div>
     <h1 class="text-base font-semibold md:text-2xl">List of Approvals</h1>
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <div x-data="{active : @if(isset(request()->page)){{ request()->page }} @else 0 @endif}">
+        <div x-data="{active : 0}">
             <x-general.card class="flex items-center w-full mb-2 overflow-x-auto bg-white rounded-md ">
                 <x-tab.title name="0" livewire="" wire:click="setState('0')">
                     <div class="flex flex-col items-center lg:flex-row">
@@ -83,7 +83,7 @@
                     <div class="flex flex-col items-center lg:flex-row">
                         <x-heroicon-o-arrows-right-left class="w-6 h-6 mb-2 mr-0 lg:mr-2 lg:mb-0"/>
                         <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
-                            Exchange Share
+                            Transfer Share
                         </span>
                     </div>
                 </x-tab.title>
@@ -154,7 +154,7 @@
                         @break
                     @case('9')
                         <h2 class="mb-4 text-base font-semibold ">
-                            Exchange Share
+                            Transfer Share
                         </h2>
                         <livewire:page.application.application-list.exchange-share>
                         @break

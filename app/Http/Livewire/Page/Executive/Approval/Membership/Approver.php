@@ -119,12 +119,12 @@ class Approver extends Component
             if($result[0]->SP_RETURN_CODE == 0){
 
                 //check in list of user clients if null adds it.
-                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->User->client_id]]);
+                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->Application->client_id]])->get();
 
                 if($check == NULL){
                     $ret = DB::table('ref.user_has_clients')->insert([
                         'user_id'   => $this->Application->user_id,
-                        'client_id' => $this->User->client_id,
+                        'client_id' => $this->Application->client_id,
                     ]);
                 }
 

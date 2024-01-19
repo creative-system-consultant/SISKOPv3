@@ -40,7 +40,17 @@
     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
         <x-form.input-tag
-            label="Reimbursement of Share Capital applied"
+            label="Current Share"
+            type="text"
+            name=""
+            value="{{ $Application->customer->fmsMembership?->total_share }}"
+            leftTag="RM"
+            rightTag=""
+            mandatory=""
+            disable="true"
+        />
+        <x-form.input-tag
+            label="Sell Share applied"
             type="text"
             name=""
             value="{{ $Application->apply_amt }}"
@@ -50,7 +60,7 @@
             disable="true"
         />
         <x-form.input-tag
-            label="Reimbursement of Share Capital approved"
+            label="Sell Share approved"
             type="text"
             name=""
             value=""
@@ -61,7 +71,7 @@
             wire:model="Application.approved_amt"
         />
         <x-form.input
-            label="Types of Share Reimbursement"
+            label="Types of Selling"
             name=""
             value="COOP"
             mandatory=""

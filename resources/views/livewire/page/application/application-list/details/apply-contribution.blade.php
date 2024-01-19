@@ -60,8 +60,8 @@
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                     <x-form.input
-                        label="Date Options"
-                        value="{{ isset($Contribution->start_apply) == NULL ? 'Pay Once' : 'Starting Date' }}"
+                        label="Contribution Type"
+                        value="{{ isset($Contribution->start_apply) == NULL ? 'Pay Once' : 'Change Monthly' }}"
                         name="cont_type"
                         id="cont_type"
                         mandatory=""

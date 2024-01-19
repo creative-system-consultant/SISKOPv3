@@ -18,23 +18,18 @@
             disable="true"
             type="text"
         />
-        <x-form.dropdown
-            label="Bank"
-            value=""
-            name="Application.bank_code"
+        <x-form.input
+            label="Bank Name"
+            name=""
+            value="{{ $Application->customer->bank?->description }}"
             mandatory=""
-            disable="{{ $disable }}"
-            default="yes"
-            wire:model="Application.bank_code"
-            >
-            @foreach ($banks ?? [] as $bank)
-                <option value="{{ $bank->code }}">{{ $bank->description }}</option>
-            @endforeach
-        </x-form.dropdown>
+            disable="true"
+            type="text"
+        />
         <x-form.input
             label="Account Bank No."
             name=""
-            value=""
+            value="{{ $Application->bank_account }}"
             mandatory=""
             disable="true"
             type="text"
@@ -66,28 +61,29 @@
     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
         <x-form.input-tag
-            label="Reimbursement of Share Capital applied"
+            label="Transfer Share applied"
             type="text"
             name=""
-            value=""
+            value="{{ $Application->apply_amt }}"
             leftTag="RM"
             rightTag=""
             mandatory=""
             disable="true"
         />
         <x-form.input-tag
-            label="Reimbursement of Share Capital approved"
+            label="Transfer Share approved"
             type="text"
             name=""
             value=""
             leftTag="RM"
             rightTag=""
             mandatory=""
-            disable=""
+            disable="{{ $disable }}"
             wire:model=""
+            wire:model="Application.approved_amt"
         />
         <x-form.input
-            label="Types of Share Reimbursement"
+            label="Types of Transfer"
             name=""
             value="MEMBER"
             mandatory=""

@@ -359,9 +359,6 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
 
         //Exec > Application List
         Route::prefix('applicationList')->group(function () {
-            // Route::get('/', function () {
-            //     return view('livewire.page.application.application-list.application-list');
-            // })->name('application.list');
             Route::get('/', ApplicationList::class)->name('application.list');       
             Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');

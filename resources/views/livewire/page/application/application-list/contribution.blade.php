@@ -1,10 +1,10 @@
 <div x-data="{ openModal : false }" wire:poll.30000ms>
     <x-table.table>
         <x-slot name="thead">
-            <x-table.table-header class="text-left " value="No" sort="" />
-            <x-table.table-header class="text-left " value="Applicant Name" sort="" />
+            <x-table.table-header class="text-left" value="No" sort="" />
+            <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
-            <x-table.table-header class="text-left" value="Payment Method" sort="" />
+            <x-table.table-header class="text-left" value="Contribution Type" sort="" />
             <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
@@ -23,7 +23,7 @@
                         {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->start_apply != NULL ? 'Starting Date' : 'PAY ONCE' }}
+                        {{ $item->start_apply != NULL ? 'CHANGE MONTHLY' : 'PAY ONCE' }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right uppercase">
                         {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
