@@ -82,10 +82,6 @@ use App\Http\Livewire\Page\Executive\Approval\Membership\Checker as MembershipCh
 use App\Http\Livewire\Page\Executive\Approval\Membership\Committee as MembershipCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Approver as MembershipApprover;
 use App\Http\Livewire\Page\Executive\Approval\Membership\Resolution as MembershipResolution;
-use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidApproval;
-use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidChecker;
-use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidCommittee;
-use App\Http\Livewire\Page\Executive\Approval\SpecialAid\SpecialAidMaker;
 use App\Http\Livewire\Page\Notification\notification;
 use App\Http\Livewire\Page\Application\ApplyFinancing\ApplyFinancing;
 use App\Http\Livewire\Page\Application\ApplyFinancing\FinancingList;
@@ -99,10 +95,6 @@ use App\Http\Livewire\Page\Executive\Approval\Approval\Checker as AllChecker;
 use App\Http\Livewire\Page\Executive\Approval\Approval\Committee as AllCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Approval\Approver as AllApprover;
 use App\Http\Livewire\Page\Executive\Approval\Approval\Resolution as AllResolution;
-use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendApprover;
-use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendMaker;
-use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendChecker;
-use App\Http\Livewire\Page\Executive\Approval\Dividend\DividendCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingApprover;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingMaker;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingChecker;
@@ -376,13 +368,6 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
         Route::get('allapproval/{include}/resolution/{uuid}', AllResolution::class)->name('allapproval.resolution');
 
         Route::prefix('approval')->group(function () {
-            //Exec > approval > specialAid
-            Route::prefix('specialAid')->group(function () {
-                Route::get('maker/{uuid}', SpecialAidMaker::class)->name('specialAid.maker');
-                Route::get('checker/{uuid}', SpecialAidChecker::class)->name('specialAid.checker');
-                Route::get('committee/{uuid}', SpecialAidCommittee::class)->name('specialAid.committee');
-                Route::get('approval/{uuid}', SpecialAidApproval::class)->name('specialAid.approval');
-            });
 
             //Exec > approval > Financing
             Route::prefix('financing')->group(function () {
@@ -391,14 +376,6 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
                 Route::get('committee/{uuid}', FinancingCommittee::class)->name('financing.committee');
                 Route::get('approver/{uuid}', FinancingApprover::class)->name('financing.approver');
                 Route::get('resolution/{uuid}', FinancingResolution::class)->name('financing.resolution');
-            });
-
-            //Exec > approval > Dividend
-            Route::prefix('dividend')->group(function () {
-                Route::get('maker/{uuid}', DividendMaker::class)->name('dividend.maker');
-                Route::get('checker/{uuid}', DividendChecker::class)->name('dividend.checker');
-                Route::get('committee/{uuid}', DividendCommittee::class)->name('dividend.committee');
-                Route::get('approver/{uuid}', DividendApprover::class)->name('dividend.approver');
             });
 
             //Exec > approval > Membership

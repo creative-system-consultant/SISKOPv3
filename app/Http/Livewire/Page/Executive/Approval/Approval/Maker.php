@@ -127,8 +127,7 @@ class Maker extends Component
         ],
     ];
 
-    public function decline()
-    {
+    public function xvalidate(){
         //ni solution en nasir. aku taknak argue
         if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
@@ -149,6 +148,11 @@ class Maker extends Component
                 $this->Application->start_approved = NULL;
             }
         }
+    }
+
+    public function decline()
+    {
+        $this->xvalidate();
 
         $this->approval_type = 'gagal';
         $this->message       = 'Application is reccomended to declined';
@@ -157,26 +161,7 @@ class Maker extends Component
 
     public function next()
     {
-        //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if($this->Application->method != 'cheque'){
-                $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
-                $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
-            } else {
-                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
-                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
-            }
-        }
-        $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if($this->Application->method != 'cheque'){
-                $this->Application->cheque_date = NULL;
-                $this->Application->cheque_clear = NULL;
-            } else {
-                $this->Application->start_apply = NULL;
-                $this->Application->start_approved = NULL;
-            }
-        }
+        $this->xvalidate();
 
         $this->Application->step++;
         $this->Application->save();

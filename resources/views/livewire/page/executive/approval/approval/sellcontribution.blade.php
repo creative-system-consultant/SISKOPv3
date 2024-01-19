@@ -35,20 +35,4 @@
         disable="{{ $disable }}"
         wire:model="Application.approved_amt"
     />
-    <x-form.input
-        label="Account Bank No."
-        name="Application.bank_account"
-        value="{{ $Application->bank_account ?? '-' }}"
-        mandatory=""
-        disable="true"
-        type="text"
-    />
-    <x-form.input
-        label="Bank Name"
-        name="bank_name"
-        value="{{ $Application->bankname() ?? '-' }}"
-        mandatory=""
-        disable="true"
-        type="text"
-    />
 </div>

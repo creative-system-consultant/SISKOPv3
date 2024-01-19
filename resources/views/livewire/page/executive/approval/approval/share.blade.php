@@ -153,7 +153,6 @@
             @endforelse
         </div>
     </div>
-    
 @endif
 
 @if ( $Application->method == 'online' )

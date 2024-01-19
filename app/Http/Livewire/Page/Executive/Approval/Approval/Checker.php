@@ -54,7 +54,6 @@ class Checker extends Component
             'page' => 2,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.bank_code' => 'required',
                 'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after:Application.cheque_date',
             ],
         ],
@@ -64,14 +63,15 @@ class Checker extends Component
             'page' => 3,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
+                'Application.bank_code' => 'required',
             ],
         ],
         'exchangeshare' => [
-            'name' => 'Exchange Share',
+            'name' => 'Transfer Share',
             'type' => 'App\Models\Share',
             'page' => 3,
             'rule' => [
-                //'Application.approved_amt' => 'required|gt:0',
+                'Application.approved_amt' => 'required|gt:0',
             ],
         ],
         'contribution' => [
@@ -80,7 +80,8 @@ class Checker extends Component
             'page' => 4,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.start_approved' => 'required',
+                'Application.start_approved' => 'after_or_equal:Application.start_apply',
+                'Application.cheque_clear' => 'required|after:Application.cheque_date',
             ],
         ],
         'sellcontribution' => [
@@ -92,7 +93,7 @@ class Checker extends Component
                 'Application.apply_amt' => 'required|gt:0',
             ],
         ],
-        'dividen' => [
+        'dividend' => [
             'name' => 'Dividend',
             'type' => 'App\Models\ApplyDividend',
             'page' => 10,
@@ -126,9 +127,32 @@ class Checker extends Component
         ],
     ];
 
+    public function xvalidate(){
+        //ni solution en nasir. aku taknak argue
+        if ($this->include == 'share' || $this->include == 'contribution'){
+            if($this->Application->method != 'cheque'){
+                $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
+                $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
+            } else {
+                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+            }
+        }
+        $this->validate();
+        if ($this->include == 'share' || $this->include == 'contribution'){
+            if($this->Application->method != 'cheque'){
+                $this->Application->cheque_date = NULL;
+                $this->Application->cheque_clear = NULL;
+            } else {
+                $this->Application->start_apply = NULL;
+                $this->Application->start_approved = NULL;
+            }
+        }
+    }
+
     public function forward()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->approval_type = 'Send to next level';
         $this->message       = 'Application send to next level';
         $this->next();
@@ -136,7 +160,7 @@ class Checker extends Component
 
     public function decline()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->approval_type = 'gagal';
         $this->message       = 'Application is reccomended to declined';
         $this->next();
@@ -144,7 +168,7 @@ class Checker extends Component
 
     public function next()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -159,41 +183,6 @@ class Checker extends Component
         return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
     }
 
-    public function back()
-    {
-        if ($this->Application->step > 1) {
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('time', 10000);
-            session()->flash('title', 'Success!');
-
-            return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
-        } else {
-            $this->dispatchBrowserEvent('swal', [
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
-    }
-
-    public function deb()
-    {
-        dd([
-            'User' => $this->User->role_ids(),
-            'Approval' => $this->Approval,
-            'current_Approval' => $this->Application->current_approval(),
-            'Application' => $this->Application,
-            'rules' => $this->rules(),
-            'include' => $this->custom_rule[$this->include]['rule'],
-        ]);
-    }
-
     public function notfound()
     {
         session()->flash('message', 'Application does not exist');
@@ -204,9 +193,9 @@ class Checker extends Component
 
     public function mount($uuid, $include)
     {
-        if (!in_array($include, ['share', 'sellshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'ChangeGuarantor'])) {
+        if (!in_array($include, ['share', 'sellshare', 'exchangeshare', 'contribution', 'sellcontribution', 'closemembership', 'specialaid', 'dividend', 'ChangeGuarantor'])) {
             $this->notfound();
-            return redirect()->route('application.list', ['page' => 1]);
+            return redirect()->route('application.list', ['page' => $this->custom_rule[$this->include]['page']]);
         }
         $this->include  = $include;
         $this->page     = $this->custom_rule[$this->include]['page'];
@@ -216,8 +205,10 @@ class Checker extends Component
 
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'dividend') {

@@ -69,30 +69,39 @@
                         default="yes"
                     />
                 </div>
+                @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
-                        <x-form.input
-                            label="Start Date"
-                            name="start_contDate"
-                            value="{{ isset($Contribution->start_apply) == NULL ? '' : $Contribution->start_apply->format('Y-m-d') }}"
-                            mandatory=""
-                            disable="true"
-                            type="date"
-                        />
-                    @endif
+                    <x-form.input
+                        label="Start Date"
+                        name="start_contDate"
+                        value="{{ isset($Contribution->start_apply) == NULL ? '' : $Contribution->start_apply->format('Y-m-d') }}"
+                        mandatory=""
+                        disable="true"
+                        type="date"
+                    />
                 </div>
                 <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
-                    @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
-                        <x-form.input
-                            label="Approved Start Date"
-                            name="start_approvedDate"
-                            value="{{ isset($Contribution->start_approved) == NULL ? '' : $Contribution->start_approved->format('Y-m-d') }}"
-                            mandatory=""
-                            disable="true"
-                            type="date"
-                        />
-                    @endif
+                    <x-form.input
+                        label="Approved Start Date"
+                        name="start_approvedDate"
+                        value="{{ $Contribution->start_approved }}"
+                        mandatory=""
+                        disable="true"
+                        type="date"
+                    />
                 </div>
+                @else
+                <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
+                    <x-form.input
+                        label="Payment Type"
+                        name="start_approvedDate"
+                        value="{{ strtoupper($Contribution->method) }}"
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                    />
+                </div>
+                @endif
             </div>
             <div class="grid grid-cols-12 gap-6">
 

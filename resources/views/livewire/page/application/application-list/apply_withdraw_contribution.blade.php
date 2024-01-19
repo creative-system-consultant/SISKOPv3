@@ -12,7 +12,6 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input
                     label="Identity Number"
                     name="custic"
@@ -21,23 +20,21 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input-tag
                     label="Current Contribution Amount"
                     type="text"
                     name="current_cont"
-                    value="{{  $withdraw->amt_before ?? '' }}"
+                    value="{{ $withdraw->customer->fmsMembership->total_contribution  ?? '0' }}"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
                     disable="true"
                 />
-
                 <x-form.input-tag
                     label="Monthly Contribution"
                     type="text"
                     name="monthly_cont"
-                    value="{{  $withdraw->customer->contribution_monthly ?? ''  }}"
+                    value="{{ $withdraw->customer->fmsMembership->monthly_contribution ?? '0'  }}"
                     leftTag="RM"
                     rightTag=""
                     mandatory=""
@@ -49,7 +46,7 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
                     <x-form.input-tag
-                        label="Add Contribution applied"
+                        label="Amount applied"
                         type="text"
                         name="cont_apply"
                         value="{{ $withdraw->apply_amt ?? '0.00' }}"
@@ -60,10 +57,9 @@
                         disable="true"
                     />
                 </div>
-
                 <div>
                     <x-form.input-tag
-                        label="Add Contribution approved"
+                        label="Amount approved"
                         type="text"
                         name="cont_approved"
                         value="{{ $withdraw->approved_amt ?? '' }}"
@@ -74,23 +70,17 @@
                         disable="true"
                     />
                 </div>
-
                 <div>
-                    <x-form.dropdown
+                    <x-form.input
                         label="Bank"
-                        value=""
-                        name="bank_code"
-                        id="bank_code"
+                        name="bank_name"
+                        id="bank_name"
+                        value="{{ $withdraw->bankname() }}"
                         mandatory=""
                         disable="true"
-                        default="yes"
-                        >
-                        @foreach ($bankName ?? [] as $bank)
-                            <option @if ($bank->code == $withdraw->bank_code) selected @endif>{{ $bank->description }}</option>
-                        @endforeach
-                    </x-form.dropdown>
+                        type="text"
+                    />
                 </div>
-
                 <div>
                     <x-form.input
                         label="Account Bank No."
@@ -101,22 +91,6 @@
                         disable="true"
                         type="text"
                     />
-                </div>
-            </div>
-
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Upload Document</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                <div>
-                    @if (isset($withdraw->files) != NULL)
-                        @forelse ($withdraw->files as $supportDoc)
-                            <a href="{{ asset('storage/'.$supportDoc->filepath) }}" target="_blank" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded-md hover:bg-blue-400">
-                                <x-heroicon-o-document class="w-5 h-5 mr-2"/>
-                                Show
-                            </a>
-                        @empty
-                            <h2 class="mb-4 ml-4 text-base border-gray-300">No Document</h2>
-                        @endforelse
-                    @endif
                 </div>
             </div>
 
