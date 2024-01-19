@@ -121,7 +121,7 @@ class Approver extends Component
                 //check in list of user clients if null adds it.
                 $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->Application->client_id]])->get();
 
-                if($check == NULL){
+                if($check->count() == 0){
                     $ret = DB::table('ref.user_has_clients')->insert([
                         'user_id'   => $this->Application->user_id,
                         'client_id' => $this->Application->client_id,

@@ -152,17 +152,9 @@ class Resolution extends Component
         }
     }
 
-    public function forward()
-    {
-        // $this->validate();
-        // $this->approval_type = 'Send to next level';
-        // $this->message       = 'Application send to next level';
-        // $this->next();
-    }
-
     public function decline()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->flag = 23;
         $this->approval_type = 'gagal';
         $this->message       = 'Application declined';
@@ -171,7 +163,7 @@ class Resolution extends Component
 
     public function next()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->Application->flag = $this->flag;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;

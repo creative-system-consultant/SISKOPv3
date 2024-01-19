@@ -151,17 +151,9 @@ class Approver extends Component
         }
     }
 
-    public function forward()
-    {
-        $this->validate();
-        $this->approval_type = 'Send to next level';
-        $this->message       = 'Application send to next level';
-        $this->next();
-    }
-
     public function decline()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->approval_type = 'gagal';
         $this->message       = 'Application Voted decline';
         $this->next();
@@ -218,7 +210,7 @@ class Approver extends Component
 
     public function next()
     {
-        $this->validate();
+        $this->xvalidate();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->vote = $this->approval_type;
         $this->Approval->save();

@@ -151,14 +151,6 @@ class Committee extends Component
         }
     }
 
-    public function forward()
-    {
-        $this->xvalidate();
-        $this->approval_type = 'Send to next level';
-        $this->message       = 'Application send to next level';
-        $this->next();
-    }
-
     public function decline()
     {
         $this->xvalidate();

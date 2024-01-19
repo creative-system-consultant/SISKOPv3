@@ -5,7 +5,7 @@
             label="Current Share"
             type="text"
             name="share_apply"
-            value="{{ $Application->amt_before }}"
+            value="{{ $Application->customer->fmsMembership?->total_share }}"
             leftTag="RM"
             rightTag=""
             mandatory=""
