@@ -130,30 +130,26 @@ class Approver extends Component
 
     public function xvalidate(){
         //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share'){
+        if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
-            } else {
-                //
             }
-        }
-        if ($this->include == 'contribution'){
-            $this->Application->start_apply = date('Y-m-d', strtotime('today'));
-            $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL){
+                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+            }
         }
         $this->validate();
-        if ($this->include == 'share'){
+        if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
-                $this->Application->cheque_date = NULL;
+                $this->reset($this->Application->cheque_date);
                 $this->Application->cheque_clear = NULL;
-            } else {
-                //
             }
-        }
-        if ($this->include == 'contribution'){
-            $this->Application->start_apply = NULL;
-            $this->Application->start_approved = NULL;
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL){
+                $this->Application->start_apply = NULL;
+                $this->Application->start_approved = NULL;
+            }
         }
     }
 
@@ -305,6 +301,12 @@ class Approver extends Component
         $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
         $this->client_bank_name = $bank_name->description;
         $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
+
+        if ($this->include == 'share' || $this->include == 'contribution'){
+            if ($this->Application->method == 'cheque'){
+                $this->Application->cheque_clear = $this->Application->cheque_clear?->format('Y-m-d') ?? $this->Application->cheque_date->format('Y-m-d');
+            }
+        }
     }
 
     public function render()
