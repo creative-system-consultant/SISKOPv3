@@ -162,6 +162,14 @@ class ApplyDividend extends Model implements Auditable
         return $this->approvals()->where([['vote','gagal'],['role_id', $type]])->count();
     }
 
+    public function approval_vote_yes() {
+        return $this->approvals()->where([['order', $this->apply_step],['vote', 'lulus']])->count();
+    }
+
+    public function approval_vote_no() {
+        return $this->approvals()->where([['order', $this->apply_step],['vote', 'gagal']])->count();
+    }
+
     public function sendWS($msg)
     {
         /**

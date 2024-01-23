@@ -118,4 +118,29 @@ class Contribution extends Model implements Auditable
     public function approval_vote_no() {
         return $this->approvals()->where([['order', $this->step],['vote', 'gagal']])->count();
     }
+
+    public function count_vote($type = 3)
+    {
+        return $this->approvals()->whereNotNull('vote')->where('role_id', $type)->count();
+    }
+
+    public function count_unvote($type = 3)
+    {
+        return $this->approvals()->whereNull('vote')->where('role_id', $type)->count();
+    }
+
+    public function vote_result($type = 3)
+    {
+        return $this->count_approved($type) >= $this->count_refuse($type) ? TRUE : FALSE;
+    }
+
+    public function count_approved($type = 3)
+    {
+        return $this->approvals()->where([['vote','lulus'],['role_id', $type]])->count();
+    }
+
+    public function count_refuse($type = 3)
+    {
+        return $this->approvals()->where([['vote','gagal'],['role_id', $type]])->count();
+    }
 }

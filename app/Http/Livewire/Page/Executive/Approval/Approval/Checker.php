@@ -129,24 +129,30 @@ class Checker extends Component
 
     public function xvalidate(){
         //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share' || $this->include == 'contribution'){
+        if ($this->include == 'share'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
             } else {
-                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
-                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                //
             }
         }
+        if ($this->include == 'contribution'){
+            $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+            $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+        }
         $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution'){
+        if ($this->include == 'share'){
             if($this->Application->method != 'cheque'){
                 $this->Application->cheque_date = NULL;
                 $this->Application->cheque_clear = NULL;
             } else {
-                $this->Application->start_apply = NULL;
-                $this->Application->start_approved = NULL;
+                //
             }
+        }
+        if ($this->include == 'contribution'){
+            $this->Application->start_apply = NULL;
+            $this->Application->start_approved = NULL;
         }
     }
 
