@@ -1,7 +1,7 @@
 
 <div>
     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Seller Information</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+    <div class="grid grid-cols-1 gap-2 md:grid-cols-4">
         <x-form.input
             label="Name"
             name=""
@@ -38,7 +38,7 @@
 </div>
 <div>
     <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+    <div class="grid grid-cols-1 gap-2 md:grid-cols-4">
         <x-form.input-tag
             label="Amount Applied"
             type="text"
@@ -92,10 +92,3 @@
         />
     </div>
 </div>
-
-
-
-
-
-
-

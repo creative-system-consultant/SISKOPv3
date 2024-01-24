@@ -3,11 +3,11 @@
 
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div x-data="{active : 1}">
-            <div class="flex bg-white rounded-md border-b">
+            <div class="flex bg-white border-b rounded-md">
                 <x-tab.title name="1" livewire="">
                     <div class="flex items-center">
-                        <x-heroicon-o-user-circle class="w-6 h-6 " /> 
-                        <span class="text-sm tooltip-text bg-primary-500 border rounded border-primary-500 text-white -mt-14">
+                        <x-heroicon-o-user-circle class="w-6 h-6 " />
+                        <span class="text-sm text-white border rounded tooltip-text bg-primary-500 border-primary-500 -mt-14">
                             Applicant Info
                         </span>
                     </div>
@@ -83,7 +83,7 @@
             </div>
         </div>
     </x-general.card>
-    
+
     <x-general.card class="p-4 mt-4 bg-white rounded-md shadow-md">
         <div x-data="{active : 1}">
             <div class="flex bg-white rounded-md">
@@ -100,7 +100,7 @@
                     </div>
                 </x-tab.title>
             </div>
-            
+
             <x-tab.content name="1">
                 <div class="mt-6">
                     @if($Approval->order == 1) No Approvals Yet @endif
@@ -183,14 +183,14 @@
                     <button type="button" wire:click="next" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         {{ $vote }} Approve
                     </button>
-                    @if($forward) 
+                    @if($forward)
                         <button wire:click="forward" type="button" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-orange-500 rounded-md focus:outline-none">
                         Send To Next Approval
                         </button>
                     @endif
                 </div>
             </div>
-            
+
         </div>
     </x-general.card>
 </div>

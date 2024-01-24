@@ -37,7 +37,11 @@
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{-- $item->status?->description --}}
+                        @if ($item->account_status == '0') Still being applied
+                        @elseif ($item->account_status == '1') Being Processed
+                        @elseif ($item->account_status == '20') Approved
+                        @elseif ($item->account_status > '20') Failed / Rejected
+                        @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         <div class="row">

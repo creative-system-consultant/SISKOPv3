@@ -186,6 +186,7 @@ class Maker extends Component
             //$this->Application->share_monthly = 0;
             //$this->Application->save();
         }
+        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
         if ($this->Application->share_pmt_mode_flag == 1){
             //$this->Application->share_monthly = 0;
             //$this->Application->share_fee = $this->Application->share_lump_sum_amt;

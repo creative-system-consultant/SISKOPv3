@@ -1,5 +1,5 @@
 <div x-show="active == 7">
-    <div  class="px-6 py-4 mt-4">
+    <div  class="px-6 py-4 mt-4" wire:poll.3s>
         <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300">Checklist Details</h2>
         <x-table.table>
             <x-slot name="thead">
@@ -8,7 +8,7 @@
                 <x-table.table-header class="text-left" value="" sort="" />
             </x-slot>
 
-            <x-slot name="tbody" wire:poll.5s>
+            <x-slot name="tbody" >
                 @foreach($applymember->files as $file)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
