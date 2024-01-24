@@ -6,12 +6,14 @@ use App\Models\Ref\RefBank;
 use App\Models\Share;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class SellShare extends Component
 {
+    use WithPagination;
+
     public User $User;
     public Share $sellShare;
-    public $sellShares;
     public $banks;
 
     public function showApplication($uuid)
@@ -23,11 +25,13 @@ class SellShare extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->sellShares = Share::where('direction', 'sell')->orWhere('direction', 'exchange')->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.sellshare');
+        $sellShares = Share::where('direction', 'sell')->orderBy('created_at','desc')->with('customer')->paginate(5);
+        return view('livewire.page.application.application-list.sellshare',[
+            'sellShares' => $sellShares,
+        ]);
     }
 }

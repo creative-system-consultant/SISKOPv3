@@ -10,6 +10,7 @@ use App\Models\SiskopCustomer as Customer;
 use App\Models\SiskopFamily as Family;
 use App\Models\SiskopEmployer as Employer;
 use App\Models\Introducer;
+use App\Models\Ref\RefBank;
 use App\Models\Ref\RefEducation;
 use App\Models\Ref\RefGender;
 use App\Models\Ref\RefMarital;
@@ -32,7 +33,7 @@ class Approver extends Component
     public FMSCustomer $CustIntroducer;
     public Introducer $Introducer;
     public ApplyMembership $Application;
-    public Approval $Approval;
+    public $Approval;
 
     public $banks;
     public $client_id;
@@ -52,11 +53,16 @@ class Approver extends Component
         'Approval.note'                    => ['required','max:255'],
         'Application.total_fee'            => ['nullable'],
         'Application.total_monthly'        => ['nullable'],
-        'Application.share_fee'            => ['required','gt:0'],
-        'Application.share_monthly'        => ['required','gt:0'],
-        'Application.register_fee'         => ['required','gt:0'],
-        'Application.contribution_fee'     => ['required','gt:0'],
-        'Application.contribution_monthly' => ['required','gt:0'],
+        'Application.share_fee'            => ['required','gte:0'],
+        'Application.share_monthly'        => ['required','gte:0'],
+        'Application.register_fee'         => ['required','gte:0'],
+        'Application.contribution_monthly' => ['required','gte:0'],
+        'Application.contribution_fee'     => ['required','gte:0'],
+        'Application.share_pmt_mode_flag'  => ['required'],
+        'Application.share_lump_sum_amt'   => ['required'],
+        'Application.payment_type'         => ['required'],
+        'Application.client_bank_id'       => ['required'],
+        'Application.client_bank_acct_no'  => ['required'],
         'CustAddress.address1'             => ['nullable'],
         'CustAddress.address2'             => ['nullable'],
         'CustAddress.address3'             => ['nullable'],
@@ -93,6 +99,7 @@ class Approver extends Component
     public function doApproveApplication(){
         $this->Application->flag = 20;
         $this->Application->approved_date = now();
+        $this->Application->save();
 
         $this->Application->Customer->save();
 
@@ -112,12 +119,12 @@ class Approver extends Component
             if($result[0]->SP_RETURN_CODE == 0){
 
                 //check in list of user clients if null adds it.
-                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->User->client_id]]);
+                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->Application->client_id]])->get();
 
-                if($check == NULL){
+                if($check->count() == 0){
                     $ret = DB::table('ref.user_has_clients')->insert([
                         'user_id'   => $this->Application->user_id,
-                        'client_id' => $this->User->client_id,
+                        'client_id' => $this->Application->client_id,
                     ]);
                 }
 
@@ -134,44 +141,59 @@ class Approver extends Component
     }
 
     public function doRejectApplication(){
-        $this->Application->flag = 24;
+        $this->Application->flag = 21;
         $this->message = 'Application is Rejected';
+
+        Log::info("MEMBERSHIP APPROVAL Rejected\nOP = Membership Approver.\nApplication ID = ".$this->Application->id." ");
     }
 
     public function countVote(){
-        //checks if vote unanimous is true, and votes are contradictory
-        if ($this->Application->current_approval()->rule_vote_type == 'unanimous' && $this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0){
-            $this->Application->step++;
+        //vote type unanimous
+        if ($this->Application->current_approval()->rule_vote_type == 'unanimous'){
+            // votes are contradictory
+            if ($this->Application->approval_vote_yes() > 0 && $this->Application->approval_vote_no() > 0){
+                $this->Application->step++;
+            // votes are all casted
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                if ($this->Application->approval_vote_yes() > 0){
+                    $this->doApproveApplication();
+                } else {
+                    $this->doRejectApplication();
+                }
+            }
         }
 
-        //checks if vote absolute is true, and votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve' && $this->Application->approval_vote_yes() > 0){
-            $this->doApproveApplication();
-        }
-
-        //checks if vote absolute is true, and votes are casted
-        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline' && $this->Application->approval_vote_no() > 0){
-            $this->doRejectApplication();
-        }
-
-        //checks if vote majority is true
-        else if ($this->Application->current_approval()->rule_vote_type == 'majority' 
-              && $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+        //checks if vote absolute is true, and any votes are casted
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve'){
+            if ($this->Application->approval_vote_yes() > 0){
                 $this->doApproveApplication();
-            } else {
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
                 $this->doRejectApplication();
             }
         }
 
-        //else, check if all votes are casted
-        else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
-            $this->doApproveApplication();
+        //checks if vote absolute is true, and any votes are casted
+        else if ($this->Application->current_approval()->rule_vote_type == 'absolute_decline'){
+            if ($this->Application->approval_vote_no() > 0){
+                $this->doRejectApplication();
+            } else if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                $this->doApproveApplication();
+            }
         }
 
-        //else
+        //checks if vote majority is true
+        else if ($this->Application->current_approval()->rule_vote_type == 'majority'){
+            if ($this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0){
+                if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()){
+                    $this->doApproveApplication();
+                } else {
+                    $this->doRejectApplication();
+                }
+            }
+        }
+
         else {
-            //$this->Application->step++;
+            //
         }
     }
 
@@ -195,29 +217,6 @@ class Approver extends Component
         return redirect()->route('application.list',['page' => '1']);
     }
 
-    public function back()
-    {
-        if ($this->Application->step > 1){
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
-            session()->flash('time', 10000);
-
-            return redirect()->route('application.list',['page' => '1']);
-        } else {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
-    }
-
     public function mount($uuid)
     {
         $this->User     = User::find(auth()->user()->id);
@@ -230,7 +229,22 @@ class Approver extends Component
                             ['order', $this->Application->step],
                             ['role_id', '4'],
                             ['user_id', $this->User->id ],
-                        ])->firstOrFail();
+                        ])->first();
+        if($this->Approval == NULL){
+            session()->flash('message', 'Application is being processed by another staff');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+            session()->flash('time', 10000);
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else if ($this->Approval->vote != NULL){
+            session()->flash('message', 'Application is have been processed by you');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+            session()->flash('time', 10000);
+
+            return redirect()->route('application.list',['page' => '1']);
+        }
         $this->CustAddress = Address::where([
                     ['cif_id', $this->Cust->id ],
                     ['address_type_id', 2],
@@ -259,6 +273,7 @@ class Approver extends Component
                     ['introduce_id', $this->Cust->id],
                     ['apply_id' , $this->Application->id],
                 ])->first();
+        $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->relationshiplist = RefRelationship::where([['client_id', $this->client_id], ['status', '1']])->get();
@@ -266,18 +281,6 @@ class Approver extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
-    }
-
-    public function deb(){
-        dd([
-            'Member' => $this->Application,
-            'Approval' => $this->Approval,
-            'vote rule' => $this->Application->current_approval()->rule_vote_type,
-            'voted'  => $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNotNull('vote')->count(),
-            'unvoted'  => $this->Application->approvals()->where('type','like','vote%')->where('order', $this->Application->step)->whereNull('vote')->count(),
-            'yes'    => $this->Application->approval_vote_yes(),
-            'no'     => $this->Application->approval_vote_no(),
-        ]);
     }
 
     public function render()

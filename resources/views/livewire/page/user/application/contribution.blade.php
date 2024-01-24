@@ -24,7 +24,7 @@
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($cont->step == 1 && $cont->flag == 1)
-                            {{ $cont->start_apply != NULL ? 'Starting Date' : 'One Month' }}
+                            {{ $cont->start_apply != NULL ? 'Starting Date' : 'Pay Once' }}
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">

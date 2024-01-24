@@ -1,11 +1,10 @@
 <div class="p-4">
-    <h1 class="text-base font-semibold md:text-2xl">Edit Product</h1>
+    <h1 class="text-base font-semibold md:text-2xl">{{ $page }} Product</h1>
     <div class="p-4 mt-4 bg-white rounded-md shadow-md">
-        <x-form.basic-form wire:submit.prevent="submit('{{ $Product->id }}')" class="p-4">
             <div class="bg-white rounded-md">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Product Info </h2>
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.input
                     label="Product Name"
                     type="text"
@@ -30,7 +29,7 @@
                 @endforeach
                 </x-form.dropdown>
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.dropdown
                     label="Financing Type"
                     value=""
@@ -58,7 +57,7 @@
                     wire:model="Product.profit_rate"
                 />
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.input-tag
                     label="Minimum Financing"
                     type="text"
@@ -84,9 +83,9 @@
                 />
 
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.dropdown
-                    label="Minimum Financing Term"
+                    label="Minimum Financing Term (YEAR)"
                     value=""
                     name="Product.term_min"
                     id=""
@@ -97,20 +96,13 @@
                     default="yes"
                     wire:model="Product.term_min"
                 >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                    @for ($i = 1; $i < 11; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
                 </x-form.dropdown>
 
                 <x-form.dropdown
-                    label="Maximum Financing Term"
+                    label="Maximum Financing Term (YEAR)"
                     value=""
                     name="Product.term_max"
                     id=""
@@ -121,19 +113,12 @@
                     default="yes"
                     wire:model="Product.term_max"
                 >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                @for ($i = 1; $i < 11; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
                 </x-form.dropdown>
             </div>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-4">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <x-form.dropdown
                     label="Concurrent Product Apply"
                     value=""
@@ -146,16 +131,9 @@
                     default="yes"
                     wire:model="Product.apply_limit"
                 >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                    @for ($i = 1; $i < 11; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
                 </x-form.dropdown>
 
                 <x-form.input
@@ -167,6 +145,52 @@
                     disable=""
                     wire:model="Product.apply_lifetime"
                 />
+            </div>
+    </div>
+        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+            <div class="bg-white rounded-md">
+                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Charges Info </h2>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 mt-4">
+                <x-form.input-tag
+                    label="Process Fee"
+                    type="text"
+                    name="Product.process_fee"
+                    value=""
+                    leftTag="RM"
+                    rightTag=""
+                    mandatory=""
+                    disable=""
+                    wire:model="Product.process_fee"
+                />
+                <x-form.input-tag
+                    label="Takaful Percentage"
+                    type="text"
+                    name="Product.takaful_percentage"
+                    value=""
+                    leftTag=""
+                    rightTag="%"
+                    mandatory=""
+                    disable=""
+                    wire:model="Product.takaful_percentage"
+                />
+                <x-form.input-tag
+                    label="Bank Charge"
+                    type="text"
+                    name="Product.bank_charge"
+                    value=""
+                    leftTag="RM"
+                    rightTag=""
+                    mandatory=""
+                    disable=""
+                    wire:model="Product.bank_charge"
+                />
+            </div>
+        </div>
+
+        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+            <div class="bg-white rounded-md">
+                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Documents Info </h2>
             </div>
             @foreach ($refdocument as $key => $list)
                 <div class="mt-4 grid grid-cols-12 gap-6">
@@ -201,6 +225,8 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
             <div class="mt-4 bg-white rounded-md">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Brochure </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
@@ -250,7 +276,7 @@
                             class="w-auto h-32 p-2 rounded-xl ring-2 ring-gray-200 "
                             @if($payment_table)
                                 src="{{ $payment_table->temporaryUrl() }}"
-                            @elseif ($brochure_file != NULL)
+                            @elseif ($payment_table_file != NULL)
                                 src="{{ asset('storage/'.$payment_table_file->filepath) }}"
                             @endif
                             alt="Payment Table"
@@ -259,14 +285,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
             <div class="mt-4 flex items-center justify-center space-x-2">
                 <a href="{{ route('product.list') }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                     Cancel
                 </a>
-                <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
-                    Update
+                <button type="button" wire:click="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                    Save
                 </button>
             </div>
-        </x-form.basic-form>
     </div>
 </div>

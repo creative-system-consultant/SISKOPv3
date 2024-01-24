@@ -6,12 +6,13 @@ use App\Models\CloseMembership as CloseMemberships;
 use App\Models\Customer;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CloseMembership extends Component
 {
+    use WithPagination;
     public User $User;
     public CloseMemberships $closemembership;
-    public $closememberships;
     public $custApply,$type;
 
     public function showApplication($uuid)
@@ -39,11 +40,13 @@ class CloseMembership extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
-        $this->closememberships = CloseMemberships::where('client_id', auth()->user()->client_id)->orderBy('created_at','desc')->with('customer')->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.close-membership');
+        $closememberships = CloseMemberships::where('client_id', auth()->user()->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        return view('livewire.page.application.application-list.close-membership',[
+            'closememberships' => $closememberships,
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Page\Application\ApplySellExchangeShare;
 
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use App\Models\Share;
 use Livewire\Component;
@@ -15,11 +16,11 @@ class ApplySellExchangeShare extends Component
     public $mbr_icno;
     public $bank_name;
     public $bank_acct;
-    public $bank_account;
     public $bank_code;
-    public $banks;
+    public $bank_id;
     public $total_share;
     public $mbr_name;
+    public $User;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -27,65 +28,72 @@ class ApplySellExchangeShare extends Component
     protected $rules = [
         'cust.name'       => 'required',
         'cust.icno'       => 'required',
-        'share_apply'     => 'required|numeric',
+        'cust.bank_id'    => 'nullable',
         'share_type'      => 'required',
         'bank_name'       => 'required_if:share_type,==,coop',
-        'bank_account'    => 'required_if:share_type,==,coop',
         'mbr_icno'        => 'required_if:share_type,==,mbr',
-        'bank_code'       => 'required_if:share_type,==,mbr',
-        'bank_acct'       => 'required_if:share_type,==,mbr',
+        // 'bank_code'       => 'required_if:share_type,==,coop',
     ];
 
     protected $messages = [
         'mbr_icno.required_if'       => ':attribute field is required',
         'share_apply.required'       => ':attribute field is required',
         'share_apply.numeric'        => ':attribute field must be a number',
-        // 'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
-        // 'share_apply.gt'             => 'Application must be more than RM0',
+        'share_apply.lte'            => 'Application must be less than Current Share Capital RM:value',
+        'share_apply.gt'             => 'Application must be more than RM0',
         'share_type.required'        => ':attribute is required',
-        'bank_name.required_if'      => ':attribute field is required',
-        'bank_code.required_if'      => ':attribute field is required',
-        'bank_account.required_if'   => ':attribute field is required',
-        'bank_acct.required_if'      => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
         'mbr_icno'        => 'Member IC No.',
         'share_apply'     => 'Reimbursement of Share Capital applied',
         'share_type'      => 'Types of Share Reimbursement',
-        'bank_name'       => 'Bank',
-        'bank_code'       => 'Bank',
-        'bank_account'    => 'Account Bank No.',
-        'bank_acct'       => 'Account Bank No.'
     ];
 
+    public function getShareRules()
+    {
+        $rules = [
+            'share_apply' => [
+                'required',
+                'numeric',
+                'min:50'
+            ],
+        ];
+
+        $rules['share_apply'][] = 'max:' . $this->total_share;
+
+
+        return $rules;
+    }
 
     public function submit()
     {
-        $user = auth()->user();
         $customer = new Customer;
-        $cust = $customer->where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $cust = $customer->where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+
+        $this->validate($this->getShareRules());
 
         if ($this->share_type == 'coop') {
+
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
-            // dd($share);
+
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
                 'bank_code'    => $this->bank_name,
-                'bank_account' => $this->bank_account,
+                'bank_account' => $this->bank_acct,
                 'flag'         => '1',
                 'step'         => '1',
                 'created_by'   => strtoupper($cust->name),
             ]);
         } elseif ($this->share_type == 'mbr') {
-            $cust_member = $customer->where([['identity_no', $this->mbr_icno], ['identity_no', '<>', $user->icno]])->where('client_id', $user->client_id)->first();
+            $cust_member = $customer->where([['identity_no', $this->mbr_icno], ['identity_no', '<>', $this->User->icno]])->where('client_id', $this->User->client_id)->first();
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'exchange']])->first();
 
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
-                'bank_code'    => $this->bank_code,
+                'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_acct,
                 'exc_cust_id'  => $cust_member->id,
                 'flag'         => '1',
@@ -107,7 +115,10 @@ class ApplySellExchangeShare extends Component
 
     public function alertConfirm()
     {
+
         $this->validate();
+        $this->validate($this->getShareRules());
+
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
@@ -179,14 +190,14 @@ class ApplySellExchangeShare extends Component
         ]);
 
         $this->share_apply  = $share?->apply_amt;
-        $this->bank_account = $share?->bank_account;
+        $this->bank_acct = $share?->bank_account;
         $this->bank_name    = $share?->bank_code;
     }
 
     public function updated()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $this->mbr_icno)->where('client_id', $user->client_id)->first();
+        $this->User = auth()->user();
+        $customer = Customer::where('identity_no', $this->mbr_icno)->where('client_id', $this->User->client_id)->first();
         if (strlen($this->mbr_icno) < 12) {
             $this->mbr_name = '';
             return;
@@ -207,7 +218,7 @@ class ApplySellExchangeShare extends Component
             ]);
             $this->mbr_name = '';
         } else {
-            if ($this->mbr_icno == $user->icno) {
+            if ($this->mbr_icno == $this->User->icno) {
                 $this->dispatchBrowserEvent('swal', [
                     'title' => '',
                     'text'  => 'IC No. Cannot Be Yourself',
@@ -231,16 +242,21 @@ class ApplySellExchangeShare extends Component
         }
     }
 
+
+
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $this->total_share = $this->cust->fmsMembership->total_share;
 
-        $this->banks           = RefBank::where([
-            ['client_id', $user->client_id],
+        $this->bank_id           = RefBank::where([
+            ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
+
+
+
 
         $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);
@@ -251,6 +267,8 @@ class ApplySellExchangeShare extends Component
 
     public function render()
     {
+        $this->bank_name = $this->cust->bank_id;
+        $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-sell-exchange-share.apply-sell-exchange-share')->extends('layouts.head');
     }
 }

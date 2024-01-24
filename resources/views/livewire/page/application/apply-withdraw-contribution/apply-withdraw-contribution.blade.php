@@ -24,7 +24,7 @@
                 />
 
                 <x-form.input-tag
-                    label="Current Contribution Amount"
+                    label="Current Contribution"
                     type="text"
                     name="current_cont"
                     value=""
@@ -47,72 +47,58 @@
                     wire:model.defer="monthly_contribution"
                 />
             </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+                <div>
+                    <x-form.dropdown
+                        label="Bank"
+                        value=""
+                        name="cust.bank_id"
+                        id=""
+                        mandatory=""
+                        disable="true"
+                        default="yes"
+                        wire:model="cust.bank_id"
+                    >
+                        @foreach ($bank_id as $list)
+                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
+                </div>
+
+                <div>
+                    <x-form.input
+                        label="Bank Account No."
+                        name="bank_acct"
+                        id="bank_acct"
+                        value=""
+                        mandatory=""
+                        disable="true"
+                        type="text"
+                        wire:model="bank_acct"
+                    />
+                </div>
+            </div>
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Contribution Information</h2>
             <x-form.basic-form wire:submit.prevent="alertConfirm">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <div>
                         <x-form.input-tag
-                            label="Add Contribution applied"
+                            label="Amount Apply"
                             type="text"
                             name="cont_apply"
+                            id="cont_apply"
                             value=""
                             placeholder="0.00"
                             leftTag="RM"
                             rightTag=""
                             mandatory=""
                             disable=""
-                            wire:model.defer="cont_apply"
-                        />
-                    </div>
-
-                    <div>
-                        <x-form.dropdown
-                            label="Bank"
-                            value=""
-                            name="bank_code"
-                            id="bank_code"
-                            mandatory=""
-                            disable=""
-                            default="yes"
-                            wire:model.defer="bank_code"
-                            >
-                            @foreach ($banks as $bank)
-                                <option value="{{ $bank->code }}">{{ $bank->description }}</option>
-                            @endforeach
-                        </x-form.dropdown>
-                    </div>
-
-                    <div>
-                        <x-form.input
-                            label="Account Bank No."
-                            name="bank_account"
-                            id="bank_account"
-                            value=""
-                            mandatory=""
-                            disable=""
-                            type="text"
-                            wire:model.defer="bank_account"
+                            wire:model="cont_apply"
                         />
                     </div>
                 </div>
 
-                <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Upload Document (uploaded only: jpg/png/jpeg/pdf)</h2>
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                    <div>
-                        <x-form.input
-                            label="Upload Supporting Document"
-                            name="support_file"
-                            id="support_file"
-                            value=""
-                            mandatory=""
-                            disable=""
-                            type="file"
-                            accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                            wire:model.defer="support_file"
-                        />
-                    </div>
-                </div>
 
                 <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">

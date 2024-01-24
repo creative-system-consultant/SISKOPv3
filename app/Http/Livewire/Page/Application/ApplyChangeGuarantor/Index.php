@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplyChangeGuarantor;
 
 use App\Models\AccountPosition;
 use App\Models\ChangeGuarantor;
+use App\Models\ChangeGuarantorDetails;
 use App\Models\Customer;
 use App\Models\FmsMembership;
 use App\Models\GuarantorList;
@@ -23,28 +24,30 @@ class Index extends Component
     public $oldNric = [];
     public $oldMbrno = [];
 
+    protected $listeners = ['submit'];
+
     public function mount()
     {
         $this->user = auth()->user();
         $this->client_id = $this->user->client_id;
-        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
 
-        $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
+        $fms_cust = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
+
 
         $changeGuarantor = ChangeGuarantor::where([
-            ['cif_id', $this->fms_cust->id],
+            ['cif_id', $fms_cust->id],
             ['flag', 0],
             ['step', 0]
         ])->first();
 
         if ($changeGuarantor != NULL) {
-            if ($changeGuarantor->flag == '0') {
+            if ($changeGuarantor->flag > '0') {
                 session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
                 session()->flash('time', 10000);
                 session()->flash('info');
                 session()->flash('title');
+                return redirect()->route('home');
             }
-            return redirect()->route('home');
         }
     }
 
@@ -74,7 +77,6 @@ class Index extends Component
                     $query->where('client_id', $this->client_id);
                 })->first();
 
-            // dd($result->fmsMembership->refMemStat->allow_guarantor_flag);
             if ($result === null) {
                 $this->addError('searchNRIC.' . $index, 'No User with this IC');
                 $this->mbrNos[$index] = '';
@@ -96,45 +98,80 @@ class Index extends Component
 
     public function submit()
     {
-        foreach ($this->guarantor as $index => $guarantor) {
-            $mbr_no = $this->mbrNos[$index] ?? null;
-            $name = $this->names[$index] ?? null;
-            $identity_no = $this->newNric[$index] ?? null;
-            $old_guarantor = FmsMembership::where('mbr_no', $guarantor->guarantor_mbr_id)->first();
-            $old_guarantor_customer = $old_guarantor->fmsCustomer;
-            $old_guarantor_mbrNo = $old_guarantor->mbr_no;
-            $old_guarantor_name = $old_guarantor_customer->name;
-            $old_guarantor_nric = $old_guarantor_customer->identity_no;
 
-
-            ChangeGuarantor::create([
-                'cust_id' => $this->siskop_cust->id,
-                'account_no' => $guarantor->account_no,
-                'old_jamin_member1' => $old_guarantor_mbrNo,
-                'old_jamin_name1' => $old_guarantor_name,
-                'old_jamin_icno1' => $old_guarantor_nric,
-                'new_jamin_member1' => $mbr_no,
-                'new_jamin_name1' => $name,
-                'new_jamin_icno1' => $identity_no,
+        if ($this->guarantor) {
+            $applyChangeGuarantor = ChangeGuarantor::create([
+                'client_id' => $this->client_id,
+                'cif_id' => $this->fms_cust->id,
+                'account_no' => $this->acct_no,
                 'jamin_reason' => $this->reasonChange,
                 'jamin_reason_txt' => $this->reasonChangeTxt,
-                'flag' => '0',
-                'step' => '0',
+                'flag' => '1',
+                'step' => '1',
                 'created_by' => auth()->user()->name,
                 'created_at' => now()
             ]);
+
+            foreach ($this->guarantor as $index => $guarantor) {
+                $mbr_no = $this->mbrNos[$index] ?? null;
+                $name = $this->names[$index] ?? null;
+                $identity_no = $this->newNric[$index] ?? null;
+                $old_guarantor = FmsMembership::where('mbr_no', $guarantor->guarantor_mbr_id)->first();
+                $old_guarantor_customer = $old_guarantor->fmsCustomer;
+                $old_guarantor_mbrNo = $old_guarantor->mbr_no;
+                $old_guarantor_name = $old_guarantor_customer->name;
+                $old_guarantor_nric = $old_guarantor_customer->identity_no;
+
+
+                $ChangeGuarantorDetails = ChangeGuarantorDetails::create([
+                    'client_id' => $this->client_id,
+                    'apply_id' => $applyChangeGuarantor->id,
+                    'cif_id' => $this->fms_cust->id,
+                    'account_no' => $guarantor->account_no,
+                    'old_jamin_member' => $old_guarantor_mbrNo,
+                    'old_jamin_name' => $old_guarantor_name,
+                    'old_jamin_icno' => $old_guarantor_nric,
+                    'new_jamin_member' => $mbr_no,
+                    'new_jamin_name' => $name,
+                    'new_jamin_icno' => $identity_no,
+                    'created_by' => auth()->user()->name,
+                    'created_at' => now()
+                ]);
+            }
+
+            $applyChangeGuarantor->remove_approvals();
+            $applyChangeGuarantor->make_approvals('ChangeGuarantor');
+
+            session()->flash('message', 'Change Guarantor Application Successfully Applied');
+            session()->flash('time', 10000);
+            session()->flash('success');
+            session()->flash('title');
+
+            return redirect('home');
+        } else {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'Error!',
+                'text'  => 'To change guarantor, you must atleast change 1 guarantor',
+                'icon'  => 'error',
+                'showConfirmButton' => false,
+                'timer' => 4500,
+            ]);
         }
+    }
 
-        session()->flash('message', 'Change Guarantor Application Successfully Applied');
-        session()->flash('time', 10000);
-        session()->flash('success');
-        session()->flash('title');
-
-        return redirect('home');
+    public function alertConfirm()
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type'      => 'warning',
+            'text'      => 'Are you sure you want to change your guarantor(s)?',
+        ]);
     }
 
     public function render()
     {
+        $this->fms_cust         = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
+        $this->siskop_cust      = SiskopCustomer::where('identity_no', $this->user->icno)->where('client_id', $this->client_id)->first();
+
 
         $membership             = $this->fms_cust->fmsMembership;
 

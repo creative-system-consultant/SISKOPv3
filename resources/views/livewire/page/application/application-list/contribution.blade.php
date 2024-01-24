@@ -1,10 +1,10 @@
 <div x-data="{ openModal : false }" wire:poll.30000ms>
     <x-table.table>
         <x-slot name="thead">
-            <x-table.table-header class="text-left " value="No" sort="" />
-            <x-table.table-header class="text-left " value="Applicant Name" sort="" />
+            <x-table.table-header class="text-left" value="No" sort="" />
+            <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
-            <x-table.table-header class="text-left" value="Payment Method" sort="" />
+            <x-table.table-header class="text-left" value="Contribution Type" sort="" />
             <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
@@ -23,7 +23,7 @@
                         {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->start_apply != NULL ? 'Starting Date' : 'One Month' }}
+                        {{ $item->start_apply != NULL ? 'CHANGE MONTHLY' : 'PAY ONCE' }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right uppercase">
                         {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
@@ -35,7 +35,7 @@
                         @if ($item->flag == '0') Still being applied
                         @elseif ($item->flag == '1') Being Processed
                         @elseif ($item->flag == '3') Failed / Decline
-                        @elseif ($item->flag == '23') Failed / Decline
+                        @elseif ($item->flag == '21' || $item->flag == '23') Failed / Decline
                         @elseif ($item->flag == '20') Approved
                         @endif
                     </x-table.table-body>
@@ -97,7 +97,10 @@
             @endforelse
         </x-slot>
     </x-table.table>
-    <x-modal.modal modalActive="openModal" title="Add Contribution Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
+    <div class="mt-4">
+        {{ $contributions->links('livewire::pagination-links') }}
+    </div>
+    <x-modal.modal modalActive="openModal" title="Add/Change Contribution Approval" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.details.apply-contribution')
     </x-modal.modal>
 </div>

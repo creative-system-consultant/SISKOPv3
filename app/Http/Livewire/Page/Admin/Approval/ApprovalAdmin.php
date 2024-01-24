@@ -44,7 +44,7 @@ class ApprovalAdmin extends Component
 
     public function mount($type = 'Share')
     {
-        if ( !in_array($type,['Share','SellShare','Contribution','SellContribution','Membership','CloseMembership','Apply_Dividend'])){
+        if (!in_array($type, ['Share', 'SellShare', 'Contribution', 'SellContribution', 'Membership', 'CloseMembership', 'Apply_Dividend', 'SpecialAid', 'ChangeGuarantor'])) {
             return redirect()->route('home');
         }
 
@@ -61,12 +61,11 @@ class ApprovalAdmin extends Component
     public function loadList()
     {
         $this->lists     = $this->approval->approvals()->orderBy('order')->get();
-
     }
 
     public function add()
     {
-        if($this->selected == ''){
+        if ($this->selected == '') {
             return '';
         }
         $last = $this->lists != [] ? $this->lists->count() : 1;
@@ -78,7 +77,7 @@ class ApprovalAdmin extends Component
             ],
             [
                 'role_id'   => $this->selected,
-                'deleted_at'=> NULL,
+                'deleted_at' => NULL,
             ]
         );
         $this->custom   = '';
@@ -88,10 +87,10 @@ class ApprovalAdmin extends Component
 
     public function up($order)
     {
-        if ($order > 1){
-            $sort = $this->approval->approvals()->whereIn('order', [$order, $order-1])->orderBy('order')->get();
+        if ($order > 1) {
+            $sort = $this->approval->approvals()->whereIn('order', [$order, $order - 1])->orderBy('order')->get();
             $sort[0]->order = $order;
-            $sort[1]->order = $order-1;
+            $sort[1]->order = $order - 1;
             $sort[0]->save();
             $sort[1]->save();
         }
@@ -100,9 +99,9 @@ class ApprovalAdmin extends Component
 
     public function down($order)
     {
-        if ($order > 0){
-            $sort = $this->approval->approvals()->whereIn('order', [$order, $order+1])->orderBy('order')->get();
-            $sort[0]->order = $order+1;
+        if ($order > 0) {
+            $sort = $this->approval->approvals()->whereIn('order', [$order, $order + 1])->orderBy('order')->get();
+            $sort[0]->order = $order + 1;
             $sort[1]->order = $order;
             $sort[0]->save();
             $sort[1]->save();
@@ -112,12 +111,12 @@ class ApprovalAdmin extends Component
 
     public function rem($id)
     {
-        $rem   = ClientApprovalRole::where([['id', $id],['client_id', $this->User->client_id]])->firstOrFail();
+        $rem   = ClientApprovalRole::where([['id', $id], ['client_id', $this->User->client_id]])->firstOrFail();
         $rem->delete();
         $this->lists    = $this->approval->approvals()->orderBy('order')->get();
-        foreach($this->lists as $key=>$list){
-            if ($list->order != $key+1){
-                $list->order = $key+1;
+        foreach ($this->lists as $key => $list) {
+            if ($list->order != $key + 1) {
+                $list->order = $key + 1;
                 $list->save();
             }
         }
@@ -138,19 +137,18 @@ class ApprovalAdmin extends Component
 
     public function change_rule($id)
     {
-        $this->rule_vote_type = $this->lists[$id-1]->rule_vote_type;
+        $this->rule_vote_type = $this->lists[$id - 1]->rule_vote_type;
     }
 
     public function saveRule($key)
     {
-        if($this->rule_vote_type == 'majority'){
+        if ($this->rule_vote_type == 'majority') {
             $this->lists[$key]->rule_vote = FALSE;
         } else {
             $this->lists[$key]->rule_vote = TRUE;
         }
         $this->lists[$key]->rule_vote_type = $this->rule_vote_type;
         $this->lists[$key]->save();
-
     }
 
     public function render()

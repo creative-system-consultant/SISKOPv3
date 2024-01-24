@@ -9,7 +9,7 @@
         @if($mailFlag ?? '' == "true")
         <div>
             <x-form.checkbox
-                label="Mailing Flag"
+                label="Mailing Address"
                 id=""
                 name=""
                 value=""

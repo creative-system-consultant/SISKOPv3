@@ -27,18 +27,22 @@ class ProductEdit extends Component
     public $refdocument;
     public $document = [];
     public $documentlist = [];
+    public $page = "Edit";
 
     protected $rules = [
-        'Product.name'               => 'required|string',
-        'Product.fin_type'           => 'required|integer',
-        'Product.product_type'       => 'required|integer',
-        'Product.profit_rate'        => ['required', 'numeric', 'lte:100'],
-        'Product.amt_min'            => ['required', 'numeric', 'lte:Product.amt_max', 'gt:0'],
-        'Product.amt_max'            => ['required', 'numeric', 'gte:Product.amt_min'],
-        'Product.term_min'           => ['required', 'integer', 'lte:Product.term_max'],
-        'Product.term_max'           => ['required', 'integer', 'gte:Product.term_min'],
-        'Product.apply_limit'        => ['required', 'integer'],
-        'Product.apply_lifetime'     => ['integer'],
+        'Product.name'           => ['required', 'string'],
+        'Product.fin_type'       => ['required', 'integer'],
+        'Product.product_type'   => ['required', 'integer'],
+        'Product.profit_rate'    => ['required', 'numeric', 'lte:100'],
+        'Product.amt_min'        => ['required', 'numeric', 'lte:Product.amt_max', 'gt:0'],
+        'Product.amt_max'        => ['required', 'numeric', 'gte:Product.amt_min'],
+        'Product.term_min'       => ['required', 'integer', 'lte:Product.term_max'],
+        'Product.term_max'       => ['required', 'integer', 'gte:Product.term_min'],
+        'Product.apply_limit'    => ['required', 'integer'],
+        'Product.apply_lifetime' => ['integer'],
+        'Product.process_fee'    => ['required', 'numeric', 'gte:0'],
+        'Product.takaful_percentage' => ['required', 'numeric', 'gte:0'],
+        'Product.bank_charge' => ['required', 'numeric', 'gte:0'],
     ];
 
     protected $messages = [
@@ -63,12 +67,19 @@ class ProductEdit extends Component
         'Product.term_max'       => 'Maximum term',
     ];
 
-    public function mount($id)
+    public function mount($id = NULL)
     {
         $this->User = auth()->user();
-        $this->Product            = AccountProduct::where('id', $id)->first();
+
+        if ($id == NULL){
+            $this->Product = new AccountProduct;
+            $this->page = "Create";
+        } else {
+            $this->Product = AccountProduct::where('id', $id)->first();
+        }
+
         $this->producttype        = RefProductType::all();
-        $this->refdocument        = RefProductDocuments::where('client_id', $this->User->client_id)->get();
+        $this->refdocument        = RefProductDocuments::get();
         $this->brochure_file      = $this->Product->files()->where('filename', 'brochure')->first();
         $this->payment_table_file = $this->Product->files()->where('filename', 'payment_table')->first();
         $this->loanType           = RefFinCalcType::where('client_id', $this->User->client_id)->get();
@@ -77,10 +88,10 @@ class ProductEdit extends Component
     public function enableDoc($code,$name)
     {
         $this->document = AccountProductDocument::firstOrCreate([
-            'product_id'    => $this->Product->id,
-            'client_id'       => $this->User->client_id,
-            'type'          => $code,
-            'name'          => $name,
+            'product_id' => $this->Product->id,
+            'client_id'  => $this->User->client_id,
+            'type'       => $code,
+            'name'       => $name,
         ]);
 
         $this->document->update([
@@ -88,7 +99,7 @@ class ProductEdit extends Component
         ]);
     }
 
-    public function submit($id)
+    public function submit()
     {
 
         $this->validate();

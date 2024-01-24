@@ -177,11 +177,6 @@
                     <button type="button" wire:click="decline" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none">
                         VOTE DECLINE
                     </button>
-                    @if($Application->step > 1)
-                    <button type="button" wire:click="back" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-                        Previous
-                     </button>
-                     @endif
                     {{--<button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
                         Debug
                      </button>--}}

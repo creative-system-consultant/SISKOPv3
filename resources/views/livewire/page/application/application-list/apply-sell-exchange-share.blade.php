@@ -2,8 +2,8 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Seller Information</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $sellShare?->id }}</h2>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
                     name="custname"
@@ -12,7 +12,6 @@
                     disable="true"
                     type="text"
                 />
-
                 <x-form.input
                     label="Identity Number"
                     name="custic"
@@ -21,64 +20,43 @@
                     disable="true"
                     type="text"
                 />
-
-                <x-form.dropdown
-                    label="Bank"
-                    value=""
-                    name="bank_code"
-                    id="bank_code"
+                <x-form.input-tag
+                    label="Current Share"
+                    type="text"
+                    name="current_share"
+                    value="{{ $sellShare->amt_before ?? '' }}"
+                    leftTag="RM"
+                    rightTag=""
                     mandatory=""
                     disable="true"
-                    default="yes"
-                    >
-                    @foreach ($banks ?? [] as $bank)
-                        <option @if ($bank->code == $sellShare->bank_code) selected @endif>{{ $bank->description }}</option>
-                    @endforeach
-                </x-form.dropdown>
-
+                />
+            </div>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mt-4">
+                <x-form.input
+                    label="Bank"
+                    name="bank_acct"
+                    id="bank_acct"
+                    value="{{ $sellShare->customer->bank?->description }}"
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                />
                 <x-form.input
                     label="Account Bank No."
                     name="bank_acct"
                     id="bank_acct"
-                    value="{{ $sellShare->bank_account ?? '' }}"
+                    value="{{ $sellShare->customer->bank_acct_no ?? '' }}"
                     mandatory=""
                     disable="true"
                     type="text"
                 />
             </div>
 
-            @if(isset($sellShare->direction) && $sellShare->direction !== 'sell'  )
-            <div>
-                <div>
-                    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Buyer Information</h2>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                        <x-form.input
-                            label="Member Name"
-                            name="buyer_name"
-                            value="{{ isset($sellShare->exc_cust_id) && $sellShare->exc_cust_id == NULL ? '' : $sellShare->buyer->name ?? '' }}"
-                            mandatory=""
-                            disable="true"
-                            type="text"
-                        />
-
-                        <x-form.input
-                            label="Member IC No."
-                            name="buyer_icno"
-                            value="{{ isset($sellShare->exc_cust_id) && $sellShare->exc_cust_id == NULL ? '' : $sellShare->buyer->icno ?? '' }}"
-                            mandatory=""
-                            disable="true"
-                            type="text"
-                        />
-                    </div>
-                </div>
-            </div>
-            @endif
-
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Share Information</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <div>
                     <x-form.input-tag
-                        label="Reimbursement of Share Capital applied"
+                        label="Amount Applied"
                         type="text"
                         name="share_apply"
                         value="{{ $sellShare->apply_amt ?? '' }}"
@@ -92,7 +70,7 @@
 
                 <div>
                     <x-form.input-tag
-                        label="Reimbursement of Share Capital approved"
+                        label="Amount Approved"
                         type="text"
                         name="share_approved"
                         value="{{ $sellShare->approved_amt ?? '' }}"
@@ -105,8 +83,8 @@
                 </div>
                 <div>
                     <x-form.input
-                        label="Types of Share Reimbursement"
-                        value="{{ isset($sellShare->direction) && $sellShare->direction == 'sell' ? 'Co-operative' : 'Member' }}"
+                        label="Sell To"
+                        value="COOP"
                         name="share_type"
                         id="share_type"
                         mandatory=""

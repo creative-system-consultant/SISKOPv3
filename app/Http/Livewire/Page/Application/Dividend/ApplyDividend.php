@@ -32,9 +32,10 @@ class ApplyDividend extends Component
         'payout_share'      => '',
         'payout_contri'     => '',
 
-        'apply.div_cash_apply'   => '',
-        'apply.div_share_apply'  => '',
-        'apply.div_contri_apply' => '',
+        'apply.div_cash_apply'   => 'numeric',
+        'apply.div_share_apply'  => 'numeric',
+        'apply.div_contri_apply' => 'numeric',
+
     ];
 
     protected $messages = [
@@ -46,8 +47,9 @@ class ApplyDividend extends Component
         $cash = $this->payout_cash ? $this->apply->div_cash_apply : '0';
         $share = $this->payout_share ? $this->apply->div_share_apply : '0';
         $contri = $this->payout_contri ? $this->apply->div_contri_apply : '0';
-
-        $this->payout = $cash + $share + $contri;
+        if (is_numeric($cash) && is_numeric($share) && is_numeric($contri)) {
+            $this->payout = $cash + $share + $contri;
+        }
     }
 
     public function submit()
@@ -103,7 +105,7 @@ class ApplyDividend extends Component
             $this->cur_bal_dividend = $this->Dividend->bal_dividen;
         }
         $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->first();
-
+        // dd($apply);
         if ($apply == NULL) {
             $this->apply = new ModelApplydividend;
             $this->apply->client_id   = $this->User->client_id;
@@ -124,8 +126,9 @@ class ApplyDividend extends Component
 
     public function render()
     {
-
-        $this->cur_bal_dividend = number_format($this->Dividend->bal_dividen - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
+        if (is_numeric($this->apply->div_cash_apply) && is_numeric($this->apply->div_share_apply) && is_numeric($this->apply->div_contri_apply)) {
+            $this->cur_bal_dividend = number_format($this->Dividend->bal_dividen - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
+        }
         return view('livewire.page.application.dividend.apply-dividend')->extends('layouts.head');
     }
 }

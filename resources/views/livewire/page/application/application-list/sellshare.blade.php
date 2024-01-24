@@ -1,9 +1,8 @@
 <div x-data="{ openModal : false }">
     <x-table.table>
         <x-slot name="thead">
-            <x-table.table-header class="text-left " value="No" sort="" />
-            <x-table.table-header class="text-left " value="Seller" sort="" />
-            <x-table.table-header class="text-left" value="Buyer" sort="" />
+            <x-table.table-header class="text-left" value="No" sort="" />
+            <x-table.table-header class="text-left" value="Applicant Name" sort=""/>
             <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-right" value="Approved Amount (RM)" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
@@ -19,9 +18,6 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         {{ $item->customer->name }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->exc_cust_id == NULL ? 'Co-operative' : $item->buyer->name }}
-                    </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right uppercase">
                         {{ $item->apply_amt }}
                     </x-table.table-body>
@@ -34,7 +30,7 @@
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '0') Still being applied
                         @elseif ($item->flag == '1') Being processed
-                        @elseif ($item->flag == '3') Failed / Decline
+                        @elseif ($item->flag == '3' || $item->flag == '21' || $item->flag == '23') Failed / Decline
                         @elseif ($item->flag == '20') Approved
                         @endif
                     </x-table.table-body>
@@ -96,7 +92,10 @@
             @endforelse
         </x-slot>
     </x-table.table>
-    <x-modal.modal modalActive="openModal" title="Share Reimbursement Application" modalSize="7xl" closeBtn="yes">
+    <div class="mt-4">
+        {{ $sellShares->links('livewire::pagination-links') }}
+    </div>
+    <x-modal.modal modalActive="openModal" title="Sell Share Approval" modalSize="7xl" closeBtn="yes">
         @include('livewire.page.application.application-list.apply-sell-exchange-share')
     </x-modal.modal>
 </div>

@@ -129,14 +129,14 @@
             </div>
         </x-form.basic-form>
         @if (session('error'))
-        <x-swall.error  message="{{ session('message') }}"/>
-    @elseif (session('info'))
-        <x-swall.info  message="{{ session('message') }}"/>
-    @elseif (session('success'))
-        <x-swall.success message="{{ session('message') }}"/>
-    @elseif (session('warning'))
-        <x-swall.warning  message="{{ session('message') }}"/>
-    @endif
+            <x-swall.error  message="{{ session('message') }}"/>
+        @elseif (session('info'))
+            <x-swall.info  message="{{ session('message') }}"/>
+        @elseif (session('success'))
+            <x-swall.success message="{{ session('message') }}"/>
+        @elseif (session('warning'))
+            <x-swall.warning  message="{{ session('message') }}"/>
+        @endif
     
         </div>
     </x-general.card>

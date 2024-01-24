@@ -103,7 +103,10 @@
                 @endforelse
             </x-slot>
         </x-table.table>
-        <x-modal.modal modalActive="openModal" title="Membership Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
+        <div class="mt-4">
+            {{ $memberships->links('livewire::pagination-links') }}
+        </div>
+        <x-modal.modal modalActive="openModal" title="Membership Approval" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
             @include('livewire.page.application.application-list.details.membership')
         </x-modal.modal>
 </div>

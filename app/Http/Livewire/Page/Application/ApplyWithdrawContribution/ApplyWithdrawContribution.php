@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Page\Application\ApplyWithdrawContribution;
 
 use App\Models\Contribution;
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -19,7 +20,11 @@ class ApplyWithdrawContribution extends Component
     public $bank_account;
     public $bank_code;
     public $banks;
+    public $bank_id;
+    public $bank_name;
+    public $bank_acct;
     public $total_contribution, $monthly_contribution;
+    public $User;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -27,69 +32,66 @@ class ApplyWithdrawContribution extends Component
     protected $rules = [
         'cust.name'                 => 'required',
         'cust.icno'                 => 'required',
-        'cont_apply'                => 'required|numeric',
-        'support_file'              => 'required',
-        'bank_code'                 => 'required',
-        'bank_account'              => 'required',
+        'cust.bank_id'              => 'nullable',
     ];
 
     protected $messages = [
         'cont_apply.required'         => ':attribute field is required',
         'cont_apply.lte'              => 'Application must be less than Current Contribution RM:value',
         'cont_apply.gt'               => 'Application must be more than RM0',
-        'cont_apply.numeric'          => ':attribute field must be number',
+        'cont_apply.numeric'          => 'Contribution must be number',
+        'cont_apply.min'              => 'Application must be more than RM50',
+        'cont_apply.max'              => 'Application must be less than Current Contribution Amount',
         'support_file.required'       => ':attribute field is required',
         'bank_code.required'          => ':attribute field is required',
         'bank_account.required'       => ':attribute field is required',
     ];
 
-    protected $validationAttributes = [
-        'cont_apply'      => 'Add Contribution Applied',
-        'support_file'    => 'Upload Supporting Document',
-        'bank_code'       => 'Bank',
-        'bank_account'    => 'Account Bank No.',
-    ];
+    public function getContributionRules()
+    {
+        $rules = [
+            'cont_apply' => [
+                'required',
+                'numeric',
+                'min:50',
+                'max:' . $this->total_contribution,
+            ],
+        ];
+        return $rules;
+    }
+
 
     public function alertConfirm()
     {
-        $this->validate();
-
+        $this->validate($this->getContributionRules());
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
             'text'      => 'Are you sure you want to apply for withdrawal contribution?',
         ]);
     }
 
+
     public function submit()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $customer = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $contribution = Contribution::where([['cust_id', $customer->id], ['flag', 0], ['step', 0], ['direction', 'withdraw']])->first();
+
+        $this->validate($this->getContributionRules());
 
         $contribution->update([
             'direction'      => 'withdraw',
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
             'approved_amt'   => NULL,
-            'bank_code'      => $this->bank_code,
-            'bank_account'   => $this->bank_account,
+            'bank_code'      => $this->bank_name,
+            'bank_account'   => $this->bank_acct,
             'flag'           => 1,
             'step'           => 1,
             'created_by'     => strtoupper($customer->name),
         ]);
+
         $contribution->remove_approvals();
         $contribution->make_approvals('SellContribution');
-
-        $filepath = 'Files/' . $customer->id . '/' . 'support_doc' . '.' . $this->support_file->extension();
-
-        Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/', $this->support_file, 'support_doc' . '.' . $this->support_file->extension());
-
-        $contribution->files()->create([
-            'filename' => 'support_doc',
-            'filedesc' => 'Support Document',
-            'filetype' => $this->support_file->extension(),
-            'filepath' => $filepath,
-        ]);
 
         session()->flash('message', 'Withdrawal Contribution Application Successfully Send');
         session()->flash('time', 10000);
@@ -118,7 +120,10 @@ class ApplyWithdrawContribution extends Component
         $contribution = Contribution::where('cust_id', $cust_id)->firstOrCreate([
             'client_id'     => $this->cust->client_id,
             'cust_id'     => $this->cust->id,
+            'flag'      => 0,
+            'step'      => 0,
             'direction'   => 'withdraw',
+
         ], [
             'amt_before'  => $this->total_contribution,
             'flag'        => 0,
@@ -133,18 +138,31 @@ class ApplyWithdrawContribution extends Component
 
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
-        $this->banks = RefBank::where('client_id', $user->client_id)->get();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->bank_id           = RefBank::where([
+            ['client_id', $this->User->client_id],
+            ['status', '1'], ['bank_cust', 'Y']
+        ])->orderBy('priority')->orderBy('description')->get();
         $this->total_contribution = $this->cust->fmsMembership->total_contribution;
+
         $this->monthly_contribution = $this->cust->fmsMembership->monthly_contribution;
 
+        if ($this->total_contribution == 0) {
+            session()->flash('message', 'You are unable to initiate a Contribution Withdrawal as your current Contribution balance stands at zero.');
+            session()->flash('time', 10000);
+            session()->flash('info');
+            session()->flash('title');
+            return redirect()->route('home');
+        }
         $this->restrictApply($this->cust->id);
         $this->applyCont($this->cust->id);
     }
 
     public function render()
     {
+        $this->bank_name = $this->cust->bank_id;
+        $this->bank_acct = $this->cust->bank_acct_no;
         return view('livewire.page.application.apply-withdraw-contribution.apply-withdraw-contribution')->extends('layouts.head');
     }
 }

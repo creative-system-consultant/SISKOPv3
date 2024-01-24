@@ -1,5 +1,5 @@
 <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Employment Information</h2>
-<div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+<div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
     <div>
         <x-form.input
             label="Company Name"
@@ -12,7 +12,7 @@
     </div>
     <div>
         <x-form.input
-            label="Name Of Department"
+            label="Department"
             name="Employer.department"
             value="{{ $Employer->department }}"
             mandatory=""
@@ -104,6 +104,16 @@
         /> 
     </div>
     <div>
+        <x-form.input
+            label="Work Phone"
+            name="Employer.worker_num"
+            value="{{ $Employer->worker_num }}"
+            mandatory=""
+            disable="{{ $input_disable }}"
+            type="text"
+        /> 
+    </div>
+    <div>
         <x-form.input-tag
             label="Salary"
             name="Employer.salary"
@@ -139,16 +149,6 @@
             wire:model=""
         /> 
     </div> --}}
-    <div>
-        <x-form.input
-            label="Work Phone"
-            name="Employer.worker_num"
-            value="{{ $Employer->worker_num }}"
-            mandatory=""
-            disable="{{ $input_disable }}"
-            type="text"
-        /> 
-    </div>
     {{--<div>
         <x-form.input
             label="Work Email"

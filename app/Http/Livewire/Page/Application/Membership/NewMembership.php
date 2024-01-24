@@ -44,6 +44,8 @@ class NewMembership extends Component
     public SiskopAddress $CustAddress;
     public Address $EmployAddress;
 
+    public $min_monthly_share;
+    public $applyStatus;
     public $apply_id;
     public $Introducer;
     public $field;
@@ -81,7 +83,7 @@ class NewMembership extends Component
     public $tab1 = 1, $tab2 = 0, $tab3 = 0, $tab4 = 0, $tab5 = 0, $tab6 = 0, $tab7 = 0, $tab8 = 0;
     public $pay_type_regist, $pay_type_share;
     public $mail_flag, $mail_flag_employer;
-    public $tot_share, $cust_bank_id, $cust_bank_id2, $client_bank_id, $client_bank_acct, $client_bank_name;
+    public $tot_share, $cust_bank_id, $cust_bank_id2, $client_bank_id, $client_bank_acct, $client_bank_name, $bankLength;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
@@ -106,14 +108,14 @@ class NewMembership extends Component
     protected $rule2 = [
         'CustAddress.address1'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.address2'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
-        'CustAddress.address3'               => 'nullable',
+        'CustAddress.address3'               => ['nullable', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.postcode'               => 'required|digits:5',
         'CustAddress.town'                   => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'CustAddress.state_id'               => 'required',
         'mail_flag'                          => 'nullable',
         'EmployAddress.address1'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.address2'             => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
-        'EmployAddress.address3'             => 'nullable',
+        'EmployAddress.address3'             => ['nullable', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.postcode'             => 'required|digits:5',
         'EmployAddress.town'                 => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'EmployAddress.state_id'             => 'required',
@@ -157,6 +159,15 @@ class NewMembership extends Component
         'pay_type_regist'                    => 'required',
         'pay_type_share'                     => 'required',
 
+    ];
+
+    protected $rule7 = [
+        'online_file' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'online_file2' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'online_file3' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'online_file4' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'payment_file_regist' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'payment_file_share' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
     ];
 
     protected $rules = [
@@ -361,7 +372,7 @@ class NewMembership extends Component
                     $this->tab7 = 1;
                     break;
                 case 7:
-                    // $this->validate($this->rule7);
+                    $this->validate($this->rule7);
                     $this->fileupload();
                     $this->tab8 = 1;
                     break;
@@ -447,7 +458,7 @@ class NewMembership extends Component
 
                     break;
                 case 7:
-                    // $this->validate($this->rule7);
+                    $this->validate($this->rule7);
                     $this->fileupload();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
 
@@ -487,7 +498,7 @@ class NewMembership extends Component
 
         // if (strlen($this->search) == 12) {
         $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
-            $query->where('status_id', '<>', 4)->where('client_id', $this->User->client_id);
+            $query->where('mbr_status', 'A')->where('client_id', $this->User->client_id);
         })->first();
         // dump('135');
 
@@ -528,7 +539,6 @@ class NewMembership extends Component
     public function gender()
     {
         $tempGender  = substr($this->Cust->identity_no, 0, 12);
-
         if ($tempGender % 2 == 0) {
             $tempGender = 'F';
         } else {
@@ -540,7 +550,6 @@ class NewMembership extends Component
     public function callSP()
     {
         $sql =  "EXEC fmsv2_dev.SISKOP.up_insert_customer_fms " . $this->User->client_id . " ," . $this->apply_id . ", 10 ";
-        // dd($sql);
         DB::statement($sql);
     }
 
@@ -563,6 +572,7 @@ class NewMembership extends Component
         $this->applymember->share_fee = $this->globalParm->MIN_SHARE;
         $this->applymember->contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
         $this->min_contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
+        $this->min_monthly_share = $this->globalParm->MIN_SHARE_MONTHLY;
         $this->monthly_share = $this->globalParm->MIN_SHARE / $this->globalParm->TOT_MTH_SHARE_INSTALMENT;
         $this->applymember->save();
 
@@ -634,53 +644,25 @@ class NewMembership extends Component
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
+        $this->religion_id       = RefReligion::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->bank_id           = RefBank::where([
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
         // dd($this->relationship);
+        $this->applyStatus = FMSCustomer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
     }
 
-    public function fileupload2()
-    {
-        if ($this->payment_file_regist) {
-            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment' . '.' . $this->payment_file_regist->extension();
-
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment' . '.' . $this->payment_file_regist->extension());
-
-            $this->applymember->files()->updateOrCreate([
-                'filename' => 'RegistrationPayment',
-            ], [
-                'filedesc' => 'Registration Payment Proof',
-                'filetype' => $this->payment_file_regist->extension(),
-                'filepath' => $filepath,
-            ]);
-        }
-
-        if ($this->payment_file_share) {
-            $filepath = 'Files/' . $customers->id . '/membership/SharePayment' . '.' . $this->payment_file_share->extension();
-
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment' . '.' . $this->payment_file_share->extension());
-
-            $this->applymember->files()->updateOrCreate([
-                'filename' => 'SharePayment',
-            ], [
-                'filedesc' => 'Share Payment Proof',
-                'filetype' => $this->payment_file_share->extension(),
-                'filepath' => $filepath,
-            ]);
-        }
-        $this->render();
-    }
     public function fileupload()
     {
+        $currentDate = now()->format('Y-m-d_His');
+
         $customers = Customer::where('identity_no', $this->User->identity_no)->first();
 
         if ($this->online_file) {
-            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo' . '.' . $this->online_file->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo-' . $currentDate . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file, 'IC_Photo' . '.' . $this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file, 'IC_Photo-' . $currentDate . '.' . $this->online_file->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'IC_Photo',
@@ -692,9 +674,9 @@ class NewMembership extends Component
         }
 
         if ($this->online_file2) {
-            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard' . '.' . $this->online_file2->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard-' . $currentDate . '.' . $this->online_file2->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file2, 'WorkerCard' . '.' . $this->online_file2->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file2, 'WorkerCard-' . $currentDate . '.' . $this->online_file2->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'WorkerCard',
@@ -706,9 +688,9 @@ class NewMembership extends Component
         }
 
         if ($this->online_file3) {
-            $filepath = 'Files/' . $customers->id . '/membership/Paycheck' . '.' . $this->online_file3->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/Paycheck-' . $currentDate . '.' . $this->online_file3->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file3, 'Paycheck' . '.' . $this->online_file3->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file3, 'Paycheck-' . $currentDate . '.' . $this->online_file3->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'Paycheck',
@@ -720,9 +702,9 @@ class NewMembership extends Component
         }
 
         if ($this->online_file4) {
-            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck' . '.' . $this->online_file4->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck-' . $currentDate . '.' . $this->online_file4->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file4, 'LastMonthPaycheck' . '.' . $this->online_file4->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file4, 'LastMonthPaycheck-' . $currentDate . '.' . $this->online_file4->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'LastMonthPaycheck',
@@ -734,9 +716,9 @@ class NewMembership extends Component
         }
 
         if ($this->payment_file_regist) {
-            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment' . '.' . $this->payment_file_regist->extension();
+            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment' . '.' . $this->payment_file_regist->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'RegistrationPayment',
@@ -747,28 +729,16 @@ class NewMembership extends Component
             ]);
         }
 
-        if ($this->payment_file_share) {
-            $filepath = 'Files/' . $customers->id . '/membership/SharePayment' . '.' . $this->payment_file_share->extension();
-
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_share, 'SharePayment' . '.' . $this->payment_file_share->extension());
-
-            $this->applymember->files()->updateOrCreate([
-                'filename' => 'SharePayment',
-            ], [
-                'filedesc' => 'Share Payment Proof',
-                'filetype' => $this->payment_file_share->extension(),
-                'filepath' => $filepath,
-            ]);
-        }
-
         $this->render();
     }
 
     public function totalfee()
     {
-        $this->applymember->update([
-            'total_fee' => $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee,
-        ]);
+        if (is_numeric($this->applymember->contribution_fee)) {
+            $this->applymember->update([
+                'total_fee' => $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee,
+            ]);
+        }
     }
 
     public function submit()
@@ -867,29 +837,32 @@ class NewMembership extends Component
         } else {
             $this->relationship      = RefRelationship::GenderSpecificList($this->Cust->gender_id, $this->User->client_id);
         }
-        // dump($this->Cust->gender_id);
 
-        if ($this->pay_type_share == '2') {
-            // $this->tot_share = $this->monthly_share;
-            $this->applymember->share_monthly = $this->monthly_share;
-            $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
-            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
-            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
-        } else {
-            $this->tot_share = $this->applymember->share_fee;
-            $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
-            $this->Mtotal_deduction =   $this->applymember->contribution_fee;
-
-            // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+        if ($this->Cust->bank_id) {
+            $bank_name = RefBank::select('bank_acc_len')->where('id', $this->Cust->bank_id)->first();
         }
-        if ($this->cust_bank_id || $this->cust_bank_id2) {
-            $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+        if (is_numeric($this->applymember->contribution_fee)) {
+            if ($this->pay_type_share == '2') {
+                // $this->tot_share = $this->monthly_share;
+                $this->applymember->share_monthly = $this->monthly_share;
+                $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
+                $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
+                $this->Mtotal_deduction =   $this->applymember->contribution_fee;
+            } else {
+                $this->tot_share = $this->applymember->share_fee;
+                $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+                $this->Mtotal_deduction =   $this->applymember->contribution_fee;
 
-            $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
-            $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
-            $this->client_bank_name = $bank_name->description;
-            $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
+                // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+            }
         }
+        $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+
+        $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
+        $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
+        $this->client_bank_name = $bank_name->description;
+        $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
+
 
         return view('livewire.page.application.membership.new-membership')->extends('layouts.head');
     }

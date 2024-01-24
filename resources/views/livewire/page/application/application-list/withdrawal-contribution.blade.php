@@ -1,13 +1,11 @@
 <div>
     <x-table.table>
         <x-slot name="thead">
-            <x-table.table-header class="text-left " value="No" sort="" />
-            <x-table.table-header class="text-left " value="Applicant Name" sort="" />
+            <x-table.table-header class="text-left" value="No" sort="" />
+            <x-table.table-header class="text-left" value="Applicant Name" sort="" />
             <x-table.table-header class="text-left" value="IC No." sort="" />
             <x-table.table-header class="text-right" value="Apply Amount (RM)" sort="" />
             <x-table.table-header class="text-right" value="Total Contribution (RM)" sort="" />
-            <x-table.table-header class="text-left" value="Account No." sort="" />
-            <x-table.table-header class="text-left" value="Bank Name" sort="" />
             <x-table.table-header class="text-left" value="Apply Date" sort="" />
             <x-table.table-header class="text-left" value="Application Status" sort="" />
             <x-table.table-header class="text-left" value="Action" sort="" />
@@ -30,23 +28,14 @@
                     <x-table.table-body colspan="" class="text-right uppercase">
                         {{ $item->amt_before == '0.00' ? '0.00' : $item->amt_before }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->bank_account }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left uppercase">
-                        @foreach ($banks as $bank)
-                            @if ($bank->code == $item->bank_code) {{ $bank->description }}
-                        @endif
-                        @endforeach
-                    </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '0') Still being applied
                         @elseif ($item->flag == '1') Being Processed
-                        @elseif ($item->flag == '3') Failed / Decline
-                        @elseif ($item->flag == '6') Approved
+                        @elseif ($item->flag == '21') Failed / Decline
+                        @elseif ($item->flag == '20') Approved
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
@@ -108,7 +97,10 @@
             @endforelse
         </x-slot>
     </x-table.table>
-    <x-modal.modal modalActive="openModal" title="Withdrawal Contribution Application" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
+    <div class="mt-4">
+        {{ $withdrawal->links('livewire::pagination-links') }}
+    </div>
+    <x-modal.modal modalActive="openModal" title="Withdrawal Contribution Approval" modalSize="7xl" closeBtn="yes" closeFn="clearApplication">
         @include('livewire.page.application.application-list.apply_withdraw_contribution')
     </x-modal.modal>
 </div>

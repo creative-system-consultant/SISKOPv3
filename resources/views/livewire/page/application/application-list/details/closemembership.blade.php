@@ -2,7 +2,7 @@
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $closemembership?->id }}</h2>
-            <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+            <div class="grid grid-cols-1 gap-2 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
                     name="applicant_name"
@@ -27,6 +27,16 @@
                     disable="true"
                     type="text"
                 />
+                <x-form.input-tag
+                    label="Reason"
+                    type="text"
+                    name="closemembership.terminate_reason"
+                    value="belum map"
+                    leftTag=""
+                    rightTag=""
+                    mandatory=""
+                    disable="true"
+                />
             </div>
 
             <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Approvals</h2>
@@ -43,10 +53,10 @@
                 @foreach ($closemembership->approvals ?? [] as $item)
                     <tr>
                         <x-table.table-body colspan="" class="text-left">
-                            @if($item->order < $closemembership->step)
-                                <x-heroicon-o-check-circle class="w-6 h-6"/>
+                            @if($item->order < $closemembership->step || $closemembership->flag > 1)
+                                <x-heroicon-o-check-circle class="w-6 h-6 text-green-500"/>
                             @elseif($item->order == $closemembership->step)
-                                <x-heroicon-o-play-circle class="w-6 h-6"/>
+                                <x-heroicon-o-play-circle class="w-6 h-6 text-blue-500"/>
                             @endif
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="text-left">

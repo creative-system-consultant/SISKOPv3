@@ -213,6 +213,7 @@
                         name4="your_wire_model_town"
                         name5="your_wire_model_postcode"
                         name6="your_wire_model_state"
+                        name7="your_wire_model_mailflag"
                         {{-- :state="$states" --}}
                         condition="state"
                     />
@@ -230,6 +231,7 @@
     name4="your_wire_model_town"
     name5="your_wire_model_postcode"
     name6="your_wire_model_state"
+    name7="your_wire_model_mailflag"
     &#x7b;&#x7b; -- :state="$states" -- &#x7d;&#x7d;
     condition="state"
 />

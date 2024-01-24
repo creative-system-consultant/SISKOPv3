@@ -4,14 +4,17 @@ namespace App\Http\Livewire\Page\Application\ApplyFinancing;
 
 use Livewire\Component;
 use App\Models\AccountProduct;
+use App\Models\User;
 
 class FinancingList extends Component
 {
-    public $Product;
+    public User $User;
+    public $Products;
 
     public function mount()
     {
-        $this->Product = AccountProduct::all();
+        $this->User = User::find(Auth()->User()->id);
+        $this->Products = AccountProduct::where('client_id', $this->User->client_id)->get();
     }
 
     public function render()

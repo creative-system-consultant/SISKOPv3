@@ -8,12 +8,14 @@ use App\Models\User;
 use App\Models\AccountApplication;
 use App\Models\Ref\RefGender;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Financing extends Component
 {
+    use WithPagination;
+
     public User $User;
     public AccountApplication $financing;
-    public $financings;
     public $gender;
     public $genderName;
 
@@ -48,19 +50,20 @@ class Financing extends Component
     {
         $this->User = Auth()->user();
 
-        $this->financings = AccountApplication::where('client_id', $this->User->client_id)
-                            //->where('account_status','>','14')
-                            ->select('id','uuid','cust_id','apply_step','purchase_price','product_id','created_at','account_status')
-                            ->orderBy('created_at','desc')
-                            ->with('customer:id,name,identity_no')
-                            //->take(20)
-                            ->get();
-
         $this->gender = RefGender::where('client_id', $this->User->client_id)->get();
     }
 
     public function render()
     {
-        return view('livewire.page.application.application-list.financing');
+        $financings = AccountApplication::where('client_id', $this->User->client_id)
+        //->where('account_status','>','14')
+        ->select('id','uuid','cust_id','apply_step','purchase_price','product_id','created_at','account_status')
+        ->orderBy('created_at','desc')
+        ->with('customer:id,name,identity_no')
+        //->take(20)
+        ->paginate(5);
+        return view('livewire.page.application.application-list.financing',[
+            'financings' => $financings,
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Page\Application\ApplyShare;
 
 use App\Models\Customer;
+use App\Models\FmsGlobalParm;
 use App\Models\Ref\RefBank;
 use App\Models\Share;
 use Livewire\Component;
@@ -23,16 +24,20 @@ class ApplyShare extends Component
     public $cdm_file;
     public $cheque_no;
     public $cheque_date;
-    public $banks;
+    public $cheque_file;
     public $total_share;
+    public $globalParm;
+    public $User;
+    public $client_bank_id;
+    public $client_bank_name;
+    public $client_bank_acct;
 
     //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
 
     protected $rules = [
         'cust.name'       => 'required',
-        'cust.icno'       => 'required',
-        'share_apply'     => 'required|numeric|not_in:0',
+        'cust.identity_no' => 'required',
         'pay_method'      => 'required',
         'online_date'     => 'exclude_if:pay_method,==,cash,&&,pay_method,==,cheque,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:pay_method,==,online|before:first day of january next year|after_or_equal:today',
@@ -43,7 +48,6 @@ class ApplyShare extends Component
         'cheque_no'       => 'required_if:pay_method,==,cheque',
         'cheque_date'     => 'exclude_if:pay_method,==,online,&&,pay_method,==,cash,&&,cont_type,null,&&,cont_type,==,cont_date|' .
             'required_if:pay_method,==,cheque|before:first day of january next year|after_or_equal:today',
-        'banks'           => 'required',
     ];
 
     protected $messages = [
@@ -62,7 +66,6 @@ class ApplyShare extends Component
         'cheque_date.required_if'     => ':attribute field is required',
         'cheque_date.before'          => 'Please enter date in this year',
         'cheque_date.after_or_equal'  => 'Please enter latest date',
-        'banks.required'              => ':attribute field is required',
     ];
 
     protected $validationAttributes = [
@@ -74,7 +77,6 @@ class ApplyShare extends Component
         'cdm_file'        => 'Upload Cdm Payment Receipt',
         'cheque_no'       => 'Cheque No.',
         'cheque_date'     => 'Cheque Date',
-        'banks'           => 'Bank',
     ];
 
     public function alertConfirm()
@@ -87,12 +89,31 @@ class ApplyShare extends Component
         ]);
     }
 
+
+    public function getShareRules()
+    {
+        $rules = [
+            'share_apply' => [
+                'required',
+                'numeric',
+            ],
+        ];
+
+        $globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+        if ($globalParm) {
+            $rules['share_apply'][] = 'min:' . $globalParm->MIN_SHARE; // Use the dynamic minimum value from $globalParm->MIN_SHARE
+        }
+
+        return $rules;
+    }
+
+
+
     public function submit()
     {
-        $user = auth()->user();
-        $customer = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
+        $customer = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
+        $this->validate($this->getShareRules());
 
-        // dd($customer);
         if ($this->share_apply == 0) {
             session()->flash('message', 'Application must be more than RM0');
             session()->flash('time', 10000);
@@ -108,7 +129,6 @@ class ApplyShare extends Component
             'cdm_date'     => $this->cdm_date ??= NULL,
             'cheque_date'  => $this->cheque_date ??= NULL,
             'cheque_no'    => $this->cheque_no ??= NULL,
-            'amt_before'   => $this->cust['share'] ??= '0',
             'apply_amt'    => $this->share_apply,
             'approved_amt' => NULL,
             'flag'         => 1,
@@ -119,37 +139,27 @@ class ApplyShare extends Component
         $this->Share->make_approvals('Share');
 
         if ($this->pay_method == 'online') {
-            // dd('Online Banking');
-            $filepath = 'Files/' . $customer->id . '/share//' . $this->Share->id . '/' . 'online_receipt' . '.' . $this->online_file->extension();
+            $filepath = 'Files/' . $customer->id . '/share//' . $this->Share->id . '/' . 'online-CDM_receipt' . '.' . $this->online_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/share//' . $this->Share->id . '/', $this->online_file, 'online_receipt' . '.' . $this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/share//' . $this->Share->id . '/', $this->online_file, 'online-CDM_receipt' . '.' . $this->online_file->extension());
 
             $this->Share->files()->create([
-                'filename' => 'online_receipt',
-                'filedesc' => 'Online Payment Receipt',
+                'filename' => 'online-CDM_receipt',
+                'filedesc' => 'Online/CDM Payment Receipt',
                 'filetype' => $this->online_file->extension(),
                 'filepath' => $filepath,
             ]);
-        } elseif ($this->pay_method == 'cash') {
-            // dd('CDM');
-            $filepath = 'Files/' . $customer->id . '/' . 'cdm_receipt' . '.' . $this->cdm_file->extension();
+        } else {
+            $filepath = 'Files/' . $customer->id . '/share//' . $this->Share->id . '/' . 'cheque' . '.' . $this->cheque_file->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/share//' . $this->Share->id . '/', $this->cdm_file, 'cdm_receipt' . '.' . $this->cdm_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customer->id . '/share//' . $this->Share->id . '/', $this->cheque_file, 'cheque' . '.' . $this->cheque_file->extension());
 
             $this->Share->files()->create([
-                'filename' => 'cdm_receipt',
-                'filedesc' => 'CDM Payment Receipt',
-                'filetype' => $this->cdm_file->extension(),
+                'filename' => 'cheque',
+                'filedesc' => 'Cheque Receipt',
+                'filetype' => $this->cheque_file->extension(),
                 'filepath' => $filepath,
             ]);
-        } else {
-            // dd('Cheque);
-            session()->flash('message', 'Share Application Successfully Send');
-            session()->flash('time', 10000);
-            session()->flash('success');
-            session()->flash('title');
-
-            return redirect()->route('home');
         }
 
         session()->flash('message', 'Share Application Successfully Send');
@@ -162,9 +172,8 @@ class ApplyShare extends Component
 
     public function mount()
     {
-        $user = auth()->user();
-        $this->cust = Customer::where('identity_no', $user->icno)->where('client_id', $user->client_id)->first();
-        $this->banks = RefBank::where('client_id', $user->client_id)->get();
+        $this->User = auth()->user();
+        $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $this->total_share = $this->cust->fmsMembership->total_share;
         $this->Share = Share::firstOrCreate([
             'cust_id'   => $this->cust->id,
@@ -193,6 +202,12 @@ class ApplyShare extends Component
 
     public function render()
     {
+        $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
+
+        $this->client_bank_id = $this->globalParm->DEF_CLIENT_BANK_ID;
+        $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
+        $this->client_bank_name = $bank_name->description;
+        $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
         return view('livewire.page.application.apply-share.apply-share')->extends('layouts.head');
     }
 }

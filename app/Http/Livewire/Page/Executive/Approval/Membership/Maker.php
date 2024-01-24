@@ -10,6 +10,7 @@ use App\Models\SiskopCustomer as Customer;
 use App\Models\SiskopFamily as Family;
 use App\Models\SiskopEmployer as Employer;
 use App\Models\Introducer;
+use App\Models\Ref\RefBank;
 use App\Models\Ref\RefEducation;
 use App\Models\Ref\RefGender;
 use App\Models\Ref\RefMarital;
@@ -30,7 +31,7 @@ class Maker extends Component
     public FMSCustomer $CustIntroducer;
     public Introducer $Introducer;
     public ApplyMembership $Application;
-    public Approval $Approval;
+    public $Approval;
 
     public $banks;
     public $client_id;
@@ -42,17 +43,22 @@ class Maker extends Component
     public $statelist;
 
     public $input_disable = 'readonly';
-    public $input_maker   = '';
+    public $input_maker = '';
 
     protected $rules = [
         'Approval.note'                    => ['required','max:255'],
         'Application.total_fee'            => ['nullable'],
         'Application.total_monthly'        => ['nullable'],
-        'Application.share_fee'            => ['required','gt:0'],
-        'Application.share_monthly'        => ['required','gt:0'],
-        'Application.register_fee'         => ['required','gt:0'],
-        'Application.contribution_fee'     => ['required','gt:0'],
-        'Application.contribution_monthly' => ['required','gt:0'],
+        'Application.share_fee'            => ['required','gte:0'],
+        'Application.share_monthly'        => ['required','gte:0'],
+        'Application.register_fee'         => ['required','gte:0'],
+        'Application.contribution_monthly' => ['required','gte:0'],
+        'Application.contribution_fee'     => ['required','gte:0'],
+        'Application.share_pmt_mode_flag'  => ['required'],
+        'Application.share_lump_sum_amt'   => ['required'],
+        'Application.payment_type'         => ['required'],
+        'Application.client_bank_id'       => ['required'],
+        'Application.client_bank_acct_no'  => ['required'],
         'CustAddress.address1'             => ['nullable'],
         'CustAddress.address2'             => ['nullable'],
         'CustAddress.address3'             => ['nullable'],
@@ -93,38 +99,25 @@ class Maker extends Component
         session()->flash('message', 'Application Pre-Approved');
         session()->flash('success');
         session()->flash('title', 'Success!');
+        session()->flash('time', 10000);
 
         return redirect()->route('application.list',['page' => '1']);
     }
 
-    public function back()
-    {
-        if ($this->Application->step > 1){
-            $this->Application->step--;
-            $this->Application->save();
-
-            session()->flash('message', 'Application Backtracked');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
-
-            return redirect()->route('application.list',['page' => '1']);
-        } else {
-            $this->dispatchBrowserEvent('swal',[
-                'title' => 'Error!',
-                'text'  => 'No previous step, this is the first Approval step.',
-                'icon'  => 'error',
-                'showConfirmButton' => false,
-                'timer' => 10000,
-            ]);
-        }
-    }
-
     public function totalfee()
     {
-        $this->Application->update([
-            'total_fee'     => $this->Application->register_fee  + $this->Application->contribution_fee    + $this->Application->share_fee,
-            'total_monthly' => $this->Application->share_monthly + $this->Application->contribution_monthly,
-        ]);
+        if ($this->Application->share_pmt_mode_flag == 1){
+            //$this->Application->share_monthly = 0;
+            //$this->Application->share_lump_sum_amt = $this->Application->share_fee;
+        } else {
+            //$this->Application->share_monthly = $this->Application->share_fee;
+            //$this->Application->share_lump_sum_amt = 0;
+        }
+
+        $this->Application->total_fee = $this->Application->register_fee  + $this->Application->share_fee + $this->Application->contribution_fee;
+        
+        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
+
     }
 
     public function mount($uuid)
@@ -138,7 +131,21 @@ class Maker extends Component
                             ['order', $this->Application->step],
                             ['role_id', '1'],
                             ['approval_type', 'App\Models\ApplyMembership'],
-                        ])->firstOrFail();
+                        ])->where(function ($query){
+                            $query->where('user_id', NULL)
+                            ->orWhere('user_id', $this->User->id);
+                        })->first();
+        if ($this->Approval == NULL){
+            session()->flash('message', 'Application is being processed by another staff');
+            session()->flash('warning');
+            session()->flash('title', 'Warning!');
+            session()->flash('time', 10000);
+
+            return redirect()->route('application.list',['page' => '1']);
+        } else {
+            $this->Approval->user_id = $this->User->id;
+            $this->Approval->save();
+        }
         $this->CustAddress = Address::where([
                             ['cif_id', $this->Cust->id ],
                             ['address_type_id', 2],
@@ -166,6 +173,7 @@ class Maker extends Component
                             ['introduce_id', $this->Cust->id],
                             ['apply_id' , $this->Application->id],
                         ])->first();
+        $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->relationshiplist = RefRelationship::where([['client_id', $this->client_id], ['status', '1']])->get();
@@ -173,15 +181,18 @@ class Maker extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
-    }
 
-    public function deb() {
-        dd([
-            'roles'     => $this->User->role_ids(),
-            'approvals' => $this->Application->approvals,
-            'approval'  => $this->Approval, 
-            'Application' => $this->Application,
-        ]);
+        if($this->Application->share_fee >= 500){
+            //$this->Application->share_monthly = 0;
+            //$this->Application->save();
+        }
+        if ($this->Application->share_pmt_mode_flag == 1){
+            //$this->Application->share_monthly = 0;
+            //$this->Application->share_fee = $this->Application->share_lump_sum_amt;
+        } else {
+            //$this->Application->share_fee = $this->Application->share_monthly;
+            //$this->Application->share_lump_sum_amt = 0;
+        }
     }
 
     public function render()
