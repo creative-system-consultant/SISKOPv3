@@ -12,6 +12,8 @@ use App\Models\FmsGlobalParm;
 use App\Models\Share;
 use App\Models\Ref\RefBank;
 use App\Models\User;
+use DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Approver extends Component
@@ -171,7 +173,7 @@ class Approver extends Component
                 // votes are all casted
             } else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
                 if ($this->Application->approval_vote_yes() > 0) {
-                    $this->Application->flag = 20;
+                    $this->doApproval();
                 } else {
                     $this->Application->flag = 21;
                 }
@@ -181,7 +183,7 @@ class Approver extends Component
         //checks if vote absolute is true, and any votes are casted
         else if ($this->Application->current_approval()->rule_vote_type == 'absolute_approve') {
             if ($this->Application->approval_vote_yes() > 0) {
-                $this->Application->flag = 20;
+                $this->doApproval();
             } else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
                 $this->Application->flag = 21;
             }
@@ -192,7 +194,7 @@ class Approver extends Component
             if ($this->Application->approval_vote_no() > 0) {
                 $this->Application->flag = 21;
             } else if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
-                $this->Application->flag = 20;
+                $this->doApproval();
             }
         }
 
@@ -200,13 +202,84 @@ class Approver extends Component
         else if ($this->Application->current_approval()->rule_vote_type == 'majority') {
             if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
                 if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()) {
-                    $this->Application->flag = 20;
+                    $this->doApproval();
                 } else {
                     $this->Application->flag = 21;
                 }
             }
         } else {
             //
+        }
+    }
+
+    public function doApproval(){
+        $this->Application->flag = 20;
+        $this->Application->save();
+
+        $dbname = env('DB_DATABASE','fmsv2_dev');
+        $spname = NULL;
+        $result = NULL;
+
+        switch ($this->include){
+            case 'share':
+            case 'sellshare':
+            case 'exchangeshare':
+                $spname = $dbname.".SISKOP.up_insert_shares_req_hst";
+                break;
+            case 'contribution':
+            case 'sellcontribution':
+                $spname = $dbname.".SISKOP.up_insert_cont_req_hst";
+                break;
+            case 'dividend':
+                $spname = $dbname.".SISKOP.up_upd_dividend_withdraw";
+                break;
+            case 'specialaid':
+                $spname = $dbname.".SISKOP.up_insert_special_aid";
+                break;
+            case 'closemembership':
+                $spname = $dbname.".SISKOP.up_upd_close_mbrship";
+                break;
+            case 'changeguarantor':
+                $spname = $dbname.".SISKOP.up_upd_guarantor_change_req";
+                break;
+            default: 
+            // default SP
+        }
+
+        if($spname != NULL){
+            $result = DB::select("EXEC ".$spname." ?,?,?",[
+                        $this->User->client_id,
+                        $this->Application->id,
+                        $this->User->id,
+                    ]);
+        } else {
+            Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = NO SP");
+        }
+
+        if($result != NULL){
+            if($result[0]->SP_RETURN_CODE == 0){
+                Log::info("APPROVAL SUCCESS\n SP RETURN = ".json_encode($result));
+            } else {
+                Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+
+                $this->dispatchBrowserEvent('swal',[
+                    'title' => 'Warning!',
+                    'text'  => 'Warning, SISTEM PROCESS FAILED. Contact CSC ADMIN. APPROVER - '.$this->include.', process SP failed. Message: '.$result[0]->SP_RETURN_MSG.'.',
+                    'icon'  => 'warning',
+                    'showConfirmButton' => false,
+                    'timer' => 100000,
+                ]);
+            }
+        } else {
+            Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+
+            $this->dispatchBrowserEvent('swal',[
+                'title' => 'ERROR!',
+                'text'  => 'ERROR, SISTEM PROCESS FAILED. Contact CSC ADMIN. APPROVER - '.$this->include.', process SP failed.',
+                'icon'  => 'error',
+                'showConfirmButton' => false,
+                'timer' => 100000,
+            ]);
         }
     }
 
