@@ -36,4 +36,9 @@ class AccountProduct extends Model implements Auditable
     {
         return $this->belongsTo(RefProductType::class, 'product_type');
     }
+
+    public function guarantor()
+    {
+        return $this->hasMany(AccountProductGuarantor::class, 'product_id');
+    }
 }

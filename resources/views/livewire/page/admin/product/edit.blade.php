@@ -12,7 +12,7 @@
                     value=""
                     mandatory=""
                     disable=""
-                    wire:model="Product.name"
+                    wire:model.defer="Product.name"
                 />
                 <x-form.dropdown
                     label="Financing Calculation Type"
@@ -22,7 +22,7 @@
                     mandatory=""
                     disable=""
                     default="yes"
-                    wire:model="Product.fin_type"
+                    wire:model.defer="Product.fin_type"
                 >
                 @foreach ($loanType as $list)
                     <option value="{{ $list->id }}"> {{ $list->description }} </option>
@@ -38,7 +38,7 @@
                     mandatory=""
                     disable=""
                     default="yes"
-                    wire:model="Product.product_type"
+                    wire:model.defer="Product.product_type"
                 >
                 @foreach ($producttype as $list)
                     <option value="{{ $list->id }}"> {{ $list->description }} </option>
@@ -54,7 +54,7 @@
                     rightTag="%"
                     mandatory=""
                     disable=""
-                    wire:model="Product.profit_rate"
+                    wire:model.defer="Product.profit_rate"
                 />
             </div>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
@@ -67,7 +67,7 @@
                     rightTag=""
                     mandatory=""
                     disable=""
-                    wire:model="Product.amt_min"
+                    wire:model.defer="Product.amt_min"
                 />
 
                 <x-form.input-tag
@@ -79,7 +79,7 @@
                     rightTag=""
                     mandatory=""
                     disable=""
-                    wire:model="Product.amt_max"
+                    wire:model.defer="Product.amt_max"
                 />
 
             </div>
@@ -94,7 +94,7 @@
                     mandatory=""
                     disable=""
                     default="yes"
-                    wire:model="Product.term_min"
+                    wire:model.defer="Product.term_min"
                 >
                     @for ($i = 1; $i < 11; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
@@ -111,7 +111,7 @@
                     mandatory=""
                     disable=""
                     default="yes"
-                    wire:model="Product.term_max"
+                    wire:model.defer="Product.term_max"
                 >
                 @for ($i = 1; $i < 11; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
@@ -129,7 +129,7 @@
                     mandatory=""
                     disable=""
                     default="yes"
-                    wire:model="Product.apply_limit"
+                    wire:model.defer="Product.apply_limit"
                 >
                     @for ($i = 1; $i < 11; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
@@ -143,7 +143,7 @@
                     value=""
                     mandatory=""
                     disable=""
-                    wire:model="Product.apply_lifetime"
+                    wire:model.defer="Product.apply_lifetime"
                 />
             </div>
     </div>
@@ -161,7 +161,7 @@
                     rightTag=""
                     mandatory=""
                     disable=""
-                    wire:model="Product.process_fee"
+                    wire:model.defer="Product.process_fee"
                 />
                 <x-form.input-tag
                     label="Takaful Percentage"
@@ -172,7 +172,7 @@
                     rightTag="%"
                     mandatory=""
                     disable=""
-                    wire:model="Product.takaful_percentage"
+                    wire:model.defer="Product.takaful_percentage"
                 />
                 <x-form.input-tag
                     label="Bank Charge"
@@ -183,7 +183,7 @@
                     rightTag=""
                     mandatory=""
                     disable=""
-                    wire:model="Product.bank_charge"
+                    wire:model.defer="Product.bank_charge"
                 />
             </div>
         </div>
@@ -204,15 +204,11 @@
                                         class="sr-only"
                                         @php
                                             $item = $Product->documents()->where('type', $list->code)->first();
+                                            if ($item != NULL && $item->status == 1){
+                                                echo 'checked';
+                                            }
                                         @endphp
-                                        @if ( $item != NULL)
-                                            @if ($item->status == 1)
-                                            checked
-                                            @else
-                                            @endif
-                                        @else
-                                        @endif
-                                        wire:click="enableDoc('{{ $list->code }}','{{ $list->description }}')"
+                                        wire:click="enableDoc('{{ $list->code }}')"
                                     >
                                     <div class="block h-8 bg-gray-300 rounded-full w-14 body"></div>
                                     <div class="absolute w-6 h-6 transition bg-white rounded-full shadow-lg s dot left-1 top-1"></div>
@@ -227,6 +223,68 @@
             @endforeach
         </div>
         <div class="p-4 mt-4 bg-white rounded-md shadow-md">
+            <div class="bg-white rounded-md">
+                <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Guarantor Info </h2>
+            </div>
+            <div class="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
+                @foreach ($guarantorlist as $item)
+                @php
+                    $first = 'true';
+                    $last = 'true';
+                    $add = 'false';
+                    $rem = 'true';
+                    if($loop->first){ $first = 'false'; $rem = 'false'; }
+                    if($loop->last){ $last = 'false'; $add = 'true'; }
+                    @endphp
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5 mt-4">
+                    <x-form.input-tag
+                        label="Min Amount (>=)"
+                        type="text"
+                        name="guarantorlist.{{ $loop->index }}.value1"
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable=""
+                        wire:model="guarantorlist.{{ $loop->index }}.value1"
+                    />
+                    <x-form.input-tag
+                        label="Max Amount (<=)"
+                        type="text"
+                        name="guarantorlist.{{ $loop->index }}.value2"
+                        value=""
+                        leftTag="RM"
+                        rightTag=""
+                        mandatory=""
+                        disable=""
+                        wire:model="guarantorlist.{{ $loop->index }}.value2"
+                    />
+                    <x-form.input
+                        label="Number of Guarantor"
+                        type="text"
+                        name="guarantorlist.{{ $loop->index }}.num"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        wire:model.defer="guarantorlist.{{ $loop->index }}.num"
+                    />
+                    <div class="relative flex mt-1 mb-2 py-2">
+                        @if($add == 'true')
+                            <button type="button" wire:click="addGuarantor" class="flex items-center justify-center p-2 mx-2 text-sm font-semibold text-white bg-green-500 rounded-md shadow-sm focus:outline-none">
+                                <x-heroicon-s-plus-circle class="w-5 h-5"/>
+                            </button>
+                        @endif
+                        @if($rem == 'true')
+                        <button type="button" wire:click="remGuarantor({{ $loop->index }})" class="flex items-center justify-center p-2 mx-2 text-sm font-semibold text-white bg-red-500 rounded-md shadow-sm focus:outline-none">
+                            <x-heroicon-s-minus-circle class="w-5 h-5"/>
+                        </button>
+                        @endif
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="p-4 mt-4 bg-white rounded-md shadow-md">
             <div class="mt-4 bg-white rounded-md">
                 <h2 class="mb-4 text-base font-semibold border-b-2 border-gray-300"> Brochure </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
@@ -239,7 +297,7 @@
                         disable=""
                         type="file"
                         accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                        wire:model="brochure"
+                        wire:model.defer="brochure"
                     />
                     <div class="mt-4 mb-8">
                         <div class="flex items-center space-x-4">
@@ -268,7 +326,7 @@
                         disable=""
                         type="file"
                         accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                        wire:model="payment_table"
+                        wire:model.defer="payment_table"
                     />
                     <div class="mt-4 mb-8">
                         <div class="flex items-center space-x-4">
@@ -291,6 +349,9 @@
                 <a href="{{ route('product.list') }}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-non">
                     Cancel
                 </a>
+                <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
+                    debug
+                </button>
                 <button type="button" wire:click="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                     Save
                 </button>

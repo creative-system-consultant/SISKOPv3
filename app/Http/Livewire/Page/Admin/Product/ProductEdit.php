@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use App\Models\Ref\RefProductType;
 use App\Models\AccountProduct;
 use App\Models\AccountProductDocument;
+use App\Models\Client;
 use App\Models\Ref\RefFinCalcType;
 use App\Models\Ref\RefProductDocuments;
 use App\Models\User;
@@ -18,6 +19,8 @@ class ProductEdit extends Component
 
     public User $User;
     public AccountProduct $Product;
+    public Client $Coop;
+    public $client_id;
     public $loanType;
     public $producttype;
     public $brochure;
@@ -27,6 +30,7 @@ class ProductEdit extends Component
     public $refdocument;
     public $document = [];
     public $documentlist = [];
+    public $guarantorlist = [];
     public $page = "Edit";
 
     protected $rules = [
@@ -42,7 +46,10 @@ class ProductEdit extends Component
         'Product.apply_lifetime' => ['integer'],
         'Product.process_fee'    => ['required', 'numeric', 'gte:0'],
         'Product.takaful_percentage' => ['required', 'numeric', 'gte:0'],
-        'Product.bank_charge' => ['required', 'numeric', 'gte:0'],
+        'Product.bank_charge'    => ['required', 'numeric', 'gte:0'],
+        'guarantorlist.*.value1' => ['nullable'],
+        'guarantorlist.*.value2' => ['nullable'],
+        'guarantorlist.*.num'    => ['nullable', 'integer', 'gte:0'],
     ];
 
     protected $messages = [
@@ -65,54 +72,113 @@ class ProductEdit extends Component
         'Product.amt_max'        => 'Maximum Financing',
         'Product.term_min'       => 'Minimum term',
         'Product.term_max'       => 'Maximum term',
+        'guarantorlist.*.value1' => 'Minimum value',
+        'guarantorlist.*.value2' => 'Maximum value',
+        'guarantorlist.*.num'    => 'Number of guarantor',
     ];
 
     public function mount($id = NULL)
     {
         $this->User = auth()->user();
+        $this->client_id = $this->User->client_id;
+        $this->Coop = Client::find($this->client_id);
+        $this->refdocument = RefProductDocuments::where('client_id', NULL)->get();
 
         if ($id == NULL){
             $this->Product = new AccountProduct;
+            $this->Product->client_id = $this->client_id;
             $this->page = "Create";
+            $this->guarantorlist[0]['value1'] = 0;
+            $this->guarantorlist[0]['value2'] = 0;
+            $this->guarantorlist[0]['num'] = 0;
         } else {
             $this->Product = AccountProduct::where('id', $id)->first();
+            $guarantors = $this->Product->guarantor;
+
+            if ($guarantors->count() > 0){
+                $cnt = 0;
+                foreach ($guarantors as $item) {
+                    $this->guarantorlist[$cnt]['value1'] = $item->min;
+                    $this->guarantorlist[$cnt]['value2'] = $item->max;
+                    $this->guarantorlist[$cnt]['num'] = $item->num;
+                    $cnt++;
+                }
+            } else {
+                $this->guarantorlist[0]['value1'] = 0;
+                $this->guarantorlist[0]['value2'] = 0;
+                $this->guarantorlist[0]['num'] = 0;
+            }
+
+            foreach ($this->refdocument as $key => $value) {
+                $item = $this->Product->documents()->where('type', $value->code)->first();
+                $this->documentlist[$value->code]['name'] = $value->description;
+                if ($item != NULL){
+                    $this->documentlist[$value->code]['status'] = $item->status;
+                } else {
+                    $this->documentlist[$value->code]['status'] = 0;
+                }
+            }
         }
 
         $this->producttype        = RefProductType::all();
-        $this->refdocument        = RefProductDocuments::get();
         $this->brochure_file      = $this->Product->files()->where('filename', 'brochure')->first();
         $this->payment_table_file = $this->Product->files()->where('filename', 'payment_table')->first();
-        $this->loanType           = RefFinCalcType::where('client_id', $this->User->client_id)->get();
+        $this->loanType           = RefFinCalcType::where('client_id', $this->client_id)->get();
     }
 
-    public function enableDoc($code,$name)
+    public function enableDoc($code)
     {
-        $this->document = AccountProductDocument::firstOrCreate([
-            'product_id' => $this->Product->id,
-            'client_id'  => $this->User->client_id,
-            'type'       => $code,
-            'name'       => $name,
-        ]);
+        $this->documentlist[$code]['status'] = !$this->documentlist[$code]['status'] ? '1' : 0;
+    }
 
-        $this->document->update([
-            'status'    => !$this->document->status,
-        ]);
+    function addGuarantor() {
+        $new['value1'] = 0;
+        $new['value2'] = 0;
+        $new['num'] = 0;
+
+        array_push($this->guarantorlist, $new);
+    }
+
+    function remGuarantor($index){
+        array_splice($this->guarantorlist,$index,1);
     }
 
     public function submit()
     {
-
         $this->validate();
 
-        $this->Product->client_id = $this->User->client_id;
         $this->Product->save();
 
-        $coop = Auth()->user()->client_id;
+        $this->Product->guarantor()->delete();
+        foreach($this->guarantorlist as $key => $value){
+            $this->Product->guarantor()->UpdateOrCreate([
+                'min' => $value['value1'],
+                'max' => $value['value2'],
+            ],[
+                'client_id' => $this->client_id,
+                'product_id' => $this->Product->id,
+                'num' => $value['num'],
+            ]);
+        }
+
+        $this->Product->documents()->delete();
+        foreach($this->refdocument as $key => $value){
+            if ($this->documentlist[$value->code]['status'] == 1){
+                $this->Product->documents()->updateOrCreate([
+                    'status' => $this->documentlist[$value->code]['status'],
+                    'name' => $value->description,
+                ],[
+                    'client_id' => $this->client_id,
+                    'product_id' => $this->Product->id,
+                    'type' => $value->code,
+                ]);
+            }
+        }
 
         if($this->brochure){
-            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension();
+            $filepath = 'Files/'.$this->client_id.'/Financing/product/'.$this->Product->id.'/'.'brochure.'.$this->brochure->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $coop. '/financing/product//'.$this->Product->id, $this->brochure, 'brochure'.'.'.$this->brochure->extension());
+            Storage::disk('local')->putFileAs('public/Files/' .$this->client_id. '/financing/product//'.$this->Product->id, $this->brochure, 'brochure'.'.'.$this->brochure->extension());
 
             $this->Product->files()->updateOrCreate([
                 'filename' => 'brochure',
@@ -123,9 +189,9 @@ class ProductEdit extends Component
         };
 
         if($this->payment_table){
-            $filepath = 'Files/'.$coop.'/Financing/product/'.$this->Product->id.'/'.'payment_table.'.$this->payment_table->extension();
+            $filepath = 'Files/'.$this->client_id.'/Financing/product/'.$this->Product->id.'/'.'payment_table.'.$this->payment_table->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $coop. '/financing/product//'.$this->Product->id, $this->payment_table, 'payment_table'.'.'.$this->payment_table->extension());
+            Storage::disk('local')->putFileAs('public/Files/' .$this->client_id. '/financing/product//'.$this->Product->id, $this->payment_table, 'payment_table'.'.'.$this->payment_table->extension());
 
             $this->Product->files()->updateOrCreate([
                 'filename' => 'payment_table',
@@ -141,6 +207,18 @@ class ProductEdit extends Component
         session()->flash('title');
 
         return redirect()->route('product.list');
+    }
+
+    public function deb(){
+        dd([
+            'Coop' => $this->Coop,
+            'client_id' => $this->client_id,
+            'Product' => $this->Product,
+            'guarantor list' => $this->guarantorlist,
+            'document' => $this->document,
+            'documentlist' => $this->documentlist,
+            'refdocument' => $this->refdocument,
+        ]);
     }
 
     public function render()

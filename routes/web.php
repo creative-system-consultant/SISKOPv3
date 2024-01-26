@@ -186,7 +186,7 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
 
         //Financing > Apply
         Route::get('/Financing/List', FinancingList::class)->name('financing.list');
-        Route::get('/Financing/{product_id}', ApplyFinancing::class)->name('financing.apply');
+        Route::get('/Financing/{product_uuid}', ApplyFinancing::class)->name('financing.apply');
         // Route::get('/Financing}', Apply_Financing::class)->name('financing.apply');
 
         //membership > apply
