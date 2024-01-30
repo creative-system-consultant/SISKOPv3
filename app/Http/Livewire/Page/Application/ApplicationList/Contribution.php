@@ -11,6 +11,7 @@ class Contribution extends Component
 {
     use WithPagination;
     public User $User;
+    public $client_id;
     public $Contribution;
 
     public function clearApplication()
@@ -43,11 +44,12 @@ class Contribution extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
+        $this->client_id = $this->User->client_id;
     }
 
     public function render()
     {
-        $contributions = ApplyContribution::where('direction', 'buy')->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $contributions = ApplyContribution::where('direction', 'buy')->where('client_id', $this->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
         return view('livewire.page.application.application-list.contribution',[
             'contributions' => $contributions,
         ]);

@@ -143,7 +143,7 @@ class Committee extends Component
         $this->validate();
         if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
-                $this->reset($this->Application->cheque_date);
+                $this->Application->cheque_date = null;
                 $this->Application->cheque_clear = NULL;
             }
             if ($this->include == 'contribution' && $this->Application->start_apply == NULL){

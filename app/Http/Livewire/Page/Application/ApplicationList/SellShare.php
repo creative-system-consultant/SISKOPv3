@@ -14,6 +14,7 @@ class SellShare extends Component
 
     public User $User;
     public Share $sellShare;
+    public $client_id;
     public $banks;
 
     public function showApplication($uuid)
@@ -25,11 +26,16 @@ class SellShare extends Component
     public function mount()
     {
         $this->User = User::find(auth()->user()->id);
+        $this->client_id = $this->User->client_id;
     }
 
     public function render()
     {
-        $sellShares = Share::where('direction', 'sell')->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $sellShares = Share::where('direction', 'sell')
+                            ->where('client_id', $this->client_id)
+                            ->orderBy('created_at','desc')
+                            ->with('customer')
+                            ->paginate(5);
         return view('livewire.page.application.application-list.sellshare',[
             'sellShares' => $sellShares,
         ]);

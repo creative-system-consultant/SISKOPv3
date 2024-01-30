@@ -142,7 +142,7 @@ class Maker extends Component
         $this->validate();
         if ($this->include == 'share' || $this->include == 'contribution'){
             if($this->Application->method != 'cheque'){
-                $this->reset($this->Application->cheque_date);
+                $this->Application->cheque_date = NULL;
                 $this->Application->cheque_clear = NULL;
             }
             if ($this->include == 'contribution' && $this->Application->start_apply == NULL){

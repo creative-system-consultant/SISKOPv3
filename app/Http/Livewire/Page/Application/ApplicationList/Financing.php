@@ -16,6 +16,7 @@ class Financing extends Component
 
     public User $User;
     public AccountApplication $financing;
+    public $client_id;
     public $gender;
     public $genderName;
 
@@ -49,13 +50,14 @@ class Financing extends Component
     public function mount()
     {
         $this->User = Auth()->user();
+        $this->client_id = $this->User->client_id;
 
         $this->gender = RefGender::where('client_id', $this->User->client_id)->get();
     }
 
     public function render()
     {
-        $financings = AccountApplication::where('client_id', $this->User->client_id)
+        $financings = AccountApplication::where('client_id', $this->client_id)
         //->where('account_status','>','14')
         ->select('id','uuid','cust_id','apply_step','purchase_price','product_id','created_at','account_status')
         ->orderBy('created_at','desc')

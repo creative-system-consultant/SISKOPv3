@@ -132,6 +132,10 @@ class ApplyContribution extends Component
 
         $this->validate($this->getContributionRules());
 
+        if ($this->cont_type == 'pay_once'){
+            $this->start_contDate == NULL;
+        }
+
         $contribution->update([
             'direction'      => 'buy',
             'amt_before'     => $this->total_contribution ??= '0',
