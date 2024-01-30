@@ -263,7 +263,7 @@ class Checker extends Component
 
         if ($this->include == 'share' || $this->include == 'contribution'){
             if ($this->Application->method == 'cheque'){
-                $this->Application->cheque_clear = $this->Application->cheque_clear?->format('Y-m-d') ?? $this->Application->cheque_date->format('Y-m-d');
+                $this->Application->cheque_clear = $this->Application->cheque_clear?? $this->Application->cheque_date;
             }
         }
     }

@@ -33,8 +33,6 @@ class Login extends Component
             return;
         }
 
-        User::where('id',Auth()->id())->update(['client_id' => NULL]);
-
         return redirect()->intended(route('home'));
     }
 
