@@ -28,10 +28,9 @@
                         {{ $aid->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($item->flag == '0') Still being applied
-                        @elseif ($item->flag == '1') Being Processed
-                        @elseif ($item->flag == '20') Approved
-                        @elseif ($item->flag > '20') Failed / Rejected
+                        @if ($aid->flag == '1') Being Processed
+                        @elseif ($aid->flag == '20') Approved
+                        @elseif ($aid->flag > '20') Failed / Rejected
                         @endif
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
@@ -42,8 +41,6 @@
                                 class="inline-flex items-center px-2 py-2 text-sm font-bold text-white bg-green-500 rounded-full hover:bg-green-400" title="Show Application">
                                 <x-heroicon-o-eye class="w-5 h-5"/>
                             </button>
-
-
 
                         @if ($aid->flag > 0 && in_array($aid->current_approval()?->group_id,$User->role_ids()) && $aid->current_approval()?->role_id == 1)
                             <a href="{{ route('allapproval.maker',['include' => 'specialaid','uuid' => $aid->uuid]) }}"

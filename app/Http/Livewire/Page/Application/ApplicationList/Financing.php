@@ -62,6 +62,7 @@ class Financing extends Component
         ->select('id','uuid','cust_id','apply_step','purchase_price','product_id','created_at','account_status')
         ->orderBy('created_at','desc')
         ->with('customer:id,name,identity_no')
+        ->where('account_status', '!=', 0)
         //->take(20)
         ->paginate(5);
         return view('livewire.page.application.application-list.financing',[
