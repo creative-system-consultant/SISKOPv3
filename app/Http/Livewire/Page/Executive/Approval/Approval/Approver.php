@@ -242,7 +242,7 @@ class Approver extends Component
             case 'changeguarantor':
                 $spname = $dbname.".SISKOP.up_upd_guarantor_change_req";
                 break;
-            default: 
+            default:
             // default SP
         }
 
@@ -377,7 +377,7 @@ class Approver extends Component
 
         if ($this->include == 'share' || $this->include == 'contribution'){
             if ($this->Application->method == 'cheque'){
-                $this->Application->cheque_clear = $this->Application->cheque_clear?->format('Y-m-d') ?? $this->Application->cheque_date->format('Y-m-d');
+                $this->Application->cheque_clear = $this->Application->cheque_clear?? $this->Application->cheque_date;
             }
         }
     }
