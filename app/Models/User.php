@@ -65,7 +65,7 @@ class User extends Authenticatable implements Auditable
     }
 
     public function user_client() {
-        return $this->belongsToMany(Client::class, 'ref.user_has_clients', 'user_id', );
+        return $this->belongsToMany(Client::class, 'ref.user_has_clients', 'user_id');
     }
 
     public function getIdentityNoAttribute()

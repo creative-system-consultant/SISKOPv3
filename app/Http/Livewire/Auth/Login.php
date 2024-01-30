@@ -33,7 +33,10 @@ class Login extends Component
             return;
         }
 
-        return redirect()->intended(route('home'));
+        // Set a session variable after successful login
+        session(['just_logged_in' => true]);
+
+        return redirect()->route('dash.guest');
     }
 
     public function render()

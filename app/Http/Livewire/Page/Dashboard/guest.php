@@ -27,6 +27,8 @@ class Guest extends Component
 
     public function select($uuid)
     {
+        session()->forget('just_logged_in');
+
         $client = Client::where('uuid', $uuid)->first();
         if ($client != NULL) {
             $this->dispatchBrowserEvent('swal', [
@@ -46,6 +48,8 @@ class Guest extends Component
 
     public function reg($uuid)
     {
+        session()->forget('just_logged_in');
+
         $client = Client::where('uuid', $uuid)->first();
         if ($client != NULL) {
             $this->dispatchBrowserEvent('swal', [
@@ -58,7 +62,6 @@ class Guest extends Component
 
             $this->User->client_id = $client->id;
             $this->User->save();
-
 
             return redirect(route('membership.apply'));
         }
