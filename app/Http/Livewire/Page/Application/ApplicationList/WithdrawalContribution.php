@@ -54,6 +54,7 @@ class WithdrawalContribution extends Component
     public function render()
     {
         $withdrawal = ApplyContribution::where([['direction', 'withdraw'],['client_id', $this->User->client_id]])
+                        ->where('flag', '!=', 0)
                         ->orderBy('created_at','desc')
                         ->with('customer')
                         ->paginate(5);

@@ -63,7 +63,7 @@ class Share extends Component
 
     public function render()
     {
-        $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
         return view('livewire.page.application.application-list.share',[
             'shares' => $shares,
         ]);

@@ -44,7 +44,7 @@ class CloseMembership extends Component
 
     public function render()
     {
-        $closememberships = CloseMemberships::where('client_id', auth()->user()->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $closememberships = CloseMemberships::where('flag', '!=', 0)->where('client_id', auth()->user()->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
         return view('livewire.page.application.application-list.close-membership',[
             'closememberships' => $closememberships,
         ]);

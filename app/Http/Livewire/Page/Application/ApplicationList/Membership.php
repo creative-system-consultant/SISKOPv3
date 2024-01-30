@@ -50,7 +50,11 @@ class Membership extends Component
 
     public function render()
     {
-        $memberships = ApplyMember::where('client_id', $this->User->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $memberships = ApplyMember::where('client_id', $this->User->client_id)
+                                    ->where('flag', '!=', 0)
+                                    ->orderBy('created_at','desc')
+                                    ->with('customer')
+                                    ->paginate(5);
 
         return view('livewire.page.application.application-list.membership',[
             'memberships' => $memberships,

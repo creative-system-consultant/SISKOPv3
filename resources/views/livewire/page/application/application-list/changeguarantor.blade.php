@@ -24,8 +24,7 @@
                         {{ $item->created_at->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        @if ($item->flag == '0') Still being applied
-                        @elseif ($item->flag == '1') Being Processed
+                        @if ($item->flag == '1') Being Processed
                         @elseif ($item->flag == '20') Approved
                         @elseif ($item->flag > '20') Failed / Rejected
                         @endif

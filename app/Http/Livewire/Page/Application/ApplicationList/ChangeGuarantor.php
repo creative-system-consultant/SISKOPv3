@@ -49,7 +49,7 @@ class ChangeGuarantor extends Component
 
     public function render()
     {
-        $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->orderBy('created_at', 'desc')->with('customer')->paginate(5);
+        $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->where('flag', '!=', 0)->orderBy('created_at', 'desc')->with('customer')->paginate(5);
         return view('livewire.page.application.application-list.changeguarantor',[
             'ChangeGuarantors' => $ChangeGuarantors,
         ]);
