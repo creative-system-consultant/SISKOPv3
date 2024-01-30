@@ -102,6 +102,7 @@ use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingCommittee;
 use App\Http\Livewire\Page\Executive\Approval\Financing\FinancingResolution;
 use App\Http\Livewire\Page\User\Application\Lists;
 use App\Http\Livewire\Page\User\Application\Membership\MembershipStatus;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -351,7 +352,7 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
 
         //Exec > Application List
         Route::prefix('applicationList')->group(function () {
-            Route::get('/', ApplicationList::class)->name('application.list');       
+            Route::get('/', ApplicationList::class)->name('application.list');
             Route::get('/specialAid/{uuid}', [SpecialAid::class, 'showApplication'])->name('application.specialAid');
             Route::get('/share/{uuid}', [Share::class, 'showApplication'])->name('application.share');
             Route::get('/sellShare/{uuid}', [SellShare::class, 'showApplication'])->name('application.sell');
