@@ -62,7 +62,6 @@ class ApplySellExchangeShare extends Component
 
         $rules['share_apply'][] = 'max:' . $this->total_share;
 
-
         return $rules;
     }
 
@@ -115,10 +114,8 @@ class ApplySellExchangeShare extends Component
 
     public function alertConfirm()
     {
-
         $this->validate();
         $this->validate($this->getShareRules());
-
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
@@ -154,7 +151,6 @@ class ApplySellExchangeShare extends Component
         }
     }
 
-
     public function contApplyMember($cust_id)
     {
         $share = Share::where('cust_id', $cust_id)->firstOrCreate([
@@ -178,20 +174,27 @@ class ApplySellExchangeShare extends Component
 
     public function contApplyCoop($cust_id)
     {
-        $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'client_id'     => $this->cust->client_id,
-            'cust_id'     => $this->cust->id,
-            'direction'   => 'sell',
-        ], [
-            'amt_before'  => $this->total_share,
-            'flag'        => 0,
-            'step'        => 0,
-            'apply_amt'   => '0.00',
-        ]);
+        $existingData = Share::where('cust_id', $cust_id)
+                            ->where('client_id', $this->cust->client_id)
+                            ->where('cust_id', $this->cust->id)
+                            ->where('direction', 'sell')
+                            ->first();
 
-        $this->share_apply  = $share?->apply_amt;
-        $this->bank_acct = $share?->bank_account;
-        $this->bank_name    = $share?->bank_code;
+        if ($existingData->flag >= 20) {
+            $share = Share::create([
+                'client_id'     => $this->cust->client_id,
+                'cust_id'     => $this->cust->id,
+                'direction'   => 'sell',
+                'amt_before'  => $this->total_share,
+                'flag'        => 0,
+                'step'        => 0,
+                'apply_amt'   => '0.00',
+            ]);
+
+            $this->share_apply  = $share?->apply_amt;
+            $this->bank_acct = $share?->bank_account;
+            $this->bank_name    = $share?->bank_code;
+        }
     }
 
     public function updated()
@@ -242,8 +245,6 @@ class ApplySellExchangeShare extends Component
         }
     }
 
-
-
     public function mount()
     {
         $this->User = auth()->user();
@@ -255,10 +256,7 @@ class ApplySellExchangeShare extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
 
-
-
-
-        $this->contApplyMember($this->cust->id);
+        // $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);
 
         $this->restricApplySell($this->cust->id);
