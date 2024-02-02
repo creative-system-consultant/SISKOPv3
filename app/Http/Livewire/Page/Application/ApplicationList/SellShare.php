@@ -31,7 +31,7 @@ class SellShare extends Component
 
     public function render()
     {
-        $sellShares = Share::where('direction', 'sell')->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $sellShares = Share::where('client_id', $this->client_id)->where('direction', 'sell')->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
         return view('livewire.page.application.application-list.sellshare',[
             'sellShares' => $sellShares,
         ]);
