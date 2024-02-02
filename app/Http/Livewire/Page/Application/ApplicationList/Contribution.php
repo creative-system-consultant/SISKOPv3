@@ -49,7 +49,7 @@ class Contribution extends Component
 
     public function render()
     {
-        $contributions = ApplyContribution::where('direction', 'buy')->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        $contributions = ApplyContribution::where('client_id', $this->client_id)->where('direction', 'buy')->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
         return view('livewire.page.application.application-list.contribution',[
             'contributions' => $contributions,
         ]);

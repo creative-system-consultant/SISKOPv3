@@ -29,7 +29,7 @@ class SpecialAid extends Component
 
     public function render()
     {
-        $specialAid = ApplySpecialAid::where('flag', '!=', 0)->orderBy('created_at', 'desc')->with('customer')->with('specialAidType')->paginate(5);
+        $specialAid = ApplySpecialAid::where('client_id', $this->client_id)->where('flag', '!=', 0)->orderBy('created_at', 'desc')->with('customer')->with('specialAidType')->paginate(5);
         return view('livewire.page.application.application-list.special-aid',[
             'specialAid' => $specialAid,
         ]);
