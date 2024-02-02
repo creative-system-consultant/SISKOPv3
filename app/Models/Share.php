@@ -49,8 +49,8 @@ class Share extends Model implements Auditable
         }
 
         foreach ($approval as $key => $value) {
-            if ($value->role_id == 1 || $value->role_id == 2){ 
-                $value->user_id = NULL; 
+            if ($value->role_id == 1 || $value->role_id == 2){
+                $value->user_id = NULL;
                 $value->type    = NULL;
             }
             $value->note = NULL;
@@ -69,7 +69,6 @@ class Share extends Model implements Auditable
 
         $count = 1;
         foreach ($ClientApprovalRoles as $key => $value) {
-
             if ($value->sys_role->name == 'APPROVER' || $value->sys_role->name == 'COMMITTEE'){
                 foreach ($value->rolegroup->users as $key1 => $value1){
                     $approval = $this->approvals()->firstOrCreate(['order' => $count,'type' => 'vote'.$key1+1]);
