@@ -153,23 +153,30 @@ class ApplySellExchangeShare extends Component
 
     public function contApplyMember($cust_id)
     {
-        $share = Share::where('cust_id', $cust_id)->firstOrCreate([
-            'client_id'     => $this->cust->client_id,
-            'cust_id'     => $this->cust->id,
-            'direction'   => 'exchange',
-        ], [
-            'amt_before'  => $this->total_share,
-            'flag'        => 0,
-            'step'        => 0,
-            'apply_amt'   => '0.00',
-        ]);
+        $existingData = Share::where('cust_id', $cust_id)
+            ->where('client_id', $this->cust->client_id)
+            ->where('cust_id', $this->cust->id)
+            ->where('direction', 'exchange')
+            ->first();
 
-        $customer = Customer::where('id', $share->exc_cust_id)->first();
+        if ($existingData->flag >= 20) {
+            $share = Share::create([
+                'client_id' => $this->cust->client_id,
+                'cust_id' => $this->cust->id,
+                'direction' => 'exchange',
+                'amt_before' => $this->total_share,
+                'flag' => 0,
+                'step' => 0,
+                'apply_amt' => '0.00',
+            ]);
 
-        $this->mbr_icno     = $customer?->icno;
-        $this->share_apply  = $share?->apply_amt;
-        $this->bank_acct    = $share?->bank_account;
-        $this->bank_code    = $share?->bank_code;
+            $customer = Customer::where('id', $share->exc_cust_id)->first();
+
+            $this->mbr_icno     = $customer?->icno;
+            $this->share_apply  = $share?->apply_amt;
+            $this->bank_acct    = $share?->bank_account;
+            $this->bank_code    = $share?->bank_code;
+        }
     }
 
     public function contApplyCoop($cust_id)
