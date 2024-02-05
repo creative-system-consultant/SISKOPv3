@@ -73,7 +73,6 @@ class ApplySellExchangeShare extends Component
         $this->validate($this->getShareRules());
 
         if ($this->share_type == 'coop') {
-
             $share = Share::where([['cust_id', $cust->id], ['flag', 0], ['step', 0], ['direction', 'sell']])->first();
 
             $share->update([
@@ -159,7 +158,7 @@ class ApplySellExchangeShare extends Component
             ->where('direction', 'exchange')
             ->first();
 
-        if ($existingData->flag >= 20) {
+        if (!$existingData || $existingData->flag >= 20) {
             $share = Share::create([
                 'client_id' => $this->cust->client_id,
                 'cust_id' => $this->cust->id,
@@ -187,7 +186,7 @@ class ApplySellExchangeShare extends Component
                             ->where('direction', 'sell')
                             ->first();
 
-        if ($existingData->flag >= 20) {
+        if (!$existingData || $existingData->flag >= 20) {
             $share = Share::create([
                 'client_id'     => $this->cust->client_id,
                 'cust_id'     => $this->cust->id,
@@ -263,7 +262,7 @@ class ApplySellExchangeShare extends Component
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
 
-        // $this->contApplyMember($this->cust->id);
+        $this->contApplyMember($this->cust->id);
         $this->contApplyCoop($this->cust->id);
 
         $this->restricApplySell($this->cust->id);
