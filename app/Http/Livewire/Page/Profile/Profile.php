@@ -33,16 +33,11 @@ class Profile extends Component
         'FmsCust.bank_id'                       => 'required',
         'FmsCust.bank_acct_no'                       => 'required',
 
-
-
-
         'Employer.name'     => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
         'Employer.department'     => ['required', 'string'],
         'Employer.position' => ['required', 'string'],
         'Employer.office_num'    => ['required', 'regex:/^\d{7,11}$/'],
         'Employer.salary'    => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-
-
 
         'FmsAddressCust.address1'     => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'FmsAddressCust.address2'     => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
@@ -53,14 +48,12 @@ class Profile extends Component
         'mail_flag'                          => 'nullable',
         'mail_flag_employer'                 => 'nullable',
 
-
         'FmsAddressEmployer.address1'     => ['required', 'string'],
         'FmsAddressEmployer.address2'     => ['required', 'string'],
         'FmsAddressEmployer.address3' => 'nullable',
         'FmsAddressEmployer.town'    => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&().]+$/'],
         'FmsAddressEmployer.postcode'    => 'required|digits:5',
         'FmsAddressEmployer.state_id'    => 'required',
-
 
         'FmsCustFamily.name'                    => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
         'FmsCustFamily.identity_no'             => 'required|numeric|digits:12',
@@ -72,8 +65,6 @@ class Profile extends Component
         'FmsCustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'FmsCustFamily.work_post'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'FmsCustFamily.salary'                  =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-
-
     ];
 
     public function getSpecialRules()
