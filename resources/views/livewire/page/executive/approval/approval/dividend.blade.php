@@ -58,7 +58,7 @@
         label="To Member's Contribution Applied"
         type="text"
         name="cont_apply"
-        value="{{ $Application->div_contribution_approved ?? '0.00' }}"
+        value="{{ $Application->div_contri_apply ?? '0.00' }}"
         placeholder="0.00"
         leftTag="RM"
         rightTag=""

@@ -63,7 +63,7 @@ class ApplyDividend extends Component
 
         $this->apply->make_approvals();
 
-        session()->flash('message', 'dividend Payout Application has been sent');
+        session()->flash('message', 'Dividend Payout Application has been sent');
         session()->flash('success');
         session()->flash('title', 'Success!');
 
