@@ -201,7 +201,7 @@ class Approver extends Component
         //checks if vote majority is true
         else if ($this->Application->current_approval()->rule_vote_type == 'majority') {
             if ($this->Application->approvals()->where('type', 'like', 'vote%')->where('order', $this->Application->step)->whereNull('vote')->count() == 0) {
-                if ($this->Application->approval_vote_yes() > $this->Application->approval_vote_no()) {
+                if ($this->Application->approvals()->where([['order', $this->Application->step],['vote', 'lulus']])->count() > $this->Application->approvals()->where([['order', $this->Application->step],['vote', 'gagal']])->count()) {
                     $this->doApproval();
                 } else {
                     $this->Application->flag = 21;
@@ -288,6 +288,7 @@ class Approver extends Component
         $this->xvalidate();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->vote = $this->approval_type;
+
         $this->Approval->save();
 
         $this->countVote();
