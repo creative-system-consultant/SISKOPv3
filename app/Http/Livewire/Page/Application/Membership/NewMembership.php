@@ -158,7 +158,6 @@ class NewMembership extends Component
         'applymember.total_fee'              => 'required|numeric',
         'pay_type_regist'                    => 'required',
         'pay_type_share'                     => 'required',
-
     ];
 
     protected $rule7 = [
@@ -286,7 +285,6 @@ class NewMembership extends Component
 
     public function next($newPage, $tab)
     {
-
         $this->numpage = $newPage;
         $mail_flag_checker = 1;
         if ($tab != 1) {
@@ -382,8 +380,6 @@ class NewMembership extends Component
                 $this->numpage++;
             }
         }
-
-
 
         $this->render();
     }
@@ -495,7 +491,6 @@ class NewMembership extends Component
 
     public function searchUser()
     {
-
         // if (strlen($this->search) == 12) {
         $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
             $query->where('mbr_status', 'A')->where('client_id', $this->User->client_id);
@@ -598,7 +593,7 @@ class NewMembership extends Component
                 'cif_id' => $this->Cust->id,
                 'client_id' => $this->User->client_id,
                 'apply_id' => $this->apply_id,
-                'address_type_id' => '2',
+                'address_type_id' => '3',
             ]
         );
 
@@ -631,7 +626,7 @@ class NewMembership extends Component
                 'cif_id' => $this->Cust->id,
                 'client_id' => $this->User->client_id,
                 'apply_id' => $this->apply_id,
-                'address_type_id' => '3'
+                'address_type_id' => '2'
             ]
         );
         $this->mail_flag_employer = $this->EmployAddress->mail_flag;
