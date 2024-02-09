@@ -12,7 +12,8 @@ use App\Models\FmsGlobalParm;
 use App\Models\Share;
 use App\Models\Ref\RefBank;
 use App\Models\User;
-use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -38,6 +39,9 @@ class Approver extends Component
     public $client_bank_name;
     public $client_bank_acct;
 
+    public $acctApplicants;
+    public $guarantorLists;
+    public $jaminan;
 
     protected function rules()
     {
@@ -330,6 +334,112 @@ class Approver extends Component
             $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $user = $this->Application->customer->where('client_id', $this->User->client_id)->first();
+
+            $this->acctApplicants = DB::table('FMS.MEMBERSHIP as A')
+                ->join('FMS.ACCOUNT_MASTERS as B', 'B.mbr_no', '=', 'A.mbr_no')
+                ->join('FMS.ACCOUNT_POSITIONS as C', 'C.account_no', '=', 'B.account_no')
+                ->join('CIF.CUSTOMERS as D', 'D.id', '=', 'A.cif_id')
+                ->select([
+                    DB::raw('A.mbr_no as mbr_no_peminjam'),
+                    'D.name',
+                    'B.account_no',
+                    'B.start_disbursed_date',
+                    'B.duration',
+                    'B.closed_date',
+                    'C.bal_outstanding',
+                    'C.month_arrears',
+                    'C.instal_arrears'
+                ])
+                ->where('A.client_id', '=', $this->User->client_id)
+                ->where('B.client_id', '=', $this->User->client_id)
+                ->where('C.client_id', '=', $this->User->client_id)
+                ->where('D.client_id', '=', $this->User->client_id)
+                ->where('A.mbr_no', '=', $user->fmsMembership->mbr_no)
+                ->where('B.account_status', '=', 1)
+                ->where('C.bal_outstanding', '>', 0)
+                ->orderBy('B.account_no')
+                ->get();
+
+            $this->acctApplicants = $this->acctApplicants->map(function ($item) {
+                $item->start_disbursed_date = Carbon::parse($item->start_disbursed_date)->format('d/m/Y');
+                $item->bal_outstanding = number_format($item->bal_outstanding, 2);
+                $item->month_arrears = number_format($item->month_arrears, 2);
+                $item->instal_arrears = number_format($item->instal_arrears, 2);
+
+                return $item;
+            });
+
+            $this->guarantorLists = DB::table('FMS.GUARANTOR_LIST as A')
+                ->join('FMS.MEMBERSHIP as B', 'B.mbr_no', '=', 'A.mbr_id')
+                ->join('FMS.ACCOUNT_MASTERS as C', function ($join) {
+                    $join->on('C.mbr_no', '=', 'B.mbr_no')
+                        ->on('C.account_no', '=', 'A.account_no');
+                })
+                ->join('FMS.ACCOUNT_POSITIONS as D', 'D.account_no', '=', 'C.account_no')
+                ->join('CIF.CUSTOMERS as E', 'E.id', '=', 'B.cif_id')
+                ->select([
+                    DB::raw('A.mbr_id as peminjam_dijamin'),
+                    'E.name',
+                    'A.account_no',
+                    'C.start_disbursed_date',
+                    'C.duration',
+                    'C.closed_date',
+                    'D.bal_outstanding',
+                    'D.month_arrears',
+                    'D.instal_arrears',
+                ])
+                ->where('A.client_id', '=', $this->User->client_id)
+                ->where('B.client_id', '=', $this->User->client_id)
+                ->where('C.client_id', '=', $this->User->client_id)
+                ->where('D.client_id', '=', $this->User->client_id)
+                ->where('A.guarantor_mbr_id', '=', $user->fmsMembership->mbr_no)
+                ->where('A.guarantor_status', '=', 1)
+                ->where('B.mbr_status', '=', 'A')
+                ->where('C.account_status', '=', 1)
+                ->where('D.bal_outstanding', '>', 0)
+                ->orderBy('A.mbr_id')
+                ->orderBy('A.account_no')
+                ->get();
+
+            $this->guarantorLists = $this->guarantorLists->map(function ($item) {
+                $item->start_disbursed_date = Carbon::parse($item->start_disbursed_date)->format('d/m/Y');
+                $item->closed_date = Carbon::parse($item->closed_date)->format('d/m/Y');
+                $item->bal_outstanding =  number_format($item->bal_outstanding, 2);
+                $item->month_arrears =  number_format($item->month_arrears, 2);
+                $item->instal_arrears =  number_format($item->instal_arrears, 2);
+                return $item;
+            });
+
+            $client = $this->User->client_id;
+            $this->jaminan = DB::select("
+                SELECT
+                    C.name,
+                    C.identity_no,
+                    G.account_no,
+                    P.bal_outstanding,
+                    (
+                        SELECT TOP 1 C.name FROM CIF.customers C
+                        INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$client'
+                        INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_id AND GSub.client_id = '$client'
+                        WHERE P.account_no = GSub.account_no
+                        AND C.client_id = '$client'
+                    ) AS guarantee_name,
+                    (
+                        SELECT TOP 1 C.identity_no FROM CIF.customers C
+                        INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$client'
+                        INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_id AND GSub.client_id = '$client'
+                        WHERE P.account_no = GSub.account_no
+                        AND C.client_id = '$client'
+                    ) AS guarantee_icno
+                FROM CIF.customers C
+                INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$client'
+                INNER JOIN FMS.GUARANTOR_LIST G ON M.mbr_no = G.guarantor_mbr_id AND G.client_id = '$client'
+                INNER JOIN FMS.account_positions P ON P.ACCOUNT_NO = G.ACCOUNT_NO AND P.client_id = '$client'
+                WHERE C.identity_no = '$user->identity_no'
+                AND P.bal_outstanding > 0
+                AND C.client_id = '$client'
+            ");
         } else if ($this->include == 'dividend') {
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'specialaid') {
