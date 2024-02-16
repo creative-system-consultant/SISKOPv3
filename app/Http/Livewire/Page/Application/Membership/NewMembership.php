@@ -25,6 +25,7 @@ use App\Models\SysOptions;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -63,12 +64,12 @@ class NewMembership extends Component
     public $identity_no;
     public $email;
     public $mobile_num;
-    public $online_file;
-    public $online_file2;
-    public $online_file3;
+    public $IC_Photo;
+    public $Worker_Card;
+    public $Paycheck;
     public $globalParm;
-    public $online_file4;
-    public $payment_file_regist;
+    public $LastMonthPaycheck;
+    public $Payment_Proof;
     public $payment_file_share;
     public $monthly_share;
     public $total_deduction;
@@ -154,19 +155,17 @@ class NewMembership extends Component
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
-        'applymember.share_monthly'          => 'required|gte:50|numeric',
         'applymember.total_fee'              => 'required|numeric',
         'pay_type_regist'                    => 'required',
         'pay_type_share'                     => 'required',
     ];
 
     protected $rule7 = [
-        'online_file' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
-        'online_file2' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
-        'online_file3' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
-        'online_file4' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
-        'payment_file_regist' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
-        'payment_file_share' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'IC_Photo' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'Worker_Card' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'Paycheck' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'LastMonthPaycheck' => 'required|file|mimes:jpeg,jpg,png,pdf|max:2048',
+        'Payment_Proof' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
     ];
 
     protected $rules = [
@@ -223,7 +222,6 @@ class NewMembership extends Component
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
-        'applymember.share_monthly'          => 'required|gte:50|numeric',
         'applymember.total_fee'              => 'required|numeric',
         'applymember.cust_bank_id'           => 'required',
         'applymember.client_bank_id'         => 'required',
@@ -654,72 +652,72 @@ class NewMembership extends Component
 
         $customers = Customer::where('identity_no', $this->User->identity_no)->first();
 
-        if ($this->online_file) {
-            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo-' . $currentDate . '.' . $this->online_file->extension();
+        if ($this->IC_Photo) {
+            $filepath = 'Files/' . $customers->id . '/membership/IC_Photo-' . $currentDate . '.' . $this->IC_Photo->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file, 'IC_Photo-' . $currentDate . '.' . $this->online_file->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->IC_Photo, 'IC_Photo-' . $currentDate . '.' . $this->IC_Photo->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'IC_Photo',
             ], [
                 'filedesc' => 'IC Photo (Front & Back)',
-                'filetype' => $this->online_file->extension(),
+                'filetype' => $this->IC_Photo->extension(),
                 'filepath' => $filepath,
             ]);
         }
 
-        if ($this->online_file2) {
-            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard-' . $currentDate . '.' . $this->online_file2->extension();
+        if ($this->Worker_Card) {
+            $filepath = 'Files/' . $customers->id . '/membership/WorkerCard-' . $currentDate . '.' . $this->Worker_Card->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file2, 'WorkerCard-' . $currentDate . '.' . $this->online_file2->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->Worker_Card, 'WorkerCard-' . $currentDate . '.' . $this->Worker_Card->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'WorkerCard',
             ], [
                 'filedesc' => 'Worker Card',
-                'filetype' => $this->online_file2->extension(),
+                'filetype' => $this->Worker_Card->extension(),
                 'filepath' => $filepath,
             ]);
         }
 
-        if ($this->online_file3) {
-            $filepath = 'Files/' . $customers->id . '/membership/Paycheck-' . $currentDate . '.' . $this->online_file3->extension();
+        if ($this->Paycheck) {
+            $filepath = 'Files/' . $customers->id . '/membership/Paycheck-' . $currentDate . '.' . $this->Paycheck->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file3, 'Paycheck-' . $currentDate . '.' . $this->online_file3->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->Paycheck, 'Paycheck-' . $currentDate . '.' . $this->Paycheck->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'Paycheck',
             ], [
                 'filedesc' => 'Paycheck',
-                'filetype' => $this->online_file3->extension(),
+                'filetype' => $this->Paycheck->extension(),
                 'filepath' => $filepath,
             ]);
         }
 
-        if ($this->online_file4) {
-            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck-' . $currentDate . '.' . $this->online_file4->extension();
+        if ($this->LastMonthPaycheck) {
+            $filepath = 'Files/' . $customers->id . '/membership/LastMonthPaycheck-' . $currentDate . '.' . $this->LastMonthPaycheck->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->online_file4, 'LastMonthPaycheck-' . $currentDate . '.' . $this->online_file4->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->LastMonthPaycheck, 'LastMonthPaycheck-' . $currentDate . '.' . $this->LastMonthPaycheck->extension());
 
             $this->applymember->files()->updateOrCreate([
                 'filename' => 'LastMonthPaycheck',
             ], [
                 'filedesc' => 'Last Month Paycheck',
-                'filetype' => $this->online_file4->extension(),
+                'filetype' => $this->LastMonthPaycheck->extension(),
                 'filepath' => $filepath,
             ]);
         }
 
-        if ($this->payment_file_regist) {
-            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension();
+        if ($this->Payment_Proof) {
+            $filepath = 'Files/' . $customers->id . '/membership/RegistrationPayment-' . $currentDate . '.' . $this->Payment_Proof->extension();
 
-            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->payment_file_regist, 'RegistrationPayment-' . $currentDate . '.' . $this->payment_file_regist->extension());
+            Storage::disk('local')->putFileAs('public/Files/' . $customers->id . '/membership//', $this->Payment_Proof, 'RegistrationPayment-' . $currentDate . '.' . $this->Payment_Proof->extension());
 
             $this->applymember->files()->updateOrCreate([
-                'filename' => 'RegistrationPayment',
+                'filename' => 'PaymentProof',
             ], [
-                'filedesc' => 'Registration Payment Proof',
-                'filetype' => $this->payment_file_regist->extension(),
+                'filedesc' => 'Payment Proof',
+                'filetype' => $this->Payment_Proof->extension(),
                 'filepath' => $filepath,
             ]);
         }
@@ -744,7 +742,7 @@ class NewMembership extends Component
             'step' => 1,
         ]);
 
-        session()->flash('message', 'Membership Application Registered');
+        session()->flash('message', 'Membership Application Successfully Sent');
         session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
@@ -793,7 +791,7 @@ class NewMembership extends Component
         } else {
             $message .= '<b>Share Fee </b> : RM' . $this->applymember->share_fee . "<br>";
         }
-        $message .= '<b>Contribution Fee</b> : RM' . $this->applymember->contribution_fee . "<br>";
+        $message .= '<b>Monthly Contribution</b> : RM' . $this->applymember->contribution_fee . "<br>";
         if ($this->pay_type_share == '2') {
             $message .= '<b>Total Fee</b> : RM' . $this->Ftotal_deduction . "<br>";
         } else {
@@ -838,12 +836,12 @@ class NewMembership extends Component
         }
         if (is_numeric($this->applymember->contribution_fee)) {
             if ($this->pay_type_share == '2') {
-                // $this->tot_share = $this->monthly_share;
                 $this->applymember->share_monthly = $this->monthly_share;
                 $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
                 $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
                 $this->Mtotal_deduction =   $this->applymember->contribution_fee;
             } else {
+                $this->applymember->share_monthly = 0;
                 $this->tot_share = $this->applymember->share_fee;
                 $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
                 $this->Mtotal_deduction =   $this->applymember->contribution_fee;
