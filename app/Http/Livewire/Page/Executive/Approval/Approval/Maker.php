@@ -133,25 +133,26 @@ class Maker extends Component
         ],
     ];
 
-    public function xvalidate(){
+    public function xvalidate()
+    {
         //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if($this->Application->method != 'cheque'){
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
             }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL){
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
                 $this->Application->start_apply = date('Y-m-d', strtotime('today'));
                 $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
         $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if($this->Application->method != 'cheque'){
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = NULL;
                 $this->Application->cheque_clear = NULL;
             }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL){
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
                 $this->Application->start_apply = NULL;
                 $this->Application->start_approved = NULL;
             }
@@ -160,8 +161,6 @@ class Maker extends Component
 
     public function decline()
     {
-        $this->xvalidate();
-
         $this->approval_type = 'gagal';
         $this->message       = 'Application is reccomended to declined';
         $this->next();
@@ -215,12 +214,13 @@ class Maker extends Component
         $this->pagetype = $this->custom_rule[$this->include]['type'] ?? '';
         $this->User     = User::find(auth()->user()->id);
 
+
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
+            $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
+            $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $user = $this->Application->customer->where('client_id', $this->User->client_id)->first();
@@ -375,9 +375,9 @@ class Maker extends Component
         $this->client_bank_name = $bank_name->description;
         $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
 
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if ($this->Application->method == 'cheque'){
-                $this->Application->cheque_clear = $this->Application->cheque_clear?? $this->Application->cheque_date;
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method == 'cheque') {
+                $this->Application->cheque_clear = $this->Application->cheque_clear ?? $this->Application->cheque_date;
             }
         }
     }
