@@ -130,6 +130,7 @@ class ApplyShare extends Component
             'cheque_date'  => $this->cheque_date ??= NULL,
             'cheque_no'    => $this->cheque_no ??= NULL,
             'apply_amt'    => $this->share_apply,
+            'apply_date'   => now(),
             'approved_amt' => NULL,
             'flag'         => 1,
             'step'         => 1,
@@ -175,22 +176,37 @@ class ApplyShare extends Component
         $this->User = auth()->user();
         $this->cust = Customer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
         $this->total_share = $this->cust->fmsMembership->total_share;
-        $this->Share = Share::firstOrCreate([
-            'cust_id'   => $this->cust->id,
-            'client_id' => $this->cust->client_id,
-            'flag'      => 0,
-            'step'      => 0,
-            'direction' => 'buy'
-        ], [
-            'amt_before'  => $this->cust->fmsMembership->total_share,
-            'apply_amt'   => '0.00',
-        ]);
 
-        $this->share_apply = $this->Share->apply_amt;
-        $this->online_date = $this->Share?->online_date?->format('Y-m-d');
-        $this->cdm_date = $this->Share?->cdm_date?->format('Y-m-d');
-        $this->cheque_no = $this->Share?->cheque_no;
-        $this->cheque_date = $this->Share?->cheque_date?->format('Y-m-d');
+        $share = Share::where([
+            ['cust_id', $this->cust->id],
+            ['flag', 1]
+        ])->first();
+
+
+        if ($share != NULL) {
+            session()->flash('message', 'Add Share application has been processed. You can only apply once at a time.');
+            session()->flash('time', 10000);
+            session()->flash('info');
+            session()->flash('title');
+
+            return redirect()->route('home');
+        } else {
+            $this->Share = Share::create([
+                'cust_id'   => $this->cust->id,
+                'client_id' => $this->cust->client_id,
+                'flag'      => 0,
+                'step'      => 0,
+                'direction' => 'buy',
+                'amt_before'  => $this->cust->fmsMembership->total_share,
+                'apply_amt'   => '0.00',
+            ]);
+
+            $this->share_apply = $this->Share->apply_amt;
+            $this->online_date = $this->Share?->online_date?->format('Y-m-d');
+            $this->cdm_date = $this->Share?->cdm_date?->format('Y-m-d');
+            $this->cheque_no = $this->Share?->cheque_no;
+            $this->cheque_date = $this->Share?->cheque_date?->format('Y-m-d');
+        }
     }
 
     public function deb()

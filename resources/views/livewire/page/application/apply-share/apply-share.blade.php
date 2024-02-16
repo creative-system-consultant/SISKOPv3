@@ -65,7 +65,7 @@
                             x-model="isSelect"
                             wire:model="pay_method"
                             >
-                            <option value="online">Online Banking/Cash Payment</option>
+                            <option value="online">Online Transfer/CDM</option>
                             <option value="cheque">By Cheque</option>
                         </x-form.dropdown>
                     </div>
@@ -88,7 +88,7 @@
 
                         <div>
                             <x-form.input
-                                label="Upload Online Payment Receipt:(uploaded only: jpg/png/jpeg/pdf)"
+                                label="Upload Receipt (jpg/png/jpeg/pdf format only)"
                                 name="online_file"
                                 id="online_file"
                                 value=""
@@ -161,7 +161,7 @@
 
                         <div>
                             <x-form.input
-                                label="Upload Cheque:(uploaded only: jpg/png/jpeg/pdf)"
+                                label="Upload Cheque (jpg/png/jpeg/pdf format only)"
                                 name="cheque_file"
                                 id="cheque_file"
                                 value=""
