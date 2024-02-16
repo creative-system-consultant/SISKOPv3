@@ -46,14 +46,14 @@ class Maker extends Component
     public $input_maker = '';
 
     protected $rules = [
-        'Approval.note'                    => ['required','max:255'],
+        'Approval.note'                    => ['required', 'max:255'],
         'Application.total_fee'            => ['nullable'],
         'Application.total_monthly'        => ['nullable'],
-        'Application.share_fee'            => ['required','gte:0'],
-        'Application.share_monthly'        => ['required','gte:0'],
-        'Application.register_fee'         => ['required','gte:0'],
-        'Application.contribution_monthly' => ['required','gte:0'],
-        'Application.contribution_fee'     => ['required','gte:0'],
+        'Application.share_fee'            => ['required', 'gte:0'],
+        'Application.share_monthly'        => ['required', 'gte:0'],
+        'Application.register_fee'         => ['required', 'gte:0'],
+        'Application.contribution_monthly' => ['required', 'gte:0'],
+        'Application.contribution_fee'     => ['required', 'gte:0'],
         'Application.share_pmt_mode_flag'  => ['required'],
         'Application.share_lump_sum_amt'   => ['required'],
         'Application.payment_type'         => ['required'],
@@ -75,8 +75,20 @@ class Maker extends Component
         'EmployAddress.mail_flag'          => ['nullable'],
     ];
 
-    public function decline(){
-        //
+    public function decline()
+    {
+        $this->Application->flag = 21;
+        $this->Approval->type = 'gagal';
+        $this->Approval->user_id = $this->User->id;
+        $this->Approval->vote = $this->Approval->type;
+        $this->Application->save();
+
+        session()->flash('message', 'Application is Rejected');
+        session()->flash('error');
+        session()->flash('title', 'Rejected!');
+        session()->flash('time', 10000);
+
+        return redirect()->route('application.list', ['page' => '1']);
     }
 
     public function next()
@@ -88,36 +100,20 @@ class Maker extends Component
         $this->Approval->type = 'lulus';
         $this->Approval->save();
 
-        if ($this->Approval->rule_whatsapp){
-            //$this->Application->sendWS('SISKOPv3 Membership Application ('.$this->Application->coop->name.') have been pre-approved by MAKER');
-        }
-
-        if ($this->Approval->rule_sms){
-            //$this->Application->sendSMS('RM0 SISKOPv3 Membership Application ('.$this->Application->coop->name.') have been pre-approved by MAKER');
-        }
 
         session()->flash('message', 'Application Pre-Approved');
         session()->flash('success');
         session()->flash('title', 'Success!');
         session()->flash('time', 10000);
 
-        return redirect()->route('application.list',['page' => '1']);
+        return redirect()->route('application.list', ['page' => '1']);
     }
 
     public function totalfee()
     {
-        if ($this->Application->share_pmt_mode_flag == 1){
-            //$this->Application->share_monthly = 0;
-            //$this->Application->share_lump_sum_amt = $this->Application->share_fee;
-        } else {
-            //$this->Application->share_monthly = $this->Application->share_fee;
-            //$this->Application->share_lump_sum_amt = 0;
-        }
-
         $this->Application->total_fee = $this->Application->register_fee  + $this->Application->share_fee + $this->Application->contribution_fee;
-        
-        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
 
+        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
     }
 
     public function mount($uuid)
@@ -127,52 +123,59 @@ class Maker extends Component
         $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
         $this->client_id = $this->User->client_id;
         $this->Approval = Approval::where([
-                            ['approval_id', $this->Application->id],
-                            ['order', $this->Application->step],
-                            ['role_id', '1'],
-                            ['approval_type', 'App\Models\ApplyMembership'],
-                        ])->where(function ($query){
-                            $query->where('user_id', NULL)
-                            ->orWhere('user_id', $this->User->id);
-                        })->first();
-        if ($this->Approval == NULL){
+            ['approval_id', $this->Application->id],
+            ['order', $this->Application->step],
+            ['role_id', '1'],
+            ['approval_type', 'App\Models\ApplyMembership'],
+        ])->where(function ($query) {
+            $query->where('user_id', NULL)
+                ->orWhere('user_id', $this->User->id);
+        })->first();
+        
+        if ($this->Approval == NULL) {
             session()->flash('message', 'Application is being processed by another staff');
             session()->flash('warning');
             session()->flash('title', 'Warning!');
             session()->flash('time', 10000);
 
-            return redirect()->route('application.list',['page' => '1']);
+            return redirect()->route('application.list', ['page' => '1']);
         } else {
             $this->Approval->user_id = $this->User->id;
             $this->Approval->save();
         }
+        
         $this->CustAddress = Address::where([
-                            ['cif_id', $this->Cust->id ],
-                            ['address_type_id', 2],
-                            ['client_id', $this->client_id],
-                        ])->first();
+            ['cif_id', $this->Cust->id],
+            ['address_type_id', 3],
+            ['client_id', $this->client_id],
+        ])->first();
+        
         $this->EmployAddress = Address::where([
-                            ['cif_id', $this->Cust->id ],
-                            ['address_type_id', 3],
-                            ['client_id', $this->client_id],
-                            ['apply_id' , $this->Application->id],
-                        ])->first();
+            ['cif_id', $this->Cust->id],
+            ['address_type_id', 2],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
+        
         $this->CustFamily = Family::where([
-                            ['cif_id', $this->Cust->id ],
-                            ['client_id', $this->client_id],
-                            ['apply_id' , $this->Application->id],
-                        ])->first();
+            ['cif_id', $this->Cust->id],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
+        
         $this->Employer   = Employer::where([
-                            ['cust_id' , $this->Cust->id], 
-                            ['client_id' , $this->client_id],
-                            ['apply_id' , $this->Application->id],
-                        ])->first(); 
+            ['cust_id', $this->Cust->id],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
+        
         $this->Introducer = Introducer::where([
-                            ['client_id' , $this->client_id],
-                            ['introduce_type', 'App\Models\SiskopCustomer'],
-                            ['introduce_id', $this->Cust->id],
-                            ['apply_id' , $this->Application->id],
-                        ])->first();
+            ['client_id', $this->client_id],
+            ['introduce_type', 'App\Models\SiskopCustomer'],
+            ['introduce_id', $this->Cust->id],
+            ['apply_id', $this->Application->id],
+        ])->first();
+        
         $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
@@ -182,18 +185,7 @@ class Maker extends Component
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
 
-        if($this->Application->share_fee >= 500){
-            //$this->Application->share_monthly = 0;
-            //$this->Application->save();
-        }
         $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
-        if ($this->Application->share_pmt_mode_flag == 1){
-            //$this->Application->share_monthly = 0;
-            //$this->Application->share_fee = $this->Application->share_lump_sum_amt;
-        } else {
-            //$this->Application->share_fee = $this->Application->share_monthly;
-            //$this->Application->share_lump_sum_amt = 0;
-        }
     }
 
     public function render()
