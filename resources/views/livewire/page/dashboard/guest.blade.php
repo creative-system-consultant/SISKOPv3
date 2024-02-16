@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div class="absolute p-1 top-7 right-2">
-                                <button type="button" wire:click="select('{{ $item->uuid }}')" class="flex items-center justify-center px-4 py-1 text-xs font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
+                                <button type="button" wire:click="select('{{ $item->id }}')" class="flex items-center justify-center px-4 py-1 text-xs font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
                                     Select
                                 </button>
                             </div>
@@ -109,7 +109,7 @@
                                         <div class="p-4 text-center">
                                             <p>Are you sure you want to register to be a member of this COOP?</p>
                                             <div class="flex items-center justify-center mt-2">
-                                                <button type="button" wire:click="reg('{{ $item->uuid }}')" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
+                                                <button type="button" wire:click="reg('{{ $item->id }}')" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                                                     Register
                                                 </button>
                                             </div>
