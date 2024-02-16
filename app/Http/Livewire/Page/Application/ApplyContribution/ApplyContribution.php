@@ -132,14 +132,15 @@ class ApplyContribution extends Component
 
         $this->validate($this->getContributionRules());
 
-        if ($this->cont_type == 'pay_once'){
-            $this->start_contDate == NULL;
+        if ($this->cont_type == 'pay_once') {
+            $this->start_contDate = NULL;
         }
 
         $contribution->update([
             'direction'      => 'buy',
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
+            'apply_date'     => now(),
             'approved_amt'   => NULL,
             'start_type'     => $this->cont_type == 'pay_once' ? '1' : '2',
             'start_apply'    => $this->start_contDate ??= NULL,
