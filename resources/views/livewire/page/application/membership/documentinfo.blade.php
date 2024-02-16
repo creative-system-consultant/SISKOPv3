@@ -5,87 +5,72 @@
             <div>
                 <x-form.input
                     label="Upload photo Of IC (Front & Back) :"
-                    name="online_file"
-                    id="online_file"
+                    name="IC_Photo"
+                    id="IC_Photo"
                     value=""
                     mandatory=""
                     disable=""
                     type="file"
                     accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                    wire:model.defer="online_file"
+                    wire:model.defer="IC_Photo"
                 />
             </div>
             <div>
                 <x-form.input
                     label="Upload photo Of Worker Card (Front) :"
-                    name="online_file2"
-                    id="online_file2"
+                    name="Worker_Card"
+                    id="Worker_Card"
                     value=""
                     mandatory=""
                     disable=""
                     type="file"
                     accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                    wire:model.defer="online_file2"
+                    wire:model.defer="Worker_Card"
                 />
             </div>
             <div>
                 <x-form.input
                     label="Upload photo Of Latest Paycheck :"
-                    name="online_file3"
-                    id="online_file3"
+                    name="Paycheck"
+                    id="Paycheck"
                     value=""
                     mandatory=""
                     disable=""
                     type="file"
                     accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                    wire:model.defer="online_file3"
+                    wire:model.defer="Paycheck"
                 />
             </div>
             <div>
                 <x-form.input
                     label="Last Month Paycheck :"
-                    name="online_file4"
-                    id="online_file4"
+                    name="LastMonthPaycheck"
+                    id="LastMonthPaycheck"
                     value=""
                     mandatory=""
                     disable=""
                     type="file"
                     accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                    wire:model.defer="online_file4"
+                    wire:model.defer="LastMonthPaycheck"
                 />
             </div>
-            @if($pay_type_regist=="1")
+            @if($pay_type_regist=="1" || $pay_type_share=='1')
 
             <div>
                 <x-form.input
-                label="Upload Payment Proof (Registration Fee):"
-                name="payment_file_regist"
-                id="payment_file_regist"
+                label="Upload Payment Proof:"
+                name="Payment_Proof"
+                id="Payment_Proof"
                 value=""
                 mandatory=""
                 disable=""
                 type="file"
                 accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                wire:model.defer="payment_file_regist"
+                wire:model.defer="Payment_Proof"
             />
             </div>
             @endif
-            @if($pay_type_share=='1')
-
-            <div>
-                <x-form.input
-                    label="Upload Payment Proof (Share Fee):"
-                    name="payment_file_share"
-                    id="payment_file_share"
-                    value=""
-                    mandatory=""
-                    disable=""
-                    type="file"
-                    accept=".jpeg, .jpg, .png, .pdf, application/pdf, image/png, image/"
-                    wire:model.defer="payment_file_share"
-                />
-            </div>
-            @endif
+  
             
         </div>
         <div class="p-4 mt-6 rounded-md  bg-gray-50 dark:bg-gray-800">
