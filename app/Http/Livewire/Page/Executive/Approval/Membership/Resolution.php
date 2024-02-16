@@ -50,14 +50,14 @@ class Resolution extends Component
     public $message       = 'Application Approved';
 
     protected $rules = [
-        'Approval.note'                    => ['required','max:255'],
+        'Approval.note'                    => ['required', 'max:255'],
         'Application.total_fee'            => ['nullable'],
         'Application.total_monthly'        => ['nullable'],
-        'Application.share_fee'            => ['required','gte:0'],
-        'Application.share_monthly'        => ['required','gte:0'],
-        'Application.register_fee'         => ['required','gte:0'],
-        'Application.contribution_monthly' => ['required','gte:0'],
-        'Application.contribution_fee'     => ['required','gte:0'],
+        'Application.share_fee'            => ['required', 'gte:0'],
+        'Application.share_monthly'        => ['required', 'gte:0'],
+        'Application.register_fee'         => ['required', 'gte:0'],
+        'Application.contribution_monthly' => ['required', 'gte:0'],
+        'Application.contribution_fee'     => ['required', 'gte:0'],
         'Application.share_pmt_mode_flag'  => ['required'],
         'Application.share_lump_sum_amt'   => ['required'],
         'Application.payment_type'         => ['required'],
@@ -79,8 +79,9 @@ class Resolution extends Component
         'EmployAddress.mail_flag'          => ['nullable'],
     ];
 
-    public function decline() {
-        $this->validate();
+    public function decline()
+    {
+        // $this->validate();
         $this->Application->flag = 21;
         $this->Application->save();
 
@@ -92,7 +93,8 @@ class Resolution extends Component
         $this->next();
     }
 
-    public function doApproval(){
+    public function doApproval()
+    {
 
         $this->Application->flag = 20;
         $this->Application->approved_date = now();
@@ -104,33 +106,33 @@ class Resolution extends Component
 
         // put event to Stored Proc
 
-        $dbname = env('DB_DATABASE','fmsv2_dev');
-        $spname = $dbname.".SISKOP.up_insert_customer_fms";
-        $result = DB::select("EXEC ".$spname." ?,?,?",[
+        $dbname = env('DB_DATABASE', 'fmsv2_dev');
+        $spname = $dbname . ".SISKOP.up_insert_customer_fms";
+        $result = DB::select("EXEC " . $spname . " ?,?,?", [
             $this->User->client_id,
             $this->Application->id,
             $this->User->id,
         ]);
 
-        if($result != NULL){
-            if($result[0]->SP_RETURN_CODE == 0){
+        if ($result != NULL) {
+            if ($result[0]->SP_RETURN_CODE == 0) {
 
                 //check in list of user clients if null adds it.
-                $check = DB::table('ref.user_has_clients')->where([['user_id',$this->Application->user_id],['client_id', $this->Application->client_id]])->get();
+                $check = DB::table('ref.user_has_clients')->where([['user_id', $this->Application->user_id], ['client_id', $this->Application->client_id]])->get();
 
-                if($check->count() == 0){
+                if ($check->count() == 0) {
                     $ret = DB::table('ref.user_has_clients')->insert([
                         'user_id'   => $this->Application->user_id,
                         'client_id' => $this->Application->client_id,
                     ]);
                 }
 
-                Log::info("MEMBERSHIP APPROVAL SUCCESS\n SP RETURN = ".json_encode($result));
+                Log::info("MEMBERSHIP APPROVAL SUCCESS\n SP RETURN = " . json_encode($result));
             } else {
-                Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+                Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = " . json_encode($result));
             }
         } else {
-            Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+            Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = " . json_encode($result));
         }
 
         // put event here
@@ -143,7 +145,7 @@ class Resolution extends Component
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = $this->approval_type;
 
-        if ($this->approval_type == 'lulus'){
+        if ($this->approval_type == 'lulus') {
             $this->doApproval();
         }
         $this->Approval->save();
@@ -153,7 +155,7 @@ class Resolution extends Component
         session()->flash('title', 'Success!');
         session()->flash('time', 10000);
 
-        return redirect()->route('application.list',['page' => '1']);
+        return redirect()->route('application.list', ['page' => '1']);
     }
 
     public function mount($uuid)
@@ -163,53 +165,53 @@ class Resolution extends Component
         $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
         $this->client_id = $this->User->client_id;
         $this->Approval = Approval::where([
-                            ['approval_id', $this->Application->id],
-                            ['order', $this->Application->step],
-                            ['role_id', '5'],
-                            ['approval_type', 'App\Models\ApplyMembership'],
-                        ])->where(function ($query){
-                            $query->where('user_id', NULL)
-                            ->orWhere('user_id', $this->User->id);
-                        })->first();
-        if ($this->Approval == NULL){
+            ['approval_id', $this->Application->id],
+            ['order', $this->Application->step],
+            ['role_id', '5'],
+            ['approval_type', 'App\Models\ApplyMembership'],
+        ])->where(function ($query) {
+            $query->where('user_id', NULL)
+                ->orWhere('user_id', $this->User->id);
+        })->first();
+        if ($this->Approval == NULL) {
             session()->flash('message', 'Application is being processed by another staff');
             session()->flash('warning');
             session()->flash('title', 'Warning!');
             session()->flash('time', 10000);
 
-            return redirect()->route('application.list',['page' => '1']);
+            return redirect()->route('application.list', ['page' => '1']);
         } else {
             $this->Approval->user_id = $this->User->id;
             $this->Approval->save();
         }
         $this->CustAddress = Address::where([
-                    ['cif_id', $this->Cust->id ],
-                    ['address_type_id', 2],
-                    ['client_id', $this->client_id],
-                    ['apply_id' , $this->Application->id],
-                ])->first();
+            ['cif_id', $this->Cust->id],
+            ['address_type_id', 2],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
         $this->EmployAddress = Address::where([
-                    ['cif_id', $this->Cust->id ],
-                    ['address_type_id', 3],
-                    ['client_id', $this->client_id],
-                    ['apply_id' , $this->Application->id],
-                ])->first();
+            ['cif_id', $this->Cust->id],
+            ['address_type_id', 3],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
         $this->CustFamily = Family::where([
-                    ['cif_id', $this->Cust->id ],
-                    ['client_id', $this->client_id],
-                    ['apply_id' , $this->Application->id],
-                ])->first();
+            ['cif_id', $this->Cust->id],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
         $this->Employer   = Employer::where([
-                    ['cust_id' , $this->Cust->id], 
-                    ['client_id' , $this->client_id],
-                    ['apply_id' , $this->Application->id],
-                ])->first();
+            ['cust_id', $this->Cust->id],
+            ['client_id', $this->client_id],
+            ['apply_id', $this->Application->id],
+        ])->first();
         $this->Introducer = Introducer::where([
-                    ['client_id' , $this->client_id],
-                    ['introduce_type', 'App\Models\SiskopCustomer'],
-                    ['introduce_id', $this->Cust->id],
-                    ['apply_id' , $this->Application->id],
-                ])->first();
+            ['client_id', $this->client_id],
+            ['introduce_type', 'App\Models\SiskopCustomer'],
+            ['introduce_id', $this->Cust->id],
+            ['apply_id', $this->Application->id],
+        ])->first();
         $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();

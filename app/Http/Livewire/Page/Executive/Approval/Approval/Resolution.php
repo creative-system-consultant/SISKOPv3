@@ -135,25 +135,26 @@ class Resolution extends Component
         ],
     ];
 
-    public function xvalidate(){
+    public function xvalidate()
+    {
         //ni solution en nasir. aku taknak argue
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if($this->Application->method != 'cheque'){
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
             }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL){
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
                 $this->Application->start_apply = date('Y-m-d', strtotime('today'));
                 $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
         $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if($this->Application->method != 'cheque'){
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = null;
                 $this->Application->cheque_clear = NULL;
             }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL){
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
                 $this->Application->start_apply = NULL;
                 $this->Application->start_approved = NULL;
             }
@@ -162,78 +163,79 @@ class Resolution extends Component
 
     public function decline()
     {
-        $this->xvalidate();
         $this->flag = 23;
         $this->approval_type = 'gagal';
         $this->message       = 'Application declined';
         $this->next();
     }
 
-    public function approve(){
+    public function approve()
+    {
         $this->xvalidate();
+        $this->Application->approved_date = now();
         $this->Application->flag = 20;
         $this->Application->save();
 
-        $dbname = env('DB_DATABASE','fmsv2_dev');
+        $dbname = env('DB_DATABASE', 'fmsv2_dev');
         $spname = NULL;
         $result = NULL;
 
-        switch ($this->include){
+        switch ($this->include) {
             case 'share':
             case 'sellshare':
             case 'exchangeshare':
-                $spname = $dbname.".SISKOP.up_insert_shares_req_hst";
+                $spname = $dbname . ".SISKOP.up_insert_shares_req_hst";
                 break;
             case 'contribution':
             case 'sellcontribution':
-                $spname = $dbname.".SISKOP.up_insert_cont_req_hst";
+                $spname = $dbname . ".SISKOP.up_insert_cont_req_hst";
                 break;
             case 'dividend':
-                $spname = $dbname.".SISKOP.up_upd_dividend_withdraw";
+                $spname = $dbname . ".SISKOP.up_upd_dividend_withdraw";
                 break;
             case 'specialaid':
-                $spname = $dbname.".SISKOP.up_insert_special_aid";
+                $spname = $dbname . ".SISKOP.up_insert_special_aid";
                 break;
             case 'closemembership':
-                $spname = $dbname.".SISKOP.up_upd_close_mbrship";
+                $spname = $dbname . ".SISKOP.up_upd_close_mbrship";
                 break;
             case 'changeguarantor':
-                $spname = $dbname.".SISKOP.up_upd_guarantor_change_req";
+                $spname = $dbname . ".SISKOP.up_upd_guarantor_change_req";
                 break;
             default:
-            // default SP
+                // default SP
         }
 
-        if($spname != NULL){
-            $result = DB::select("EXEC ".$spname." ?,?,?",[
-                        $this->User->client_id,
-                        $this->Application->id,
-                        $this->User->id,
-                    ]);
+        if ($spname != NULL) {
+            $result = DB::select("EXEC " . $spname . " ?,?,?", [
+                $this->User->client_id,
+                $this->Application->id,
+                $this->User->id,
+            ]);
         } else {
             Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = NO SP");
         }
 
-        if($result != NULL){
-            if($result[0]->SP_RETURN_CODE == 0){
-                Log::info("APPROVAL SUCCESS\n SP RETURN = ".json_encode($result));
+        if ($result != NULL) {
+            if ($result[0]->SP_RETURN_CODE == 0) {
+                Log::info("APPROVAL SUCCESS\n SP RETURN = " . json_encode($result));
             } else {
-                Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+                Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = SP CALL RETURN ERROR\nSP RETURN = " . json_encode($result));
 
-                $this->dispatchBrowserEvent('swal',[
+                $this->dispatchBrowserEvent('swal', [
                     'title' => 'Warning!',
-                    'text'  => 'Warning, SISTEM PROCESS FAILED. Contact CSC ADMIN. APPROVER - '.$this->include.', process SP failed. Message: '.$result[0]->SP_RETURN_MSG.'.',
+                    'text'  => 'Warning, SISTEM PROCESS FAILED. Contact CSC ADMIN. APPROVER - ' . $this->include . ', process SP failed. Message: ' . $result[0]->SP_RETURN_MSG . '.',
                     'icon'  => 'warning',
                     'showConfirmButton' => false,
                     'timer' => 100000,
                 ]);
             }
         } else {
-            Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = SP CALL RETURN ERROR\nSP RETURN = ".json_encode($result));
+            Log::critical("APPROVAL ERROR\nOP = Approver.\n ERR = SP CALL RETURN ERROR\nSP RETURN = " . json_encode($result));
 
-            $this->dispatchBrowserEvent('swal',[
+            $this->dispatchBrowserEvent('swal', [
                 'title' => 'ERROR!',
-                'text'  => 'ERROR, SISTEM PROCESS FAILED. Contact CSC ADMIN. APPROVER - '.$this->include.', process SP failed.',
+                'text'  => 'ERROR, SISTEM PROCESS FAILED. Contact CSC ADMIN. APPROVER - ' . $this->include . ', process SP failed.',
                 'icon'  => 'error',
                 'showConfirmButton' => false,
                 'timer' => 100000,
@@ -280,10 +282,10 @@ class Resolution extends Component
 
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
+            $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-            $this->Application->approved_amt = $this->Application->apply_amt ?? $this->Application->approved_amt;
+            $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $user = $this->Application->customer->where('client_id', $this->User->client_id)->first();
@@ -440,9 +442,9 @@ class Resolution extends Component
         $this->client_bank_name = $bank_name->description;
         $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
 
-        if ($this->include == 'share' || $this->include == 'contribution'){
-            if ($this->Application->method == 'cheque'){
-                $this->Application->cheque_clear = $this->Application->cheque_clear?? $this->Application->cheque_date;
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method == 'cheque') {
+                $this->Application->cheque_clear = $this->Application->cheque_clear ?? $this->Application->cheque_date;
             }
         }
     }
