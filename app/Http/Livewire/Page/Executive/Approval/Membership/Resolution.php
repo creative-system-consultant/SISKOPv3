@@ -116,7 +116,6 @@ class Resolution extends Component
 
         if ($result != NULL) {
             if ($result[0]->SP_RETURN_CODE == 0) {
-
                 //check in list of user clients if null adds it.
                 $check = DB::table('ref.user_has_clients')->where([['user_id', $this->Application->user_id], ['client_id', $this->Application->client_id]])->get();
 
@@ -134,9 +133,6 @@ class Resolution extends Component
         } else {
             Log::critical("MEMBERSHIP APPROVAL ERROR\nOP = Membership RESOLUTION.\n ER = SP CALL RETURN ERROR\nSP RETURN = " . json_encode($result));
         }
-
-        // put event here
-
     }
 
     public function next()
@@ -173,6 +169,7 @@ class Resolution extends Component
             $query->where('user_id', NULL)
                 ->orWhere('user_id', $this->User->id);
         })->first();
+        
         if ($this->Approval == NULL) {
             session()->flash('message', 'Application is being processed by another staff');
             session()->flash('warning');
@@ -184,34 +181,40 @@ class Resolution extends Component
             $this->Approval->user_id = $this->User->id;
             $this->Approval->save();
         }
+        
         $this->CustAddress = Address::where([
             ['cif_id', $this->Cust->id],
             ['address_type_id', 2],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
+        
         $this->EmployAddress = Address::where([
             ['cif_id', $this->Cust->id],
             ['address_type_id', 3],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
+        
         $this->CustFamily = Family::where([
             ['cif_id', $this->Cust->id],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
+        
         $this->Employer   = Employer::where([
             ['cust_id', $this->Cust->id],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
+        
         $this->Introducer = Introducer::where([
             ['client_id', $this->client_id],
             ['introduce_type', 'App\Models\SiskopCustomer'],
             ['introduce_id', $this->Cust->id],
             ['apply_id', $this->Application->id],
         ])->first();
+        
         $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
