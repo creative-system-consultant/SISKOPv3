@@ -127,7 +127,7 @@
                         <x-form.input
                             label="Cheque Clearance Date"
                             name="cheque_date"
-                            value="{{ isset($share->cheque_cleared) == NULL ? '' : $share->cheque_cleared->format('Y-m-d') }}"
+                            value="{{ isset($share->cheque_clear) == NULL ? '' : $share->cheque_clear->format('Y-m-d') }}"
                             mandatory=""
                             disable="true"
                             type="date"

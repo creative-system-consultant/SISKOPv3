@@ -148,14 +148,14 @@
             <div>
                 <x-form.input
                     label="Cheque Clearence Date"
-                    name="Application.cheque_clear"
-                    value=""
+                    name="cheque_clear"
+                    value="{{ $Application->cheque_clear == NULL ? '' : $Application->cheque_clear->format('Y-m-d') }}"
                     mandatory=""
-                    disable=""
+                    disable="true"
                     type="date"
-                    wire:model="Application.cheque_clear"
                 />
             </div>
+        
             <div>
                 <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
                     View Document
