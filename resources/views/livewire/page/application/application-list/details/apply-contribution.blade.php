@@ -36,7 +36,7 @@
             <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Contribution Type"
-                    value="{{ isset($Contribution->start_apply) == NULL ? 'Pay Once' : 'Change Monthly' }}"
+                    value="{{ isset($Contribution->start_type) == 1 ? 'Pay Once' : 'Change Monthly Contribution' }}"
                     name="cont_type"
                     id="cont_type"
                     mandatory=""
