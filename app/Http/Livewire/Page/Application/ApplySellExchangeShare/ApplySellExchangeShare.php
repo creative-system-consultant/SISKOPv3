@@ -78,6 +78,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
+                'apply_date'   => now(),
                 'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_acct,
                 'flag'         => '1',
@@ -91,6 +92,7 @@ class ApplySellExchangeShare extends Component
             $share->update([
                 'amt_before'   => $this->total_share,
                 'apply_amt'    => $this->share_apply,
+                'apply_date'   => now(),
                 'bank_code'    => $this->bank_name,
                 'bank_account' => $this->bank_acct,
                 'exc_cust_id'  => $cust_member->id,
@@ -181,10 +183,10 @@ class ApplySellExchangeShare extends Component
     public function contApplyCoop($cust_id)
     {
         $existingData = Share::where('cust_id', $cust_id)
-                            ->where('client_id', $this->cust->client_id)
-                            ->where('cust_id', $this->cust->id)
-                            ->where('direction', 'sell')
-                            ->first();
+            ->where('client_id', $this->cust->client_id)
+            ->where('cust_id', $this->cust->id)
+            ->where('direction', 'sell')
+            ->first();
 
         if (!$existingData || $existingData->flag >= 20) {
             $share = Share::create([

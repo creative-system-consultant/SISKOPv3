@@ -59,6 +59,7 @@ class ApplyDividend extends Component
         $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
         $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
         $this->apply->flag = 1;
+        $this->apply->apply_date = now();
         $this->apply->save();
 
         $this->apply->make_approvals();

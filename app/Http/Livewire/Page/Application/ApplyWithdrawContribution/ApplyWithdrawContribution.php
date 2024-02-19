@@ -82,6 +82,7 @@ class ApplyWithdrawContribution extends Component
             'direction'      => 'withdraw',
             'amt_before'     => $this->total_contribution ??= '0',
             'apply_amt'      => $this->cont_apply,
+            'apply_date'     => now(),
             'approved_amt'   => NULL,
             'bank_code'      => $this->bank_name,
             'bank_account'   => $this->bank_acct,
