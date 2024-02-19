@@ -58,7 +58,7 @@ class ApplySpecialAid extends Component
                 'step'              => 1,
                 'flag'              => 1,
                 'apply_amt'         => $this->apply_amt[$index],
-                'apply_date'   => now(),
+                'apply_date'        => now(),
                 'event_date'        => $this->event_date[$index],
                 'approved_amt'      => NULL,
                 'created_by'        => strtoupper($this->customer->name)
