@@ -23,7 +23,7 @@
                         {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
-                        {{ $item->start_apply != NULL ? 'CHANGE MONTHLY' : 'PAY ONCE' }}
+                        {{ $item->start_type == 2 ? 'CHANGE MONTHLY' : 'PAY ONCE' }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right uppercase">
                         {{ $item->apply_amt == '0.00' ? '0.00' : $item->apply_amt }}
