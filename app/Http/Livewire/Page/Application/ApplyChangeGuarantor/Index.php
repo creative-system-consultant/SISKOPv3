@@ -103,6 +103,7 @@ class Index extends Component
             $applyChangeGuarantor = ChangeGuarantor::create([
                 'client_id' => $this->client_id,
                 'cif_id' => $this->fms_cust->id,
+                'apply_date'   => now(),
                 'account_no' => $this->acct_no,
                 'jamin_reason' => $this->reasonChange,
                 'jamin_reason_txt' => $this->reasonChangeTxt,

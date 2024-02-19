@@ -91,6 +91,7 @@ class Index extends Component
                 'cust_id'           => $this->fms_cust->id,
                 'client_id'         => $this->client_id,
                 'terminate_reason'  => $this->reason,
+                'apply_date'        => now(),
                 'icno'              => $this->fms_cust->identity_no,
                 'flag'              => '1',
                 'step'              => '1',
