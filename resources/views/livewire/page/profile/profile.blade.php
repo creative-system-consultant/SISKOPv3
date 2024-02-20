@@ -55,7 +55,7 @@
                 wire:model="FmsCust.bank_id"
             >
                 @foreach ($bank_id as $list)
-                    <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                    <option value="{{ $list->code }}"> {{ $list->description }}</option>
                 @endforeach
             </x-form.dropdown>
 
@@ -211,7 +211,7 @@
                         wire:model="FmsCustFamily.relation_id"
                     >
                     @foreach ($relationship as $list)
-                        <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                        <option value="{{ $list->code }}"> {{ $list->description }}</option>
                     @endforeach
                     </x-form.dropdown>
                 </div>
@@ -238,7 +238,7 @@
                         wire:model="FmsCustFamily.race_id"
                     >
                         @foreach ($race_id as $list)
-                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                            <option value="{{ $list->code }}"> {{ $list->description }}</option>
                         @endforeach
                     </x-form.dropdown>
                 </div>
@@ -254,7 +254,7 @@
                         wire:model="FmsCustFamily.religion_id"
                     >
                         @foreach ($religion_id as $list)
-                            <option value="{{ $list->id }}"> {{ $list->description }}</option>
+                            <option value="{{ $list->code }}"> {{ $list->description }}</option>
                         @endforeach
                     </x-form.dropdown>
                 </div>
