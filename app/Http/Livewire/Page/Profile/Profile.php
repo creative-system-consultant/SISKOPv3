@@ -213,6 +213,8 @@ class Profile extends Component
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
+
+        // dd($this->FmsCust->religion_id);
     }
 
     public function updatingMailFlag()
