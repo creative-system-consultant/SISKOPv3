@@ -218,6 +218,7 @@ class Approver extends Component
 
     public function doApproval()
     {
+        $this->Application->approved_date = now();
         $this->Application->flag = 20;
         $this->Application->save();
 
