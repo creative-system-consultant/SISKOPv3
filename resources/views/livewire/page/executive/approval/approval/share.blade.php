@@ -39,7 +39,6 @@
     </div>
 </div>
 
-
     <div class="grid grid-cols-1 gap-2 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" >
         <div>
             <x-form.input
@@ -151,7 +150,7 @@
                     name="cheque_clear"
                     value="{{ $Application->cheque_clear == NULL ? '' : $Application->cheque_clear->format('Y-m-d') }}"
                     mandatory=""
-                    disable="true"
+                    disable=""
                     type="date"
                 />
             </div>
