@@ -26,37 +26,37 @@ class SiskopCustomer extends Model implements Auditable
 
     public function bank()
     {
-        return $this->belongsTo(Ref\RefBank::class, 'bank_id');
+        return $this->belongsTo(Ref\RefBank::class, 'bank_id', 'code');
     }
 
     public function education()
     {
-        return $this->belongsTo(Ref\RefEducation::class, 'education_id');
+        return $this->belongsTo(Ref\RefEducation::class, 'education_id', 'code');
     }
 
     public function gender()
     {
-        return $this->belongsTo(Ref\RefGender::class, 'gender_id','code');
+        return $this->belongsTo(Ref\RefGender::class, 'gender_id', 'code');
     }
 
     public function marital()
     {
-        return $this->belongsTo(Ref\RefMarital::class, 'marital_id');
+        return $this->belongsTo(Ref\RefMarital::class, 'marital_id', 'code');
     }
 
     public function race()
     {
-        return $this->belongsTo(Ref\RefRace::class, 'race_id');
+        return $this->belongsTo(Ref\RefRace::class, 'race_id', 'code');
     }
 
     public function religion()
     {
-        return $this->belongsTo(Ref\RefReligion::class, 'religion_id');
+        return $this->belongsTo(Ref\RefReligion::class, 'religion_id', 'code');
     }
 
     public function title()
     {
-        return $this->belongsTo(Ref\RefCustTitle::class, 'title_id');
+        return $this->belongsTo(Ref\RefCustTitle::class, 'title_id', 'code');
     }
 
     public function family()
