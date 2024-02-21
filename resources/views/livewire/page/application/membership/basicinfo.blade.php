@@ -56,6 +56,22 @@
                     />
                 </div>
                 <div>
+                    <x-form.dropdown
+                        label="Citizenship"
+                        value=""
+                        name="Cust.country_id"
+                        id=""
+                        mandatory=""
+                        disable=""
+                        default="yes"
+                        wire:model="Cust.country_id"
+                    >
+                        @foreach ($country_id as $list)
+                            <option value="{{ $list->abbr }}"> {{ $list->description }}</option>
+                        @endforeach
+                    </x-form.dropdown>
+                </div>
+                <div>
                     <x-form.input
                         label="Mobile Number"
                         name="Cust.phone"
@@ -64,6 +80,17 @@
                         disable=""
                         type="text"
                         wire:model="Cust.phone"
+                    /> 
+                </div>
+                <div>
+                    <x-form.input
+                        label="Residential Number"
+                        name="Cust.resident_phone"
+                        value=""
+                        mandatory=""
+                        disable=""
+                        type="text"
+                        wire:model="Cust.resident_phone"
                     /> 
                 </div>
                 <div>
@@ -406,56 +433,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-4 gap-2">
-                {{-- <div>
-                    <x-form.dropdown
-                        label="Sector"
-                        value=""
-                        name=""
-                        id=""
-                        mandatory=""
-                        disable=""
-                        default="yes"
-                        wire:model=""
-                    >
-                        <option value="1">GOV</option>
-                        <option value="2">private</option>
-                        <option value="3">semi-gov</option>
-                    </x-form.dropdown>
-                </div> 
-                <div>
-                    <x-form.dropdown
-                        label="Work Status"
-                        value=""
-                        name=""
-                        id=""
-                        mandatory=""
-                        disable=""
-                        default="yes"
-                        wire:model=""
-                    >
-                        <option value="">Unemployed</option>
-                        <option value="">Permanent</option>
-                        <option value="">Full-Time Contract</option>
-                        <option value="">Part-Time</option>
-                        <option value="">Internship</option>
-                        <option value="">Casual</option>
-                        <option value="">Self-Employed</option>
-                        <option value="">Pensioner/Retired</option>
-                        <option value="">Temporary</option>
-                        <option value="">Probation</option>
-                    </x-form.dropdown>
-                </div>
-                <div>
-                    <x-form.input
-                        label="Staff No"
-                        name=""
-                        value=""
-                        mandatory=""
-                        disable=""
-                        type="text"
-                        wire:model=""
-                    /> 
-                </div>--}}
                 <div>
                     <x-form.input
                         label="Start Work Date"
@@ -502,17 +479,17 @@
                         wire:model="Employer.salary"
                     /> 
                 </div>
-                {{-- <div>
+                <div>
                     <x-form.input
-                        label="Salary No"
-                        name="Employer.salary_ref"
+                        label="Staff No"
+                        name="Employer.staff_no"
                         value=""
                         mandatory=""
                         disable=""
                         type="text"
-                        wire:model=""
+                        wire:model="Employer.staff_no"
                     /> 
-                </div> --}}
+                </div>
                 {{-- <div>
                     <x-form.input-tag
                         label="Monthly Allowance"
