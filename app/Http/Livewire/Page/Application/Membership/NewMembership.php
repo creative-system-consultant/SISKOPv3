@@ -12,6 +12,7 @@ use App\Models\SiskopCustomer as Customer;
 use App\Models\SiskopEmployer as CustEmployer;
 use App\Models\SiskopFamily as CustFamily;
 use App\Models\Ref\RefBank;
+use App\Models\Ref\RefCountry;
 use App\Models\Ref\RefCustTitle;
 use App\Models\Ref\RefEducation;
 use App\Models\Ref\RefGender;
@@ -60,6 +61,7 @@ class NewMembership extends Component
     public $relationship;
     public $race_id;
     public $state_id;
+    public $country_id;
     public $name;
     public $identity_no;
     public $email;
@@ -86,7 +88,6 @@ class NewMembership extends Component
     public $mail_flag, $mail_flag_employer;
     public $tot_share, $cust_bank_id, $cust_bank_id2, $client_bank_id, $client_bank_acct, $client_bank_name, $bankLength;
 
-    //Need protected $listerners to run the Livewire.emit event
     protected $listeners = ['submit'];
 
     protected $rule1 = [
@@ -100,10 +101,10 @@ class NewMembership extends Component
         'Cust.marital_id'                    => 'required',
         'Cust.email'                         => 'required|email',
         'Cust.title_id'                      => 'required',
+        'Cust.country_id'                    => 'required',
         'Cust.religion_id'                   => 'required',
         'Cust.bank_id'                       => 'required',
-        // 'Cust.bank_acct_no'                  => 'required|regex:/^\d{11}$/',
-
+        'Cust.resident_phone'                => ['nullable', 'regex:/^\d{7,11}$/'],
     ];
 
     protected $rule2 = [
@@ -144,6 +145,7 @@ class NewMembership extends Component
         'Employer.salary'                    =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
         'Employer.worker_num'                => ['nullable', 'regex:/^\d{7,11}$/'],
         'Employer.work_start'                => 'required|date|before_or_equal:today',
+        'Employer.staff_no'                  => ['required', 'regex:/^[A-Za-z0-9\/\-\(\)]+$/'],
     ];
 
     protected $rule5 = [
@@ -176,19 +178,20 @@ class NewMembership extends Component
         'Cust.race_id'                       => 'required',
         'Cust.gender_id'                     => 'required',
         'Cust.education_id'                  => 'required',
+        'Cust.country_id'                    => 'required',
         'Cust.marital_id'                    => 'required',
         'Cust.email'                         => 'required',
         'Cust.title_id'                      => 'required',
         'Cust.religion_id'                   => 'required',
         'Cust.bank_id'                       => 'required',
         'Cust.bank_acct_no'                  => 'required',
+        'Cust.resident_phone'                => 'nullable',
         'CustAddress.address1'               => 'required',
         'CustAddress.address2'               => 'required',
         'CustAddress.address3'               => 'nullable',
         'CustAddress.postcode'               => 'required',
         'CustAddress.town'                   => 'required',
         'CustAddress.state_id'               => 'required',
-        // 'CustAddress.mail_flag'              => 'required',
         'Employer.name'                      => 'required',
         'Employer.department'                => 'required',
         'Employer.position'                  => 'required',
@@ -196,7 +199,7 @@ class NewMembership extends Component
         'Employer.salary'                    => 'required',
         'Employer.worker_num'                => 'required',
         'Employer.work_start'                => 'required',
-        // 'EmployAddress.mail_flag'            => 'required',
+        'Employer.staff_no'                => 'required',
         'EmployAddress.address1'             => 'required',
         'EmployAddress.address2'             => 'required',
         'EmployAddress.address3'             => 'nullable',
@@ -239,7 +242,7 @@ class NewMembership extends Component
                         return $fail("The bank ID is not selected.");
                     }
 
-                    $bankAccountLength = RefBank::where('id', $this->Cust->bank_id)->value('bank_acc_len');
+                    $bankAccountLength = RefBank::where('code', $this->Cust->bank_id)->value('bank_acc_len');
 
                     if (!$bankAccountLength) {
                         return $fail("Unable to determine the bank account length.");
@@ -489,23 +492,18 @@ class NewMembership extends Component
 
     public function searchUser()
     {
-        // if (strlen($this->search) == 12) {
         $result = FMSCustomer::with('fmsMembership')->where('identity_no', $this->search)->whereHas('fmsMembership', function ($query) {
             $query->where('mbr_status', 'A')->where('client_id', $this->User->client_id);
         })->first();
-        // dump('135');
 
         if ($result == NULL) {
             $this->addError('search', 'No User with this IC');
-            // dump('1035');
         } else if ($result->fmsMembership->refMemStat->allow_introducer_flag == "N") {
             $this->addError('search', 'This user is unable to be an introducer');
         } else {
             $this->CustIntroducer = $result;
             $this->resetErrorBag('search');
-            // dump('1036');
         }
-        // }
     }
 
     public function updatedCustIcno()
@@ -634,6 +632,7 @@ class NewMembership extends Component
         $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->gender_id         = RefGender::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->country_id        = RefCountry::where([['client_id', $this->User->client_id]])->get();
         $this->marital_id        = RefMarital::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
@@ -642,7 +641,6 @@ class NewMembership extends Component
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
-        // dd($this->relationship);
         $this->applyStatus = FMSCustomer::where('identity_no', $this->User->icno)->where('client_id', $this->User->client_id)->first();
     }
 
@@ -806,22 +804,6 @@ class NewMembership extends Component
         ]);
     }
 
-    public function deb()
-    {
-        dd([
-            'User'        => $this->User,
-            'member'      => $this->Member,
-            'applymember' => $this->applymember,
-            'customer'    => $this->Cust,
-            'custfamily'  => $this->CustFamily,
-            //'family'      => $this->Family,
-            'employer'    => $this->Employer,
-            'address'     => $this->CustAddress,
-            //'emp address' => $this->EmployAddress,
-            'fam address' => $this->FamilyAddress,
-            //'address fams' => $this->CustFamily->address()->firstOrCreate(),
-        ]);
-    }
 
     public function render()
     {
@@ -845,8 +827,6 @@ class NewMembership extends Component
                 $this->tot_share = $this->applymember->share_fee;
                 $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
                 $this->Mtotal_deduction =   $this->applymember->contribution_fee;
-
-                // $this->total_deduction = $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
             }
         }
         $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
