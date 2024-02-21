@@ -24,13 +24,13 @@
                         {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
-                        {{ $item->register_fee == NULL ? '0.00' : $item->register_fee }}
+                        {{ $item->register_fee == NULL ? '0.00' : number_format($item->register_fee,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
-                        {{ $item->share_fee == NULL ? '0.00' : $item->share_fee }}
+                        {{ $item->share_pmt_mode_flag == 1 ? number_format($item->share_lump_sum_amt,2) : number_format($item->share_monthly,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
-                        {{ $item->contribution_fee == NULL ? '0.00' : $item->contribution_fee }}
+                        {{ $item->contribution_fee == NULL ? '0.00' : number_format($item->contribution_fee,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->created_at->format("d-m-Y")  }}
