@@ -40,6 +40,7 @@ class Committee extends Component
     public $maritallist;
     public $racelist;
     public $relationshiplist;
+    public $uuid;
     public $statelist;
 
     public $input_disable = 'readonly';
@@ -150,6 +151,7 @@ class Committee extends Component
 
     public function mount($uuid)
     {
+        $this->uuid = $uuid;
         $this->User     = User::find(auth()->user()->id);
         $this->Application  = ApplyMembership::where('uuid', $uuid)->first();
         $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
@@ -216,6 +218,7 @@ class Committee extends Component
 
     public function render()
     {
+        $this->Application = ApplyMembership::where('uuid', $this->uuid)->first();
         return view('livewire.page.executive.approval.membership.committee')->extends('layouts.head');
     }
 }

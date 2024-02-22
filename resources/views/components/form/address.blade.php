@@ -136,7 +136,7 @@
                 <option value="" hide selected>SELECT STATE</option>
                 @isset($state)
                 @foreach ($state as $item)
-                    <option value="{{ $item->id }}" >{{ $item->description }}</option>
+                    <option value="{{ $item->code }}" >{{ $item->description }}</option>
                 @endforeach
                 @endisset
             </select>

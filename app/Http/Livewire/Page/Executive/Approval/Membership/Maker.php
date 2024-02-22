@@ -33,6 +33,7 @@ class Maker extends Component
     public ApplyMembership $Application;
     public $Approval;
 
+    public $uuid;
     public $banks;
     public $client_id;
     public $educationlist;
@@ -77,15 +78,17 @@ class Maker extends Component
 
     public function decline()
     {
-        $this->Application->flag = 21;
-        $this->Approval->type = 'gagal';
-        $this->Approval->user_id = $this->User->id;
-        $this->Approval->vote = $this->Approval->type;
+        $this->Application->step++;
         $this->Application->save();
 
-        session()->flash('message', 'Application is Rejected');
+        $this->Approval->user_id = $this->User->id;
+        $this->Approval->type = 'gagal';
+        $this->Approval->save();
+
+
+        session()->flash('message', 'Application is recommended to declined');
         session()->flash('error');
-        session()->flash('title', 'Rejected!');
+        session()->flash('title', 'Pending!');
         session()->flash('time', 10000);
 
         return redirect()->route('application.list', ['page' => '1']);
@@ -118,6 +121,7 @@ class Maker extends Component
 
     public function mount($uuid)
     {
+        $this->uuid = $uuid;
         $this->Application = ApplyMembership::where('uuid', $uuid)->first();
         $this->User     = User::find(auth()->user()->id);
         $this->Cust     = Customer::where('id', $this->Application->cust_id)->first();
@@ -131,7 +135,7 @@ class Maker extends Component
             $query->where('user_id', NULL)
                 ->orWhere('user_id', $this->User->id);
         })->first();
-        
+
         if ($this->Approval == NULL) {
             session()->flash('message', 'Application is being processed by another staff');
             session()->flash('warning');
@@ -143,39 +147,39 @@ class Maker extends Component
             $this->Approval->user_id = $this->User->id;
             $this->Approval->save();
         }
-        
+
         $this->CustAddress = Address::where([
             ['cif_id', $this->Cust->id],
             ['address_type_id', 3],
             ['client_id', $this->client_id],
         ])->first();
-        
+
         $this->EmployAddress = Address::where([
             ['cif_id', $this->Cust->id],
             ['address_type_id', 2],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
-        
+
         $this->CustFamily = Family::where([
             ['cif_id', $this->Cust->id],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
-        
+
         $this->Employer   = Employer::where([
             ['cust_id', $this->Cust->id],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
-        
+
         $this->Introducer = Introducer::where([
             ['client_id', $this->client_id],
             ['introduce_type', 'App\Models\SiskopCustomer'],
             ['introduce_id', $this->Cust->id],
             ['apply_id', $this->Application->id],
         ])->first();
-        
+
         $this->banks            = RefBank::where('client_id', $this->client_id)->get();
         $this->CustIntroducer   = FMSCustomer::firstOrNew(['id' => $this->Introducer->intro_cust_id]);
         $this->statelist        = RefState::where([['client_id', $this->client_id], ['status', '1']])->get();
@@ -190,6 +194,7 @@ class Maker extends Component
 
     public function render()
     {
+        $this->Application = ApplyMembership::where('uuid', $this->uuid)->first();
         return view('livewire.page.executive.approval.membership.maker')->extends('layouts.head');
     }
 }
