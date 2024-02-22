@@ -25,11 +25,11 @@ class Guest extends Component
         $this->clients = Client::where('id', '>', '2')->whereNotIn('id', $this->userclientid)->orderbyRaw("type_id asc, name2 asc")->get();
     }
 
-    public function select($id)
+    public function select($uuid)
     {
         session()->forget('just_logged_in');
 
-        $client = Client::where('id', $id)->first();
+        $client = Client::where('uuid', $uuid)->first();
         if ($client != NULL) {
             $this->dispatchBrowserEvent('swal', [
                 'title' => 'Success!',
@@ -46,11 +46,11 @@ class Guest extends Component
         }
     }
 
-    public function reg($id)
+    public function reg($uuid)
     {
         session()->forget('just_logged_in');
 
-        $client = Client::where('id', $id)->first();
+        $client = Client::where('uuid', $uuid)->first();
         if ($client != NULL) {
             $this->dispatchBrowserEvent('swal', [
                 'title' => 'Success!',
