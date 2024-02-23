@@ -25,7 +25,7 @@
                         {{$aid->specialAidType->name}}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $aid->created_at->format("d-m-Y") }}
+                        {{ $aid->apply_date->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($aid->flag == '1') Being Processed

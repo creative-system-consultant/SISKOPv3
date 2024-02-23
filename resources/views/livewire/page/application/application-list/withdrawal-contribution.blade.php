@@ -29,7 +29,7 @@
                         {{ $item->amt_before == '0.00' ? '0.00' : $item->amt_before }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $item->created_at->format("d-m-Y") }}
+                        {{ $item->apply_date->format("d-m-Y") }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left uppercase">
                         @if ($item->flag == '1') Being Processed
