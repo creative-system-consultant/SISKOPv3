@@ -16,7 +16,13 @@ class CloseMembership extends Model
 
     protected $table = 'SISKOP.STOP_MEMBERSHIP';
     protected $guarded = [];
-    protected $dates = ['created_at', 'deleted_at', 'updated_at'];
+    protected $dates = ['created_at', 'deleted_at', 'updated_at', 'apply_date'];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+        'apply_date'    => 'datetime',
+    ];
 
     public function customer()
     {
