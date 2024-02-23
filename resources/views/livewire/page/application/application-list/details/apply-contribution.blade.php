@@ -2,7 +2,7 @@
 <div>
     <x-general.card class="px-4">
         <div class="pb-4 pl-4 pr-4">
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information - {{ $Contribution->id }}</h2>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Applicant Information</h2>
             <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Name"
@@ -32,11 +32,11 @@
                     disable="true"
                 />
             </div>
-            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Application Information</h2>
+            <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Application Information{{$Contribution->start_type}}</h2>
             <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <x-form.input
                     label="Contribution Type"
-                    value="{{ isset($Contribution->start_type) == 1 ? 'Pay Once' : 'Change Monthly Contribution' }}"
+                    value="{{ $Contribution->start_type == 2 ? 'Change Monthly Contribution'  :  'Pay Once'}}"
                     name="cont_type"
                     id="cont_type"
                     mandatory=""
@@ -65,7 +65,7 @@
                     mandatory=""
                     disable="true"
                 />
-                @if (isset($Contribution->start_apply) && $Contribution->start_apply !== NULL)
+                @if ((isset($Contribution->start_apply) && $Contribution->start_apply !== NULL) && $Contribution->start_type == 2)
                 <div>
                     <x-form.input
                         label="Start Date"
