@@ -740,6 +740,8 @@ class NewMembership extends Component
         $this->applymember->update([
             'flag' => 1,
             'step' => 1,
+            'apply_date' => now(),
+            'updated_at' => now()
         ]);
 
         session()->flash('message', 'Membership Application Successfully Sent');
