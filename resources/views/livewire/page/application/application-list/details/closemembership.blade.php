@@ -31,7 +31,7 @@
                     label="Reason"
                     type="text"
                     name="closemembership.terminate_reason"
-                    value="{{$closemembership->terminate_reason}}"
+                    value="{{$closemembership->terminate_reason ?? ''}}"
                     leftTag=""
                     rightTag=""
                     mandatory=""

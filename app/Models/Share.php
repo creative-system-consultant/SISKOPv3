@@ -29,7 +29,7 @@ class Share extends Model implements Auditable
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
-        'apply_date'    => 'date',
+        'apply_date'    => 'datetime',
     ];
 
     public function buyer()

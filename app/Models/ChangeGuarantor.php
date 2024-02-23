@@ -15,7 +15,18 @@ class ChangeGuarantor extends Model
 
     protected $table = 'SISKOP.CHANGE_GUARANTOR';
     protected $guarded = [];
-    protected $dates = ['created_at', 'deleted_at', 'updated_at'];
+    protected $dates = [
+        'created_at',
+        'deleted_at',
+        'updated_at',
+        'apply_date',
+    ];
+    protected $casts   = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'deleted_at'    => 'datetime',
+        'apply_date'    => 'datetime',
+    ];
 
     public function customer()
     {
@@ -133,11 +144,11 @@ class ChangeGuarantor extends Model
 
     public function count_approved($type = 3)
     {
-        return $this->approvals()->where([['vote','lulus'],['role_id', $type]])->count();
+        return $this->approvals()->where([['vote', 'lulus'], ['role_id', $type]])->count();
     }
 
     public function count_refuse($type = 3)
     {
-        return $this->approvals()->where([['vote','gagal'],['role_id', $type]])->count();
+        return $this->approvals()->where([['vote', 'gagal'], ['role_id', $type]])->count();
     }
 }

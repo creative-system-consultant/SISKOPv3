@@ -24,6 +24,7 @@ class ApplySpecialAid extends Model
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
+        'apply_date'    => 'datetime',
     ];
 
     public function field()
@@ -142,11 +143,11 @@ class ApplySpecialAid extends Model
 
     public function count_approved($type = 3)
     {
-        return $this->approvals()->where([['vote','lulus'],['role_id', $type]])->count();
+        return $this->approvals()->where([['vote', 'lulus'], ['role_id', $type]])->count();
     }
 
     public function count_refuse($type = 3)
     {
-        return $this->approvals()->where([['vote','gagal'],['role_id', $type]])->count();
+        return $this->approvals()->where([['vote', 'gagal'], ['role_id', $type]])->count();
     }
 }
