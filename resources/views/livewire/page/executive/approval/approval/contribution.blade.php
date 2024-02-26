@@ -109,15 +109,28 @@
                 disable="true"
                 type="date"
             />
+            
+            @if($Application->current_approval()->role=='MAKER')
             <x-form.input
-                label="Approved Start Date"
-                name="start_approvedDate"
-                value=""
-                mandatory=""
-                disable=""
-                type="date"
-                wire:model="Application.start_approved"
-            />
+            label="Approved Start Date"
+            name="Application.start_approved"
+            value=""
+            mandatory=""
+            disable=""
+            type="date"
+            wire:model="Application.start_approved"
+        />
+            @else
+            <x-form.input
+            label="Approved Start Date"
+            name="Application.start_approved"
+            value=""
+            mandatory=""
+            disable="true"
+            type="date"
+            wire:model="Application.start_approved"
+        />
+            @endif
     </div>
     @else
         <div class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 my-4">

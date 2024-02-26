@@ -171,7 +171,9 @@ class Maker extends Component
 
     public function next()
     {
-        $this->Application->cheque_clear = $this->cleared_date;
+        if ($this->approval_type != 'gagal') {
+            $this->xvalidate();
+        }
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;

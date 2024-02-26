@@ -175,7 +175,9 @@ class Resolution extends Component
 
     public function approve()
     {
-        $this->xvalidate();
+        if ($this->approval_type != 'gagal') {
+            $this->xvalidate();
+        }
         $this->Application->approved_date = now();
         $this->Application->flag = 20;
         $this->Application->save();

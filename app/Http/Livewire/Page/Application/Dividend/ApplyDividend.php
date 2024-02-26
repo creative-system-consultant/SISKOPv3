@@ -106,7 +106,6 @@ class ApplyDividend extends Component
             $this->cur_bal_dividend = $this->Dividend->bal_dividen;
         }
         $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->first();
-        // dd($apply);
         if ($apply == NULL) {
             $this->apply = new ModelApplydividend;
             $this->apply->client_id   = $this->User->client_id;
@@ -114,7 +113,7 @@ class ApplyDividend extends Component
             $this->apply->mbr_no    = $this->Cust->fmsMembership->mbr_no;
             $this->apply->div_year  = date('Y');
             $this->apply->save();
-        } else if ($apply->flag == 0) {
+        } else if ($apply->flag != 1) {
             $this->apply = $apply;
         } else {
             session()->flash('message', 'Only 1 active application allowed. Please Wait until previous application is authorized.');
