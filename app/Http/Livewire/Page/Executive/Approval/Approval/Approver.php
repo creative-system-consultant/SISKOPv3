@@ -291,7 +291,9 @@ class Approver extends Component
 
     public function next()
     {
-        $this->xvalidate();
+        if ($this->approval_type != 'gagal') {
+            $this->xvalidate();
+        }
         $this->Approval->user_id = $this->User->id;
         $this->Approval->vote = $this->approval_type;
 
