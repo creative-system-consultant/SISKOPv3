@@ -31,6 +31,7 @@ class Maker extends Component
     public $page = 0;
     public $pagename = '';
     public $pagetype = '';
+    public $cleared_date;
     public $vote = 'Suggest';
 
     public $globalParm;
@@ -135,8 +136,10 @@ class Maker extends Component
 
     public function xvalidate()
     {
-        //ni solution en nasir. aku taknak argue
         if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method == 'cheque') {
+                $this->Application->cheque_clear = $this->cleared_date;
+            }
             if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
@@ -168,8 +171,7 @@ class Maker extends Component
 
     public function next()
     {
-        $this->xvalidate();
-
+        $this->Application->cheque_clear = $this->cleared_date;
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -329,7 +331,6 @@ class Maker extends Component
                 AND P.bal_outstanding > 0
                 AND C.client_id = '$client'
             ");
-
         } else if ($this->include == 'dividend') {
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'specialaid') {

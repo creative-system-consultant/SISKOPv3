@@ -31,6 +31,7 @@ class Approver extends Component
     public $message = 'Application Voted Approve';
     public $page = 0;
     public $pagename = '';
+    public $cleared_date;
     public $pagetype = '';
     public $vote = 'Vote';
 
@@ -61,7 +62,6 @@ class Approver extends Component
             'page' => 2,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after:Application.cheque_date',
             ],
         ],
         'sellshare' => [
@@ -138,6 +138,9 @@ class Approver extends Component
     {
         //ni solution en nasir. aku taknak argue
         if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method == 'cheque') {
+                $this->Application->cheque_clear = $this->Application->cheque_clear;
+            }
             if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
@@ -335,6 +338,7 @@ class Approver extends Component
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
 
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
+            $this->cleared_date = $this->Application->cheque_clear;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $user = $this->Application->customer->where('client_id', $this->User->client_id)->first();
@@ -479,7 +483,6 @@ class Approver extends Component
 
             return redirect()->route('application.list', ['page' => '1']);
         }
-        //$this->forward = $this->Approval->rule_forward ?? FALSE;
         $this->banks = RefBank::where('client_id', $this->Application->client_id)->where('status', '1')->orderby('priority', 'asc')->orderby('description')->get();
 
         $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
@@ -488,12 +491,6 @@ class Approver extends Component
         $bank_name = RefBank::select('description')->where('id', $this->client_bank_id)->first();
         $this->client_bank_name = $bank_name->description;
         $this->client_bank_acct = $this->globalParm->DEF_CLIENT_BANK_ACCT_NO;
-
-        if ($this->include == 'share' || $this->include == 'contribution') {
-            if ($this->Application->method == 'cheque') {
-                $this->Application->cheque_clear = $this->Application->cheque_clear ?? $this->Application->cheque_date;
-            }
-        }
     }
 
     public function render()

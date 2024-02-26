@@ -32,6 +32,7 @@ class Committee extends Component
     public $pagename = '';
     public $pagetype = '';
     public $vote = 'Vote';
+    public $cleared_date;
 
     public $globalParm;
     public $client_bank_id;
@@ -137,6 +138,9 @@ class Committee extends Component
     {
         //ni solution en nasir. aku taknak argue
         if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method == 'cheque') {
+                $this->Application->cheque_clear = $this->Application->cheque_clear;
+            }
             if ($this->Application->method != 'cheque') {
                 $this->Application->cheque_date = date('Y-m-d', strtotime('today'));
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
@@ -242,6 +246,7 @@ class Committee extends Component
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
+            $this->cleared_date = $this->Application->cheque_clear;
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $user = $this->Application->customer->where('client_id', $this->User->client_id)->first();
