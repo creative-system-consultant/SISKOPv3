@@ -144,17 +144,28 @@
                     type="date"
                 />
             </div>
+            @if($Application->current_approval()->role=='MAKER')
+            <div>
+                <x-form.input
+                    label="Cheque Clearence Date"
+                    name="cheque_clear"
+                    value=""
+                    disable=""
+                    type="date"
+                    wire:model="cleared_date"
+                />
+            </div>
+            @else
             <div>
                 <x-form.input
                     label="Cheque Clearence Date"
                     name="cheque_clear"
                     value="{{ $Application->cheque_clear == NULL ? '' : $Application->cheque_clear->format('Y-m-d') }}"
-                    mandatory=""
-                    disable=""
+                    disable="true"
                     type="date"
                 />
             </div>
-        
+            @endif
             <div>
                 <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
                     View Document
