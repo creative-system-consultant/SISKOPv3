@@ -195,14 +195,9 @@ class Maker extends Component
 
     public function next()
     {
-        try {
-            $this->validate($this->xvalidate());
-        } catch (ValidationException $e) {
-            dd($e->validator->errors());
+        if ($this->approval_type != 'gagal') {
+            $this->xvalidate();
         }
-        // if ($this->approval_type != 'gagal') {
-        //     $this->xvalidate();
-        // }
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
