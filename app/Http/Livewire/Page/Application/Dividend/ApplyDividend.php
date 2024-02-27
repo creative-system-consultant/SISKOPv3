@@ -23,20 +23,35 @@ class ApplyDividend extends Component
     public $contri_amt;
     public $payout;
     public $cur_bal_dividend;
+    public $max_bal_dividend;
 
     protected $rules = [
         'Dividend.bal_dividen'  => '',
-        'payout'            => 'lt:Dividend.bal_dividen|gt:0',
 
         'payout_cash'       => '',
         'payout_share'      => '',
         'payout_contri'     => '',
 
-        'apply.div_cash_apply'   => 'numeric',
-        'apply.div_share_apply'  => 'numeric',
-        'apply.div_contri_apply' => 'numeric',
+        'apply.div_cash_apply'   => 'nullable|numeric',
+        'apply.div_share_apply'  => 'nullable|numeric',
+        'apply.div_contri_apply' => 'nullable|numeric',
 
     ];
+
+    public function getPayoutRules()
+    {
+        $rules = [
+            'payout' => [
+                'required',
+                'numeric',
+            ],
+        ];
+
+
+        $rules['payout'][] = 'max:' . $this->max_bal_dividend;
+
+        return $rules;
+    }
 
     protected $messages = [
         //'payout.*'    => 'Total Payout must be more than 0 and less than Dividend',
@@ -47,14 +62,22 @@ class ApplyDividend extends Component
         $cash = $this->payout_cash ? $this->apply->div_cash_apply : '0';
         $share = $this->payout_share ? $this->apply->div_share_apply : '0';
         $contri = $this->payout_contri ? $this->apply->div_contri_apply : '0';
+
         if (is_numeric($cash) && is_numeric($share) && is_numeric($contri)) {
             $this->payout = $cash + $share + $contri;
+            $this->apply->div_cash_apply = $cash;
+            $this->apply->div_share_apply = $share;
+            $this->apply->div_contri_apply = $contri;
         }
     }
+
+
 
     public function submit()
     {
         $this->validate();
+        $this->validate($this->getPayoutRules());
+
         $this->apply->dividend_total = $this->Dividend->bal_dividen;
         $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
         $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
@@ -96,6 +119,7 @@ class ApplyDividend extends Component
         $this->Cust = Customer::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->firstOrFail();
 
         $this->Dividend = Dividend::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->first();
+        // dd($this->Dividend);
         if ($this->Dividend == NULL) {
             session()->flash('message', 'There are no Dividend Payout for this Customer');
             session()->flash('warning');
@@ -103,9 +127,16 @@ class ApplyDividend extends Component
 
             return redirect()->route('home');
         } else if ($this->Dividend) {
-            $this->cur_bal_dividend = $this->Dividend->bal_dividen;
+            if ($this->Dividend->bal_div_withdrawal == NULL) {
+                $this->cur_bal_dividend = number_format($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal, 2);
+                $this->max_bal_dividend = $this->cur_bal_dividend;
+            } else {
+                $this->cur_bal_dividend = $this->Dividend->bal_dividen;
+                $this->max_bal_dividend = $this->cur_bal_dividend;
+            }
         }
-        $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->first();
+        $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->where('flag', 1)->first();
+
         if ($apply == NULL) {
             $this->apply = new ModelApplydividend;
             $this->apply->client_id   = $this->User->client_id;
@@ -113,8 +144,6 @@ class ApplyDividend extends Component
             $this->apply->mbr_no    = $this->Cust->fmsMembership->mbr_no;
             $this->apply->div_year  = date('Y');
             $this->apply->save();
-        } else if ($apply->flag != 1) {
-            $this->apply = $apply;
         } else {
             session()->flash('message', 'Only 1 active application allowed. Please Wait until previous application is authorized.');
             session()->flash('warning');
