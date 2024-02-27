@@ -27,6 +27,7 @@ class Contribution extends Model implements Auditable
         'online_date'   => 'datetime',
         'cdm_date'      => 'datetime',
         'cheque_date'   => 'datetime',
+        'cheque_clear'  => 'datetime',
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
         'deleted_at'    => 'datetime',
