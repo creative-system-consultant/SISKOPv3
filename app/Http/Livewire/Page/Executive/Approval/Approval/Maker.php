@@ -14,6 +14,7 @@ use App\Models\Ref\RefBank;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Maker extends Component
@@ -105,9 +106,9 @@ class Maker extends Component
             'type' => 'App\Models\ApplyDividend',
             'page' => 10,
             'rule' => [
-                'Application.div_cash_approved' => 'required|gt:0',
-                'Application.div_share_approved' => 'required|gt:0',
-                'Application.div_contri_approved' => 'required|gt:0',
+                'Application.div_cash_approved' => 'nullable|gt:0',
+                'Application.div_share_approved' => 'nullable|gt:0',
+                'Application.div_contri_approved' => 'nullable|gt:0',
             ],
         ],
         'closemembership' => [
@@ -149,6 +150,29 @@ class Maker extends Component
                 $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
+        if ($this->include == 'dividend') {
+            $rules = [
+                'Application.div_cash_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_share_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_contri_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+            ];
+
+            $rules['Application.div_cash_approved'][] = 'max:' . $this->Application->div_cash_apply;
+            $rules['Application.div_share_approved'][] = 'max:' . $this->Application->div_share_apply;
+            $rules['Application.div_contri_approved'][] = 'max:' . $this->Application->div_contri_apply;
+
+            return $rules;
+        }
+
         $this->validate();
         if ($this->include == 'share' || $this->include == 'contribution') {
             if ($this->Application->method != 'cheque') {
@@ -171,9 +195,14 @@ class Maker extends Component
 
     public function next()
     {
-        if ($this->approval_type != 'gagal') {
-            $this->xvalidate();
+        try {
+            $this->validate($this->xvalidate());
+        } catch (ValidationException $e) {
+            dd($e->validator->errors());
         }
+        // if ($this->approval_type != 'gagal') {
+        //     $this->xvalidate();
+        // }
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
@@ -335,6 +364,9 @@ class Maker extends Component
             ");
         } else if ($this->include == 'dividend') {
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->div_cash_approved = $this->Application->div_cash_apply;
+            $this->Application->div_share_approved = $this->Application->div_share_apply;
+            $this->Application->div_contri_approved = $this->Application->div_contri_apply;
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'ChangeGuarantor') {

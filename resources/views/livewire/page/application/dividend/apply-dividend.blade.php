@@ -105,7 +105,7 @@
             <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
                 <x-form.input-tag
                     label="Current Balance Dividend"
-                    name="payout"
+                    name="cur_bal"
                     value=""
                     leftTag="RM"
                     rightTag=""
