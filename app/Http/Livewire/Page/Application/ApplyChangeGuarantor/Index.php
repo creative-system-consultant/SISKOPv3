@@ -36,18 +36,17 @@ class Index extends Component
 
         $changeGuarantor = ChangeGuarantor::where([
             ['cif_id', $fms_cust->id],
-            ['flag', 0],
-            ['step', 0]
+            ['flag', 1],
         ])->first();
 
+
+
         if ($changeGuarantor != NULL) {
-            if ($changeGuarantor->flag > '0') {
-                session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
-                session()->flash('time', 10000);
-                session()->flash('info');
-                session()->flash('title');
-                return redirect()->route('home');
-            }
+            session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
+            session()->flash('time', 10000);
+            session()->flash('info');
+            session()->flash('title');
+            return redirect()->route('home');
         }
     }
 
