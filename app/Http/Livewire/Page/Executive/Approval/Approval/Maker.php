@@ -62,7 +62,6 @@ class Maker extends Component
             'page' => 2,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after_or_equal:Application.cheque_date|before_or_equal:today',
             ],
         ],
         'sellshare' => [
@@ -89,7 +88,6 @@ class Maker extends Component
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
                 'Application.start_approved' => 'after_or_equal:Application.start_apply',
-                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after_or_equal:Application.cheque_date|before_or_equal:today',
             ],
         ],
         'sellcontribution' => [
@@ -151,6 +149,42 @@ class Maker extends Component
             }
         }
 
+        $this->validate();
+
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            if ($this->Application->method != 'cheque') {
+                $this->Application->cheque_date = NULL;
+                $this->Application->cheque_clear = NULL;
+            }
+            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
+                $this->Application->start_apply = NULL;
+                $this->Application->start_approved = NULL;
+            }
+        }
+    }
+
+    public function shareValidation()
+    {
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            $rules = [
+                'Application.cheque_clear' => [],
+                'Application.approved_amt' => ['required', 'numeric'],
+            ];
+            $rules['Application.approved_amt'][] = 'max:' . $this->Application->apply_amt;
+
+            if ($this->Application->method == 'cheque') {
+                $rules['Application.cheque_clear'] = [
+                    'required',
+                    'after_or_equal:Application.cheque_date',
+                    'before_or_equal:today',
+                ];
+            }
+            return $rules;
+        }
+    }
+
+    public function dividendValidation()
+    {
         if ($this->include == 'dividend') {
             $rules = [
                 'Application.div_cash_approved' => [
@@ -173,19 +207,8 @@ class Maker extends Component
 
             return $rules;
         }
-
-        $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution') {
-            if ($this->Application->method != 'cheque') {
-                $this->Application->cheque_date = NULL;
-                $this->Application->cheque_clear = NULL;
-            }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = NULL;
-                $this->Application->start_approved = NULL;
-            }
-        }
     }
+
 
     public function decline()
     {
@@ -197,8 +220,11 @@ class Maker extends Component
     public function next()
     {
         if ($this->approval_type != 'gagal') {
-            $this->xvalidate();
+            $this->validate($this->xvalidate());
+            $this->validate($this->shareValidation());
+            $this->validate($this->dividendValidation());
         }
+
         $this->Application->step++;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
