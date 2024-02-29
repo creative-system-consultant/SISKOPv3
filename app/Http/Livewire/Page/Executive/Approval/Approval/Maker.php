@@ -62,7 +62,7 @@ class Maker extends Component
             'page' => 2,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after:Application.cheque_date',
+                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after_or_equal:Application.cheque_date|before_or_equal:today',
             ],
         ],
         'sellshare' => [
@@ -89,7 +89,7 @@ class Maker extends Component
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
                 'Application.start_approved' => 'after_or_equal:Application.start_apply',
-                'Application.cheque_clear' => 'required|after:Application.cheque_date',
+                'Application.cheque_clear' => 'required_if:Application.method,==,cheque|after_or_equal:Application.cheque_date|before_or_equal:today',
             ],
         ],
         'sellcontribution' => [
@@ -150,6 +150,7 @@ class Maker extends Component
                 $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
+
         if ($this->include == 'dividend') {
             $rules = [
                 'Application.div_cash_approved' => [
