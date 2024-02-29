@@ -150,29 +150,6 @@ class Approver extends Component
             }
         }
 
-        if ($this->include == 'dividend') {
-            $rules = [
-                'Application.div_cash_approved' => [
-                    'nullable',
-                    'numeric',
-                ],
-                'Application.div_share_approved' => [
-                    'nullable',
-                    'numeric',
-                ],
-                'Application.div_contri_approved' => [
-                    'nullable',
-                    'numeric',
-                ],
-            ];
-
-            $rules['Application.div_cash_approved'][] = 'max:' . $this->Application->div_cash_apply;
-            $rules['Application.div_share_approved'][] = 'max:' . $this->Application->div_share_apply;
-            $rules['Application.div_contri_approved'][] = 'max:' . $this->Application->div_contri_apply;
-
-            return $rules;
-        }
-
         $this->validate();
         if ($this->include == 'share' || $this->include == 'contribution') {
             if ($this->Application->method != 'cheque') {
@@ -315,11 +292,60 @@ class Approver extends Component
         }
     }
 
+    public function shareValidation()
+    {
+        if ($this->include == 'share' || $this->include == 'contribution') {
+            $rules = [
+                'Application.cheque_clear' => [],
+                'Application.approved_amt' => ['required', 'numeric'],
+            ];
+            $rules['Application.approved_amt'][] = 'max:' . $this->Application->apply_amt;
+
+            if ($this->Application->method == 'cheque') {
+                $rules['Application.cheque_clear'] = [
+                    'required',
+                    'after_or_equal:Application.cheque_date',
+                    'before_or_equal:today',
+                ];
+            }
+            return $rules;
+        }
+    }
+
+    public function dividendValidation()
+    {
+        if ($this->include == 'dividend') {
+            $rules = [
+                'Application.div_cash_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_share_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_contri_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+            ];
+
+            $rules['Application.div_cash_approved'][] = 'max:' . $this->Application->div_cash_apply;
+            $rules['Application.div_share_approved'][] = 'max:' . $this->Application->div_share_apply;
+            $rules['Application.div_contri_approved'][] = 'max:' . $this->Application->div_contri_apply;
+
+            return $rules;
+        }
+    }
+
     public function next()
     {
         if ($this->approval_type != 'gagal') {
-            $this->xvalidate();
+            $this->validate($this->xvalidate());
+            $this->validate($this->shareValidation());
+            $this->validate($this->dividendValidation());
         }
+
         $this->Approval->user_id = $this->User->id;
         $this->Approval->vote = $this->approval_type;
 
@@ -359,11 +385,15 @@ class Approver extends Component
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
-            $this->cleared_date = $this->Application->cheque_clear->format('Y-m-d');
+            if ($this->cleared_date) {
+                $this->cleared_date = $this->Application->cheque_clear->format('Y-m-d');
+            }
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
-            $this->cleared_date = $this->Application->cheque_clear;
+            if ($this->cleared_date) {
+                $this->cleared_date = $this->Application->cheque_clear->format('Y-m-d');
+            }
         } else if ($this->include == 'closemembership') {
             $this->Application = CloseMembership::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $user = $this->Application->customer->where('client_id', $this->User->client_id)->first();

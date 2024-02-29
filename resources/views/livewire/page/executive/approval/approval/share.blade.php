@@ -148,7 +148,7 @@
             <div>
                 <x-form.input
                     label="Cheque Clearence Date"
-                    name="cheque_clear"
+                    name="Application.cheque_clear"
                     value=""
                     disable=""
                     type="date"
