@@ -107,9 +107,9 @@ class Resolution extends Component
             'type' => 'App\Models\ApplyDividend',
             'page' => 10,
             'rule' => [
-                'Application.div_cash_approved' => 'required|gt:0',
-                'Application.div_share_approved' => 'required|gt:0',
-                'Application.div_contri_approved' => 'required|gt:0',
+                'Application.div_cash_approved' => 'nullable|gt:0',
+                'Application.div_share_approved' => 'nullable|gt:0',
+                'Application.div_contri_approved' => 'nullable|gt:0',
             ],
         ],
         'closemembership' => [
@@ -152,6 +152,30 @@ class Resolution extends Component
                 $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
+
+        if ($this->include == 'dividend') {
+            $rules = [
+                'Application.div_cash_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_share_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_contri_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+            ];
+
+            $rules['Application.div_cash_approved'][] = 'max:' . $this->Application->div_cash_apply;
+            $rules['Application.div_share_approved'][] = 'max:' . $this->Application->div_share_apply;
+            $rules['Application.div_contri_approved'][] = 'max:' . $this->Application->div_contri_apply;
+
+            return $rules;
+        }
+
         $this->validate();
         if ($this->include == 'share' || $this->include == 'contribution') {
             if ($this->Application->method != 'cheque') {

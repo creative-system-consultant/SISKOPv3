@@ -88,7 +88,6 @@ class Approver extends Component
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
                 'Application.start_approved' => 'after_or_equal:Application.start_apply',
-                'Application.cheque_clear' => 'required|after:Application.cheque_date',
             ],
         ],
         'sellcontribution' => [
@@ -150,6 +149,30 @@ class Approver extends Component
                 $this->Application->start_approved = date('Y-m-d', strtotime('today'));
             }
         }
+
+        if ($this->include == 'dividend') {
+            $rules = [
+                'Application.div_cash_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_share_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+                'Application.div_contri_approved' => [
+                    'nullable',
+                    'numeric',
+                ],
+            ];
+
+            $rules['Application.div_cash_approved'][] = 'max:' . $this->Application->div_cash_apply;
+            $rules['Application.div_share_approved'][] = 'max:' . $this->Application->div_share_apply;
+            $rules['Application.div_contri_approved'][] = 'max:' . $this->Application->div_contri_apply;
+
+            return $rules;
+        }
+
         $this->validate();
         if ($this->include == 'share' || $this->include == 'contribution') {
             if ($this->Application->method != 'cheque') {
@@ -336,9 +359,9 @@ class Approver extends Component
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
+            $this->cleared_date = $this->Application->cheque_clear->format('Y-m-d');
         } else if ($this->include == 'share' || $this->include == 'sellshare' || $this->include == 'exchangeshare') {
             $this->Application = Share::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
             $this->cleared_date = $this->Application->cheque_clear;
         } else if ($this->include == 'closemembership') {
