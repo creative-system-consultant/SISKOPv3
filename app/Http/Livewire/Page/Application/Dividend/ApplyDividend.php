@@ -44,7 +44,8 @@ class ApplyDividend extends Component
             'payout' => [
                 'required',
                 'numeric',
-            ],
+                'min:1',
+            ]
         ];
 
 
@@ -76,23 +77,23 @@ class ApplyDividend extends Component
 
     public function submit()
     {
-        $this->validate();
-        $this->validate($this->getPayoutRules());
+            $this->validate();
+            $this->validate($this->getPayoutRules());
 
-        $this->apply->dividend_total = $this->Dividend->bal_dividen;
-        $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
-        $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
-        $this->apply->flag = 1;
-        $this->apply->apply_date = now();
-        $this->apply->save();
+            $this->apply->dividend_total = $this->Dividend->bal_dividen;
+            $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
+            $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
+            $this->apply->flag = 1;
+            $this->apply->apply_date = now();
+            $this->apply->save();
 
-        $this->apply->make_approvals();
+            $this->apply->make_approvals();
 
-        session()->flash('message', 'Dividend Payout Application has been sent');
-        session()->flash('success');
-        session()->flash('title', 'Success!');
+            session()->flash('message', 'Dividend Payout Application has been sent');
+            session()->flash('success');
+            session()->flash('title', 'Success!');
 
-        return redirect()->route('home');
+            return redirect()->route('home');
     }
 
     public function deb()
