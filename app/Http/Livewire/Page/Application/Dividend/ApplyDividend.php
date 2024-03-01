@@ -32,9 +32,9 @@ class ApplyDividend extends Component
         'payout_share'      => '',
         'payout_contri'     => '',
 
-        'apply.div_cash_apply'   => 'nullable|numeric',
-        'apply.div_share_apply'  => 'nullable|numeric',
-        'apply.div_contri_apply' => 'nullable|numeric',
+        'apply.div_cash_apply'   => 'required|numeric',
+        'apply.div_share_apply'  => 'required|numeric',
+        'apply.div_contri_apply' => 'required|numeric',
 
     ];
 
