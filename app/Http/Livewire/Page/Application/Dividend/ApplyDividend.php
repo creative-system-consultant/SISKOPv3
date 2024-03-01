@@ -64,7 +64,8 @@ class ApplyDividend extends Component
         $contri = $this->payout_contri ? $this->apply->div_contri_apply : '0';
 
         if (is_numeric($cash) && is_numeric($share) && is_numeric($contri)) {
-            $this->payout = $cash + $share + $contri;
+            $payout = $cash + $share + $contri;
+            $this->payout = round($payout,2);
             $this->apply->div_cash_apply = $cash;
             $this->apply->div_share_apply = $share;
             $this->apply->div_contri_apply = $contri;
