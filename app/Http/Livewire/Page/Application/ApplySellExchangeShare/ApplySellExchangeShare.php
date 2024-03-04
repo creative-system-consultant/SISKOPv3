@@ -105,7 +105,7 @@ class ApplySellExchangeShare extends Component
         $share->remove_approvals();
         $share->make_approvals('SellShare');
 
-        session()->flash('message', 'Share Reimbursement Application Successfully Send');
+        session()->flash('message', 'Add/Sell Share Application has successfully sent');
         session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
@@ -115,13 +115,20 @@ class ApplySellExchangeShare extends Component
 
     public function alertConfirm()
     {
-        $this->validate();
-        $this->validate($this->getShareRules());
+        if($this->total_share >= 500){
+            $this->validate();
+            $this->validate($this->getShareRules());
 
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'type'      => 'warning',
-            'text'      => 'Are you sure you want to apply for share reimbursement?',
-        ]);
+            $this->dispatchBrowserEvent('swal:confirm', [
+                'type'      => 'warning',
+                'text'      => 'Are you sure to apply for add/sell share',
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('swal:confirm', [
+                'type'      => 'warning',
+                'text'      => "Your Total Share less then RM 500 ",
+            ]);
+        }
     }
 
     public function restricApplySell($id)

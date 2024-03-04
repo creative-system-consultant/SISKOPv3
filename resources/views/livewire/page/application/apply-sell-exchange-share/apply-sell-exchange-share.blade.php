@@ -129,10 +129,6 @@
                     </div>
                 </div>
 
- 
-
-                
-
                 <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
                     <div class="flex items-center justify-center space-x-2">
                         <button type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
