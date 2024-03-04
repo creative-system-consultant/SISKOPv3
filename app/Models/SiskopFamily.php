@@ -42,10 +42,10 @@ class SiskopFamily extends Model implements Auditable
     }
 
     public function race() {
-        return $this->belongsTo(Ref\RefRace::class,'code');
+        return $this->belongsTo(Ref\RefRace::class,'race_id');
     }
 
     public function religion() {
-        return $this->belongsTo(Ref\RefReligion::class,'code');
+        return $this->belongsTo(Ref\RefReligion::class,'religion_id');
     }
 }

@@ -54,7 +54,7 @@
         <x-form.input
             label="Race"
             name="CustFamily.description"
-            value="{{ $CustFamily->race ? $CustFamily->race->description : '' }}"
+            value="{{ $CustFamily->race->description }}"
             mandatory=""
             disable="{{ $input_disable }}"
             type="text"
@@ -64,7 +64,7 @@
         <x-form.input
             label="Religion"
             name="CustFamily.description"
-            value="{{ $CustFamily->religion ? $CustFamily->religion->description : '' }}"
+            value="{{ $CustFamily->religion->description }}"
             mandatory=""
             disable="{{ $input_disable }}"
             type="text"
