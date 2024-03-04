@@ -50,4 +50,54 @@
             type="text"
         />
     </div>
+    <div>
+        <x-form.input
+            label="Race"
+            name="CustFamily.description"
+            value="{{ $CustFamily->race->description }}"
+            mandatory=""
+            disable="{{ $input_disable }}"
+            type="text"
+        />
+    </div>
+    <div>
+        <x-form.input
+            label="Religion"
+            name="CustFamily.description"
+            value="{{ $CustFamily->religion->description }}"
+            mandatory=""
+            disable="{{ $input_disable }}"
+            type="text"
+        />
+    </div>
+    <div>
+        <x-form.input
+            label="Employer Name"
+            name="CustFamily.employer_name"
+            value="{{ $CustFamily->employer_name }}"
+            mandatory=""
+            disable="{{ $input_disable }}"
+            type="text"
+        />
+    </div>
+    <div>
+        <x-form.input
+            label="Work Post"
+            name="CustFamily.work_post"
+            value="{{ $CustFamily->work_post }}"
+            mandatory=""
+            disable="{{ $input_disable }}"
+            type="text"
+        />
+    </div>
+    <div>
+        <x-form.input
+            label="Salary"
+            name="CustFamily.salary"
+            value="{{ $CustFamily->salary }}"
+            mandatory=""
+            disable="{{ $input_disable }}"
+            type="text"
+        />
+    </div>
 </div>
