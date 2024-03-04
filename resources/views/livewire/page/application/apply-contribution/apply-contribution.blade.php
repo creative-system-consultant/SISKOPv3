@@ -122,7 +122,7 @@
 
                             <div>
                                 <x-form.input
-                                    label="Upload Online/Cash Payment Receipt:(uploaded only: jpg/png/jpeg/pdf)"
+                                    label="Upload Receipt:(uploaded only: jpg/png/jpeg/pdf)"
                                     name="online_file"
                                     id="online_file"
                                     value=""
@@ -194,7 +194,7 @@
 
                             <div>
                                 <x-form.input
-                                    label="Upload Cheque:(uploaded only: jpg/png/jpeg/pdf)"
+                                    label="Upload Receipt:(uploaded only: jpg/png/jpeg/pdf)"
                                     name="cheque_file"
                                     id="cheque_file"
                                     value=""
