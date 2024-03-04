@@ -97,7 +97,7 @@ class ApplyContribution extends Component
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'      => 'warning',
-            'text'      => 'Are you sure you want to apply for add contribution?',
+            'text'      => 'Are you sure to apply for add/change contribution?',
         ]);
     }
 
