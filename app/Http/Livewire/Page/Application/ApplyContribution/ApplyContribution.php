@@ -78,7 +78,7 @@ class ApplyContribution extends Component
 
     protected $validationAttributes = [
         'cont_apply'      => 'Add Contribution Applied',
-        'cont_type'       => 'Types of Add Contribution',
+        'cont_type'       => 'Contribution Type',
         'start_contDate'  => 'Start Date',
         'payment_method'  => 'Payment Method',
         'online_date'     => 'Online Payment Date',

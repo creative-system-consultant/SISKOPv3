@@ -53,7 +53,7 @@
                 <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.input-tag
-                            label="New Contribution Amount"
+                            label="Amount Applied"
                             type="text"
                             name="cont_apply"
                             value=""
@@ -68,7 +68,7 @@
 
                     <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4">
                         <x-form.dropdown
-                            label="Types of Add Contribution"
+                            label="Contribution Type"
                             value=""
                             name="cont_type"
                             id="cont_type"
@@ -99,7 +99,7 @@
                                 x-model="showing"
                                 wire:model="payment_method"
                                 >
-                                <option value="online">Online Banking/Cash Payment</option>
+                                <option value="online">Online Transfer/CDM</option>
                                 <option value="cheque">By Cheque</option>
                             </x-form.dropdown>
                         </div>
