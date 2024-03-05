@@ -514,50 +514,6 @@
                         wire:model="Employer.worker_num"
                     /> 
                 </div>
-                {{--<div>
-                    <x-form.input
-                        label="Work Email"
-                        name=""
-                        value=""
-                        mandatory=""
-                        disable=""
-                        type="text"
-                        wire:model=""
-                    /> 
-                </div>
-                 <div>
-                    <x-form.input
-                        label="Extension"
-                        name=""
-                        value=""
-                        mandatory=""
-                        disable=""
-                        type="text"
-                        wire:model=""
-                    /> 
-                </div>
-                <div>
-                    <x-form.input
-                        label="Start Pension Date"
-                        name=""
-                        value=""
-                        mandatory=""
-                        disable=""
-                        type="date"
-                        wire:model=""
-                    /> 
-                </div>
-                <div>
-                    <x-form.input
-                        label="Start Pension Age "
-                        name=""
-                        value=""
-                        mandatory=""
-                        disable=""
-                        type="text"
-                        wire:model=""
-                    /> 
-                </div> --}}
             </div>
         </div>
     </div>
