@@ -84,27 +84,14 @@
                     disable="true"
                     type="text"
                     placeholder="0.00"
-                    wire:model="Dividend.bal_dividen"
+                    wire:model="total_amt_dividen"
                 />
             </div>
-            <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
-                <x-form.input-tag
-                    label="Total Dividend Withdrawal "
-                    name="payout"
-                    value=""
-                    leftTag="RM"
-                    rightTag=""
-                    mandatory=""
-                    disable="true"
-                    type="text"
-                    placeholder="0.00"
-                    wire:model="payout"
-                />
-            </div>
+        
 
             <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
                 <x-form.input-tag
-                    label="Current Balance Dividend"
+                    label="Available Balance Dividend"
                     name="cur_bal"
                     value=""
                     leftTag="RM"
@@ -114,6 +101,21 @@
                     type="text"
                     placeholder="0.00"
                     wire:model="cur_bal_dividend"
+                />
+            </div>
+
+            <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
+                <x-form.input-tag
+                    label="GL Balance Dividend"
+                    name="cur_bal"
+                    value=""
+                    leftTag="RM"
+                    rightTag=""
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                    placeholder="0.00"
+                    wire:model="Dividend.bal_dividen"
                 />
             </div>
         </div>
@@ -203,15 +205,31 @@
                 />
             </div>
         </div>
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-4 mt-4 mb-4 sm:col-span-4 md:col-span-2 lg:col-span-2 xl:col-span-2">
+        
+            </div>
+            <div class="col-span-12 sm:col-span-12 md:col-span-2 lg:col-span-2 xl:col-span-2">
+                <x-form.input-tag
+                    label="Total Applied Amount "
+                    name="payout"
+                    value=""
+                    leftTag="RM"
+                    rightTag=""
+                    mandatory=""
+                    disable="true"
+                    type="text"
+                    placeholder="0.00"
+                    wire:model="payout"
+                />
+            </div>
+        </div>
 
         <div class="p-4 mt-6 rounded-md bg-gray-50 dark:bg-gray-600">
             <div class="flex items-center justify-center space-x-2">
                 <a href="{{url()->previous()}}" class="flex items-center justify-center p-2 text-sm font-semibold text-gray-500 bg-white border-2 rounded-md focus:outline-none">
                     Cancel
                 </a>
-                <button type="button" wire:click="deb" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md focus:outline-none">
-                    Debug
-                </button>
                 <button type="button" wire:click="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                     Submit
                 </button>
