@@ -22,7 +22,7 @@ class Guest extends Component
         $this->User = User::find(auth()->User()->id);
         $this->userclient = $this->User->user_client;
         $this->userclientid = explode(',', DB::table('ref.USER_HAS_CLIENTS')->select('client_id')->where('user_id', $this->User->id)->get()->implode('client_id', ','));
-        $this->clients = Client::where('id', '>', '2')->whereNotIn('id', $this->userclientid)->orderbyRaw("type_id asc, name2 asc")->get();
+        $this->clients = Client::whereNotIn('id', $this->userclientid)->orderbyRaw("type_id asc, name2 asc")->get();
     }
 
     public function select($uuid)
