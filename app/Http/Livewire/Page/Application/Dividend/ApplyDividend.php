@@ -23,6 +23,8 @@ class ApplyDividend extends Component
     public $contri_amt;
     public $payout;
     public $cur_bal_dividend;
+    public $pending_div = 0;
+    public $total_amt_dividen;
     public $max_bal_dividend;
 
     protected $rules = [
@@ -48,7 +50,6 @@ class ApplyDividend extends Component
             ]
         ];
 
-
         $rules['payout'][] = 'max:' . $this->max_bal_dividend;
 
         return $rules;
@@ -66,7 +67,7 @@ class ApplyDividend extends Component
 
         if (is_numeric($cash) && is_numeric($share) && is_numeric($contri)) {
             $payout = $cash + $share + $contri;
-            $this->payout = round($payout,2);
+            $this->payout = round($payout, 2);
             $this->apply->div_cash_apply = $cash;
             $this->apply->div_share_apply = $share;
             $this->apply->div_contri_apply = $contri;
@@ -77,42 +78,25 @@ class ApplyDividend extends Component
 
     public function submit()
     {
-            $this->validate();
-            $this->validate($this->getPayoutRules());
+        $this->validate();
+        $this->validate($this->getPayoutRules());
 
-            $this->apply->dividend_total = $this->Dividend->bal_dividen;
-            $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
-            $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
-            $this->apply->flag = 1;
-            $this->apply->apply_date = now();
-            $this->apply->save();
+        $this->apply->dividend_total = $this->Dividend->bal_dividen;
+        $this->apply->share_before  = $this->Cust->fmsMembership->total_share;
+        $this->apply->contri_before = $this->Cust->fmsMembership->total_contribution;
+        $this->apply->flag = 1;
+        $this->apply->apply_date = now();
+        $this->apply->save();
 
-            $this->apply->make_approvals();
+        $this->apply->make_approvals();
 
-            session()->flash('message', 'Dividend Payout Application has been sent');
-            session()->flash('success');
-            session()->flash('title', 'Success!');
+        session()->flash('message', 'Dividend Payout Application has been sent');
+        session()->flash('success');
+        session()->flash('title', 'Success!');
 
-            return redirect()->route('home');
+        return redirect()->route('home');
     }
 
-    public function deb()
-    {
-        dd([
-            'Cust'          => $this->Cust,
-            'apply'         => $this->apply,
-            'payout_cash'   => $this->payout_cash,
-            'payout_share'  => $this->payout_share,
-            'payout_contri' => $this->payout_contri,
-            'cash_amt'      => $this->cash_amt,
-            'share_amt'     => $this->share_amt,
-            'contri_amt'    => $this->contri_amt,
-            'cash'          => $this->payout_cash ? $this->apply->div_cash_apply : '0',
-            'share'         => $this->payout_share ? $this->apply->div_share_apply : '0',
-            'contri'        => $this->payout_contri ? $this->apply->div_contri_apply : '0',
-            'Dividend'      => $this->Dividend,
-        ]);
-    }
 
     public function mount()
     {
@@ -121,7 +105,6 @@ class ApplyDividend extends Component
         $this->Cust = Customer::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->firstOrFail();
 
         $this->Dividend = Dividend::where([['client_id', $this->User->client_id], ['identity_no', $this->User->icno]])->first();
-        // dd($this->Dividend);
         if ($this->Dividend == NULL) {
             session()->flash('message', 'There are no Dividend Payout for this Customer');
             session()->flash('warning');
@@ -130,11 +113,13 @@ class ApplyDividend extends Component
             return redirect()->route('home');
         } else if ($this->Dividend) {
             if ($this->Dividend->bal_div_withdrawal == NULL) {
-                $this->cur_bal_dividend = number_format($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal, 2);
+                $this->cur_bal_dividend = $this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal;
                 $this->max_bal_dividend = $this->cur_bal_dividend;
             } else {
-                $this->cur_bal_dividend = $this->Dividend->bal_dividen;
+                $this->cur_bal_dividend = $this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal;
+                $this->pending_div = $this->Dividend->bal_div_pending_withdrawal;
                 $this->max_bal_dividend = $this->cur_bal_dividend;
+                $this->total_amt_dividen = $this->Dividend->total_amt_dividen;
             }
         }
         $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->where('flag', 1)->first();
@@ -158,7 +143,7 @@ class ApplyDividend extends Component
     public function render()
     {
         if (is_numeric($this->apply->div_cash_apply) && is_numeric($this->apply->div_share_apply) && is_numeric($this->apply->div_contri_apply)) {
-            $this->cur_bal_dividend = number_format($this->Dividend->bal_dividen - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
+            $this->cur_bal_dividend = number_format(($this->Dividend->bal_dividen - $this->pending_div) - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
         }
         return view('livewire.page.application.dividend.apply-dividend')->extends('layouts.head');
     }
