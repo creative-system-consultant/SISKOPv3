@@ -125,7 +125,7 @@
                                 wire:model.lazy="passwordConfirmation"
                                 id="password_confirmation"
                                 type="password"
-                                placeholder="Confrim Password"
+                                placeholder="confirm Password"
                                 required
                                 class="content-center w-full px-4 py-2 text-sm form-input"
                             />
@@ -149,4 +149,21 @@
 
     </div>
 </div>
+
+@push('js')
+<script>
+    window.addEventListener('swal:confirm', event => {
+        swal.fire({
+            icon: event.detail.type,
+            title: event.detail.text,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel'
+        }).then(function(result){
+            if(result.isConfirmed){
+                window.Livewire.emit('submit');
+            }
+        });
+    });
+</script>
+@endpush
 

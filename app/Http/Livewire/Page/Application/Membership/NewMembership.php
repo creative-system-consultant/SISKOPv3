@@ -749,7 +749,8 @@ class NewMembership extends Component
         session()->flash('success');
         session()->flash('title');
 
-        return redirect()->route('home');
+        //return redirect()->route('home');
+        return redirect()->route('dash.guest');
     }
 
     public function submitto()
@@ -802,10 +803,11 @@ class NewMembership extends Component
 
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'          => 'warning',
-            'title'         => 'Are you sure you want to apply for membership?',
+            'title'         => 'Are you sure want to apply for membership?',
             'html'          => $message,
             'note'          => 'Please recheck all your details before click "Submit" button.',
         ]);
+
     }
 
 
