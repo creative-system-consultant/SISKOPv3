@@ -104,9 +104,9 @@ class Maker extends Component
             'type' => 'App\Models\ApplyDividend',
             'page' => 10,
             'rule' => [
-                'Application.div_cash_approved' => 'nullable|gt:0',
-                'Application.div_share_approved' => 'nullable|gt:0',
-                'Application.div_contri_approved' => 'nullable|gt:0',
+                'Application.div_cash_approved' => 'nullable',
+                'Application.div_share_approved' => 'nullable',
+                'Application.div_contri_approved' => 'nullable',
             ],
         ],
         'closemembership' => [
@@ -386,9 +386,9 @@ class Maker extends Component
             ");
         } else if ($this->include == 'dividend') {
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-            $this->Application->div_cash_approved = $this->Application->div_cash_apply;
-            $this->Application->div_share_approved = $this->Application->div_share_apply;
-            $this->Application->div_contri_approved = $this->Application->div_contri_apply;
+            $this->Application->div_cash_approved = number_format($this->Application->div_cash_apply, 2);
+            $this->Application->div_share_approved = number_format($this->Application->div_share_apply, 2);
+            $this->Application->div_contri_approved = number_format($this->Application->div_contri_apply, 2);
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'ChangeGuarantor') {

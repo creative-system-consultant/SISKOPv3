@@ -104,9 +104,9 @@ class Approver extends Component
             'type' => 'App\Models\ApplyDividend',
             'page' => 10,
             'rule' => [
-                'Application.div_cash_approved' => 'required|gt:0',
-                'Application.div_share_approved' => 'required|gt:0',
-                'Application.div_contri_approved' => 'required|gt:0',
+                'Application.div_cash_approved' => 'nullable',
+                'Application.div_share_approved' => 'nullable',
+                'Application.div_contri_approved' => 'nullable',
             ],
         ],
         'closemembership' => [
@@ -228,7 +228,6 @@ class Approver extends Component
         $dbname = env('DB_DATABASE', 'fmsv2_dev');
         $spname = NULL;
         $result = NULL;
-
         switch ($this->include) {
             case 'share':
             case 'sellshare':
@@ -248,7 +247,7 @@ class Approver extends Component
             case 'closemembership':
                 $spname = $dbname . ".SISKOP.up_upd_close_mbrship";
                 break;
-            case 'changeguarantor':
+            case 'ChangeGuarantor':
                 $spname = $dbname . ".SISKOP.up_upd_guarantor_change_req";
                 break;
             default:
@@ -340,6 +339,7 @@ class Approver extends Component
 
     public function next()
     {
+
         if ($this->approval_type != 'gagal') {
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
@@ -504,6 +504,9 @@ class Approver extends Component
             ");
         } else if ($this->include == 'dividend') {
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->div_cash_approved = number_format($this->Application->div_cash_apply, 2);
+            $this->Application->div_share_approved = number_format($this->Application->div_share_apply, 2);
+            $this->Application->div_contri_approved = number_format($this->Application->div_contri_apply, 2);
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'ChangeGuarantor') {
