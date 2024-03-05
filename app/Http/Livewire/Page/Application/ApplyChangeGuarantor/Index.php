@@ -113,30 +113,33 @@ class Index extends Component
             ]);
 
             foreach ($this->guarantor as $index => $guarantor) {
-                $mbr_no = $this->mbrNos[$index] ?? null;
-                $name = $this->names[$index] ?? null;
-                $identity_no = $this->newNric[$index] ?? null;
-                $old_guarantor = FmsMembership::where('mbr_no', $guarantor->guarantor_mbr_id)->first();
-                $old_guarantor_customer = $old_guarantor->fmsCustomer;
-                $old_guarantor_mbrNo = $old_guarantor->mbr_no;
-                $old_guarantor_name = $old_guarantor_customer->name;
-                $old_guarantor_nric = $old_guarantor_customer->identity_no;
+
+                if (isset($this->mbrNos[$index])) {
+                    $mbr_no = $this->mbrNos[$index];
+                    $name = $this->names[$index];
+                    $identity_no = $this->newNric[$index];
+                    $old_guarantor = FmsMembership::where('mbr_no', $guarantor->guarantor_mbr_no)->first();
+                    $old_guarantor_customer = $old_guarantor->fmsCustomer;
+                    $old_guarantor_mbrNo = $old_guarantor->mbr_no;
+                    $old_guarantor_name = $old_guarantor_customer->name;
+                    $old_guarantor_nric = $old_guarantor_customer->identity_no;
 
 
-                $ChangeGuarantorDetails = ChangeGuarantorDetails::create([
-                    'client_id' => $this->client_id,
-                    'apply_id' => $applyChangeGuarantor->id,
-                    'cif_id' => $this->fms_cust->id,
-                    'account_no' => $guarantor->account_no,
-                    'old_jamin_member' => $old_guarantor_mbrNo,
-                    'old_jamin_name' => $old_guarantor_name,
-                    'old_jamin_icno' => $old_guarantor_nric,
-                    'new_jamin_member' => $mbr_no,
-                    'new_jamin_name' => $name,
-                    'new_jamin_icno' => $identity_no,
-                    'created_by' => auth()->user()->name,
-                    'created_at' => now()
-                ]);
+                    $ChangeGuarantorDetails = ChangeGuarantorDetails::create([
+                        'client_id' => $this->client_id,
+                        'apply_id' => $applyChangeGuarantor->id,
+                        'cif_id' => $this->fms_cust->id,
+                        'account_no' => $guarantor->account_no,
+                        'old_jamin_member' => $old_guarantor_mbrNo,
+                        'old_jamin_name' => $old_guarantor_name,
+                        'old_jamin_icno' => $old_guarantor_nric,
+                        'new_jamin_member' => $mbr_no,
+                        'new_jamin_name' => $name,
+                        'new_jamin_icno' => $identity_no,
+                        'created_by' => auth()->user()->name,
+                        'created_at' => now()
+                    ]);
+                }
             }
 
             $applyChangeGuarantor->remove_approvals();

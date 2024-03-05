@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Page\Application\ApplicationList;
 
+use App\Http\Traits\HasApprovals;
 use App\Models\ChangeGuarantor as ModelsChangeGuarantor;
 use App\Models\ChangeGuarantorDetails;
 use App\Models\User;
@@ -11,6 +12,7 @@ use Livewire\WithPagination;
 class ChangeGuarantor extends Component
 {
     use WithPagination;
+
     public User $User;
     public $Change;
     public $ChangeGuarantorsDetails;
@@ -50,7 +52,7 @@ class ChangeGuarantor extends Component
     public function render()
     {
         $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->where('flag', '!=', 0)->orderBy('created_at', 'desc')->with('customer')->paginate(5);
-        return view('livewire.page.application.application-list.changeguarantor',[
+        return view('livewire.page.application.application-list.changeguarantor', [
             'ChangeGuarantors' => $ChangeGuarantors,
         ]);
     }

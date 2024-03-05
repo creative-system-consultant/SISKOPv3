@@ -20,7 +20,7 @@ class GuarantorList extends Model
 
     public function fmsMembership()
     {
-        return $this->hasOne(FmsMembership::class, 'mbr_no', 'guarantor_mbr_id')
+        return $this->hasOne(FmsMembership::class, 'mbr_no', 'guarantor_mbr_no')
             ->where('client_id', $this->client_id);
     }
 }
