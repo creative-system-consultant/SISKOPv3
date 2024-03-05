@@ -31,30 +31,40 @@ class Register extends Component
 
     public function register()
     {
-        $this->validate([
-            'name'      => ['required'],
-            'icno'      => ['required'],
-            'phone_no'  => ['required'],
-            'email'     => ['required', 'email', 'unique:App\Models\User'],
-            'password'  => ['required', 'min:8', 'same:passwordConfirmation'],
-        ]);
+        //Check if ic exists
+        $user = User::where('icno',$this->icno)->first();
 
-        $user = User::create([
-            'email'     => $this->email,
-            'name'      => $this->name,
-            'phone_no'  => $this->phone_no,
-            'icno'      => $this->icno,
-            'password'  => Hash::make($this->password),
-            'user_type' => 4
-        ]);
+        if(!$user){
+            $this->validate([
+                'name'      => ['required'],
+                'icno'      => ['required'],
+                'phone_no'  => ['required'],
+                'email'     => ['required', 'email', 'unique:App\Models\User'],
+                'password'  => ['required', 'min:8', 'same:passwordConfirmation'],
+            ]);
 
-        $user->save();
+            $user = User::create([
+                'email'     => $this->email,
+                'name'      => $this->name,
+                'phone_no'  => $this->phone_no,
+                'icno'      => $this->icno,
+                'password'  => Hash::make($this->password),
+                'user_type' => 4
+            ]);
 
-        event(new Registered($user));
+            $user->save();
 
-        Auth::login($user, true);
+            event(new Registered($user));
 
-        return redirect()->intended(route('home'));
+            Auth::login($user, true);
+
+            return redirect()->intended(route('home'));
+        }else{
+            $this->dispatchBrowserEvent('swal:confirm', [
+                'type'      => 'warning',
+                'text'      => "This .'$this->icno '. already exits!!!",
+            ]);
+        }
     }
 
     public function render()
