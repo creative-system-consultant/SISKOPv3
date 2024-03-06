@@ -150,13 +150,13 @@ class Maker extends Component
 
         $this->CustAddress = Address::where([
             ['cif_id', $this->Cust->id],
-            ['address_type_id', 3],
+            ['address_type_id', 'N'],
             ['client_id', $this->client_id],
         ])->first();
 
         $this->EmployAddress = Address::where([
             ['cif_id', $this->Cust->id],
-            ['address_type_id', 2],
+            ['address_type_id', 'B'],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();

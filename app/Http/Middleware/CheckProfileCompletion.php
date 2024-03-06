@@ -31,8 +31,8 @@ class CheckProfileCompletion
             session()->flash('title');
         } else {
             $Employer  = CustEmployer::where('client_id', $user->client_id)->where('cif_id', $FmsCust->id)->first();
-            $FmsAddressCust = FmsAddress::where('client_id', $user->client_id)->where('cif_id', $FmsCust->id)->where('address_type_id', 2)->first();
-            $FmsAddressEmployer = FmsAddress::where('client_id', $user->client_id)->where('cif_id', $FmsCust->id)->where('address_type_id', 3)->first();
+            $FmsAddressCust = FmsAddress::where('client_id', $user->client_id)->where('cif_id', $FmsCust->id)->where('address_type_id', 'B')->first();
+            $FmsAddressEmployer = FmsAddress::where('client_id', $user->client_id)->where('cif_id', $FmsCust->id)->where('address_type_id', 'N')->first();
 
             if (is_null($Employer) || is_null($FmsAddressCust) || is_null($FmsAddressEmployer)) {
                 $flagger = true;

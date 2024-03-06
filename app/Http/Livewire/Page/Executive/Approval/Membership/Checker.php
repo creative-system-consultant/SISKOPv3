@@ -160,13 +160,13 @@ class Checker extends Component
         $this->forward  = $this->Approval->rule_forward ?? FALSE;
         $this->CustAddress = Address::where([
             ['cif_id', $this->Cust->id],
-            ['address_type_id', 3],
+            ['address_type_id', 'N'],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();
         $this->EmployAddress = Address::where([
             ['cif_id', $this->Cust->id],
-            ['address_type_id', 2],
+            ['address_type_id', 'B'],
             ['client_id', $this->client_id],
             ['apply_id', $this->Application->id],
         ])->first();

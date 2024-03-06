@@ -71,10 +71,10 @@ class ClientCreate extends Component
     {
         $this->User = User::find(auth()->user()->id);
 
-        if ($client_id != NULL){
+        if ($client_id != NULL) {
             $this->coop     = Client::find($client_id);
             $this->address  = $this->coop->address()->firstOrCreate([
-                'address_type_id'   => 1
+                'address_type_id'   => 'N'
             ]);
             $this->page     = "Edit";
             $this->ids      = $this->coop->getids();
@@ -92,14 +92,14 @@ class ClientCreate extends Component
 
     public function add()
     {
-        $this->ids   = [...$this->ids, $this->selected ];
+        $this->ids   = [...$this->ids, $this->selected];
         $this->users = User::whereIn('id', $this->ids)->get();
         $this->idrem = array_diff($this->idrem, [$this->selected]);
     }
 
     public function rem($id)
     {
-        $this->idrem = [...$this->idrem, $id ];
+        $this->idrem = [...$this->idrem, $id];
         $this->ids   = array_diff($this->ids, [$id]);
         $this->ids   = array_filter($this->ids);
         $this->users = User::whereIn('id', $this->ids)->get();
@@ -110,11 +110,11 @@ class ClientCreate extends Component
         //dd($this->coop);
         $this->validate();
 
-        if($this->ids == []){
-            if ($this->coop->status == 1){
+        if ($this->ids == []) {
+            if ($this->coop->status == 1) {
                 $this->addError('coop.status', 'Can\'t set active without any Admins active');
                 $this->addError('search', 'Can\'t set active without any Admins active');
-                $this->dispatchBrowserEvent('swal',[
+                $this->dispatchBrowserEvent('swal', [
                     'title' => 'Warning!',
                     'text'  => 'Can\'t set ACTIVE without any Admins active',
                     'icon'  => 'warning',
@@ -127,21 +127,22 @@ class ClientCreate extends Component
 
         $this->coop->save();
 
-        if($this->logo){
-            Storage::disk('local')->putFileAs('public/Files/Logo/', $this->logo, $this->coop->id.'-logo.'.$this->logo->extension());
-            $filepath   = 'Files/Logo/'.$this->coop->id.'-logo.'.$this->logo->extension();
+        if ($this->logo) {
+            Storage::disk('local')->putFileAs('public/Files/Logo/', $this->logo, $this->coop->id . '-logo.' . $this->logo->extension());
+            $filepath   = 'Files/Logo/' . $this->coop->id . '-logo.' . $this->logo->extension();
             $this->coop->logo_path = $filepath;
             $this->coop->files()->updateOrCreate(
                 [
                     'filename'     => 'logo'
-                ],[
+                ],
+                [
                     'filedesc'     => 'COOP LOGO',
                     'filetype'     => $this->logo->extension(),
                     'filepath'     => $filepath,
                 ]
             );
         } else {
-            if ($this->coop->logo_path == NULL){
+            if ($this->coop->logo_path == NULL) {
                 $this->coop->logo_path = 'img/logo.png';
             }
         }
@@ -151,10 +152,10 @@ class ClientCreate extends Component
                 'user_id'   => $value,
                 'client_id'   => $this->coop->id,
                 'status'    => '1',
-                'updated_by'=> $this->User->name,
+                'updated_by' => $this->User->name,
             ]);
         }
- 
+
         $this->coop->address()->save($this->address);
         $this->coop->address_id = $this->address->id;
         $this->coop->save();
@@ -164,8 +165,8 @@ class ClientCreate extends Component
 
     public function searchUser()
     {
-        if (strlen($this->search) > 2){
-            $this->userList = User::where('name', 'like', '%'.$this->search.'%')->select('id','name')->orderBy('name')->take(5)->get();
+        if (strlen($this->search) > 2) {
+            $this->userList = User::where('name', 'like', '%' . $this->search . '%')->select('id', 'name')->orderBy('name')->take(5)->get();
         } else {
             $this->userList = [];
         }
