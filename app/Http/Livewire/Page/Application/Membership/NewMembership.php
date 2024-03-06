@@ -591,7 +591,7 @@ class NewMembership extends Component
                 'cif_id' => $this->Cust->id,
                 'client_id' => $this->User->client_id,
                 'apply_id' => $this->apply_id,
-                'address_type_id' => '3',
+                'address_type_id' => 'N',
             ]
         );
 
@@ -624,7 +624,7 @@ class NewMembership extends Component
                 'cif_id' => $this->Cust->id,
                 'client_id' => $this->User->client_id,
                 'apply_id' => $this->apply_id,
-                'address_type_id' => '2'
+                'address_type_id' => 'B'
             ]
         );
         $this->mail_flag_employer = $this->EmployAddress->mail_flag;
@@ -807,7 +807,6 @@ class NewMembership extends Component
             'html'          => $message,
             'note'          => 'Please recheck all your details before click "Submit" button.',
         ]);
-
     }
 
 
