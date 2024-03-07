@@ -47,14 +47,14 @@
             <x-form.dropdown
                 label="Bank"
                 value=""
-                name="FmsCust.bank_id"
+                name="FmsCust.bank_code"
                 id=""
                 mandatory=""
                 disable=""
                 default="yes"
-                wire:model="FmsCust.bank_id"
+                wire:model="FmsCust.bank_code"
             >
-                @foreach ($bank_id as $list)
+                @foreach ($bank_code as $list)
                     <option value="{{ $list->code }}"> {{ $list->description }}</option>
                 @endforeach
             </x-form.dropdown>
@@ -203,12 +203,12 @@
                     <x-form.dropdown
                         label="Relationship"
                         value=""
-                        name="FmsCustFamily.relation_id"
+                        name="FmsCustFamily.relation_code"
                         id=""
                         mandatory=""
                         disable=""
                         default="yes"
-                        wire:model="FmsCustFamily.relation_id"
+                        wire:model="FmsCustFamily.relation_code"
                     >
                     @foreach ($relationship as $list)
                         <option value="{{ $list->code }}"> {{ $list->description }}</option>
@@ -230,14 +230,14 @@
                     <x-form.dropdown
                         label="Race"
                         value=""
-                        name="FmsCustFamily.race_id"
+                        name="FmsCustFamily.race_code"
                         id=""
                         mandatory=""
                         disable=""
                         default="yes"
-                        wire:model="FmsCustFamily.race_id"
+                        wire:model="FmsCustFamily.race_code"
                     >
-                        @foreach ($race_id as $list)
+                        @foreach ($race_code as $list)
                             <option value="{{ $list->code }}"> {{ $list->description }}</option>
                         @endforeach
                     </x-form.dropdown>
@@ -246,14 +246,14 @@
                     <x-form.dropdown
                         label="Religion"
                         value=""
-                        name="FmsCustFamily.religion_id"
+                        name="FmsCustFamily.religion_code"
                         id=""
                         mandatory=""
                         disable=""
                         default="yes"
-                        wire:model="FmsCustFamily.religion_id"
+                        wire:model="FmsCustFamily.religion_code"
                     >
-                        @foreach ($religion_id as $list)
+                        @foreach ($religion_code as $list)
                             <option value="{{ $list->code }}"> {{ $list->description }}</option>
                         @endforeach
                     </x-form.dropdown>
