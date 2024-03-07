@@ -23,14 +23,14 @@ class Profile extends Component
     public User $User;
     public $Employer, $EmployerC10, $FmsCust, $FmsCustC10, $FmsAddressCust, $FmsAddressCustC10, $FmsAddressEmployer, $FmsAddressEmployerC10, $FmsCustFamily, $FmsCustFamilyC10, $state_id;
     public $mail_flag, $mail_flag_employer;
-    public $race_id, $religion_id, $relationship, $bank_id;
+    public $race_code, $religion_code, $relationship, $bank_code;
 
     protected $rules = [
         'FmsCust.name'     => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
         'FmsCust.identity_no'     => 'required|numeric|digits:12',
         'FmsCust.phone' => ['required', 'regex:/^\d{7,11}$/'],
         'FmsCust.email'    => 'required|email',
-        'FmsCust.bank_id'                       => 'required',
+        'FmsCust.bank_code'                       => 'required',
         'FmsCust.bank_acct_no'                       => 'required',
 
         'Employer.name'     => ['required', 'regex:/^[A-Za-z @\/-]+$/'],
@@ -59,9 +59,9 @@ class Profile extends Component
         'FmsCustFamily.identity_no'             => 'required|numeric|digits:12',
         'FmsCustFamily.email'                   => ['required', 'email:rfc', 'regex:/^[\w\.-]+@[\w\.-]+\.\w+$/'],
         'FmsCustFamily.phone_no'                => ['required', 'regex:/^\d{7,11}$/'],
-        'FmsCustFamily.relation_id'             => 'required',
-        'FmsCustFamily.race_id'                 => 'required',
-        'FmsCustFamily.religion_id'             => 'required',
+        'FmsCustFamily.relation_code'             => 'required',
+        'FmsCustFamily.race_code'                 => 'required',
+        'FmsCustFamily.religion_code'             => 'required',
         'FmsCustFamily.employer_name'           => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'FmsCustFamily.work_post'               => ['required', 'regex:/^[A-Za-z0-9 \-\/@,&()]+$/'],
         'FmsCustFamily.salary'                  =>  ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
@@ -74,11 +74,11 @@ class Profile extends Component
                 'required',
                 'numeric',
                 function ($attribute, $value, $fail) {
-                    if (!$this->FmsCust->bank_id) {
+                    if (!$this->FmsCust->bank_code) {
                         return $fail("The bank ID is not selected.");
                     }
 
-                    $bankAccountLength = RefBank::where('id', $this->FmsCust->bank_id)->value('bank_acc_len');
+                    $bankAccountLength = RefBank::where('id', $this->FmsCust->bank_code)->value('bank_acc_len');
 
                     if (!$bankAccountLength) {
                         return $fail("Unable to determine the bank account length.");
@@ -94,6 +94,7 @@ class Profile extends Component
 
     public function submit()
     {
+        dd($this->FmsCust->bank_code);
         $this->validate();
         $this->validate($this->getSpecialRules());
 
@@ -103,7 +104,7 @@ class Profile extends Component
             $this->FmsCustC10->name = $this->FmsCust->name;
             $this->FmsCustC10->phone = $this->FmsCust->phone;
             $this->FmsCustC10->email = $this->FmsCust->email;
-            $this->FmsCustC10->bank_id = $this->FmsCust->bank_id;
+            $this->FmsCustC10->bank_code = $this->FmsCust->bank_code;
             $this->FmsCustC10->bank_acct_no = $this->FmsCust->bank_acct_no;
             $this->FmsCustC10->save();
             $this->FmsCust->save();
@@ -155,9 +156,9 @@ class Profile extends Component
             $this->FmsCustFamilyC10->identity_no = $this->FmsCustFamily->identity_no;
             $this->FmsCustFamilyC10->email = $this->FmsCustFamily->email;
             $this->FmsCustFamilyC10->phone_no = $this->FmsCustFamily->phone_no;
-            $this->FmsCustFamilyC10->relation_id = $this->FmsCustFamily->relation_id;
-            $this->FmsCustFamilyC10->race_id = $this->FmsCustFamily->race_id;
-            $this->FmsCustFamilyC10->religion_id = $this->FmsCustFamily->religion_id;
+            $this->FmsCustFamilyC10->relation_code = $this->FmsCustFamily->relation_code;
+            $this->FmsCustFamilyC10->race_code = $this->FmsCustFamily->race_code;
+            $this->FmsCustFamilyC10->religion_code = $this->FmsCustFamily->religion_code;
             $this->FmsCustFamilyC10->employer_name = $this->FmsCustFamily->employer_name;
             $this->FmsCustFamilyC10->work_post = $this->FmsCustFamily->work_post;
             $this->FmsCustFamilyC10->salary = $this->FmsCustFamily->salary;
@@ -202,14 +203,14 @@ class Profile extends Component
 
         $this->state_id          = RefState::where([['client_id', $this->User->client_id], ['status', '1']])->get();
 
-        $this->race_id           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
-        $this->religion_id       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
+        $this->race_code           = RefRace::where([['client_id', $this->User->client_id], ['status', '1']])->get();
+        $this->religion_code       = RefReligion::where([['client_id', 1], ['status', '1']])->get();
 
 
         $this->mail_flag = $this->FmsAddressCust->mail_flag;
         $this->mail_flag_employer = $this->FmsAddressEmployer->mail_flag;
 
-        $this->bank_id           = RefBank::where([
+        $this->bank_code           = RefBank::where([
             ['client_id', $this->User->client_id],
             ['status', '1'], ['bank_cust', 'Y']
         ])->orderBy('priority')->orderBy('description')->get();
