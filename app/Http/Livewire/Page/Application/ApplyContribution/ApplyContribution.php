@@ -170,7 +170,6 @@ class ApplyContribution extends Component
                     'filepath' => $filepath,
                 ]);
 
-                return redirect()->route('home');
             } else {
                 $filepath = 'Files/' . $customer->id . '/contribution//' . $contribution->id . '/' . 'cheque' . '.' . $this->cheque_file->extension();
 
@@ -184,6 +183,14 @@ class ApplyContribution extends Component
                 ]);
             }
         }
+
+        // $this->dispatchBrowserEvent('swal', [
+        //     'title' => 'Warning!',
+        //     'text'  => 'Success, Add Contribution Application Successfully Send',
+        //     'icon'  => 'warning',
+        //     'showConfirmButton' => false,
+        //     'timer' => 100000,
+        // ]);
         session()->flash('message', 'Add Contribution Application Successfully Send');
         session()->flash('time', 10000);
         session()->flash('success');
