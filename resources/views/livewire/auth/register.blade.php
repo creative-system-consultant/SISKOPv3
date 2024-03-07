@@ -125,7 +125,7 @@
                                 wire:model.lazy="passwordConfirmation"
                                 id="password_confirmation"
                                 type="password"
-                                placeholder="confirm Password"
+                                placeholder="Confirm Password"
                                 required
                                 class="content-center w-full px-4 py-2 text-sm form-input"
                             />
