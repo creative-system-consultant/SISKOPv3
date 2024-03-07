@@ -105,7 +105,7 @@ class ApplySellExchangeShare extends Component
         $share->remove_approvals();
         $share->make_approvals('SellShare');
 
-        session()->flash('message', 'Add/Sell Share Application has successfully sent');
+        session()->flash('message', 'Sell/Transfer Share Application has successfully sent');
         session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
@@ -121,7 +121,7 @@ class ApplySellExchangeShare extends Component
 
             $this->dispatchBrowserEvent('swal:confirm', [
                 'type'      => 'warning',
-                'text'      => 'Are you sure to apply for add/sell share',
+                'text'      => 'Are you sure to apply for sell/transfer share?',
             ]);
         }else{
             $this->dispatchBrowserEvent('swal:confirm', [
