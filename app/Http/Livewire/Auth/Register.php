@@ -31,13 +31,9 @@ class Register extends Component
 
     public function register()
     {
-        //Check if ic exists
-        $user = User::where('icno',$this->icno)->first();
-
-        if(!$user){
             $this->validate([
                 'name'      => ['required'],
-                'icno'      => ['required'],
+                'icno'      => ['required','unique:App\Models\User'],
                 'phone_no'  => ['required'],
                 'email'     => ['required', 'email', 'unique:App\Models\User'],
                 'password'  => ['required', 'min:8', 'same:passwordConfirmation'],
@@ -59,12 +55,6 @@ class Register extends Component
             Auth::login($user, true);
 
             return redirect()->intended(route('home'));
-        }else{
-            $this->dispatchBrowserEvent('swal:confirm', [
-                'type'      => 'warning',
-                'text'      => "This .'$this->icno '. already exits!!!",
-            ]);
-        }
     }
 
     public function render()
