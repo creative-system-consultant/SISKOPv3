@@ -48,8 +48,6 @@ class Guest extends Component
 
     public function reg($uuid)
     {
-        session()->forget('just_logged_in');
-
         $client = Client::where('uuid', $uuid)->first();
         if ($client != NULL) {
             $this->dispatchBrowserEvent('swal', [
