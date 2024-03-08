@@ -315,7 +315,7 @@ class Maker extends Component
             });
 
             $this->guarantorLists = DB::table('FMS.GUARANTOR_LIST as A')
-                ->join('FMS.MEMBERSHIP as B', 'B.mbr_no', '=', 'A.mbr_id')
+                ->join('FMS.MEMBERSHIP as B', 'B.mbr_no', '=', 'A.mbr_no')
                 ->join('FMS.ACCOUNT_MASTERS as C', function ($join) {
                     $join->on('C.mbr_no', '=', 'B.mbr_no')
                         ->on('C.account_no', '=', 'A.account_no');
@@ -323,7 +323,7 @@ class Maker extends Component
                 ->join('FMS.ACCOUNT_POSITIONS as D', 'D.account_no', '=', 'C.account_no')
                 ->join('CIF.CUSTOMERS as E', 'E.id', '=', 'B.cif_id')
                 ->select([
-                    DB::raw('A.mbr_id as peminjam_dijamin'),
+                    DB::raw('A.mbr_no as peminjam_dijamin'),
                     'E.name',
                     'A.account_no',
                     'C.start_disbursed_date',
@@ -337,12 +337,12 @@ class Maker extends Component
                 ->where('B.client_id', '=', $this->User->client_id)
                 ->where('C.client_id', '=', $this->User->client_id)
                 ->where('D.client_id', '=', $this->User->client_id)
-                ->where('A.guarantor_mbr_id', '=', $this->Application->customer->fmsMembership->mbr_no)
+                ->where('A.guarantor_mbr_no', '=', $this->Application->customer->fmsMembership->mbr_no)
                 ->where('A.guarantor_status', '=', 1)
                 ->where('B.mbr_status', '=', 'A')
                 ->where('C.account_status', '=', 1)
                 ->where('D.bal_outstanding', '>', 0)
-                ->orderBy('A.mbr_id')
+                ->orderBy('A.mbr_no')
                 ->orderBy('A.account_no')
                 ->get();
 
@@ -365,20 +365,20 @@ class Maker extends Component
                     (
                         SELECT TOP 1 C.name FROM CIF.customers C
                         INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$client'
-                        INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_id AND GSub.client_id = '$client'
+                        INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_no AND GSub.client_id = '$client'
                         WHERE P.account_no = GSub.account_no
                         AND C.client_id = '$client'
                     ) AS guarantee_name,
                     (
                         SELECT TOP 1 C.identity_no FROM CIF.customers C
                         INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$client'
-                        INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_id AND GSub.client_id = '$client'
+                        INNER JOIN FMS.GUARANTOR_LIST GSub ON M.mbr_no = GSub.mbr_no AND GSub.client_id = '$client'
                         WHERE P.account_no = GSub.account_no
                         AND C.client_id = '$client'
                     ) AS guarantee_icno
                 FROM CIF.customers C
                 INNER JOIN FMS.MEMBERSHIP M ON C.id = M.cif_id AND M.client_id = '$client'
-                INNER JOIN FMS.GUARANTOR_LIST G ON M.mbr_no = G.guarantor_mbr_id AND G.client_id = '$client'
+                INNER JOIN FMS.GUARANTOR_LIST G ON M.mbr_no = G.guarantor_mbr_no AND G.client_id = '$client'
                 INNER JOIN FMS.account_positions P ON P.ACCOUNT_NO = G.ACCOUNT_NO AND P.client_id = '$client'
                 WHERE C.identity_no = '$user->identity_no'
                 AND P.bal_outstanding > 0

@@ -1,5 +1,34 @@
 {{-- <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Close Membership Information</h2> --}}
 <div>
+    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Membership Information</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+        <x-form.input
+            label="Total Contribution"
+            name=""
+            value="{{ $Application->customer->fmsMembership->total_contribution }}"
+            mandatory=""
+            disable="true"
+            type="text"
+        />
+        <x-form.input
+            label="Total Share"
+            name=""
+            value="{{ $Application->customer->fmsMembership->total_share }}"
+            mandatory=""
+            disable="true"
+            type="text"
+        />
+        <x-form.input
+            label="Balance Outstanding"
+            name=""
+            value=""
+            mandatory=""
+            disable="true"
+            type="text"
+        />
+    </div>
+</div>
+<div>
     <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Account of Applicant</h2>
     <div>
         <x-table.table>
@@ -60,7 +89,6 @@
     <div>
         <x-table.table>
             <x-slot name="thead">
-                <x-table.table-header class="text-left " value="Member No" sort="" />
                 <x-table.table-header class="text-left" value="Name" sort="" />
                 <x-table.table-header class="text-left" value="Acc No" sort="" />
                 <x-table.table-header class="text-left" value="Start Disbursed Date" sort="" />
@@ -73,9 +101,6 @@
             <x-slot name="tbody">
                 @forelse($guarantorLists as $guarantorList)
                 <tr>
-                    <x-table.table-body colspan="" class="text-left">
-                        {{ $guarantorList->peminjam_dijamin }}
-                    </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $guarantorList->name }}
                     </x-table.table-body>
@@ -104,42 +129,6 @@
                 @empty
                 <tr>
                     <x-table.table-body colspan="9" class="text-center">
-                        No Data
-                    </x-table.table-body>
-                </tr>
-                @endforelse
-            </x-slot>
-        </x-table.table>
-    </div>
-
-    <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Guarantee</h2>
-    <div>
-        <x-table.table>
-            <x-slot name="thead">
-                <x-table.table-header class="text-left " value="Loan Account Number" sort="" />
-                <x-table.table-header class="text-left" value="Borrower(s) Name" sort="" />
-                <x-table.table-header class="text-left" value="NRIC" sort="" />
-                <x-table.table-header class="text-right" value="Balance Outstanding" sort="" />
-            </x-slot>
-            <x-slot name="tbody">
-                @forelse($jaminan as $item)
-                <tr>
-                    <x-table.table-body colspan="" class="text-left">
-                        {{$item->account_no}}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        {{$item->guarantee_name}}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        {{$item->guarantee_icno}}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-right">
-                        {{$item->bal_outstanding}}
-                    </x-table.table-body>
-                </tr>
-                @empty
-                <tr>
-                    <x-table.table-body colspan="4" class="text-center">
                         No Data
                     </x-table.table-body>
                 </tr>
