@@ -104,20 +104,11 @@
                                 </div>
                             </x-sidebar.dropdown-nav-item>
                         @endif
-                            {{--<x-sidebar.nav-item title="List of Application" route="{{ route('user_application.list') }}" uri="userApplicationList'">
-                                <x-heroicon-o-document-text class="w-7 h-7" />
-                            </x-sidebar.nav-item>--}}
 
-                            {{--<x-sidebar.nav-item title="COOP Membership Status" route="{{ route('user_membership.status') }}" uri="membershipStatus">
-                                <x-heroicon-o-document-text class="w-7 h-7" />
-                            </x-sidebar.nav-item>--}}
                         @if(auth()->user()->user_type == 2)
                             <x-sidebar.nav-item title="Register / Update Product" route="{{ route('product.list') }}" uri="product">
                                 <x-heroicon-o-briefcase class="w-7 h-7" />
                             </x-sidebar.nav-item>
-                            {{--<x-sidebar.nav-item title="Membership Maintenance" route="{{ route('membership.admin') }}" uri="membership">
-                                <x-heroicon-o-document-magnifying-glass class="w-7 h-7" />
-                            </x-sidebar.nav-item>--}}
                             <x-sidebar.dropdown-nav-item active="open" title="ADMIN" uri="admin/*">
                                 <x-slot name="icon">
                                     <x-heroicon-o-user class="w-7 h-7" />

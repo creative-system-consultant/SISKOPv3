@@ -52,6 +52,9 @@ class Register extends Component
 
             event(new Registered($user));
 
+            // Set a session variable after successful register, before login
+            session(['just_logged_in' => true]);
+
             Auth::login($user, true);
 
             return redirect()->intended(route('home'));
