@@ -50,6 +50,16 @@
             disable="true"
         />
         <x-form.input-tag
+            label="Current Share"
+            type="text"
+            name=""
+            value="{{ $Application->customer->fmsMembership->total_share }}"
+            leftTag="RM"
+            rightTag=""
+            mandatory=""
+            disable="true"
+        />
+        <x-form.input-tag
             label="Amount Approved"
             type="text"
             name=""
