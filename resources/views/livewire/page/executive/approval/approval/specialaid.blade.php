@@ -31,7 +31,7 @@
             label="Amount Approved"
             type="text"
             name="Application.approved_amt"
-            value=""
+            value="{{ $Application->apply_amt ?? '0.00' }}"
             leftTag="RM"
             rightTag=""
             mandatory=""
