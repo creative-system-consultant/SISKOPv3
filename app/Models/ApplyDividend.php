@@ -27,6 +27,11 @@ class ApplyDividend extends Model implements Auditable
         'apply_date'    => 'datetime',
     ];
 
+    public function final_div()
+    {
+        return $this->belongsTo(Dividend::class,'mbr_no','mbr_no');
+    }
+
     public function approvals()
     {
         return $this->morphMany(Approval::class, 'approval');
