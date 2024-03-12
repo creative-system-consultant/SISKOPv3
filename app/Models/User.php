@@ -87,4 +87,9 @@ class User extends Authenticatable implements Auditable
             return TRUE;
         }
     }
+
+    public function membership_apply()
+    {
+        return $this->hasMany(ApplyMembership::class,'user_id');
+    }
 }
