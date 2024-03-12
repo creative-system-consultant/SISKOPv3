@@ -44,7 +44,7 @@
                     leftTag="RM"
                     rightTag=""
                     type="text"
-                    wire:model="applymember.register_fee"
+                    wire:model="tot_share"
                 />
             </div>
             @else
