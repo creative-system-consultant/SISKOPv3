@@ -68,6 +68,10 @@ class User extends Authenticatable implements Auditable
         return $this->belongsToMany(Client::class, 'ref.user_has_clients', 'user_id');
     }
 
+    public function user_current_client() {
+        return $this->belongsTo(Client::class,'client_id','id');
+    }
+
     public function getIdentityNoAttribute()
     {
         return $this->icno;

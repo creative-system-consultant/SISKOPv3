@@ -24,7 +24,7 @@
             </div>
             <div class="hidden md:block">
                 <div class="flex justify-center pl-4 text-white">
-                    <p class="text-sm italic font-semibold uppercase md:text-xl">{{ config('app.name') }}</p>
+                    <p class="text-sm italic font-semibold uppercase md:text-xl">{{ config('app.name') }} {{ auth()->user()->user_current_client->name }}</p>
                 </div>
             </div>
         </div>
