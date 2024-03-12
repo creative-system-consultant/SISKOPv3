@@ -86,7 +86,7 @@
                 </x-table.table>
             </div>
 
-            <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Account as Guarantor</h2>
+            <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Guarantee</h2>
             <div>
                 <x-table.table>
                     <x-slot name="thead">
@@ -142,7 +142,7 @@
                 </x-table.table>
             </div>
 
-            <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Guarantee</h2>
+            {{-- <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Guarantee</h2>
             <div>
                 <x-table.table>
                     <x-slot name="thead">
@@ -178,7 +178,7 @@
                         @endforelse
                     </x-slot>
                 </x-table.table>
-            </div>
+            </div> --}}
 
             <x-form.basic-form wire:submit.prevent="alertConfirm" x-data="{types: '', selected: false}">
 
