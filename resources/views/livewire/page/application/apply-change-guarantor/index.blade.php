@@ -51,7 +51,7 @@
                 <x-slot name="thead">
                     <tr  class="">
                         <th  colspan="6" class="px-6 py-3 border bg-primary-100 text-sm leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            List Of Guarantors
+                            List Of Guarantors of Account No : {{ $this->acct_no }}
                         </th>
                     </tr>
                     <tr  class="">

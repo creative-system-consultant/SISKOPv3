@@ -16,7 +16,7 @@ class FmsMembership extends Model
     public function fmsAcctMaster()
     {
         return $this->hasMany(AccountMaster::class, 'mbr_no', 'mbr_no')
-            ->where('client_id', $this->client_id);
+            ->where('client_id', $this->client_id)->orderBy('account_no','asc');
     }
 
     public function fmsCustomer()
