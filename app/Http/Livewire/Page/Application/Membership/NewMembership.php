@@ -364,8 +364,11 @@ class NewMembership extends Component
                     $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
                     if ($this->pay_type_share == '1') {
                         $this->applymember->share_monthly = 0;
+                        $this->applymember->total_monthly = $this->applymember->contribution_fee;
                         $this->applymember->share_lump_sum_amt = $this->tot_share;
                     } else {
+                        $this->applymember->share_monthly = $this->tot_share;
+                        $this->applymember->total_monthly = $this->applymember->contribution_fee + $this->tot_share;
                         $this->applymember->share_lump_sum_amt = 0;
                     }
                     $this->applymember->save();
@@ -824,7 +827,9 @@ class NewMembership extends Component
         if (is_numeric($this->applymember->contribution_fee)) {
             if ($this->pay_type_share == '2') {
                 $this->applymember->share_monthly = $this->monthly_share;
+                $this->applymember->share_fee   = 0;
                 $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
+                $this->tot_share =  $this->monthly_share;
                 $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
                 $this->Mtotal_deduction =   $this->applymember->contribution_fee;
             } else {
