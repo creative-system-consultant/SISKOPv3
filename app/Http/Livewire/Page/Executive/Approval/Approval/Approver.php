@@ -43,6 +43,7 @@ class Approver extends Component
     public $acctApplicants;
     public $guarantorLists;
     public $jaminan;
+    public $approved_amt;
 
     protected function rules()
     {
@@ -242,6 +243,7 @@ class Approver extends Component
                 $spname = $dbname . ".SISKOP.up_upd_dividend_withdraw";
                 break;
             case 'specialaid':
+                dd($this->approved_amt);
                 $spname = $dbname . ".SISKOP.up_insert_special_aid";
                 break;
             case 'closemembership':
@@ -433,7 +435,7 @@ class Approver extends Component
             });
 
             $this->guarantorLists = DB::table('FMS.GUARANTOR_LIST as A')
-                ->join('FMS.MEMBERSHIP as B', 'B.mbr_no', '=', 'A.mbr_id')
+                ->join('FMS.MEMBERSHIP as B', 'B.mbr_no', '=', 'A.mbr_no')
                 ->join('FMS.ACCOUNT_MASTERS as C', function ($join) {
                     $join->on('C.mbr_no', '=', 'B.mbr_no')
                         ->on('C.account_no', '=', 'A.account_no');
@@ -441,7 +443,7 @@ class Approver extends Component
                 ->join('FMS.ACCOUNT_POSITIONS as D', 'D.account_no', '=', 'C.account_no')
                 ->join('CIF.CUSTOMERS as E', 'E.id', '=', 'B.cif_id')
                 ->select([
-                    DB::raw('A.mbr_id as peminjam_dijamin'),
+                    DB::raw('A.mbr_no as peminjam_dijamin'),
                     'E.name',
                     'A.account_no',
                     'C.start_disbursed_date',
@@ -460,7 +462,7 @@ class Approver extends Component
                 ->where('B.mbr_status', '=', 'A')
                 ->where('C.account_status', '=', 1)
                 ->where('D.bal_outstanding', '>', 0)
-                ->orderBy('A.mbr_id')
+                ->orderBy('A.mbr_no')
                 ->orderBy('A.account_no')
                 ->get();
 

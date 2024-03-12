@@ -191,7 +191,7 @@ class ApplyContribution extends Component
         //     'showConfirmButton' => false,
         //     'timer' => 100000,
         // ]);
-        session()->flash('message', 'Add Contribution Application Successfully Send');
+        session()->flash('message', 'Add/Change Contribution Application Successfully Sent');
         session()->flash('time', 10000);
         session()->flash('success');
         session()->flash('title');
