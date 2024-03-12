@@ -34,8 +34,6 @@
             <div>
                 <x-table.table>
                     <x-slot name="thead">
-                        <x-table.table-header class="text-left " value="Member No" sort="" />
-                        <x-table.table-header class="text-left" value="Name" sort="" />
                         <x-table.table-header class="text-left" value="Acc No" sort="" />
                         <x-table.table-header class="text-left" value="Start Disbursed Date" sort="" />
                         <x-table.table-header class="text-left" value="Duration" sort="" />
@@ -47,12 +45,6 @@
                     <x-slot name="tbody">
                         @forelse($acctApplicants as $acctApplicant)
                             <tr>
-                                <x-table.table-body colspan="" class="text-left">
-                                    {{ $acctApplicant->mbr_no_peminjam }}
-                                </x-table.table-body>
-                                <x-table.table-body colspan="" class="text-left">
-                                    {{ $acctApplicant->name }}
-                                </x-table.table-body>
                                 <x-table.table-body colspan="" class="text-left">
                                     {{ $acctApplicant->account_no }}
                                 </x-table.table-body>
