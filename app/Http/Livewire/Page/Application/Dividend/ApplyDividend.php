@@ -113,10 +113,10 @@ class ApplyDividend extends Component
             return redirect()->route('home');
         } else if ($this->Dividend) {
             if ($this->Dividend->bal_div_withdrawal == NULL) {
-                $this->cur_bal_dividend = $this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal;
+                $this->cur_bal_dividend = round($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal,2);
                 $this->max_bal_dividend = $this->cur_bal_dividend;
             } else {
-                $this->cur_bal_dividend = $this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal;
+                $this->cur_bal_dividend = round($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal,2);
                 $this->pending_div = $this->Dividend->bal_div_pending_withdrawal;
                 $this->max_bal_dividend = $this->cur_bal_dividend;
                 $this->total_amt_dividen = $this->Dividend->total_amt_dividen;
@@ -144,6 +144,8 @@ class ApplyDividend extends Component
     {
         if (is_numeric($this->apply->div_cash_apply) && is_numeric($this->apply->div_share_apply) && is_numeric($this->apply->div_contri_apply)) {
             $this->cur_bal_dividend = number_format(($this->Dividend->bal_dividen - $this->pending_div) - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
+    
+        
         }
         return view('livewire.page.application.dividend.apply-dividend')->extends('layouts.head');
     }

@@ -23,10 +23,10 @@
                         {{ $item->customer->icno }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
-                        {{ $item->dividend_total }}
+                        {{ number_format($item->div_share_apply + $item->div_contri_apply + $item->div_cash_apply,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
-                        {{ $item->balance() }}
+                        {{ number_format($item->balance(),2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->apply_date->format("d-m-Y") }}
