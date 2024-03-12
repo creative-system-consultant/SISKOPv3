@@ -243,7 +243,6 @@ class Approver extends Component
                 $spname = $dbname . ".SISKOP.up_upd_dividend_withdraw";
                 break;
             case 'specialaid':
-                dd($this->approved_amt);
                 $spname = $dbname . ".SISKOP.up_insert_special_aid";
                 break;
             case 'closemembership':
