@@ -62,12 +62,19 @@
                                                     <p class="text-sm font-semibold leading-5 text-primary-600">{{ $item->name2 }}</p>
                                                 </div>
                                             </div>
-                                            <div class="absolute p-1 top-7 right-2">
-                                                <button type="button" class="flex items-center justify-center px-4 py-1 text-xs font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none"
-                                                    @click="openRegister{{ $loop->iteration }} = true">
-                                                    Register
-                                                </button>
-                                            </div>
+
+                                            @php
+                                            $appliedClientIds = auth()->user()->membership_apply->pluck('client_id')->toArray();
+                                            @endphp
+
+                                            @if(!in_array($item->id, $appliedClientIds))
+                                                <div class="absolute p-1 top-7 right-2">
+                                                    <button type="button" class="flex items-center justify-center px-4 py-1 text-xs font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none"
+                                                        @click="openRegister{{ $loop->iteration }} = true">
+                                                        Register
+                                                    </button>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="mt-2">
