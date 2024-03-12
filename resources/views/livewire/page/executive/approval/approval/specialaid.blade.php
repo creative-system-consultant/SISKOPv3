@@ -42,13 +42,14 @@
     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
         <x-form.input-tag
             label="Event Date"
-            type="text"
+            type="date"
             name="Application.event_date"
-            value="{{ date('d/m/Y', strtotime($Application->event_date)) }}"
+            value=""
             leftTag=""
             rightTag=""
             mandatory=""
             disable="{{ $disable }}"
+            wire:model="events_date"
         />
     </div>
 </div>

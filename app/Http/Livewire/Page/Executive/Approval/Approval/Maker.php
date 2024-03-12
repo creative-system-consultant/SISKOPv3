@@ -43,6 +43,7 @@ class Maker extends Component
     public $acctApplicants;
     public $guarantorLists;
     public $jaminan;
+    public $events_date;
 
     protected function rules()
     {
@@ -391,6 +392,8 @@ class Maker extends Component
             $this->Application->div_contri_approved = number_format($this->Application->div_contri_apply, 2);
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
+            $this->events_date = $this->Application->event_date;
         } else if ($this->include == 'ChangeGuarantor') {
             $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
