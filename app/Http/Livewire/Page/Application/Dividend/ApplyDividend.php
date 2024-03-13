@@ -113,30 +113,40 @@ class ApplyDividend extends Component
             return redirect()->route('home');
         } else if ($this->Dividend) {
             if ($this->Dividend->bal_div_withdrawal == NULL) {
-                $this->cur_bal_dividend = round($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal,2);
+                $this->cur_bal_dividend = round($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal, 2);
                 $this->max_bal_dividend = $this->cur_bal_dividend;
+                $this->total_amt_dividen = $this->Dividend->total_amt_dividen;
             } else {
-                $this->cur_bal_dividend = round($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal,2);
+                $this->cur_bal_dividend = round($this->Dividend->bal_dividen - $this->Dividend->bal_div_pending_withdrawal, 2);
                 $this->pending_div = $this->Dividend->bal_div_pending_withdrawal;
                 $this->max_bal_dividend = $this->cur_bal_dividend;
                 $this->total_amt_dividen = $this->Dividend->total_amt_dividen;
             }
         }
-        $apply = ModelApplydividend::where([['client_id', $this->User->client_id], ['cust_id', $this->Cust->id], ['div_year', date('Y')]])->where('flag', 1)->first();
 
-        if ($apply == NULL) {
+        $apply = ModelApplydividend::where([
+            ['cust_id', $this->Cust->id],
+            ['client_id', $this->User->client_id],
+            ['div_year', date('Y')],
+        ])->orderBy('id', 'desc')->first();
+
+        if ($apply->flag >= 20) {
             $this->apply = new ModelApplydividend;
             $this->apply->client_id   = $this->User->client_id;
             $this->apply->cust_id   = $this->Cust->id;
             $this->apply->mbr_no    = $this->Cust->fmsMembership->mbr_no;
+            $this->apply->flag  = 0;
+            $this->apply->step  = 0;
             $this->apply->div_year  = date('Y');
             $this->apply->save();
-        } else {
+        } else if ($apply->flag == 1) {
             session()->flash('message', 'Only 1 active application allowed. Please Wait until previous application is authorized.');
             session()->flash('warning');
             session()->flash('title', 'Success!');
 
             return redirect()->route('home');
+        } else {
+            $this->apply = $apply;
         }
     }
 
@@ -144,8 +154,6 @@ class ApplyDividend extends Component
     {
         if (is_numeric($this->apply->div_cash_apply) && is_numeric($this->apply->div_share_apply) && is_numeric($this->apply->div_contri_apply)) {
             $this->cur_bal_dividend = number_format(($this->Dividend->bal_dividen - $this->pending_div) - ($this->apply->div_cash_apply + $this->apply->div_share_apply + $this->apply->div_contri_apply), 2);
-    
-        
         }
         return view('livewire.page.application.dividend.apply-dividend')->extends('layouts.head');
     }
