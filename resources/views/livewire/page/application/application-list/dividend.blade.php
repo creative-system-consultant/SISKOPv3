@@ -26,7 +26,7 @@
                         {{ number_format($item->div_share_apply + $item->div_contri_apply + $item->div_cash_apply,2) }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
-                        {{ number_format($item->final_div->bal_dividen,2) }}
+                        {{ number_format($item->final_div->bal_dividen,2) ?? 0.00 }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $item->apply_date->format("d-m-Y") }}
