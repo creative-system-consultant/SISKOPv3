@@ -32,14 +32,10 @@ class Index extends Component
         $this->client_id = $this->user->client_id;
 
         $fms_cust = Customer::where([['client_id', $this->client_id], ['identity_no', $this->user->icno]])->firstOrFail();
-
-
         $changeGuarantor = ChangeGuarantor::where([
             ['cif_id', $fms_cust->id],
             ['flag', 1],
         ])->first();
-
-
 
         if ($changeGuarantor != NULL) {
             session()->flash('message', 'Change guarantor application has been processed. You only need to apply once.');
@@ -59,7 +55,6 @@ class Index extends Component
         $this->identity_no_old = $this->guarantor->fmsMembership->fmsCustomer->identity_no;
         $this->name_old = $this->guarantor->fmsMembership->fmsCustomer->name;
     }
-
 
     public function searchUser($index)
     {
@@ -92,12 +87,12 @@ class Index extends Component
         } else {
             $this->mbrNos[$index] = '';
             $this->names[$index] = '';
+            $this->newNric[$index] = '';
         }
     }
 
     public function submit()
     {
-
         if ($this->guarantor) {
             $applyChangeGuarantor = ChangeGuarantor::create([
                 'client_id' => $this->client_id,
@@ -113,7 +108,6 @@ class Index extends Component
             ]);
 
             foreach ($this->guarantor as $index => $guarantor) {
-
                 if (isset($this->mbrNos[$index])) {
                     $mbr_no = $this->mbrNos[$index];
                     $name = $this->names[$index];
@@ -123,7 +117,6 @@ class Index extends Component
                     $old_guarantor_mbrNo = $old_guarantor->mbr_no;
                     $old_guarantor_name = $old_guarantor_customer->name;
                     $old_guarantor_nric = $old_guarantor_customer->identity_no;
-
 
                     $ChangeGuarantorDetails = ChangeGuarantorDetails::create([
                         'client_id' => $this->client_id,
@@ -191,7 +184,7 @@ class Index extends Component
         }
 
         if ($this->clicked == 1) {
-            $this->guarantor = GuarantorList::where('account_no', $this->acct_no)->where('client_id', $this->client_id)->get();
+            $this->guarantor = GuarantorList::where('account_no', $this->acct_no)->where('client_id', $this->client_id)->where('guarantor_status', 1)->get();
             foreach ($this->guarantors as $index => $guarantor) {
                 $this->searchNRIC[$index] = '';
                 $this->mbrNos[$index] = '';

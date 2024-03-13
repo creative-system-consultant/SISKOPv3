@@ -1,59 +1,57 @@
 <div>
-    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Special Aid Information</h2>
+    <h2 class="mt-6 mb-4 text-lg font-semibold border-b-2 border-gray-300">Change Guarantor Information</h2>
     <div class="mt-2">
         <x-table.table>
             <x-slot name="thead">
                 <tr  class="">
-                    <th  colspan="3" class="px-6 py-3 border  text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center bg-primary-50" >
-                        Old Guarantor 
+                    <th  colspan="3" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase border dark:bg-gray-600 dark:text-white bg-primary-50" >
+                        Old Guarantor
                     </th>
-                    <th  colspan="3" class="px-6 py-3 border text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center bg-primary-100" >
+                    <th  colspan="3" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase border dark:bg-gray-600 dark:text-white bg-primary-100" >
                         New Guarantor
                     </th>
                 </tr>
                 <tr>
-                    <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                    <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                         No
                     </th>
-                    <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                    <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                         Name
                     </th>
-                    <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                    <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                         NRIC
                     </th>
-                    <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                    <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                         No
                     </th>
-                    <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                    <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase bg-gray-100 border dark:bg-gray-600 dark:text-white" >
                         Name
                     </th>
-                    <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                    <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase bg-gray-100 border dark:bg-gray-600 dark:text-white" >
                         NRIC
                     </th>
                 </tr>
-                
             </x-slot>
+            @dump($Application->details)
             <x-slot name="tbody">
                 @forelse($Application->details as $item)
                     <tr>
-                        <td  width="5%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-left text-xs">
+                        <td  width="5%" class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                             {{$loop->iteration}}
                         </td>
-                        <td  width="30%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-left text-xs">
+                        <td  width="30%" class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                             {{$item->old_jamin_name}}
                         </td>
-                        <td  width="15%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-left text-xs">
+                        <td  width="15%" class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                             {{$item->old_jamin_icno}}
                         </td>
-
-                        <td  width="5%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-left text-xs">
+                        <td  width="5%" class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                             {{$loop->iteration}}
                         </td>
-
-                        <td  width="35%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-left text-xs">
+                        <td  width="35%" class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                             {{$item->new_jamin_name}}
                         </td>
-                        <td  width="15%" class="px-6 py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-left text-xs">
+                        <td  width="15%" class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                             {{$item->new_jamin_icno}}
                         </td>
                     </tr>
@@ -73,7 +71,7 @@
 
 
 {{-- <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >
-    
+
     <div>
         <label for="online_file" class="block mb-1 mr-3 text-sm font-semibold leading-5 text-gray-700">
             Show Supporting Document
