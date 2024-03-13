@@ -28,7 +28,7 @@
                         </x-table.table-body>
                         <x-table.table-body colspan="" class="">
                             <div class="flex items-center justify-center space-x-2">
-                                <a class="cursor-pointer flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none" wire:click='searchGuarantor("{{$item->account_no}}")'>
+                                <a class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600 focus:outline-none" wire:click='searchGuarantor("{{$item->account_no}}")'>
                                     <x-heroicon-o-cursor-arrow-rays class="w-4 h-4" />
                                     Please Choose
                                 </a>
@@ -45,59 +45,59 @@
                 </x-slot>
             </x-table.table>
         </div>
+
         @if($clicked!=0)
         <div class="mt-10">
             <x-table.table>
                 <x-slot name="thead">
                     <tr  class="">
-                        <th  colspan="6" class="px-6 py-3 border bg-primary-100 text-sm leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                        <th  colspan="6" class="px-6 py-3 text-sm font-medium leading-4 tracking-wider text-center uppercase border bg-primary-100 dark:bg-gray-600 dark:text-white" >
                             List Of Guarantors of Account No : {{ $this->acct_no }}
                         </th>
                     </tr>
                     <tr  class="">
-                        <th  colspan="3" class="px-6 py-3 border bg-white text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            Current 
+                        <th  colspan="3" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase bg-white border dark:bg-gray-600 dark:text-white" >
+                            Current
                         </th>
-                        <th  colspan="3" class="px-6 py-3 border bg-white text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
-                            New 
+                        <th  colspan="3" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase bg-white border dark:bg-gray-600 dark:text-white" >
+                            New
                         </th>
                     </tr>
                     <tr>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                        <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                             Membership Number
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                        <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                             NRIC
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-50 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                        <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase border bg-gray-50 dark:bg-gray-600 dark:text-white" >
                             Name
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                        <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase bg-gray-100 border dark:bg-gray-600 dark:text-white" >
                             Membership Number
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-center" >
+                        <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center uppercase bg-gray-100 border dark:bg-gray-600 dark:text-white" >
                             NRIC
                         </th>
-                        <th  colspan="1" class="px-6 py-3 border bg-gray-100 text-xs leading-4 font-medium uppercase tracking-wider dark:bg-gray-600 dark:text-white text-left" >
+                        <th  colspan="1" class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left uppercase bg-gray-100 border dark:bg-gray-600 dark:text-white" >
                             Name
                         </th>
                     </tr>
-                    
                 </x-slot>
                 <x-slot name="tbody">
                     @if($guarantor)
                         @foreach ($guarantor as $index => $item)
                             <tr>
-                                <td  width="5%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                <td  width="5%" class="px-6 py-2 text-xs leading-5 text-center whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                                     {{$item->fmsMembership->mbr_no}}
                                 </td>
-                                <td  width="15%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                <td  width="15%" class="px-6 py-2 text-xs leading-5 text-center whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                                     {{$item->fmsMembership->fmsCustomer->identity_no}}
                                 </td>
-                                <td  width="30%"  class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-xs text-left">
+                                <td  width="30%"  class="px-6 py-2 text-xs leading-5 text-left whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                                     {{$item->fmsMembership->fmsCustomer->name}}
                                 </td>
-                                <td  width="5%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                <td  width="5%" class="px-6 py-2 text-xs leading-5 text-center whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                                     <x-form.input
                                         label=""
                                         name=""
@@ -108,7 +108,7 @@
                                         wire:model="mbrNos.{{ $index }}"
                                     />
                                 </td>
-                                <td  width="15%" class="px-6 py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                <td  width="15%" class="px-6 py-2 text-xs leading-5 text-center whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                                     <x-form.input
                                         label=""
                                         name="searchNRIC.{{$index}}"
@@ -120,7 +120,7 @@
                                         type="text"
                                     />
                                 </td>
-                                <td  width="30%" class="px-6  py-2 whitespace-no-wrap leading-5 bg-white dark:bg-gray-700 dark:text-white border text-center text-xs">
+                                <td  width="30%" class="px-6 py-2 text-xs leading-5 text-center whitespace-no-wrap bg-white border dark:bg-gray-700 dark:text-white">
                                     <x-form.input
                                         label=""
                                         name=""
@@ -140,7 +140,7 @@
         @endif
 
         <div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
+            <div class="grid grid-cols-1 gap-4 mt-10 lg:grid-cols-3">
                 <div>
                     <x-form.dropdown
                         label="Reason for Changing Guarantor"
@@ -160,7 +160,7 @@
             </div>
 
             @if($reasonChange =="Lain-lain")
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+            <div class="grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2">
                 <x-form.text-area
                     label="Other Reasons : ({{ strlen($reasonChangeTxt) }}/255)"
                     value=""
@@ -179,11 +179,11 @@
                     <button wire:click="alertConfirm" type="submit" class="flex items-center justify-center p-2 text-sm font-semibold text-white bg-green-500 rounded-md focus:outline-none">
                         Submit
                     </button>
-               
+
                 </div>
             </div>
         </div>
-        
+
     </x-general.card>
 </div>
 
