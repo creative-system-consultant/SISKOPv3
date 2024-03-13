@@ -33,13 +33,11 @@
     <div>
         <x-table.table>
             <x-slot name="thead">
-                <x-table.table-header class="text-left " value="Member No" sort="" />
-                <x-table.table-header class="text-left" value="Name" sort="" />
                 <x-table.table-header class="text-left" value="Acc No" sort="" />
                 <x-table.table-header class="text-left" value="Start Disbursed Date" sort="" />
-                <x-table.table-header class="text-left" value="Duration" sort="" />
+                <x-table.table-header class="text-right" value="Duration" sort="" />
                 <x-table.table-header class="text-left" value="Closed Date" sort="" />
-                <x-table.table-header class="text-left" value="Bal Outstanding" sort="" />
+                <x-table.table-header class="text-right" value="Bal Outstanding" sort="" />
                 <x-table.table-header class="text-right" value="Month Arrears" sort="" />
                 <x-table.table-header class="text-right" value="Instal Arrears" sort="" />
             </x-slot>
@@ -47,24 +45,18 @@
                 @forelse($acctApplicants as $acctApplicant)
                 <tr>
                     <x-table.table-body colspan="" class="text-left">
-                        {{ $acctApplicant->mbr_no_peminjam }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
-                        {{ $acctApplicant->name }}
-                    </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
                         {{ $acctApplicant->account_no }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-right">
+                    <x-table.table-body colspan="" class="text-left">
                         {{ $acctApplicant->start_disbursed_date }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
+                    <x-table.table-body colspan="" class="text-right">
                         {{ $acctApplicant->duration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $acctApplicant->closed_date }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
+                    <x-table.table-body colspan="" class="text-right">
                         {{ $acctApplicant->bal_outstanding }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
@@ -85,16 +77,16 @@
         </x-table.table>
     </div>
 
-    <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Account as Guarantor</h2>
+    <h2 class="my-4 text-base font-semibold border-b-2 border-gray-300">List of Guarantee</h2>
     <div>
         <x-table.table>
             <x-slot name="thead">
                 <x-table.table-header class="text-left" value="Name" sort="" />
                 <x-table.table-header class="text-left" value="Acc No" sort="" />
                 <x-table.table-header class="text-left" value="Start Disbursed Date" sort="" />
-                <x-table.table-header class="text-left" value="Duration" sort="" />
+                <x-table.table-header class="text-right" value="Duration" sort="" />
                 <x-table.table-header class="text-left" value="Closed Date" sort="" />
-                <x-table.table-header class="text-left" value="Bal Outstanding" sort="" />
+                <x-table.table-header class="text-right" value="Bal Outstanding" sort="" />
                 <x-table.table-header class="text-right" value="Month Arrears" sort="" />
                 <x-table.table-header class="text-right" value="Instal Arrears" sort="" />
             </x-slot>
@@ -107,16 +99,16 @@
                     <x-table.table-body colspan="" class="text-left">
                         {{ $guarantorList->account_no }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-right">
+                    <x-table.table-body colspan="" class="text-left">
                         {{ $guarantorList->start_disbursed_date }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
+                    <x-table.table-body colspan="" class="text-right">
                         {{ $guarantorList->duration }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $guarantorList->closed_date }}
                     </x-table.table-body>
-                    <x-table.table-body colspan="" class="text-left">
+                    <x-table.table-body colspan="" class="text-right">
                         {{ $guarantorList->bal_outstanding }}
                     </x-table.table-body>
                     <x-table.table-body colspan="" class="text-right">
