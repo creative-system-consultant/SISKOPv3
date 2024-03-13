@@ -90,10 +90,10 @@
             <x-form.input
                 label="Cheque Clearence Date"
                 name="Application.cheque_clear"
-                value=""
+                value="{{ $Application->cheque_clear == NULL ? '' : $Application->cheque_clear->format('Y-m-d') }}"
                 disable="true"
                 type="date"
-                wire:model="cleared_date"
+                
             />
         </div>
         @endif
