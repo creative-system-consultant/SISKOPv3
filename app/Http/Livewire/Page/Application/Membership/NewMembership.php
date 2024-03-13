@@ -824,7 +824,7 @@ class NewMembership extends Component
         if (is_numeric($this->applymember->contribution_fee)) {
             if ($this->pay_type_share == '2') {
                 $this->applymember->share_monthly = $this->monthly_share;
-                $this->applymember->share_fee   = 0;
+                $this->applymember->share_fee   = 50;
                 $this->total_deduction =  $this->monthly_share + $this->applymember->contribution_fee;
                 $this->tot_share =  $this->monthly_share;
                 $this->Ftotal_deduction =  $this->applymember->register_fee + $this->monthly_share + $this->applymember->contribution_fee;
