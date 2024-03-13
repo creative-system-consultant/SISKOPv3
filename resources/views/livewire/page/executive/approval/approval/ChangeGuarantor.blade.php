@@ -32,7 +32,6 @@
                     </th>
                 </tr>
             </x-slot>
-            @dump($Application->details)
             <x-slot name="tbody">
                 @forelse($Application->details as $item)
                     <tr>
