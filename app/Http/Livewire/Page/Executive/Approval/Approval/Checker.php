@@ -196,6 +196,16 @@ class Checker extends Component
         $this->next();
     }
 
+    public function contributionValidation()
+    {
+        if ($this->include == 'contribution' && $this->Application->start_type == 2) {
+            $rules = [
+                'Application.start_approved' => 'after_or_equal:Application.start_apply',
+            ];
+            return $rules;
+        }
+    }
+
     public function next()
     {
         if ($this->approval_type != 'gagal') {
