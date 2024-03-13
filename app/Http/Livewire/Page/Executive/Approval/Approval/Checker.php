@@ -87,7 +87,6 @@ class Checker extends Component
             'page' => 4,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.start_approved' => 'after_or_equal:Application.start_apply',
                 'Application.cheque_clear' => 'required|after:Application.cheque_date',
             ],
         ],
@@ -146,8 +145,13 @@ class Checker extends Component
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
             }
             if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
-                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                if ($this->Application->start_type == 1) {
+                    $this->Application->start_apply = NULL;
+                    $this->Application->start_approved = NULL;
+                } else {
+                    $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                    $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                }
             }
         }
 
@@ -175,16 +179,6 @@ class Checker extends Component
         }
 
         $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution') {
-            if ($this->Application->method != 'cheque') {
-                $this->Application->cheque_date = null;
-                $this->Application->cheque_clear = NULL;
-            }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = NULL;
-                $this->Application->start_approved = NULL;
-            }
-        }
     }
 
     public function forward()
@@ -206,6 +200,7 @@ class Checker extends Component
     {
         if ($this->approval_type != 'gagal') {
             $this->xvalidate();
+            $this->validate($this->contributionValidation());
         }
         $this->Application->step++;
         $this->Application->save();
