@@ -81,6 +81,8 @@
     <div>
         <x-table.table>
             <x-slot name="thead">
+                <x-table.table-header class="text-left" value="Name" sort="" />
+                <x-table.table-header class="text-left" value="Acc No" sort="" />
                 <x-table.table-header class="text-left" value="Start Disbursed Date" sort="" />
                 <x-table.table-header class="text-right" value="Duration" sort="" />
                 <x-table.table-header class="text-left" value="Closed Date" sort="" />
@@ -91,6 +93,12 @@
             <x-slot name="tbody">
                 @forelse($guarantorLists as $guarantorList)
                 <tr>
+                    <x-table.table-body colspan="" class="text-left">
+                        {{ $guarantorList->name }}
+                    </x-table.table-body>
+                    <x-table.table-body colspan="" class="text-left">
+                        {{ $guarantorList->account_no }}
+                    </x-table.table-body>
                     <x-table.table-body colspan="" class="text-left">
                         {{ $guarantorList->start_disbursed_date }}
                     </x-table.table-body>
