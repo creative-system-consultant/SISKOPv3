@@ -34,18 +34,18 @@ class SiskopFamily extends Model implements Auditable
     }
 
     public function relation() {
-        return $this->belongsTo(Ref\RefRelationship::class,'relation_id');
+        return $this->belongsTo(Ref\RefRelationship::class,'relation_id', 'code');
     }
 
     public function relationship() {
-        return $this->belongsTo(Ref\RefRelationship::class,'relation_id');
+        return $this->belongsTo(Ref\RefRelationship::class,'relation_id', 'code');
     }
 
     public function race() {
-        return $this->belongsTo(Ref\RefRace::class,'code');
+        return $this->belongsTo(Ref\RefRace::class,'race_id', 'code');
     }
 
     public function religion() {
-        return $this->belongsTo(Ref\RefReligion::class,'code');
+        return $this->belongsTo(Ref\RefReligion::class,'religion_id', 'code');
     }
 }
