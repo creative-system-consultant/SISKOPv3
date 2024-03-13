@@ -363,13 +363,13 @@ class NewMembership extends Component
                     $this->applymember->register_fee_flag = $this->pay_type_regist;
                     $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
                     if ($this->pay_type_share == '1') {
-                        $this->applymember->share_monthly = 0;
-                        $this->applymember->total_monthly = $this->applymember->contribution_fee;
+                        $this->applymember->share_fee = 500;
                         $this->applymember->share_lump_sum_amt = $this->tot_share;
+                        $this->applymember->share_monthly = 0;
                     } else {
-                        $this->applymember->share_monthly = $this->tot_share;
-                        $this->applymember->total_monthly = $this->applymember->contribution_fee + $this->tot_share;
+                        $this->applymember->share_fee = 50;
                         $this->applymember->share_lump_sum_amt = 0;
+                        $this->applymember->share_monthly = 50;
                     }
                     $this->applymember->save();
                     $this->tab7 = 1;
@@ -467,7 +467,6 @@ class NewMembership extends Component
                     break;
             }
         }
-
 
         $this->render();
     }
@@ -631,8 +630,6 @@ class NewMembership extends Component
             ]
         );
         $this->mail_flag_employer = $this->EmployAddress->mail_flag;
-
-
 
         $this->title_id          = RefCustTitle::where([['client_id', $this->User->client_id], ['status', '1']])->get();
         $this->education_id      = RefEducation::where([['client_id', $this->User->client_id], ['status', '1']])->get();
