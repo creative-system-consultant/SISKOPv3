@@ -89,7 +89,6 @@ class Resolution extends Component
             'page' => 4,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.start_approved' => 'after_or_equal:Application.start_apply',
                 'Application.cheque_clear' => 'required|after:Application.cheque_date',
             ],
         ],
@@ -148,8 +147,13 @@ class Resolution extends Component
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
             }
             if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
-                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                if ($this->Application->start_type == 1) {
+                    $this->Application->start_apply = NULL;
+                    $this->Application->start_approved = NULL;
+                } else {
+                    $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                    $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                }
             }
         }
 
@@ -177,16 +181,6 @@ class Resolution extends Component
         }
 
         $this->validate();
-        if ($this->include == 'share' || $this->include == 'contribution') {
-            if ($this->Application->method != 'cheque') {
-                $this->Application->cheque_date = null;
-                $this->Application->cheque_clear = NULL;
-            }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = NULL;
-                $this->Application->start_approved = NULL;
-            }
-        }
     }
 
     public function decline()
@@ -273,9 +267,21 @@ class Resolution extends Component
         }
     }
 
+    public function contributionValidation()
+    {
+        if ($this->include == 'contribution' && $this->Application->start_type == 2) {
+            $rules = [
+                'Application.start_approved' => 'after_or_equal:Application.start_apply',
+            ];
+            return $rules;
+        }
+    }
+
     public function next()
     {
         $this->xvalidate();
+        $this->validate($this->contributionValidation());
+
         $this->Application->flag = $this->flag;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;

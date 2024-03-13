@@ -88,7 +88,6 @@ class Maker extends Component
             'page' => 4,
             'rule' => [
                 'Application.approved_amt' => 'required|gt:0',
-                'Application.start_approved' => 'after_or_equal:Application.start_apply',
             ],
         ],
         'sellcontribution' => [
@@ -145,23 +144,17 @@ class Maker extends Component
                 $this->Application->cheque_clear = date('Y-m-d', strtotime("tomorrow"));
             }
             if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = date('Y-m-d', strtotime('today'));
-                $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                if ($this->Application->start_type == 1) {
+                    $this->Application->start_apply = NULL;
+                    $this->Application->start_approved = NULL;
+                } else {
+                    $this->Application->start_apply = date('Y-m-d', strtotime('today'));
+                    $this->Application->start_approved = date('Y-m-d', strtotime('today'));
+                }
             }
         }
 
         $this->validate();
-
-        if ($this->include == 'share' || $this->include == 'contribution') {
-            if ($this->Application->method != 'cheque') {
-                $this->Application->cheque_date = NULL;
-                $this->Application->cheque_clear = NULL;
-            }
-            if ($this->include == 'contribution' && $this->Application->start_apply == NULL) {
-                $this->Application->start_apply = NULL;
-                $this->Application->start_approved = NULL;
-            }
-        }
     }
 
     public function shareValidation()
@@ -210,6 +203,16 @@ class Maker extends Component
         }
     }
 
+    public function contributionValidation()
+    {
+        if ($this->include == 'contribution' && $this->Application->start_type == 2) {
+            $rules = [
+                'Application.start_approved' => 'after_or_equal:Application.start_apply',
+            ];
+            return $rules;
+        }
+    }
+
 
     public function decline()
     {
@@ -224,6 +227,7 @@ class Maker extends Component
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
             $this->validate($this->dividendValidation());
+            $this->validate($this->contributionValidation());
         }
 
         $this->Application->step++;
