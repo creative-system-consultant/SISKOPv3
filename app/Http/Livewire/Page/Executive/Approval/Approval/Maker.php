@@ -225,7 +225,6 @@ class Maker extends Component
 
     public function next()
     {   
-        dd($this->events_date);
         if ($this->approval_type != 'gagal') {
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
