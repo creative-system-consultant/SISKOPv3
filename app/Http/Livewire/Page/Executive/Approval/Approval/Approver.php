@@ -509,9 +509,10 @@ class Approver extends Component
             ");
         } else if ($this->include == 'dividend') {
             $this->Application = ApplyDividend::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
-            $this->Application->div_cash_approved = number_format($this->Application->div_cash_apply, 2);
-            $this->Application->div_share_approved = number_format($this->Application->div_share_apply, 2);
-            $this->Application->div_contri_approved = number_format($this->Application->div_contri_apply, 2);
+            $this->Application->div_cash_approved = number_format($this->Application->div_cash_approved, 2);
+            $this->Application->div_share_approved = number_format($this->Application->div_share_approved, 2);
+            $this->Application->div_contri_approved = number_format($this->Application->div_contri_approved, 2);
+
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else if ($this->include == 'ChangeGuarantor') {

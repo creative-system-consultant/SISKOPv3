@@ -44,6 +44,7 @@ class Maker extends Component
     public $guarantorLists;
     public $jaminan;
     public $events_date;
+    public $div_cash_approved,$div_share_approved,$div_contri_approved;
 
     protected function rules()
     {
@@ -222,7 +223,7 @@ class Maker extends Component
     }
 
     public function next()
-    {
+    {   
         if ($this->approval_type != 'gagal') {
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
