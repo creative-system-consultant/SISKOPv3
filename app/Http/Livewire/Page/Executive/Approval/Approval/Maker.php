@@ -224,7 +224,6 @@ class Maker extends Component
 
     public function next()
     {   
-        //dd($this->Application->div_cash_approved,$this->Application->div_share_approved,$this->Application->div_contri_approved);
         if ($this->approval_type != 'gagal') {
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
@@ -396,11 +395,6 @@ class Maker extends Component
             $this->Application->div_cash_approved = number_format($this->Application->div_cash_apply, 2);
             $this->Application->div_share_approved = number_format($this->Application->div_share_apply, 2);
             $this->Application->div_contri_approved = number_format($this->Application->div_contri_apply, 2);
-
-            // $this->Application->div_cash_approved = $this->div_cash_approved;
-            // $this->Application->div_share_approved = $this->div_share_approved;
-            // $this->Application->div_contri_approved = $this->div_contri_approved;
-           
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
