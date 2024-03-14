@@ -14,6 +14,7 @@ class CloseMembership extends Component
     public User $User;
     public CloseMemberships $closemembership;
     public $custApply,$type;
+    public $route;
 
     public function showApplication($uuid)
     {
@@ -37,14 +38,28 @@ class CloseMembership extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User = User::find(auth()->user()->id);
     }
 
     public function render()
     {
-        $closememberships = CloseMemberships::where('flag', '!=', 0)->where('client_id', auth()->user()->client_id)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        if ($this->route == 'approval.list') {
+            $closememberships = CloseMemberships::where('flag', 1)
+                                                ->where('client_id', auth()->user()->client_id)
+                                                ->orderBy('created_at','desc')
+                                                ->with('customer')
+                                                ->paginate(5);
+        } else {
+            $closememberships = CloseMemberships::where('flag', '!=', 0)
+                                                ->where('client_id', auth()->user()->client_id)
+                                                ->orderBy('created_at','desc')
+                                                ->with('customer')
+                                                ->paginate(5);
+        }
+
         return view('livewire.page.application.application-list.close-membership',[
             'closememberships' => $closememberships,
         ]);

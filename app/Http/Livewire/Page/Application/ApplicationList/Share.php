@@ -13,6 +13,7 @@ class Share extends Component
 
     public User $User;
     public ApplyShare $share;
+    public $route;
 
     public function clearApplication()
     {
@@ -55,15 +56,29 @@ class Share extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User   = User::find(auth()->user()->id);
         $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])->orderBy('created_at','desc')->with('customer')->paginate(5);
     }
 
     public function render()
     {
-        $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        if ($this->route == 'approval.list') {
+            $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])
+                                    ->where('flag', 1)
+                                    ->orderBy('created_at','desc')
+                                    ->with('customer')
+                                    ->paginate(5);
+        } else {
+            $shares = ApplyShare::where([['direction', 'buy'],['client_id', $this->User->client_id]])
+                                    ->where('flag', '!=', 0)
+                                    ->orderBy('created_at','desc')
+                                    ->with('customer')
+                                    ->paginate(5);
+        }
+
         return view('livewire.page.application.application-list.share',[
             'shares' => $shares,
         ]);

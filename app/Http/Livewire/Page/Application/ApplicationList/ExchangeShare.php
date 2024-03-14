@@ -12,6 +12,7 @@ class ExchangeShare extends Component
     use WithPagination;
     public User $User;
     public ExchangeShares $ExchangeShares;
+    public $route;
 
     public function clearApplication()
     {
@@ -39,14 +40,28 @@ class ExchangeShare extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User   = User::find(auth()->user()->id);
     }
 
     public function render()
     {
-        $shares = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        if ($this->route == 'approval.list') {
+            $shares = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])
+                                    ->where('flag', 1)
+                                    ->orderBy('created_at','desc')
+                                    ->with('customer')
+                                    ->paginate(5);
+        } else {
+            $shares = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])
+                                    ->where('flag', '!=', 0)
+                                    ->orderBy('created_at','desc')
+                                    ->with('customer')
+                                    ->paginate(5);
+        }
+
         return view('livewire.page.application.application-list.exchangeshare',[
             'shares' => $shares,
         ]);

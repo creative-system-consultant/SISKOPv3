@@ -12,6 +12,7 @@ class Dividend extends Component
     use WithPagination;
     public User $User;
     public ApplyDividend $dividend;
+    public $route;
 
     public function clearApplication()
     {
@@ -39,14 +40,28 @@ class Dividend extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User      = User::find(auth()->user()->id);
     }
 
     public function render()
     {
-        $dividends = ApplyDividend::where([['client_id', $this->User->client_id]])->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        if ($this->route == 'approval.list') {
+            $dividends = ApplyDividend::where([['client_id', $this->User->client_id]])
+                                        ->where('flag', 1)
+                                        ->orderBy('created_at','desc')
+                                        ->with('customer')
+                                        ->paginate(5);
+        } else {
+            $dividends = ApplyDividend::where([['client_id', $this->User->client_id]])
+                                        ->where('flag', '!=', 0)
+                                        ->orderBy('created_at','desc')
+                                        ->with('customer')
+                                        ->paginate(5);
+        }
+
         return view('livewire.page.application.application-list.dividend',[
             'dividends' => $dividends,
         ]);

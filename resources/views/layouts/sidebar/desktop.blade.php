@@ -44,7 +44,10 @@
                         @endif
 
                         @if(auth()->user()->user_type == 3)
-                            <x-sidebar.nav-item title="List of Approvals" route="{{ route('application.list') }}" uri="applicationList">
+                            <x-sidebar.nav-item title="List of Approvals" route="{{ route('approval.list') }}" uri="approvalList">
+                                <x-heroicon-o-document-text class="w-7 h-7" />
+                            </x-sidebar.nav-item>
+                            <x-sidebar.nav-item title="List of Applications" route="{{ route('application.list') }}" uri="applicationList">
                                 <x-heroicon-o-document-text class="w-7 h-7" />
                             </x-sidebar.nav-item>
                             <x-sidebar.nav-item title="Customer Search" route="{{ route('customer.search') }}" uri="searchcustomer">
