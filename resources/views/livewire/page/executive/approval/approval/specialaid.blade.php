@@ -48,7 +48,7 @@
             leftTag=""
             rightTag=""
             mandatory=""
-            disable="{{ $disable }}"
+            disable=""
             wire:model="events_date"
         />
     </div>

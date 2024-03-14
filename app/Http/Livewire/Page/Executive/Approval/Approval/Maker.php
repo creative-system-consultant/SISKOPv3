@@ -13,6 +13,7 @@ use App\Models\Share;
 use App\Models\Ref\RefBank;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -224,6 +225,7 @@ class Maker extends Component
 
     public function next()
     {   
+        dd($this->events_date);
         if ($this->approval_type != 'gagal') {
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
