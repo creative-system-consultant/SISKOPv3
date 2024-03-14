@@ -97,6 +97,17 @@ class ApplyDividend extends Component
         return redirect()->route('home');
     }
 
+    public function createNewApplication()
+    {
+        $this->apply = new ModelApplydividend;
+        $this->apply->client_id   = $this->User->client_id;
+        $this->apply->cust_id   = $this->Cust->id;
+        $this->apply->mbr_no    = $this->Cust->fmsMembership->mbr_no;
+        $this->apply->flag  = 0;
+        $this->apply->step  = 0;
+        $this->apply->div_year  = date('Y');
+        $this->apply->save();
+    }
 
     public function mount()
     {
@@ -129,24 +140,20 @@ class ApplyDividend extends Component
             ['client_id', $this->User->client_id],
             ['div_year', date('Y')],
         ])->orderBy('id', 'desc')->first();
+        if ($apply) {
+            if ($apply->flag >= 20) {
+                $this->createNewApplication();
+            } else if ($apply->flag == 1) {
+                session()->flash('message', 'Only 1 active application allowed. Please Wait until previous application is authorized.');
+                session()->flash('warning');
+                session()->flash('title', 'Success!');
 
-        if ($apply->flag >= 20) {
-            $this->apply = new ModelApplydividend;
-            $this->apply->client_id   = $this->User->client_id;
-            $this->apply->cust_id   = $this->Cust->id;
-            $this->apply->mbr_no    = $this->Cust->fmsMembership->mbr_no;
-            $this->apply->flag  = 0;
-            $this->apply->step  = 0;
-            $this->apply->div_year  = date('Y');
-            $this->apply->save();
-        } else if ($apply->flag == 1) {
-            session()->flash('message', 'Only 1 active application allowed. Please Wait until previous application is authorized.');
-            session()->flash('warning');
-            session()->flash('title', 'Success!');
-
-            return redirect()->route('home');
+                return redirect()->route('home');
+            } else {
+                $this->apply = $apply;
+            }
         } else {
-            $this->apply = $apply;
+            $this->createNewApplication();
         }
     }
 
