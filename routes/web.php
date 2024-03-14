@@ -351,6 +351,11 @@ Route::middleware(['auth', 'mustselectclient'])->group(function () {
             Route::get('edit/{uuid}', EditCustomer::class)->name('customer.edit');
         });
 
+        //Exec > Approval List
+        Route::prefix('approvalList')->group(function () {
+            Route::get('/', ApplicationList::class)->name('approval.list');
+        });
+
         //Exec > Application List
         Route::prefix('applicationList')->group(function () {
             Route::get('/', ApplicationList::class)->name('application.list');

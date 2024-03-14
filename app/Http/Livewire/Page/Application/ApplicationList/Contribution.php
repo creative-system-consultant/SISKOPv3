@@ -13,6 +13,7 @@ class Contribution extends Component
     public User $User;
     public $client_id;
     public $Contribution;
+    public $route;
 
     public function clearApplication()
     {
@@ -41,15 +42,31 @@ class Contribution extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User = User::find(auth()->user()->id);
         $this->client_id = $this->User->client_id;
     }
 
     public function render()
     {
-        $contributions = ApplyContribution::where('client_id', $this->client_id)->where('direction', 'buy')->where('flag', '!=', 0)->orderBy('created_at','desc')->with('customer')->paginate(5);
+        if ($this->route == 'approval.list') {
+            $contributions = ApplyContribution::where('client_id', $this->client_id)
+                                                ->where('direction', 'buy')
+                                                ->where('flag', 1)
+                                                ->orderBy('created_at','desc')
+                                                ->with('customer')
+                                                ->paginate(5);
+        } else {
+            $contributions = ApplyContribution::where('client_id', $this->client_id)
+                                                ->where('direction', 'buy')
+                                                ->where('flag', '!=', 0)
+                                                ->orderBy('created_at','desc')
+                                                ->with('customer')
+                                                ->paginate(5);
+        }
+
         return view('livewire.page.application.application-list.contribution',[
             'contributions' => $contributions,
         ]);

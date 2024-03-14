@@ -16,6 +16,7 @@ class ChangeGuarantor extends Component
     public User $User;
     public $Change;
     public $ChangeGuarantorsDetails;
+    public $route;
 
     public function clearApplication()
     {
@@ -44,14 +45,28 @@ class ChangeGuarantor extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User = User::find(auth()->user()->id);
     }
 
     public function render()
     {
-        $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)->where('flag', '!=', 0)->orderBy('created_at', 'desc')->with('customer')->paginate(5);
+        if ($this->route == 'approval.list') {
+            $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)
+                                                    ->where('flag', 1)
+                                                    ->orderBy('created_at', 'desc')
+                                                    ->with('customer')
+                                                    ->paginate(5);
+        } else {
+            $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)
+                                                    ->where('flag', '!=', 0)
+                                                    ->orderBy('created_at', 'desc')
+                                                    ->with('customer')
+                                                    ->paginate(5);
+        }
+
         return view('livewire.page.application.application-list.changeguarantor', [
             'ChangeGuarantors' => $ChangeGuarantors,
         ]);

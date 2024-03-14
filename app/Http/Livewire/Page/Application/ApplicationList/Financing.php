@@ -16,6 +16,7 @@ class Financing extends Component
 
     public User $User;
     public AccountApplication $financing;
+    public $route;
     public $client_id;
     public $gender;
     public $genderName;
@@ -47,8 +48,9 @@ class Financing extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($route)
     {
+        $this->route = $route;
         $this->User = Auth()->user();
         $this->client_id = $this->User->client_id;
 
@@ -65,6 +67,7 @@ class Financing extends Component
         ->where('account_status', '!=', 0)
         //->take(20)
         ->paginate(5);
+
         return view('livewire.page.application.application-list.financing',[
             'financings' => $financings,
         ]);
