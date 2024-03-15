@@ -39,6 +39,7 @@
             wire:model="Application.approved_amt"
         />
     </div>
+    @if($Application->current_approval()->role=='MAKER')
     <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
         <x-form.input-tag
             label="Event Date"
@@ -48,10 +49,24 @@
             leftTag=""
             rightTag=""
             mandatory=""
-            disable="{{ $disable }}"
+            disable=""
             wire:model="events_date"
         />
     </div>
+    @else
+    <div class="col-span-12 mb-4 sm:col-span-12 md:col-span-3 lg:col-span-3 xl:col-span-3">
+        <x-form.input-tag
+            label="Event Date"
+            type="date"
+            name="Application.event_date"
+            value=""
+            leftTag=""
+            rightTag=""
+            mandatory=""
+            disable="true"
+            wire:model="events_date"
+        />
+    @endif
 </div>
 
 <div class="grid grid-cols-1 gap-6 mt-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3" >

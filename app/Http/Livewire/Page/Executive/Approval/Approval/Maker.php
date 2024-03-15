@@ -13,6 +13,7 @@ use App\Models\Share;
 use App\Models\Ref\RefBank;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -232,6 +233,7 @@ class Maker extends Component
         }
 
         $this->Application->step++;
+        $this->Application->event_date = $this->events_date;
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = $this->approval_type;
@@ -399,6 +401,8 @@ class Maker extends Component
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
             $this->events_date = $this->Application->event_date;
+            $this->Application->event_date = $this->events_date;
+            
         } else if ($this->include == 'ChangeGuarantor') {
             $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {

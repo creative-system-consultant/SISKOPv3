@@ -43,7 +43,7 @@ class Approver extends Component
     public $acctApplicants;
     public $guarantorLists;
     public $jaminan;
-    public $approved_amt;
+    public $approved_amt,$events_date;
 
     protected function rules()
     {
@@ -515,6 +515,7 @@ class Approver extends Component
 
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $this->events_date = $this->Application->event_date;
         } else if ($this->include == 'ChangeGuarantor') {
             $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
