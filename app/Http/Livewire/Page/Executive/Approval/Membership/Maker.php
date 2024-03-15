@@ -128,17 +128,21 @@ class Maker extends Component
     {
         if ($this->share_pmt_mode_flag == 1) {
             $this->Application->contribution_monthly = $this->contribution_fee_monthly;
-            $this->Application->share_monthly = $this->minShare;
+            // $this->Application->share_monthly = $this->minShare;
+            $this->Application->share_monthly = 0;
             $this->share_fee_monthly = number_format($this->minShare, 2);
             $this->total_monthly = number_format($this->contribution_fee_monthly, 2);
+            $this->total_fee = $this->contribution_fee_monthly + $this->Application->register_fee + $this->share_fee_monthly;
         } else {
             $this->Application->contribution_monthly = $this->contribution_fee_monthly;
-            $this->Application->share_monthly = $this->share_fee_monthly;
-            $this->total_monthly = number_format($this->share_fee_monthly + $this->contribution_fee_monthly, 2);
+            ///$this->Application->share_monthly = $this->share_fee_monthly;
+            $this->Application->share_monthly = number_format($this->minShareMonthly, 2);
+            $this->total_monthly = number_format($this->Application->share_monthly + $this->contribution_fee_monthly, 2);
+            $this->total_fee = $this->contribution_fee_monthly + $this->Application->register_fee + $this->Application->share_monthly;
         }
 
 
-        $this->total_fee = $this->contribution_fee_monthly + $this->Application->register_fee + $this->share_fee_monthly;
+        
         $this->Application->total_fee = $this->total_fee;
 
 
@@ -222,13 +226,15 @@ class Maker extends Component
         $this->minShare = $this->globalParm->MIN_SHARE;
         $this->minShareMonthly = $this->globalParm->MIN_SHARE / $this->globalParm->TOT_MTH_SHARE_INSTALMENT;
 
-
         $this->share_pmt_mode_flag = $this->Application->share_pmt_mode_flag;
         $this->payment_type = $this->Application->payment_type;
         $this->contribution_fee_monthly = $this->Application->contribution_monthly;
-        $this->share_fee_monthly = $this->Application->share_monthly;
+        $this->share_fee_monthly = number_format($this->minShareMonthly, 2);
+        $this->Application->share_monthly = number_format($this->minShareMonthly, 2);
+        //dd($this->Application->share_monthly);
         $this->total_monthly = $this->Application->total_monthly;
         $this->total_fee = $this->Application->total_fee;
+        $this->share_fee_monthly = number_format($this->minShare, 2);
     }
 
     public function render()

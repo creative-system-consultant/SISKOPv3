@@ -55,25 +55,25 @@
     <x-form.input-tag
         label="Share Upfront"
         type="text"
-        name="share_fee_monthly"
+        name="Application.share_monthly"
         value=""
         leftTag="RM"
         rightTag=""
         mandatory=""
         disable="true"
-        wire:model="share_fee_monthly"
+        wire:model="Application.share_monthly"
         wire:keydown.debounce.1500ms="totalfee"
     />
     <x-form.input-tag
         label="Share Monthly"
         type="text"
-        name="share_fee_monthly"
+        name="Application.share_monthly"
         value=""
         leftTag="RM"
         rightTag=""
         mandatory=""
-        disable="{{ $input_maker }}"
-        wire:model="share_fee_monthly"
+        disable="true"
+        wire:model="Application.share_monthly"
         wire:keydown.debounce.1500ms="totalfee"
     />
     @else
