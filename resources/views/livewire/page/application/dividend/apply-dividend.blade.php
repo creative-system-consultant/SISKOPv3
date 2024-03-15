@@ -84,7 +84,7 @@
                     disable="true"
                     type="text"
                     placeholder="0.00"
-                    wire:model="Dividend.total_amt_dividen"
+                    wire:model="total_amt_dividen"
                 />
             </div>
         

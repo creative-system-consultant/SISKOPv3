@@ -74,6 +74,7 @@ class NewMembership extends Component
     public $Payment_Proof;
     public $payment_file_share;
     public $monthly_share;
+    public $min_share;
     public $total_deduction;
     public $Ftotal_deduction;
     public $Mtotal_deduction;
@@ -363,13 +364,15 @@ class NewMembership extends Component
                     $this->applymember->register_fee_flag = $this->pay_type_regist;
                     $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
                     if ($this->pay_type_share == '1') {
-                        $this->applymember->share_fee = 500;
+                        $this->applymember->share_fee = $this->min_share;
                         $this->applymember->share_lump_sum_amt = $this->tot_share;
                         $this->applymember->share_monthly = 0;
+                        $this->applymember->total_monthly   = $this->applymember->contribution_fee;
                     } else {
-                        $this->applymember->share_fee = 50;
+                        $this->applymember->share_fee = $this->min_monthly_share;
                         $this->applymember->share_lump_sum_amt = 0;
-                        $this->applymember->share_monthly = 50;
+                        $this->applymember->share_monthly = $this->min_monthly_share;
+                        $this->applymember->total_monthly   = $this->monthly_share + $this->applymember->contribution_fee;
                     }
                     $this->applymember->save();
                     $this->tab7 = 1;
@@ -565,6 +568,7 @@ class NewMembership extends Component
         $this->globalParm = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
         $this->applymember->register_fee = 50;
         $this->applymember->share_fee = $this->globalParm->MIN_SHARE;
+        $this->min_share = $this->globalParm->MIN_SHARE;
         $this->applymember->contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
         $this->min_contribution_fee = $this->globalParm->MIN_CONTRIBUTION;
         $this->min_monthly_share = $this->globalParm->MIN_SHARE_MONTHLY;

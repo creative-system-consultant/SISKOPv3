@@ -43,6 +43,14 @@ class Checker extends Component
     public $statelist;
     public $uuid;
 
+    // untuk selesai masalah hydration dropdown, sebab code lama amik data direct dari db.
+    public $share_pmt_mode_flag;
+    public $payment_type;
+    public $contribution_fee_monthly;
+    public $share_fee_monthly;
+    public $total_monthly;
+    public $total_fee;
+
     public $forward       = false;
     public $input_disable = 'readonly';
     public $input_maker   = 'readonly';
@@ -194,6 +202,12 @@ class Checker extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->share_pmt_mode_flag = $this->Application->share_pmt_mode_flag;
+        $this->payment_type = $this->Application->payment_type;
+        $this->contribution_fee_monthly = $this->Application->contribution_monthly;
+        $this->share_fee_monthly = $this->Application->share_monthly;
+        $this->total_monthly = $this->Application->total_monthly;
+        $this->total_fee = $this->Application->total_fee;
     }
 
     public function render()
