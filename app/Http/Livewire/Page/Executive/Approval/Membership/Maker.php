@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Page\Executive\Approval\Membership;
 use App\Models\ApplyMembership;
 use App\Models\Approval;
 use App\Models\Customer as FMSCustomer;
+use App\Models\FmsGlobalParm;
 use App\Models\SiskopAddress as Address;
 use App\Models\SiskopCustomer as Customer;
 use App\Models\SiskopFamily as Family;
@@ -42,6 +43,17 @@ class Maker extends Component
     public $racelist;
     public $relationshiplist;
     public $statelist;
+    public $globalParm;
+    public $minShare;
+    public $minShareMonthly;
+
+    // untuk selesai masalah hydration dropdown, sebab code lama amik data direct dari db.
+    public $share_pmt_mode_flag;
+    public $payment_type;
+    public $contribution_fee_monthly;
+    public $share_fee_monthly;
+    public $total_monthly;
+    public $total_fee;
 
     public $input_disable = 'readonly';
     public $input_maker = '';
@@ -114,9 +126,26 @@ class Maker extends Component
 
     public function totalfee()
     {
-        $this->Application->total_fee = $this->Application->register_fee  + $this->Application->share_fee + $this->Application->contribution_fee;
+        if ($this->share_pmt_mode_flag == 1) {
+            $this->Application->contribution_monthly = $this->contribution_fee_monthly;
+            $this->Application->share_monthly = $this->minShare;
+            $this->share_fee_monthly = number_format($this->minShare, 2);
+            $this->total_monthly = number_format($this->contribution_fee_monthly, 2);
+        } else {
+            $this->Application->contribution_monthly = $this->contribution_fee_monthly;
+            $this->Application->share_monthly = $this->share_fee_monthly;
+            $this->total_monthly = number_format($this->share_fee_monthly + $this->contribution_fee_monthly, 2);
+        }
 
-        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
+
+        $this->total_fee = $this->contribution_fee_monthly + $this->Application->register_fee + $this->share_fee_monthly;
+        $this->Application->total_fee = $this->total_fee;
+
+
+        $this->Application->total_monthly = $this->total_monthly;
+        $this->Application->share_pmt_mode_flag = $this->share_pmt_mode_flag;
+        $this->Application->payment_type = $this->payment_type;
+        $this->Application->save();
     }
 
     public function mount($uuid)
@@ -188,8 +217,18 @@ class Maker extends Component
         $this->genderlist       = RefGender::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->maritallist      = RefMarital::where([['client_id', $this->client_id], ['status', '1']])->get();
         $this->racelist         = RefRace::where([['client_id', $this->client_id], ['status', '1']])->get();
+        $this->globalParm       = FmsGlobalParm::where('client_id', $this->User->client_id)->first();
 
-        $this->Application->total_monthly = $this->Application->share_monthly + $this->Application->contribution_monthly;
+        $this->minShare = $this->globalParm->MIN_SHARE;
+        $this->minShareMonthly = $this->globalParm->MIN_SHARE / $this->globalParm->TOT_MTH_SHARE_INSTALMENT;
+
+
+        $this->share_pmt_mode_flag = $this->Application->share_pmt_mode_flag;
+        $this->payment_type = $this->Application->payment_type;
+        $this->contribution_fee_monthly = $this->Application->contribution_monthly;
+        $this->share_fee_monthly = $this->Application->share_monthly;
+        $this->total_monthly = $this->Application->total_monthly;
+        $this->total_fee = $this->Application->total_fee;
     }
 
     public function render()
