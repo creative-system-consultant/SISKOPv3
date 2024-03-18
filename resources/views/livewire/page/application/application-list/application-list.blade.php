@@ -105,63 +105,33 @@
                         <livewire:page.application.application-list.financing :route=$route>
                         @break
                     @case('1')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Membership
-                        </h2>
                         <livewire:page.application.application-list.membership :route=$route>
                         @break
                     @case('2')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Add Share
-                        </h2>
                         <livewire:page.application.application-list.share :route=$route>
                         @break
                     @case('3')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Sell Share
-                        </h2>
                         <livewire:page.application.application-list.sell-share :route=$route>
                         @break
                     @case('4')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Add/Change Contribution
-                        </h2>
                         <livewire:page.application.application-list.contribution :route=$route>
                         @break
                     @case('5')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Withdrawal Contribution
-                        </h2>
                         <livewire:page.application.application-list.withdrawal-contribution :route=$route>
                         @break
                     @case('6')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Special Aid
-                        </h2>
                         <livewire:page.application.application-list.special-aid :route=$route>
                         @break
                     @case('7')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Dividend Withdrawal
-                        </h2>
                         <livewire:page.application.application-list.dividend :route=$route>
                         @break
                     @case('8')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Close Membership
-                        </h2>
                         <livewire:page.application.application-list.close-membership :route=$route>
                         @break
                     @case('9')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Transfer Share
-                        </h2>
                         <livewire:page.application.application-list.exchange-share :route=$route>
                         @break
                     @case('10')
-                        <h2 class="mb-4 text-base font-semibold ">
-                            Change Guarantor
-                        </h2>
                         <livewire:page.application.application-list.change-guarantor :route=$route>
                         @break
                 @endswitch

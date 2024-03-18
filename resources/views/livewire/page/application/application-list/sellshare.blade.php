@@ -1,4 +1,15 @@
 <div x-data="{ openModal : false }">
+    <div class="flex items-center justify-between pb-4">
+        <h2 class="mb-4 text-base font-semibold ">
+            Sell Share
+        </h2>
+        <x-form.dropdown label="Filter" value="" name="" id="" mandatory="" disable="" default="yes" wire:model="filter">
+            <option value="process">Being Processed</option>
+            <option value="approved">Approved</option>
+            <option value="failed">Failed / Rejected</option>
+        </x-form.dropdown>
+    </div>
+
     <x-table.table>
         <x-slot name="thead">
             <x-table.table-header class="text-left" value="No" sort="" />

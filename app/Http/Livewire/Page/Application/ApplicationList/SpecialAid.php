@@ -15,6 +15,7 @@ class SpecialAid extends Component
     public $specialAid_type;
     public $custApply, $type;
     public $route;
+    public $filter = '';
 
     public function showApplication($uuid)
     {
@@ -39,9 +40,18 @@ class SpecialAid extends Component
                                             ->with('specialAidType')
                                             ->paginate(5);
         } else {
-            $specialAid = ApplySpecialAid::where('client_id', $this->client_id)
-                                            ->where('flag', '!=', 0)
-                                            ->orderBy('created_at', 'desc')
+            $specialAidQuery = ApplySpecialAid::where('client_id', $this->client_id)
+                                                ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $specialAidQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $specialAidQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $specialAidQuery->where('flag', '>', 20);
+            }
+
+            $specialAid = $specialAidQuery->orderBy('created_at', 'desc')
                                             ->with('customer')
                                             ->with('specialAidType')
                                             ->paginate(5);

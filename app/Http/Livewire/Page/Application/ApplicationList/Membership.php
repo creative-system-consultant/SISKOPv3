@@ -16,6 +16,7 @@ class Membership extends Component
     public SiskopCustomer $Cust;
     public $membership;
     public $route;
+    public $filter = '';
 
     public function clearApplication()
     {
@@ -59,11 +60,20 @@ class Membership extends Component
                                         ->with('customer')
                                         ->paginate(5);
         } else {
-            $memberships = ApplyMember::where('client_id', $this->User->client_id)
-                                        ->where('flag', '!=', 0)
-                                        ->orderBy('created_at', 'desc')
-                                        ->with('customer')
-                                        ->paginate(5);
+            $membershipsQuery = ApplyMember::where('client_id', $this->User->client_id)
+                                            ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $membershipsQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $membershipsQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $membershipsQuery->where('flag', '>', 20);
+            }
+
+            $memberships = $membershipsQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.membership',[

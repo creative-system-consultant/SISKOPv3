@@ -14,6 +14,7 @@ class Contribution extends Component
     public $client_id;
     public $Contribution;
     public $route;
+    public $filter = '';
 
     public function clearApplication()
     {
@@ -59,12 +60,21 @@ class Contribution extends Component
                                                 ->with('customer')
                                                 ->paginate(5);
         } else {
-            $contributions = ApplyContribution::where('client_id', $this->client_id)
-                                                ->where('direction', 'buy')
-                                                ->where('flag', '!=', 0)
-                                                ->orderBy('created_at','desc')
-                                                ->with('customer')
-                                                ->paginate(5);
+            $contributionsQuery = ApplyContribution::where('client_id', $this->client_id)
+                                                    ->where('direction', 'buy')
+                                                    ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $contributionsQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $contributionsQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $contributionsQuery->where('flag', '>', 20);
+            }
+
+            $contributions = $contributionsQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.contribution',[

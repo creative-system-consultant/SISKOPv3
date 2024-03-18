@@ -13,6 +13,7 @@ class Dividend extends Component
     public User $User;
     public ApplyDividend $dividend;
     public $route;
+    public $filter = '';
 
     public function clearApplication()
     {
@@ -55,11 +56,20 @@ class Dividend extends Component
                                         ->with('customer')
                                         ->paginate(5);
         } else {
-            $dividends = ApplyDividend::where([['client_id', $this->User->client_id]])
-                                        ->where('flag', '!=', 0)
-                                        ->orderBy('created_at','desc')
-                                        ->with('customer')
-                                        ->paginate(5);
+            $dividendsQuery = ApplyDividend::where([['client_id', $this->User->client_id]])
+                                                ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $dividendsQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $dividendsQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $dividendsQuery->where('flag', '>', 20);
+            }
+
+            $dividends = $dividendsQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.dividend',[

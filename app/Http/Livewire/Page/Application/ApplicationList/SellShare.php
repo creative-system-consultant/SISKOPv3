@@ -17,6 +17,7 @@ class SellShare extends Component
     public $client_id;
     public $banks;
     public $route;
+    public $filter = '';
 
     public function showApplication($uuid)
     {
@@ -41,12 +42,21 @@ class SellShare extends Component
                                 ->with('customer')
                                 ->paginate(5);
         } else {
-            $sellShares = Share::where('client_id', $this->client_id)
-                                ->where('direction', 'sell')
-                                ->where('flag', '!=', 0)
-                                ->orderBy('created_at','desc')
-                                ->with('customer')
-                                ->paginate(5);
+            $sellSharesQuery = Share::where('client_id', $this->client_id)
+                                        ->where('direction', 'sell')
+                                        ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $sellSharesQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $sellSharesQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $sellSharesQuery->where('flag', '>', 20);
+            }
+
+            $sellShares = $sellSharesQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.sellshare',[

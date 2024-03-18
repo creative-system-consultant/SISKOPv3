@@ -17,6 +17,7 @@ class ChangeGuarantor extends Component
     public $Change;
     public $ChangeGuarantorsDetails;
     public $route;
+    public $filter = '';
 
     public function clearApplication()
     {
@@ -60,11 +61,20 @@ class ChangeGuarantor extends Component
                                                     ->with('customer')
                                                     ->paginate(5);
         } else {
-            $ChangeGuarantors = ModelsChangeGuarantor::where('client_id', $this->User->client_id)
-                                                    ->where('flag', '!=', 0)
-                                                    ->orderBy('created_at', 'desc')
-                                                    ->with('customer')
-                                                    ->paginate(5);
+            $ChangeGuarantorsQuery = ModelsChangeGuarantor::where('client_id', $this->User->client_id)
+                                                ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $ChangeGuarantorsQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $ChangeGuarantorsQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $ChangeGuarantorsQuery->where('flag', '>', 20);
+            }
+
+            $ChangeGuarantors = $ChangeGuarantorsQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.changeguarantor', [

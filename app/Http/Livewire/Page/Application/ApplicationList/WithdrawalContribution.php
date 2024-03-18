@@ -17,6 +17,7 @@ class WithdrawalContribution extends Component
     public $bankName;
     public $banks;
     public $route;
+    public $filter = '';
 
     public function clearApplication()
     {
@@ -62,11 +63,21 @@ class WithdrawalContribution extends Component
                             ->with('customer')
                             ->paginate(5);
         } else {
-            $withdrawal = ApplyContribution::where([['direction', 'withdraw'],['client_id', $this->User->client_id]])
-                            ->where('flag', '!=', 0)
-                            ->orderBy('created_at','desc')
-                            ->with('customer')
-                            ->paginate(5);
+            $withdrawalQuery = ApplyContribution::where([['direction', 'withdraw'],['client_id', $this->User->client_id]])
+                                                    ->where('direction', 'buy')
+                                                    ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $withdrawalQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $withdrawalQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $withdrawalQuery->where('flag', '>', 20);
+            }
+
+            $withdrawal = $withdrawalQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.withdrawal-contribution',[
