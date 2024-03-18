@@ -13,7 +13,6 @@
                     rightTag=""
                     type="text"
                     wire:model="applymember.register_fee"
-                    wire:keydown="totalfee"
                 />
             </div>
 
@@ -59,7 +58,6 @@
                     rightTag=""
                     type="text"
                     wire:model="tot_share"
-                    wire:keydown="totalfee"
                 />
             </div>
             @endif

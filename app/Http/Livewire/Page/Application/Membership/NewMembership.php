@@ -355,7 +355,6 @@ class NewMembership extends Component
                     $this->tab6 = 1;
                     break;
                 case 6:
-                    $this->totalfee();
                     $this->validate($this->rule6);
                     $this->applymember->cust_bank_id = $this->cust_bank_id;
                     $this->applymember->client_bank_id = $this->client_bank_id;
@@ -368,11 +367,13 @@ class NewMembership extends Component
                         $this->applymember->share_lump_sum_amt = $this->tot_share;
                         $this->applymember->share_monthly = 0;
                         $this->applymember->total_monthly   = $this->applymember->contribution_fee;
+                        $this->applymember->total_fee   = $this->Ftotal_deduction;
                     } else {
                         $this->applymember->share_fee = $this->min_monthly_share;
                         $this->applymember->share_lump_sum_amt = 0;
                         $this->applymember->share_monthly = $this->min_monthly_share;
                         $this->applymember->total_monthly   = $this->monthly_share + $this->applymember->contribution_fee;
+                        $this->applymember->total_fee   = $this->Ftotal_deduction;
                     }
                     $this->applymember->save();
                     $this->tab7 = 1;
@@ -729,14 +730,7 @@ class NewMembership extends Component
         $this->render();
     }
 
-    public function totalfee()
-    {
-        if (is_numeric($this->applymember->contribution_fee)) {
-            $this->applymember->update([
-                'total_fee' => $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee,
-            ]);
-        }
-    }
+
 
     public function submit()
     {
@@ -835,8 +829,8 @@ class NewMembership extends Component
                 $this->Mtotal_deduction =   $this->applymember->contribution_fee;
             } else {
                 $this->applymember->share_monthly = 0;
-                $this->tot_share = $this->applymember->share_fee;
-                $this->Ftotal_deduction =  $this->applymember->register_fee + $this->applymember->share_fee + $this->applymember->contribution_fee;
+                $this->tot_share = $this->min_share;
+                $this->Ftotal_deduction =  $this->applymember->register_fee + $this->min_share + $this->applymember->contribution_fee;
                 $this->Mtotal_deduction =   $this->applymember->contribution_fee;
             }
         }
