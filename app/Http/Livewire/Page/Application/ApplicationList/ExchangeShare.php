@@ -13,6 +13,7 @@ class ExchangeShare extends Component
     public User $User;
     public ExchangeShares $ExchangeShares;
     public $route;
+    public $filter = '';
 
     public function clearApplication()
     {
@@ -55,11 +56,20 @@ class ExchangeShare extends Component
                                     ->with('customer')
                                     ->paginate(5);
         } else {
-            $shares = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])
-                                    ->where('flag', '!=', 0)
-                                    ->orderBy('created_at','desc')
-                                    ->with('customer')
-                                    ->paginate(5);
+            $sharesQuery = ExchangeShares::where([['direction', 'exchange'],['client_id', $this->User->client_id]])
+                                                ->where('flag', '!=', 0);
+
+            if ($this->filter == 'process') {
+                $sharesQuery->where('flag', 1);
+            } elseif ($this->filter == 'approved') {
+                $sharesQuery->where('flag', 20);
+            } elseif ($this->filter == 'failed') {
+                $sharesQuery->where('flag', '>', 20);
+            }
+
+            $shares = $sharesQuery->orderBy('created_at', 'desc')
+                                            ->with('customer')
+                                            ->paginate(5);
         }
 
         return view('livewire.page.application.application-list.exchangeshare',[
