@@ -158,7 +158,6 @@ class NewMembership extends Component
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
-        'applymember.total_fee'              => 'required|numeric',
         'pay_type_regist'                    => 'required',
         'pay_type_share'                     => 'required',
     ];
@@ -226,7 +225,6 @@ class NewMembership extends Component
         'applymember.register_fee'           => 'required|gte:50|numeric',
         'applymember.share_fee'              => 'required|gte:50|numeric',
         'applymember.contribution_fee'       => 'required|gte:50|numeric',
-        'applymember.total_fee'              => 'required|numeric',
         'applymember.cust_bank_id'           => 'required',
         'applymember.client_bank_id'         => 'required',
         'applymember.client_bank_acct_no'       => 'required',
