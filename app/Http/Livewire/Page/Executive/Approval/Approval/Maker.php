@@ -11,6 +11,7 @@ use App\Models\Contribution;
 use App\Models\FmsGlobalParm;
 use App\Models\Share;
 use App\Models\Ref\RefBank;
+use App\Models\SpecialAid;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -46,6 +47,7 @@ class Maker extends Component
     public $jaminan;
     public $events_date;
     public $div_cash_approved,$div_share_approved,$div_contri_approved;
+    public $saMinAmt, $saMaxAmt;
 
     protected function rules()
     {
@@ -124,7 +126,7 @@ class Maker extends Component
             'type' => 'App\Models\ApplySpecialAid',
             'page' => 6,
             'rule' => [
-                'Application.approved_amt' => 'required|gt:0|numeric',
+                'Application.approved_amt' => 'required|gte:saMinAmt|lte:saMaxAmt|numeric',
             ],
         ],
         'ChangeGuarantor' => [
@@ -224,7 +226,7 @@ class Maker extends Component
     }
 
     public function next()
-    {   
+    {
         if ($this->approval_type != 'gagal') {
             $this->validate($this->xvalidate());
             $this->validate($this->shareValidation());
@@ -276,7 +278,6 @@ class Maker extends Component
         $this->pagename = $this->custom_rule[$this->include]['name'];
         $this->pagetype = $this->custom_rule[$this->include]['type'] ?? '';
         $this->User     = User::find(auth()->user()->id);
-
 
         if ($this->include == 'contribution' || $this->include == 'sellcontribution') {
             $this->Application = Contribution::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
@@ -399,10 +400,12 @@ class Maker extends Component
             $this->Application->div_contri_approved = number_format($this->Application->div_contri_apply, 2);
         } else if ($this->include == 'specialaid') {
             $this->Application = ApplySpecialAid::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
+            $specialAidData = SpecialAid::find($this->Application->special_aid_id);
+            $this->saMinAmt = $specialAidData->min_apply_amt;
+            $this->saMaxAmt = $specialAidData->max_apply_amt;
             $this->Application->approved_amt = $this->Application->approved_amt ?? $this->Application->apply_amt;
             $this->events_date = $this->Application->event_date;
             $this->Application->event_date = $this->events_date;
-            
         } else if ($this->include == 'ChangeGuarantor') {
             $this->Application = ChangeGuarantor::where('uuid', $uuid)->where('client_id', $this->User->client_id)->with('customer')->first();
         } else {
