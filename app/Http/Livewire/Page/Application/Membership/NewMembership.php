@@ -444,7 +444,6 @@ class NewMembership extends Component
 
                     break;
                 case 6:
-                    $this->totalfee();
                     $this->validate($this->rule6);
                     $this->applymember->cust_bank_id = $this->cust_bank_id;
                     $this->applymember->client_bank_id = $this->client_bank_id;
@@ -452,12 +451,18 @@ class NewMembership extends Component
                     $this->applymember->share_pmt_mode_flag = $this->pay_type_share;
                     $this->applymember->register_fee_flag = $this->pay_type_regist;
                     $this->applymember->contribution_monthly = $this->applymember->contribution_fee;
-
                     if ($this->pay_type_share == '1') {
-                        $this->applymember->share_monthly = 0;
+                        $this->applymember->share_fee = $this->min_share;
                         $this->applymember->share_lump_sum_amt = $this->tot_share;
+                        $this->applymember->share_monthly = 0;
+                        $this->applymember->total_monthly   = $this->applymember->contribution_fee;
+                        $this->applymember->total_fee   = $this->Ftotal_deduction;
                     } else {
+                        $this->applymember->share_fee = $this->min_monthly_share;
                         $this->applymember->share_lump_sum_amt = 0;
+                        $this->applymember->share_monthly = $this->min_monthly_share;
+                        $this->applymember->total_monthly   = $this->monthly_share + $this->applymember->contribution_fee;
+                        $this->applymember->total_fee   = $this->Ftotal_deduction;
                     }
                     $this->applymember->save();
                     $this->dispatchBrowserEvent('tab-changed', ['newActiveTab' => $this->activeTab]);
