@@ -46,7 +46,7 @@ class Maker extends Component
     public $guarantorLists;
     public $jaminan;
     public $events_date;
-    public $div_cash_approved,$div_share_approved,$div_contri_approved;
+    public $div_cash_approved, $div_share_approved, $div_contri_approved;
     public $saMinAmt, $saMaxAmt;
 
     protected function rules()
@@ -235,7 +235,9 @@ class Maker extends Component
         }
 
         $this->Application->step++;
-        $this->Application->event_date = $this->events_date;
+        if ($this->include == 'specialaid') {
+            $this->Application->event_date = $this->events_date;
+        }
         $this->Application->save();
         $this->Approval->user_id = $this->User->id;
         $this->Approval->type = $this->approval_type;
