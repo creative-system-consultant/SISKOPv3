@@ -236,7 +236,11 @@ class Resolution extends Component
         $this->share_pmt_mode_flag = $this->Application->share_pmt_mode_flag;
         $this->payment_type = $this->Application->payment_type;
         $this->contribution_fee_monthly = $this->Application->contribution_monthly;
-        $this->share_fee_monthly = $this->Application->share_monthly;
+        if ($this->share_pmt_mode_flag == 1) {
+            $this->share_fee_monthly = $this->Application->share_lump_sum_amt;
+        } else {
+            $this->share_fee_monthly = $this->Application->share_monthly;
+        }
         $this->total_monthly = $this->Application->total_monthly;
         $this->total_fee = $this->Application->total_fee;
     }
